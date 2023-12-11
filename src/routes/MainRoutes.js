@@ -7,15 +7,10 @@ import Loadable from 'ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
-// utilities routing
-const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
-const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
-const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
-
-// sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+// plans routing
+const ListDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/ListDomainPlans')));
+const AddDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/AddDomainPlans')));
+const UpdateDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/UpdateDomainPlans')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -28,62 +23,31 @@ const MainRoutes = {
       element: <DashboardDefault />
     },
     {
-      path: 'dashboard',
+      path: 'plans',
       children: [
         {
-          path: 'default',
-          element: <DashboardDefault />
+          path: 'list-domain-plans',
+          element: <ListDomainPlans />
         }
       ]
     },
     {
-      path: 'utils',
+      path: 'plans',
       children: [
         {
-          path: 'util-typography',
-          element: <UtilsTypography />
+          path: 'add-domain-plans',
+          element: <AddDomainPlans />
         }
       ]
     },
     {
-      path: 'utils',
+      path: 'plans',
       children: [
         {
-          path: 'util-color',
-          element: <UtilsColor />
+          path: 'update-domain-plans/:id',
+          element: <UpdateDomainPlans />
         }
       ]
-    },
-    {
-      path: 'utils',
-      children: [
-        {
-          path: 'util-shadow',
-          element: <UtilsShadow />
-        }
-      ]
-    },
-    {
-      path: 'icons',
-      children: [
-        {
-          path: 'tabler-icons',
-          element: <UtilsTablerIcons />
-        }
-      ]
-    },
-    {
-      path: 'icons',
-      children: [
-        {
-          path: 'material-icons',
-          element: <UtilsMaterialIcons />
-        }
-      ]
-    },
-    {
-      path: 'sample-page',
-      element: <SamplePage />
     }
   ]
 };

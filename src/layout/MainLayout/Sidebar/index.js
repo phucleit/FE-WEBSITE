@@ -37,7 +37,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
         >
           <MenuList />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-            <Chip label={process.env.REACT_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
+            <Chip label={process.env.ITV_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>
         </PerfectScrollbar>
       </BrowserView>
@@ -45,7 +45,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
         <Box sx={{ px: 2 }}>
           <MenuList />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-            <Chip label={process.env.REACT_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
+            <Chip label={process.env.ITV_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>
         </Box>
       </MobileView>
