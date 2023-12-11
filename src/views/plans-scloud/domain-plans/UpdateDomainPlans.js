@@ -69,7 +69,7 @@ export default function UpdateDomainPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-domain-plans');
+          navigate('/plans/list-domain');
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -83,7 +83,7 @@ export default function UpdateDomainPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard">
-                  <InputLabel>Name</InputLabel>
+                  <InputLabel>Tên miền</InputLabel>
                   <Input
                     id="name"
                     name="name"

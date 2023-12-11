@@ -13,6 +13,7 @@ const AddDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-pla
 const UpdateDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/UpdateDomainPlans')));
 const ListEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/ListEmailPlans')));
 const AddEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/AddEmailPlans')));
+const UpdateEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/UpdateEmailPlans')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -28,7 +29,7 @@ const MainRoutes = {
       path: 'plans',
       children: [
         {
-          path: 'list-domain-plans',
+          path: 'list-domain',
           element: <ListDomainPlans />
         }
       ]
@@ -37,7 +38,7 @@ const MainRoutes = {
       path: 'plans',
       children: [
         {
-          path: 'add-domain-plans',
+          path: 'add-domain',
           element: <AddDomainPlans />
         }
       ]
@@ -46,7 +47,7 @@ const MainRoutes = {
       path: 'plans',
       children: [
         {
-          path: 'update-domain-plans/:id',
+          path: 'update-domain/:id',
           element: <UpdateDomainPlans />
         }
       ]
@@ -55,7 +56,7 @@ const MainRoutes = {
       path: 'plans',
       children: [
         {
-          path: 'list-email-plans',
+          path: 'list-email',
           element: <ListEmailPlans />
         }
       ]
@@ -64,8 +65,17 @@ const MainRoutes = {
       path: 'plans',
       children: [
         {
-          path: 'add-email-plans',
+          path: 'add-email',
           element: <AddEmailPlans />
+        }
+      ]
+    },
+    {
+      path: 'plans',
+      children: [
+        {
+          path: 'update-email/:id',
+          element: <UpdateEmailPlans />
         }
       ]
     }

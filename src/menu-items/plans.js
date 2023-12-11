@@ -21,28 +21,28 @@ const plans = {
           id: 'domain-plans',
           title: 'Tên miền',
           type: 'item',
-          url: '/plans/list-domain-plans',
+          url: '/plans/list-domain',
           breadcrumbs: false
         },
         {
           id: 'hosting-plans',
           title: 'Hosting',
           type: 'item',
-          url: '/plans/list-hosting-plans',
+          url: '/plans/list-hosting',
           breadcrumbs: false
         },
         {
           id: 'email-plans',
           title: 'Email',
           type: 'item',
-          url: '/plans/list-email-plans',
+          url: '/plans/list-email',
           breadcrumbs: false
         },
         {
           id: 'ssl-plans',
           title: 'SSL',
           type: 'item',
-          url: '/plans/list-ssl-plans',
+          url: '/plans/list-ssl',
           breadcrumbs: false
         }
       ]

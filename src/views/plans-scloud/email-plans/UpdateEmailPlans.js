@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
@@ -27,8 +27,10 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function AddEmailPlans() {
+export default function UpdateEmailPlans() {
   let navigate = useNavigate();
+  const paramId = useParams();
+  const currentId = paramId.id;
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -36,7 +38,20 @@ export default function AddEmailPlans() {
   const [capacity, setCapacity] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleAddEmailPlans = (e) => {
+  useEffect(() => {
+    loadDetailEmailPlans();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadDetailEmailPlans = async () => {
+    const result = await axios.get(`${LIST_EMAIL_PLANS}/${currentId}`);
+    setName(result.data.name);
+    setPrice(result.data.price);
+    setAccount(result.data.account);
+    setCapacity(result.data.capacity);
+  };
+
+  const handleUpdateEmailPlans = (e) => {
     e.preventDefault();
     if (name == '') {
       alert('Vui lòng nhập tên gói email!');
@@ -58,7 +73,7 @@ export default function AddEmailPlans() {
       return;
     }
 
-    const addEmailPlans = {
+    const updateEmailPlans = {
       name: name,
       price: price,
       account: account,
@@ -66,7 +81,7 @@ export default function AddEmailPlans() {
     };
 
     axios
-      .post(`${LIST_EMAIL_PLANS}`, addEmailPlans)
+      .put(`${LIST_EMAIL_PLANS}/${currentId}`, updateEmailPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {
@@ -78,7 +93,7 @@ export default function AddEmailPlans() {
 
   return (
     <>
-      <MainCard title="Thêm mới">
+      <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -144,15 +159,15 @@ export default function AddEmailPlans() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddEmailPlans}>
-                Thêm mới
+              <Button variant="contained" size="medium" onClick={handleUpdateEmailPlans}>
+                Cập nhật
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
-        <Alert severity="success">Thêm thành công!</Alert>
+        <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
   );
