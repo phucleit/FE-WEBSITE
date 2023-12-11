@@ -1,8 +1,8 @@
 // assets
-import { IconDashboard } from '@tabler/icons';
+import { IconLayoutBoardSplit } from '@tabler/icons';
 
 // constant
-const icons = { IconDashboard };
+const icons = { IconLayoutBoardSplit };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -15,7 +15,7 @@ const dashboard = {
       title: 'Tổng quát',
       type: 'item',
       url: '/',
-      icon: icons.IconDashboard,
+      icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
     }
   ]

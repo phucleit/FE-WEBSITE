@@ -1,34 +1,31 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconUsers } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconTypography,
-  IconPalette,
-  IconShadow,
-  IconWindmill
+  IconUsers
 };
 
 const customers = {
-  id: 'customers',
+  id: 'customers-scloud',
   title: 'Khách hàng - Scloud',
   type: 'group',
   children: [
     {
-      id: 'khach-hang',
+      id: 'customers',
       title: 'Khách hàng',
       type: 'collapse',
-      icon: icons.IconWindmill,
+      icon: icons.IconUsers,
       children: [
         {
-          id: 'danh-sach',
+          id: 'list-customers',
           title: 'Danh sách',
           type: 'item',
           url: '/icons/tabler-icons',
           breadcrumbs: false
         },
         {
-          id: 'them-moi',
+          id: 'add-customers',
           title: 'Thêm mới',
           type: 'item',
           url: '/icons/tabler-icons',

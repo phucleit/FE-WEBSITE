@@ -1,48 +1,45 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconServerBolt } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconTypography,
-  IconPalette,
-  IconShadow,
-  IconWindmill
+  IconServerBolt
 };
 
 const services = {
-  id: 'services',
+  id: 'services-scloud',
   title: 'Dịch vụ - Scloud',
   type: 'group',
   children: [
     {
-      id: 'dich-vu',
+      id: 'services',
       title: 'Dịch vụ',
       type: 'collapse',
-      icon: icons.IconWindmill,
+      icon: icons.IconServerBolt,
       children: [
         {
-          id: 'domain',
+          id: 'domain-services',
           title: 'Tên miền',
           type: 'item',
           url: '/icons/tabler-icons',
           breadcrumbs: false
         },
         {
-          id: 'hosting',
+          id: 'hosting-services',
           title: 'Hostings',
           type: 'item',
           url: '/icons/tabler-icons',
           breadcrumbs: false
         },
         {
-          id: 'email',
+          id: 'email-services',
           title: 'Email',
           type: 'item',
           url: '/icons/tabler-icons',
           breadcrumbs: false
         },
         {
-          id: 'ssl',
+          id: 'ssl-services',
           title: 'SSL',
           type: 'item',
           url: '/icons/tabler-icons',

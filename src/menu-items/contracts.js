@@ -1,34 +1,31 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconDatabaseImport } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconTypography,
-  IconPalette,
-  IconShadow,
-  IconWindmill
+  IconDatabaseImport
 };
 
 const contracts = {
-  id: 'contracts',
+  id: 'contracts-scloud',
   title: 'Hợp đồng - Scloud',
   type: 'group',
   children: [
     {
-      id: 'hop-dong',
+      id: 'contracts',
       title: 'Hợp đồng',
       type: 'collapse',
-      icon: icons.IconWindmill,
+      icon: icons.IconDatabaseImport,
       children: [
         {
-          id: 'danh-sach',
+          id: 'list-contracts',
           title: 'Danh sách',
           type: 'item',
           url: '/icons/tabler-icons',
           breadcrumbs: false
         },
         {
-          id: 'them-moi',
+          id: 'add-contracts',
           title: 'Thêm mới',
           type: 'item',
           url: '/icons/tabler-icons',

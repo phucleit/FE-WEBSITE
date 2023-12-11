@@ -1,24 +1,21 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconPlaylistAdd } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconTypography,
-  IconPalette,
-  IconShadow,
-  IconWindmill
+  IconPlaylistAdd
 };
 
 const plans = {
-  id: 'plans',
+  id: 'plans-scloud',
   title: 'Đăng ký dịch vụ - Scloud',
   type: 'group',
   children: [
     {
-      id: 'dang-ky',
+      id: 'plans',
       title: 'Đăng ký mới',
       type: 'collapse',
-      icon: icons.IconWindmill,
+      icon: icons.IconPlaylistAdd,
       children: [
         {
           id: 'domain-plans',
