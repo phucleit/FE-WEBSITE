@@ -17,7 +17,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
-const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
+const LIST_EMAIL_PLANS = `${config.API_URL}/plans/email`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,14 +27,16 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function AddDomainPlans() {
+export default function AddEmailPlans() {
   let navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [account, setAccount] = useState('');
+  const [capacity, setCapacity] = useState('');
   const [open, setOpen] = useState(false);
 
-  const handleAddDomainPlans = (e) => {
+  const handleAddEmailPlans = (e) => {
     e.preventDefault();
     if (name == '') {
       alert('Vui lòng nhập tên miền!');
@@ -46,17 +48,29 @@ export default function AddDomainPlans() {
       return;
     }
 
-    const addDomainPlans = {
+    if (account == '') {
+      alert('Vui lòng nhập số lượng tài khoản!');
+      return;
+    }
+
+    if (capacity == '') {
+      alert('Vui lòng nhập dung lượng!');
+      return;
+    }
+
+    const addEmailPlans = {
       name: name,
-      price: price
+      price: price,
+      account: account,
+      capacity: capacity
     };
 
     axios
-      .post(`${LIST_DOMAIN_PLANS}`, addDomainPlans)
+      .post(`${LIST_EMAIL_PLANS}`, addEmailPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-domain-plans');
+          navigate('/plans/list-email-plans');
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -77,7 +91,7 @@ export default function AddDomainPlans() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required={true}
-                    placeholder="Nhập tên miền..."
+                    placeholder="Nhập tên email..."
                   />
                 </FormControl>
               </Item>
@@ -92,7 +106,37 @@ export default function AddDomainPlans() {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required={true}
-                    placeholder="Nhập chi phí tên miền..."
+                    placeholder="Nhập chi phí email..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard">
+                  <InputLabel>Tài khoản</InputLabel>
+                  <Input
+                    id="account"
+                    name="account"
+                    value={account}
+                    onChange={(e) => setAccount(e.target.value)}
+                    required={true}
+                    placeholder="Nhập số lượng tài khoản..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard">
+                  <InputLabel>Dung lượng</InputLabel>
+                  <Input
+                    id="capacity"
+                    name="capacity"
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
+                    required={true}
+                    placeholder="Nhập dung lượng..."
                   />
                 </FormControl>
               </Item>
@@ -100,7 +144,7 @@ export default function AddDomainPlans() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddDomainPlans}>
+              <Button variant="contained" size="medium" onClick={handleAddEmailPlans}>
                 Thêm mới
               </Button>
             </Item>

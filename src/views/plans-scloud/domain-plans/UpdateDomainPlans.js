@@ -10,6 +10,8 @@ import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -32,6 +34,7 @@ export default function UpdateDomainPlans() {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadDetailDomainPlans();
@@ -64,55 +67,62 @@ export default function UpdateDomainPlans() {
     axios
       .put(`${LIST_DOMAIN_PLANS}/${currentId}`, updateDomainPlans)
       .then(() => {
-        alert('Cập nhật thành công!');
-        navigate('/plans/list-domain-plans');
+        setOpen(true);
+        setInterval(() => {
+          navigate('/plans/list-domain-plans');
+        }, 1500);
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <MainCard title="Cập nhật">
-      <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
+    <>
+      <MainCard title="Cập nhật">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard">
+                  <InputLabel>Name</InputLabel>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên miền..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard">
+                  <InputLabel>Chi phí</InputLabel>
+                  <Input
+                    id="price"
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập chi phí tên miền..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
             <Item>
-              <FormControl variant="standard">
-                <InputLabel>Name</InputLabel>
-                <Input
-                  id="name"
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required={true}
-                  placeholder="Nhập tên miền..."
-                />
-              </FormControl>
+              <Button variant="contained" size="medium" onClick={handleUpdateDomainPlans}>
+                Cập nhật
+              </Button>
             </Item>
           </Grid>
-          <Grid item xs={6}>
-            <Item>
-              <FormControl variant="standard">
-                <InputLabel>Chi phí</InputLabel>
-                <Input
-                  id="price"
-                  name="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required={true}
-                  placeholder="Nhập chi phí tên miền..."
-                />
-              </FormControl>
-            </Item>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Item>
-            <Button variant="contained" size="medium" color="secondary" onClick={handleUpdateDomainPlans}>
-              Cập nhật
-            </Button>
-          </Item>
-        </Grid>
-      </Box>
-    </MainCard>
+        </Box>
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Cập nhật thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }
