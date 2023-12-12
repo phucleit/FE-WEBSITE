@@ -132,7 +132,7 @@ export default function AddEmailPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tài khoản</InputLabel>
+                  <InputLabel>Số lượng tài khoản</InputLabel>
                   <Input
                     id="account"
                     name="account"

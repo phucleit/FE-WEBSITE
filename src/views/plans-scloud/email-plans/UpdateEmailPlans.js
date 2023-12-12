@@ -108,7 +108,7 @@ export default function UpdateEmailPlans() {
 
   return (
     <>
-      <MainCard title="Thêm mới">
+      <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -144,7 +144,7 @@ export default function UpdateEmailPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tài khoản</InputLabel>
+                  <InputLabel>Số lượng tài khoản</InputLabel>
                   <Input
                     id="account"
                     name="account"

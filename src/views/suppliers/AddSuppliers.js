@@ -84,7 +84,7 @@ export default function AddSuppliers() {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên nhà cung cấp</InputLabel>
                   <Input
                     id="name"
@@ -99,7 +99,7 @@ export default function AddSuppliers() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên công ty</InputLabel>
                   <Input
                     id="company"
@@ -114,7 +114,7 @@ export default function AddSuppliers() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Số điện thoại</InputLabel>
                   <Input
                     id="phone"
@@ -129,7 +129,7 @@ export default function AddSuppliers() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Địa chỉ</InputLabel>
                   <Input
                     id="address"

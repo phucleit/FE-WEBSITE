@@ -13,12 +13,20 @@ const AddSuppliers = Loadable(lazy(() => import('views/suppliers/AddSuppliers'))
 const UpdateSuppliers = Loadable(lazy(() => import('views/suppliers/UpdateSuppliers')));
 
 // plans routing
+// domain plans
 const ListDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/ListDomainPlans')));
 const AddDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/AddDomainPlans')));
 const UpdateDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/UpdateDomainPlans')));
+
+// email plans
 const ListEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/ListEmailPlans')));
 const AddEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/AddEmailPlans')));
 const UpdateEmailPlans = Loadable(lazy(() => import('views/plans-scloud/email-plans/UpdateEmailPlans')));
+
+// hosting plans
+const ListHostingPlans = Loadable(lazy(() => import('views/plans-scloud/hosting-plans/ListHostingPlans')));
+const AddHostingPlans = Loadable(lazy(() => import('views/plans-scloud/hosting-plans/AddHostingPlans')));
+const UpdateHostingPlans = Loadable(lazy(() => import('views/plans-scloud/hosting-plans/UpdateHostingPlans')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -73,6 +81,18 @@ const MainRoutes = {
         {
           path: 'update-email/:id',
           element: <UpdateEmailPlans />
+        },
+        {
+          path: 'list-hosting',
+          element: <ListHostingPlans />
+        },
+        {
+          path: 'add-hosting',
+          element: <AddHostingPlans />
+        },
+        {
+          path: 'update-hosting/:id',
+          element: <UpdateHostingPlans />
         }
       ]
     }

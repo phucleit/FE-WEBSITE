@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,11 +12,14 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-import config from '../../config';
+import config from '../../../config';
 
+const LIST_HOSTING_PLANS = `${config.API_URL}/plans/hosting`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,66 +30,65 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function UpdateSuppliers() {
+export default function AddEmailPlans() {
   let navigate = useNavigate();
-  const paramId = useParams();
-  const currentId = paramId.id;
 
   const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [price, setPrice] = useState('');
+  const [account, setAccount] = useState('');
+  const [capacity, setCapacity] = useState('');
+  const [supplier, setSupplier] = useState('');
+
+  const [listSupplier, setListSupplier] = useState([]);
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    loadDetailSuppliers();
+    loadSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadDetailSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
-    setName(result.data.name);
-    setCompany(result.data.company);
-    setPhone(result.data.phone);
-    setAddress(result.data.address);
+  const loadSuppliers = async () => {
+    const result = await axios.get(`${LIST_SUPPLIER}`);
+    setListSupplier(result.data);
   };
 
-  const handleUpdateSuppliers = (e) => {
+  const handleAddHostingPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên nhà cung cấp!');
+      alert('Vui lòng nhập tên gói hosting!');
       return;
     }
 
-    if (company == '') {
-      alert('Vui lòng nhập tên công ty!');
+    if (price == '') {
+      alert('Vui lòng nhập chi phí hosting!');
       return;
     }
 
-    if (phone == '') {
-      alert('Vui lòng nhập số điện thoại!');
+    if (account == '') {
+      alert('Vui lòng nhập số lượng tài khoản!');
       return;
     }
 
-    if (address == '') {
-      alert('Vui lòng nhập địa chỉ!');
+    if (capacity == '') {
+      alert('Vui lòng nhập dung lượng!');
       return;
     }
 
-    const updateSuppliers = {
+    const addHostingPlans = {
       name: name,
-      company: company,
-      phone: phone,
-      address: address
+      price: price,
+      account: account,
+      capacity: capacity,
+      supplier: supplier
     };
 
     axios
-      .put(`${LIST_SUPPLIER}/${currentId}`, updateSuppliers)
+      .post(`${LIST_HOSTING_PLANS}`, addHostingPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/suppliers/list-suppliers');
+          navigate('/plans/list-hosting');
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -94,20 +96,20 @@ export default function UpdateSuppliers() {
 
   return (
     <>
-      <MainCard title="Cập nhật">
+      <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tên nhà cung cấp</InputLabel>
+                  <InputLabel>Tên gói hosting</InputLabel>
                   <Input
                     id="name"
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required={true}
-                    placeholder="Nhập tên nhà cung cấp..."
+                    placeholder="Nhập tên gói hosting..."
                   />
                 </FormControl>
               </Item>
@@ -115,14 +117,14 @@ export default function UpdateSuppliers() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tên công ty</InputLabel>
+                  <InputLabel>Chi phí</InputLabel>
                   <Input
-                    id="company"
-                    name="company"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
+                    id="price"
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                     required={true}
-                    placeholder="Nhập tên công ty..."
+                    placeholder="Nhập chi phí email..."
                   />
                 </FormControl>
               </Item>
@@ -130,14 +132,14 @@ export default function UpdateSuppliers() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Số điện thoại</InputLabel>
+                  <InputLabel>Số lượng website</InputLabel>
                   <Input
-                    id="phone"
-                    name="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    id="account"
+                    name="account"
+                    value={account}
+                    onChange={(e) => setAccount(e.target.value)}
                     required={true}
-                    placeholder="Nhập số điện thoại..."
+                    placeholder="Nhập số lượng website..."
                   />
                 </FormControl>
               </Item>
@@ -145,30 +147,44 @@ export default function UpdateSuppliers() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Địa chỉ</InputLabel>
+                  <InputLabel>Dung lượng</InputLabel>
                   <Input
-                    id="address"
-                    name="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    id="capacity"
+                    name="capacity"
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
                     required={true}
-                    placeholder="Nhập địa chỉ..."
+                    placeholder="Nhập dung lượng..."
                   />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={12}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Nhà cung cấp</InputLabel>
+                  <Select id="supplier" value={supplier} label="Chọn nhà cung cấp..." onChange={(e) => setSupplier(e.target.value)}>
+                    {listSupplier.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleUpdateSuppliers}>
-                Cập nhật
+              <Button variant="contained" size="medium" onClick={handleAddHostingPlans}>
+                Thêm mới
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
-        <Alert severity="success">Cập nhật thành công!</Alert>
+        <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
   );
