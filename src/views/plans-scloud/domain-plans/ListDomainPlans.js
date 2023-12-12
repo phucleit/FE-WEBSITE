@@ -21,6 +21,12 @@ export default function ListDomainPlans() {
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
+      field: 'supplier',
+      headerName: 'Nhà cung cấp',
+      width: 300,
+      valueGetter: (params) => `${params.row.supplier.name}`
+    },
+    {
       field: 'action',
       headerName: 'Hành động',
       width: 150,

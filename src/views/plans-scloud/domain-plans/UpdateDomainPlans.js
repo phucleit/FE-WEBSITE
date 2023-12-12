@@ -12,12 +12,15 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
+const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -34,10 +37,15 @@ export default function UpdateDomainPlans() {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [supplier, setSupplier] = useState('');
+
+  const [listSupplier, setListSupplier] = useState([]);
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadDetailDomainPlans();
+    loadSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -45,6 +53,12 @@ export default function UpdateDomainPlans() {
     const result = await axios.get(`${LIST_DOMAIN_PLANS}/${currentId}`);
     setName(result.data.name);
     setPrice(result.data.price);
+    setSupplier(result.data.supplier._id);
+  };
+
+  const loadSuppliers = async () => {
+    const result = await axios.get(`${LIST_SUPPLIER}`);
+    setListSupplier(result.data);
   };
 
   const handleUpdateDomainPlans = (e) => {
@@ -61,7 +75,8 @@ export default function UpdateDomainPlans() {
 
     const updateDomainPlans = {
       name: name,
-      price: price
+      price: price,
+      supplier: supplier
     };
 
     axios
@@ -80,9 +95,9 @@ export default function UpdateDomainPlans() {
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền</InputLabel>
                   <Input
                     id="name"
@@ -95,9 +110,9 @@ export default function UpdateDomainPlans() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Chi phí</InputLabel>
                   <Input
                     id="price"
@@ -107,6 +122,20 @@ export default function UpdateDomainPlans() {
                     required={true}
                     placeholder="Nhập chi phí tên miền..."
                   />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={4}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Nhà cung cấp</InputLabel>
+                  <Select id="supplier" value={supplier} label="Chọn nhà cung cấp..." onChange={(e) => setSupplier(e.target.value)}>
+                    {listSupplier.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>

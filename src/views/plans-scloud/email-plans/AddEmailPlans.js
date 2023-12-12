@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
@@ -12,12 +12,15 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
 const LIST_EMAIL_PLANS = `${config.API_URL}/plans/email`;
+const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -34,7 +37,21 @@ export default function AddEmailPlans() {
   const [price, setPrice] = useState('');
   const [account, setAccount] = useState('');
   const [capacity, setCapacity] = useState('');
+  const [supplier, setSupplier] = useState('');
+
+  const [listSupplier, setListSupplier] = useState([]);
+
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    loadSuppliers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadSuppliers = async () => {
+    const result = await axios.get(`${LIST_SUPPLIER}`);
+    setListSupplier(result.data);
+  };
 
   const handleAddEmailPlans = (e) => {
     e.preventDefault();
@@ -62,7 +79,8 @@ export default function AddEmailPlans() {
       name: name,
       price: price,
       account: account,
-      capacity: capacity
+      capacity: capacity,
+      supplier: supplier
     };
 
     axios
@@ -83,7 +101,7 @@ export default function AddEmailPlans() {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên gói email</InputLabel>
                   <Input
                     id="name"
@@ -98,7 +116,7 @@ export default function AddEmailPlans() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Chi phí</InputLabel>
                   <Input
                     id="price"
@@ -113,7 +131,7 @@ export default function AddEmailPlans() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Tài khoản</InputLabel>
                   <Input
                     id="account"
@@ -128,7 +146,7 @@ export default function AddEmailPlans() {
             </Grid>
             <Grid item xs={6}>
               <Item>
-                <FormControl variant="standard">
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Dung lượng</InputLabel>
                   <Input
                     id="capacity"
@@ -138,6 +156,20 @@ export default function AddEmailPlans() {
                     required={true}
                     placeholder="Nhập dung lượng..."
                   />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={12}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Nhà cung cấp</InputLabel>
+                  <Select id="supplier" value={supplier} label="Chọn nhà cung cấp..." onChange={(e) => setSupplier(e.target.value)}>
+                    {listSupplier.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>
