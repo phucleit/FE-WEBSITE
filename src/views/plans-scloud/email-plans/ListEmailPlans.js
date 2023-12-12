@@ -78,7 +78,7 @@ export default function ListEmailPlans() {
                       (Giá trên chưa bao gồm VAT)
                     </Typography>
                     <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity}</Typography>
+                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity} GB</Typography>
                     <Divider />
                     <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Địa chỉ Email: {item.account} tài khoản</Typography>
                     <Divider />
