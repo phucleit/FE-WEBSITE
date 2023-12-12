@@ -7,6 +7,11 @@ import Loadable from 'ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
+// supplier
+const ListSuppliers = Loadable(lazy(() => import('views/suppliers/ListSuppliers')));
+const AddSuppliers = Loadable(lazy(() => import('views/suppliers/AddSuppliers')));
+const UpdateSuppliers = Loadable(lazy(() => import('views/suppliers/UpdateSuppliers')));
+
 // plans routing
 const ListDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/ListDomainPlans')));
 const AddDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/AddDomainPlans')));
@@ -26,53 +31,45 @@ const MainRoutes = {
       element: <DashboardDefault />
     },
     {
+      path: 'suppliers',
+      children: [
+        {
+          path: 'list-suppliers',
+          element: <ListSuppliers />
+        },
+        {
+          path: 'add-suppliers',
+          element: <AddSuppliers />
+        },
+        {
+          path: 'update-suppliers/:id',
+          element: <UpdateSuppliers />
+        }
+      ]
+    },
+    {
       path: 'plans',
       children: [
         {
           path: 'list-domain',
           element: <ListDomainPlans />
-        }
-      ]
-    },
-    {
-      path: 'plans',
-      children: [
+        },
         {
           path: 'add-domain',
           element: <AddDomainPlans />
-        }
-      ]
-    },
-    {
-      path: 'plans',
-      children: [
+        },
         {
           path: 'update-domain/:id',
           element: <UpdateDomainPlans />
-        }
-      ]
-    },
-    {
-      path: 'plans',
-      children: [
+        },
         {
           path: 'list-email',
           element: <ListEmailPlans />
-        }
-      ]
-    },
-    {
-      path: 'plans',
-      children: [
+        },
         {
           path: 'add-email',
           element: <AddEmailPlans />
-        }
-      ]
-    },
-    {
-      path: 'plans',
-      children: [
+        },
         {
           path: 'update-email/:id',
           element: <UpdateEmailPlans />

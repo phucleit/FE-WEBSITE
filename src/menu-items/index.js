@@ -1,13 +1,12 @@
 import dashboard from './dashboard';
-import services from './services';
+import suppliers from './suppliers';
 import plans from './plans';
+import services from './services';
 import customers from './customers';
 import contracts from './contracts';
 
-// ==============================|| MENU ITEMS ||============================== //
-
 const menuItems = {
-  items: [dashboard, services, plans, customers, contracts]
+  items: [dashboard, suppliers, plans, customers, services, contracts]
 };
 
 export default menuItems;

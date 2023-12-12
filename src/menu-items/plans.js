@@ -8,12 +8,12 @@ const icons = {
 
 const plans = {
   id: 'plans-scloud',
-  title: 'Đăng ký dịch vụ - Scloud',
+  title: 'Đăng ký gói dịch vụ - Scloud',
   type: 'group',
   children: [
     {
       id: 'plans',
-      title: 'Đăng ký mới',
+      title: 'Gói dịch vụ',
       type: 'collapse',
       icon: icons.IconPlaylistAdd,
       children: [
