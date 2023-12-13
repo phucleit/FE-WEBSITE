@@ -16,6 +16,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import ListSupplierPlans from './ListSupplierPlans';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -167,6 +168,7 @@ export default function UpdateSuppliers() {
           </Grid>
         </Box>
       </MainCard>
+      <ListSupplierPlans />
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

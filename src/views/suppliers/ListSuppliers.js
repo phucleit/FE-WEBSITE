@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
+import { IconEdit } from '@tabler/icons';
 
 import config from '../../config';
 
@@ -25,7 +26,7 @@ export default function ListSupplier() {
         return (
           <>
             <Link to={'/suppliers/update-suppliers/' + params.row._id}>
-              <i className="fas fa-edit"></i>
+              <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
           </>
