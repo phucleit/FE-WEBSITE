@@ -43,6 +43,11 @@ const ListCustomers = Loadable(lazy(() => import('views/customers/ListCustomers'
 const AddCustomers = Loadable(lazy(() => import('views/customers/AddCustomers')));
 const UpdateCustomers = Loadable(lazy(() => import('views/customers/UpdateCustomers')));
 
+// contracts
+const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
+const AddContracts = Loadable(lazy(() => import('views/contracts/AddContracts')));
+const UpdateContracts = Loadable(lazy(() => import('views/contracts/UpdateContracts')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -149,6 +154,23 @@ const MainRoutes = {
         {
           path: 'update-customers/:id',
           element: <UpdateCustomers />
+        }
+      ]
+    },
+    {
+      path: 'contracts',
+      children: [
+        {
+          path: 'list-contracts',
+          element: <ListContracts />
+        },
+        {
+          path: 'add-contracts',
+          element: <AddContracts />
+        },
+        {
+          path: 'update-contracts/:id',
+          element: <UpdateContracts />
         }
       ]
     }
