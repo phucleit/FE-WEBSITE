@@ -77,7 +77,7 @@ export default function ListEmailPlans() {
                     <Typography sx={{ fontSize: 14, pt: 1, pb: 1, fontStyle: 'italic' }} color="text.secondary">
                       (Giá trên chưa bao gồm VAT)
                     </Typography>
-                    <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>Nhà cung cấp: {item.supplier.name}</Typography>
+                    <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>Nhà cung cấp: {item.supplier_id.name}</Typography>
                     <Divider />
                     <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity} GB</Typography>
                     <Divider />

@@ -57,7 +57,7 @@ export default function UpdateHostinglPlans() {
     setPrice(result.data.price);
     setAccount(result.data.account);
     setCapacity(result.data.capacity);
-    setSupplier(result.data.supplier._id);
+    setSupplier(result.data.supplier_id._id);
   };
 
   const loadSuppliers = async () => {
@@ -92,7 +92,7 @@ export default function UpdateHostinglPlans() {
       price: price,
       account: account,
       capacity: capacity,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios

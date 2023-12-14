@@ -53,7 +53,7 @@ export default function UpdateDomainPlans() {
     const result = await axios.get(`${LIST_DOMAIN_PLANS}/${currentId}`);
     setName(result.data.name);
     setPrice(result.data.price);
-    setSupplier(result.data.supplier._id);
+    setSupplier(result.data.supplier_id._id);
   };
 
   const loadSuppliers = async () => {
@@ -76,7 +76,7 @@ export default function UpdateDomainPlans() {
     const updateDomainPlans = {
       name: name,
       price: price,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios

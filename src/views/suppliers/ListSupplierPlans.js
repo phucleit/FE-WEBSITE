@@ -31,10 +31,10 @@ export default function ListSupplierPlans() {
 
   const loadListPlanSuppliers = async () => {
     const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
-    setDomainPlans(result.data.domainPlans);
-    setEmailPlans(result.data.emailPlans);
-    setHostingPlans(result.data.hostingPlans);
-    setSslPlans(result.data.sslPlans);
+    setDomainPlans(result.data[0].domainPlans);
+    setEmailPlans(result.data[0].emailPlans);
+    setHostingPlans(result.data[0].hostingPlans);
+    setSslPlans(result.data[0].sslPlans);
   };
 
   const [valueTab, setValueTab] = useState('1');
@@ -178,48 +178,64 @@ export default function ListSupplierPlans() {
               </TabList>
             </Box>
             <TabPanel value="1">
-              <DataGrid
-                rows={domainPlans}
-                columns={columnsDomain}
-                getRowId={(row) => row._id}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                disableSelectionOnClick
-                disableRowSelectionOnClick
-              />
+              {domainPlans.length !== 0 ? (
+                <DataGrid
+                  rows={domainPlans}
+                  columns={columnsDomain}
+                  getRowId={(row) => row._id}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
+                  disableSelectionOnClick
+                  disableRowSelectionOnClick
+                />
+              ) : (
+                ''
+              )}
             </TabPanel>
             <TabPanel value="2">
-              <DataGrid
-                rows={emailPlans}
-                columns={columnsEmail}
-                getRowId={(row) => row._id}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                disableSelectionOnClick
-                disableRowSelectionOnClick
-              />
+              {emailPlans.length !== 0 ? (
+                <DataGrid
+                  rows={emailPlans}
+                  columns={columnsEmail}
+                  getRowId={(row) => row._id}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
+                  disableSelectionOnClick
+                  disableRowSelectionOnClick
+                />
+              ) : (
+                ''
+              )}
             </TabPanel>
             <TabPanel value="3">
-              <DataGrid
-                rows={hostingPlans}
-                columns={columnsHosting}
-                getRowId={(row) => row._id}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                disableSelectionOnClick
-                disableRowSelectionOnClick
-              />
+              {hostingPlans.length !== 0 ? (
+                <DataGrid
+                  rows={hostingPlans}
+                  columns={columnsHosting}
+                  getRowId={(row) => row._id}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
+                  disableSelectionOnClick
+                  disableRowSelectionOnClick
+                />
+              ) : (
+                ''
+              )}
             </TabPanel>
             <TabPanel value="4">
-              <DataGrid
-                rows={sslPlans}
-                columns={columnsSsl}
-                getRowId={(row) => row._id}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                disableSelectionOnClick
-                disableRowSelectionOnClick
-              />
+              {sslPlans.length !== 0 ? (
+                <DataGrid
+                  rows={sslPlans}
+                  columns={columnsSsl}
+                  getRowId={(row) => row._id}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
+                  disableSelectionOnClick
+                  disableRowSelectionOnClick
+                />
+              ) : (
+                ''
+              )}
             </TabPanel>
           </TabContext>
         </Box>

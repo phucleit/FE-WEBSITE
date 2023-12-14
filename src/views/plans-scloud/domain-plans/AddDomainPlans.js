@@ -66,7 +66,7 @@ export default function AddDomainPlans() {
     const addDomainPlans = {
       name: name,
       price: price,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios

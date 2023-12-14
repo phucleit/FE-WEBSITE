@@ -80,7 +80,7 @@ export default function AddEmailPlans() {
       price: price,
       account: account,
       capacity: capacity,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios

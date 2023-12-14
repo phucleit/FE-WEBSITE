@@ -25,7 +25,7 @@ export default function ListDomainPlans() {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 300,
-      valueGetter: (params) => `${params.row.supplier.name}`
+      valueGetter: (params) => `${params.row.supplier_id.name}`
     },
     {
       field: 'action',
@@ -75,15 +75,19 @@ export default function ListDomainPlans() {
         </Button>
       }
     >
-      <DataGrid
-        rows={data}
-        columns={columns}
-        getRowId={(row) => row._id}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        disableSelectionOnClick
-        disableRowSelectionOnClick
-      />
+      {data.length ? (
+        <DataGrid
+          rows={data}
+          columns={columns}
+          getRowId={(row) => row._id}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+          disableRowSelectionOnClick
+        />
+      ) : (
+        ''
+      )}
     </MainCard>
   );
 }

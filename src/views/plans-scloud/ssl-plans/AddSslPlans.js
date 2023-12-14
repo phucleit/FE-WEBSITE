@@ -68,7 +68,7 @@ export default function AddSslPlans() {
       name: name,
       price: price,
       feature: feature,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios

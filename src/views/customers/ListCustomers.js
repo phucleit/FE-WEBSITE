@@ -75,15 +75,19 @@ export default function ListCustomers() {
         </Button>
       }
     >
-      <DataGrid
-        rows={data}
-        columns={columns}
-        getRowId={(row) => row._id}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        disableSelectionOnClick
-        disableRowSelectionOnClick
-      />
+      {data.length !== 0 ? (
+        <DataGrid
+          rows={data}
+          columns={columns}
+          getRowId={(row) => row._id}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+          disableRowSelectionOnClick
+        />
+      ) : (
+        ''
+      )}
     </MainCard>
   );
 }

@@ -47,10 +47,10 @@ export default function UpdateSuppliers() {
 
   const loadDetailSuppliers = async () => {
     const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
-    setName(result.data.name);
-    setCompany(result.data.company);
-    setPhone(result.data.phone);
-    setAddress(result.data.address);
+    setName(result.data[0].name);
+    setCompany(result.data[0].company);
+    setPhone(result.data[0].phone);
+    setAddress(result.data[0].address);
   };
 
   const handleUpdateSuppliers = (e) => {

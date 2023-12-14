@@ -55,7 +55,7 @@ export default function UpdateSslPlans() {
     setName(result.data.name);
     setPrice(result.data.price);
     setFeature(result.data.feature);
-    setSupplier(result.data.supplier._id);
+    setSupplier(result.data.supplier_id._id);
   };
 
   const loadSuppliers = async () => {
@@ -79,7 +79,7 @@ export default function UpdateSslPlans() {
       name: name,
       price: price,
       feature: feature,
-      supplier: supplier
+      supplier_id: supplier
     };
 
     axios
