@@ -44,6 +44,13 @@ const plans = {
           type: 'item',
           url: '/plans/list-ssl',
           breadcrumbs: false
+        },
+        {
+          id: 'content-plans',
+          title: 'Viết bài Content & PR',
+          type: 'item',
+          url: '/plans/list-content',
+          breadcrumbs: false
         }
       ]
     }

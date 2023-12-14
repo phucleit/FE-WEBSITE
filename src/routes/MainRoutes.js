@@ -33,6 +33,11 @@ const ListSslPlans = Loadable(lazy(() => import('views/plans-scloud/ssl-plans/Li
 const AddSslPlans = Loadable(lazy(() => import('views/plans-scloud/ssl-plans/AddSslPlans')));
 const UpdateSslPlans = Loadable(lazy(() => import('views/plans-scloud/ssl-plans/UpdateSslPlans')));
 
+// content plans
+const ListContentPlans = Loadable(lazy(() => import('views/plans-scloud/content-plans/ListContentPlans')));
+const AddContentPlans = Loadable(lazy(() => import('views/plans-scloud/content-plans/AddContentPlans')));
+const UpdateContentPlans = Loadable(lazy(() => import('views/plans-scloud/content-plans/UpdateContentPlans')));
+
 // customers
 const ListCustomers = Loadable(lazy(() => import('views/customers/ListCustomers')));
 const AddCustomers = Loadable(lazy(() => import('views/customers/AddCustomers')));
@@ -115,6 +120,18 @@ const MainRoutes = {
         {
           path: 'update-ssl/:id',
           element: <UpdateSslPlans />
+        },
+        {
+          path: 'list-content',
+          element: <ListContentPlans />
+        },
+        {
+          path: 'add-content',
+          element: <AddContentPlans />
+        },
+        {
+          path: 'update-content/:id',
+          element: <UpdateContentPlans />
         }
       ]
     },

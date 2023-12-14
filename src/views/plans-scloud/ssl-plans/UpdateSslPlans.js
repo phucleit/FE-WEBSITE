@@ -66,12 +66,12 @@ export default function UpdateSslPlans() {
   const handleUpdateSslPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên gói email!');
+      alert('Vui lòng nhập tên gói ssl!');
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí email!');
+      alert('Vui lòng nhập chi phí ssl!');
       return;
     }
 
