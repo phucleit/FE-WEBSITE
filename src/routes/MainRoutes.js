@@ -12,7 +12,7 @@ const ListSuppliers = Loadable(lazy(() => import('views/suppliers/ListSuppliers'
 const AddSuppliers = Loadable(lazy(() => import('views/suppliers/AddSuppliers')));
 const UpdateSuppliers = Loadable(lazy(() => import('views/suppliers/UpdateSuppliers')));
 
-// plans routing
+/***** plans *****/
 // domain plans
 const ListDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/ListDomainPlans')));
 const AddDomainPlans = Loadable(lazy(() => import('views/plans-scloud/domain-plans/AddDomainPlans')));
@@ -42,6 +42,12 @@ const UpdateContentPlans = Loadable(lazy(() => import('views/plans-scloud/conten
 const ListCustomers = Loadable(lazy(() => import('views/customers/ListCustomers')));
 const AddCustomers = Loadable(lazy(() => import('views/customers/AddCustomers')));
 const UpdateCustomers = Loadable(lazy(() => import('views/customers/UpdateCustomers')));
+
+/***** services *****/
+// domain serices
+const ListDomainServices = Loadable(lazy(() => import('views/services-scloud/domain-services/ListDomainServices')));
+const AddDomainServices = Loadable(lazy(() => import('views/services-scloud/domain-services/AddDomainServices')));
+const UpdateDomainServices = Loadable(lazy(() => import('views/services-scloud/domain-services/UpdateDomainServices')));
 
 // contracts
 const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
@@ -154,6 +160,23 @@ const MainRoutes = {
         {
           path: 'update-customers/:id',
           element: <UpdateCustomers />
+        }
+      ]
+    },
+    {
+      path: 'services',
+      children: [
+        {
+          path: 'list-domain',
+          element: <ListDomainServices />
+        },
+        {
+          path: 'add-domain',
+          element: <AddDomainServices />
+        },
+        {
+          path: 'update-domain/:id',
+          element: <UpdateDomainServices />
         }
       ]
     },

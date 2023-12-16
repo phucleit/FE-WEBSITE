@@ -21,28 +21,35 @@ const services = {
           id: 'domain-services',
           title: 'Tên miền',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/services/list-domain',
           breadcrumbs: false
         },
         {
           id: 'hosting-services',
           title: 'Hostings',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/services/list-hosting',
           breadcrumbs: false
         },
         {
           id: 'email-services',
           title: 'Email',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/services/list-email',
           breadcrumbs: false
         },
         {
           id: 'ssl-services',
           title: 'SSL',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/services/list-ssl',
+          breadcrumbs: false
+        },
+        {
+          id: 'content-services',
+          title: 'Viết bài Content & PR',
+          type: 'item',
+          url: '/services/list-content',
           breadcrumbs: false
         }
       ]
