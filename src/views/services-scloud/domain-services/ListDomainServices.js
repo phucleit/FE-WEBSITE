@@ -147,8 +147,8 @@ export default function ListDomainServices() {
 
   useEffect(() => {
     loadListDomainServices();
-    loadDomainServicesExpiring();
-    loadDomainServicesExpired();
+    loadListDomainServicesExpiring();
+    loadListDomainServicesExpired();
   }, []);
 
   const loadListDomainServices = async () => {
@@ -160,20 +160,12 @@ export default function ListDomainServices() {
   const loadListDomainServicesExpiring = async () => {
     const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
     setData(result.data);
+    setCountDomainServicesExpiring(result.data.length);
   };
 
   const loadListDomainServicesExpired = async () => {
     const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
     setData(result.data);
-  };
-
-  const loadDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
-    setCountDomainServicesExpiring(result.data.length);
-  };
-
-  const loadDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
     setCountDomainServicesExpired(result.data.length);
   };
 
@@ -182,7 +174,8 @@ export default function ListDomainServices() {
       axios
         .delete(`${LIST_DOMAIN_SERVICES}/` + id)
         .then(() => {
-          setData(data.filter((item) => item._id !== id));
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
         })
         .catch((error) => console.log(error));
     }

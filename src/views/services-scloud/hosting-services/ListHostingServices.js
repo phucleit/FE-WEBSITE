@@ -13,7 +13,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
-const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
+const LIST_HOSTING_SERVICES = `${config.API_URL}/services/HOSTING`;
 
 export default function ListHostingServices() {
   const getCreatedAt = (params) => {
@@ -38,10 +38,24 @@ export default function ListHostingServices() {
       renderCell: (params) => {
         return (
           <span>
-            {params.row.name}
+            {params.row.domain_service_id.name}
             {params.row.domain_plan_id.name}
             <br />
-            Domain {params.row.domain_plan_id.name}
+            Domain {params.row.domain_plan_id.name} / NCC {params.row.domain_supplier_id.name}
+          </span>
+        );
+      }
+    },
+    {
+      field: 'hosting',
+      headerName: 'Gói hosting',
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <span>
+            {params.row.hosting_plan_id.name}
+            <br />
+            NCC {params.row.hosting_supplier_id.name}
           </span>
         );
       }
@@ -49,15 +63,9 @@ export default function ListHostingServices() {
     {
       field: 'price',
       headerName: 'Giá dịch vụ',
-      width: 120,
+      width: 130,
       valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 150,
-      valueGetter: (params) => `${params.row.supplier_id.name}`
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan_id.price)
     },
     {
       field: 'customer',
@@ -94,7 +102,7 @@ export default function ListHostingServices() {
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 220,
+      width: 200,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -142,47 +150,38 @@ export default function ListHostingServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
-  const [countDomainServicesExpiring, setCountDomainServicesExpiring] = useState([]);
-  const [countDomainServicesExpired, setCountDomainServicesExpired] = useState([]);
+  // const [countDomainServicesExpiring, setCountDomainServicesExpiring] = useState([]);
+  // const [countDomainServicesExpired, setCountDomainServicesExpired] = useState([]);
 
   useEffect(() => {
-    loadListDomainServices();
-    loadDomainServicesExpiring();
-    loadDomainServicesExpired();
+    loadListHostingServices();
+    // loadDomainServicesExpiring();
+    // loadDomainServicesExpired();
   }, []);
 
-  const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+  const loadListHostingServices = async () => {
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
-  const loadListDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
-    setData(result.data);
-  };
+  // const loadListDomainServicesExpiring = async () => {
+  //   const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
+  //   setData(result.data);
+  // };
 
-  const loadListDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
-    setData(result.data);
-  };
-
-  const loadDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
-    setCountDomainServicesExpiring(result.data.length);
-  };
-
-  const loadDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
-    setCountDomainServicesExpired(result.data.length);
-  };
+  // const loadListDomainServicesExpired = async () => {
+  //   const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`);
+  //   setData(result.data);
+  // };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_DOMAIN_SERVICES}/` + id)
+        .delete(`${LIST_HOSTING_SERVICES}/` + id)
         .then(() => {
-          setData(data.filter((item) => item._id !== id));
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
         })
         .catch((error) => console.log(error));
     }
@@ -198,14 +197,16 @@ export default function ListHostingServices() {
       }
     >
       <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-        <Button variant="contained" size="small" onClick={loadListDomainServices}>
+        <Button variant="contained" size="small" onClick={loadListHostingServices}>
           Đang sử dụng: {dataLength ? dataLength : '0'}
         </Button>
-        <Button variant="contained" size="small" onClick={loadListDomainServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
-          Sắp hết hạn: {countDomainServicesExpiring ? countDomainServicesExpiring : '0'}
+        <Button variant="contained" size="small" color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          {/* Sắp hết hạn: {countDomainServicesExpiring ? countDomainServicesExpiring : '0'} */}
+          Sắp hết hạn: 0
         </Button>
-        <Button variant="contained" size="small" onClick={loadListDomainServicesExpired} color="error">
-          Hết hạn: {countDomainServicesExpired ? countDomainServicesExpired : '0'}
+        <Button variant="contained" size="small" color="error">
+          {/* Hết hạn: {countDomainServicesExpired ? countDomainServicesExpired : '0'} */}
+          Hết hạn: 0
         </Button>
       </Box>
       {data.length ? (
