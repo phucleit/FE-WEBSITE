@@ -49,6 +49,21 @@ const ListDomainServices = Loadable(lazy(() => import('views/services-scloud/dom
 const AddDomainServices = Loadable(lazy(() => import('views/services-scloud/domain-services/AddDomainServices')));
 const UpdateDomainServices = Loadable(lazy(() => import('views/services-scloud/domain-services/UpdateDomainServices')));
 
+// hosting serices
+const ListHostingServices = Loadable(lazy(() => import('views/services-scloud/hosting-services/ListHostingServices')));
+const AddHostingServices = Loadable(lazy(() => import('views/services-scloud/hosting-services/AddHostingServices')));
+const UpdateHostingServices = Loadable(lazy(() => import('views/services-scloud/hosting-services/UpdateHostingServices')));
+
+// email serices
+const ListEmailServices = Loadable(lazy(() => import('views/services-scloud/email-services/ListEmailServices')));
+const AddEmailServices = Loadable(lazy(() => import('views/services-scloud/email-services/AddEmailServices')));
+const UpdateEmailServices = Loadable(lazy(() => import('views/services-scloud/email-services/UpdateEmailServices')));
+
+// ssl serices
+const ListSslServices = Loadable(lazy(() => import('views/services-scloud/ssl-services/ListSslServices')));
+const AddSslServices = Loadable(lazy(() => import('views/services-scloud/ssl-services/AddSslServices')));
+const UpdateSslServices = Loadable(lazy(() => import('views/services-scloud/ssl-services/UpdateSslServices')));
+
 // contracts
 const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
 const AddContracts = Loadable(lazy(() => import('views/contracts/AddContracts')));
@@ -177,6 +192,42 @@ const MainRoutes = {
         {
           path: 'update-domain/:id',
           element: <UpdateDomainServices />
+        },
+        {
+          path: 'list-hosting',
+          element: <ListHostingServices />
+        },
+        {
+          path: 'add-hosting',
+          element: <AddHostingServices />
+        },
+        {
+          path: 'update-hosting/:id',
+          element: <UpdateHostingServices />
+        },
+        {
+          path: 'list-email',
+          element: <ListEmailServices />
+        },
+        {
+          path: 'add-email',
+          element: <AddEmailServices />
+        },
+        {
+          path: 'update-email/:id',
+          element: <UpdateEmailServices />
+        },
+        {
+          path: 'list-ssl',
+          element: <ListSslServices />
+        },
+        {
+          path: 'add-ssl',
+          element: <AddSslServices />
+        },
+        {
+          path: 'update-ssl/:id',
+          element: <UpdateSslServices />
         }
       ]
     },

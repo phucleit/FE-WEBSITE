@@ -16,7 +16,8 @@ export default function ListCustomers() {
   const getCreatedAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    return date;
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
   };
 
   const columns = [
@@ -25,8 +26,8 @@ export default function ListCustomers() {
     { field: 'gender', headerName: 'Giới tính', width: 100 },
     { field: 'idNumber', headerName: 'Số CCCD', width: 150 },
     { field: 'phone', headerName: 'Số điện thoại', width: 150 },
-    { field: 'address', headerName: 'Địa chỉ', width: 350 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
+    { field: 'address', headerName: 'Địa chỉ', width: 320 },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',
