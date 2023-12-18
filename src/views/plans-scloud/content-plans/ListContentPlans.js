@@ -32,7 +32,7 @@ export default function ListContentPlans() {
 
   useEffect(() => {
     loadListContentPlans();
-  });
+  }, []);
 
   const loadListContentPlans = async () => {
     const result = await axios.get(`${LIST_CONTENT_PLANS}`);

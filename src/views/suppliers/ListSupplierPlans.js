@@ -27,7 +27,8 @@ export default function ListSupplierPlans() {
 
   useEffect(() => {
     loadListPlanSuppliers();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const loadListPlanSuppliers = async () => {
     const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);

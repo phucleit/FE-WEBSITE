@@ -32,7 +32,7 @@ export default function ListEmailPlans() {
 
   useEffect(() => {
     loadListEmailPlans();
-  });
+  }, []);
 
   const loadListEmailPlans = async () => {
     const result = await axios.get(`${LIST_EMAIL_PLANS}`);

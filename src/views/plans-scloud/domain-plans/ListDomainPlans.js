@@ -48,7 +48,7 @@ export default function ListDomainPlans() {
 
   useEffect(() => {
     loadListDomainPlans();
-  });
+  }, []);
 
   const loadListDomainPlans = async () => {
     const result = await axios.get(`${LIST_DOMAIN_PLANS}`);

@@ -32,7 +32,7 @@ export default function ListHostingPlans() {
 
   useEffect(() => {
     loadListHostingPlans();
-  });
+  }, []);
 
   const loadListHostingPlans = async () => {
     const result = await axios.get(`${LIST_HOSTING_PLANS}`);

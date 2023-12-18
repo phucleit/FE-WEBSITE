@@ -49,7 +49,7 @@ export default function ListCustomers() {
 
   useEffect(() => {
     loadListCustomers();
-  });
+  }, []);
 
   const loadListCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}`);

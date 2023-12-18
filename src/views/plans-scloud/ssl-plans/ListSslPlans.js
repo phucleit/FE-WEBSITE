@@ -32,7 +32,7 @@ export default function ListSslPlans() {
 
   useEffect(() => {
     loadListSslPlans();
-  });
+  }, []);
 
   const loadListSslPlans = async () => {
     const result = await axios.get(`${LIST_SSL_PLANS}`);

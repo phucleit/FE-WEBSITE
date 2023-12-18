@@ -39,7 +39,7 @@ export default function ListSupplier() {
 
   useEffect(() => {
     loadListSupplier();
-  });
+  }, []);
 
   const loadListSupplier = async () => {
     const result = await axios.get(`${LIST_SUPPLIER}`);
