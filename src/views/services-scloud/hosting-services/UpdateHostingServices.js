@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -32,7 +32,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UpdateHostingServices() {
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
 
@@ -45,7 +45,7 @@ export default function UpdateHostingServices() {
   const [listHostingPlans, setListHostingPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
 
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadDetailHostingServices();

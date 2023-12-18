@@ -13,7 +13,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
-const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
+const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 
 export default function ListSslServices() {
   const getCreatedAt = (params) => {
@@ -38,10 +38,24 @@ export default function ListSslServices() {
       renderCell: (params) => {
         return (
           <span>
-            {params.row.name}
+            {params.row.domain_service_id.name}
             {params.row.domain_plan_id.name}
             <br />
-            Domain {params.row.domain_plan_id.name}
+            Domain {params.row.domain_plan_id.name} / NCC {params.row.domain_supplier_id.name}
+          </span>
+        );
+      }
+    },
+    {
+      field: 'ssl',
+      headerName: 'Gói ssl',
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <span>
+            {params.row.ssl_plan_id.name}
+            <br />
+            NCC {params.row.ssl_supplier_id.name}
           </span>
         );
       }
@@ -49,15 +63,8 @@ export default function ListSslServices() {
     {
       field: 'price',
       headerName: 'Giá dịch vụ',
-      width: 120,
-      valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 150,
-      valueGetter: (params) => `${params.row.supplier_id.name}`
+      width: 130,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price)
     },
     {
       field: 'customer',
@@ -94,7 +101,7 @@ export default function ListSslServices() {
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 220,
+      width: 200,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -129,7 +136,7 @@ export default function ListSslServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-hosting/' + params.row._id}>
+            <Link to={'/services/update-ssl/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -142,47 +149,40 @@ export default function ListSslServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
-  const [countDomainServicesExpiring, setCountDomainServicesExpiring] = useState([]);
-  const [countDomainServicesExpired, setCountDomainServicesExpired] = useState([]);
+  const [countSslServicesExpiring, setCountSslServicesExpiring] = useState([]);
+  const [countSslServicesExpired, setCountSslServicesExpired] = useState([]);
 
   useEffect(() => {
-    loadListDomainServices();
-    loadDomainServicesExpiring();
-    loadDomainServicesExpired();
+    loadListSslServices();
+    loadSslServicesExpiring();
+    loadSslServicesExpired();
   }, []);
 
-  const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+  const loadListSslServices = async () => {
+    const result = await axios.get(`${LIST_SSL_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
-  const loadListDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
+  const loadSslServicesExpiring = async () => {
+    const result = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`);
     setData(result.data);
+    setCountSslServicesExpiring(result.data.length);
   };
 
-  const loadListDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
+  const loadSslServicesExpired = async () => {
+    const result = await axios.get(`${LIST_SSL_SERVICES}/expired/all`);
     setData(result.data);
-  };
-
-  const loadDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
-    setCountDomainServicesExpiring(result.data.length);
-  };
-
-  const loadDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
-    setCountDomainServicesExpired(result.data.length);
+    setCountSslServicesExpired(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_DOMAIN_SERVICES}/` + id)
+        .delete(`${LIST_SSL_SERVICES}/` + id)
         .then(() => {
-          setData(data.filter((item) => item._id !== id));
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
         })
         .catch((error) => console.log(error));
     }
@@ -198,14 +198,14 @@ export default function ListSslServices() {
       }
     >
       <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-        <Button variant="contained" size="small" onClick={loadListDomainServices}>
+        <Button variant="contained" size="small" onClick={loadListSslServices}>
           Đang sử dụng: {dataLength ? dataLength : '0'}
         </Button>
-        <Button variant="contained" size="small" onClick={loadListDomainServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
-          Sắp hết hạn: {countDomainServicesExpiring ? countDomainServicesExpiring : '0'}
+        <Button variant="contained" size="small" onClick={loadSslServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          Sắp hết hạn: {countSslServicesExpiring ? countSslServicesExpiring : '0'}
         </Button>
-        <Button variant="contained" size="small" onClick={loadListDomainServicesExpired} color="error">
-          Hết hạn: {countDomainServicesExpired ? countDomainServicesExpired : '0'}
+        <Button variant="contained" size="small" onClick={loadSslServicesExpired} color="error">
+          Hết hạn: {countSslServicesExpired ? countSslServicesExpired : '0'}
         </Button>
       </Box>
       {data.length ? (

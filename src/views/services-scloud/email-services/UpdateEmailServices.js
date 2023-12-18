@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -33,6 +33,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function UpdateEmailServices() {
   let navigate = useNavigate();
+  const paramId = useParams();
+  const currentId = paramId.id;
 
   const [domain_service_id, setDomainServiceId] = useState('');
   const [email_plan_id, setEmailPlanId] = useState('');
@@ -46,11 +48,20 @@ export default function UpdateEmailServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadDetailHostingServices();
     loadListDomainServices();
     loadListEmailPlans();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadDetailHostingServices = async () => {
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}/${currentId}`);
+    setDomainServiceId(result.data.domain_service_id._id);
+    setEmailPlanId(result.data.email_plan_id._id);
+    setPeriods(result.data.periods);
+    setCustomerId(result.data.customer_id._id);
+  };
 
   const loadListDomainServices = async () => {
     const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
@@ -67,10 +78,10 @@ export default function UpdateEmailServices() {
     setListCustomers(result.data);
   };
 
-  const handleAddEmailServices = (e) => {
+  const handleUpdateEmailServices = (e) => {
     e.preventDefault();
 
-    const addEmailServices = {
+    const updateEmailServices = {
       domain_service_id: domain_service_id,
       email_plan_id: email_plan_id,
       periods: periods,
@@ -78,11 +89,11 @@ export default function UpdateEmailServices() {
     };
 
     axios
-      .post(`${LIST_EMAIL_SERVICES}`, addEmailServices)
+      .put(`${LIST_EMAIL_SERVICES}/${currentId}`, updateEmailServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-hosting');
+          navigate('/services/list-email');
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -90,7 +101,7 @@ export default function UpdateEmailServices() {
 
   return (
     <>
-      <MainCard title="Thêm mới">
+      <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -102,6 +113,7 @@ export default function UpdateEmailServices() {
                     value={domain_service_id}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
+                    disabled
                   >
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
@@ -122,6 +134,7 @@ export default function UpdateEmailServices() {
                     value={email_plan_id}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setEmailPlanId(e.target.value)}
+                    disabled
                   >
                     {listEmailPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
@@ -155,7 +168,13 @@ export default function UpdateEmailServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select
+                    id="customer_id"
+                    value={customer_id}
+                    label="Chọn khách hàng..."
+                    onChange={(e) => setCustomerId(e.target.value)}
+                    disabled
+                  >
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}
@@ -168,7 +187,7 @@ export default function UpdateEmailServices() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddEmailServices}>
+              <Button variant="contained" size="medium" onClick={handleUpdateEmailServices}>
                 Cập nhật
               </Button>
             </Item>
