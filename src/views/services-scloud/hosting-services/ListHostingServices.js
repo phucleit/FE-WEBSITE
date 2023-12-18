@@ -13,7 +13,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
 
-const LIST_HOSTING_SERVICES = `${config.API_URL}/services/HOSTING`;
+const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 
 export default function ListHostingServices() {
   const getCreatedAt = (params) => {
@@ -150,13 +150,13 @@ export default function ListHostingServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
-  // const [countDomainServicesExpiring, setCountDomainServicesExpiring] = useState([]);
-  // const [countDomainServicesExpired, setCountDomainServicesExpired] = useState([]);
+  const [countHostingServicesExpiring, setCountHostingServicesExpiring] = useState([]);
+  const [countHostingServicesExpired, setCountHostingServicesExpired] = useState([]);
 
   useEffect(() => {
     loadListHostingServices();
-    // loadDomainServicesExpiring();
-    // loadDomainServicesExpired();
+    loadHostingServicesExpiring();
+    loadHostingServicesExpired();
   }, []);
 
   const loadListHostingServices = async () => {
@@ -165,15 +165,17 @@ export default function ListHostingServices() {
     setDataLength(result.data.length);
   };
 
-  // const loadListDomainServicesExpiring = async () => {
-  //   const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
-  //   setData(result.data);
-  // };
+  const loadHostingServicesExpiring = async () => {
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
+    setData(result.data);
+    setCountHostingServicesExpiring(result.data.length);
+  };
 
-  // const loadListDomainServicesExpired = async () => {
-  //   const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`);
-  //   setData(result.data);
-  // };
+  const loadHostingServicesExpired = async () => {
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`);
+    setData(result.data);
+    setCountHostingServicesExpired(result.data.length);
+  };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
@@ -200,13 +202,11 @@ export default function ListHostingServices() {
         <Button variant="contained" size="small" onClick={loadListHostingServices}>
           Đang sử dụng: {dataLength ? dataLength : '0'}
         </Button>
-        <Button variant="contained" size="small" color="warning" sx={{ ml: '10px', mr: '10px' }}>
-          {/* Sắp hết hạn: {countDomainServicesExpiring ? countDomainServicesExpiring : '0'} */}
-          Sắp hết hạn: 0
+        <Button variant="contained" size="small" onClick={loadHostingServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          Sắp hết hạn: {countHostingServicesExpiring ? countHostingServicesExpiring : '0'}
         </Button>
-        <Button variant="contained" size="small" color="error">
-          {/* Hết hạn: {countDomainServicesExpired ? countDomainServicesExpired : '0'} */}
-          Hết hạn: 0
+        <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error">
+          Hết hạn: {countHostingServicesExpired ? countHostingServicesExpired : '0'}
         </Button>
       </Box>
       {data.length ? (
