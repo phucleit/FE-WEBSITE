@@ -55,7 +55,7 @@ export default function ListEmailServices() {
           <span>
             {params.row.email_plan_id.name}
             <br />
-            NCC {params.row.email_supplier_id.name}
+            NCC: {params.row.email_supplier_id.name}
           </span>
         );
       }

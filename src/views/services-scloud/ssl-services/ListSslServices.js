@@ -55,7 +55,7 @@ export default function ListSslServices() {
           <span>
             {params.row.ssl_plan_id.name}
             <br />
-            NCC {params.row.ssl_supplier_id.name}
+            NCC: {params.row.ssl_supplier_id.name}
           </span>
         );
       }

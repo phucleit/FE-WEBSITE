@@ -55,7 +55,7 @@ export default function ListHostingServices() {
           <span>
             {params.row.hosting_plan_id.name}
             <br />
-            NCC {params.row.hosting_supplier_id.name}
+            NCC: {params.row.hosting_supplier_id.name}
           </span>
         );
       }

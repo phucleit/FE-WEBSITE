@@ -16,6 +16,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import ListServices from './ListServices';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
@@ -48,12 +49,12 @@ export default function UpdateCustomers() {
 
   const loadDetailCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}/${currentId}`);
-    setFullName(result.data.fullname);
-    setEmail(result.data.email);
-    setGender(result.data.gender);
-    setIdNumber(result.data.idNumber);
-    setPhone(result.data.phone);
-    setAddress(result.data.address);
+    setFullName(result.data[0].fullname);
+    setEmail(result.data[0].email);
+    setGender(result.data[0].gender);
+    setIdNumber(result.data[0].idNumber);
+    setPhone(result.data[0].phone);
+    setAddress(result.data[0].address);
   };
 
   const handleUpdateCustomers = (e) => {
@@ -203,6 +204,7 @@ export default function UpdateCustomers() {
           </Grid>
         </Box>
       </MainCard>
+      <ListServices />
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

@@ -146,13 +146,13 @@ export default function ListContentServices() {
 
   const loadContentServicesExpiring = async () => {
     const result = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`);
-    setData(result.data);
+    // setData(result.data);
     setCountContentServicesExpiring(result.data.length);
   };
 
   const loadContentServicesExpired = async () => {
     const result = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`);
-    setData(result.data);
+    // setData(result.data);
     setCountContentServicesExpired(result.data.length);
   };
 
