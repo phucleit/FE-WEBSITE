@@ -49,7 +49,7 @@ export default function ListHostingServices() {
     {
       field: 'hosting',
       headerName: 'Gói hosting',
-      width: 130,
+      width: 160,
       renderCell: (params) => {
         return (
           <span>
@@ -62,8 +62,8 @@ export default function ListHostingServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 130,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 170,
       valueGetter: (params) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan_id.price)
     },
@@ -128,8 +128,8 @@ export default function ListHostingServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 200 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
+    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 180 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',

@@ -62,8 +62,8 @@ export default function ListSslServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 130,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 170,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price)
     },
     {

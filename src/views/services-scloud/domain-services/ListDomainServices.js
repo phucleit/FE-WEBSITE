@@ -48,21 +48,21 @@ export default function ListDomainServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 120,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 170,
       valueGetter: (params) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
-      width: 150,
+      width: 140,
       valueGetter: (params) => `${params.row.supplier_id.name}`
     },
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 280,
+      width: 260,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (

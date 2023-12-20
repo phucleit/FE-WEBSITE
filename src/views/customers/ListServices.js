@@ -10,7 +10,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-// import { IconEdit } from '@tabler/icons';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -66,21 +65,27 @@ export default function ListServices() {
     {
       field: 'name',
       headerName: 'Dịch vụ Domain',
-      width: 300,
-      valueGetter: (params) => `${params.row.name}${params.row.domain_plan[0].name}`
+      width: 250,
+      valueGetter: (params) =>
+        params.row.name && params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].name
+          ? `${params.row.name}${params.row.domain_plan[0].name}`
+          : ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
-      width: 150,
-      valueGetter: (params) => `${params.row.supplier[0].name}`
+      width: 170,
+      valueGetter: (params) =>
+        params.row.supplier && params.row.supplier[0] && params.row.supplier[0].name ? params.row.supplier[0].name : ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 180,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 220,
       valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan[0].price)
+        params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan[0].price)
+          : ''
     },
     {
       field: 'status',
@@ -115,13 +120,13 @@ export default function ListServices() {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
       width: 200,
-      valueGetter: (params) => getCreatedAt(params.row.createdAt)
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
       width: 200,
-      valueGetter: (params) => getExpiredAt(params.row.expiredAt)
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
 
@@ -129,7 +134,7 @@ export default function ListServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 280,
+      width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
         const domainPlanName = params.row.domain_plan[0]?.name || '';
@@ -139,7 +144,7 @@ export default function ListServices() {
             {domainServiceName}
             {domainPlanName}
             <br />
-            NCC: {domainSupplierName}
+            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
         );
       }
@@ -148,20 +153,22 @@ export default function ListServices() {
       field: 'hosting',
       headerName: 'Dịch vụ Hosting',
       width: 220,
-      valueGetter: (params) => `${params.row.hosting_plan[0].name}`
+      valueGetter: (params) => params.row.hosting_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 150,
-      valueGetter: (params) => `${params.row.hosting_supplier[0].name}`
+      valueGetter: (params) => params.row.hosting_supplier[0]?.name || ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 180,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 220,
       valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan[0].price)
+        params.row.hosting_plan && params.row.hosting_plan[0] && params.row.hosting_plan[0].price
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan[0].price)
+          : ''
     },
     {
       field: 'status',
@@ -196,13 +203,13 @@ export default function ListServices() {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
       width: 200,
-      valueGetter: (params) => getCreatedAt(params.row.createdAt)
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
       width: 200,
-      valueGetter: (params) => getExpiredAt(params.row.expiredAt)
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
 
@@ -210,7 +217,7 @@ export default function ListServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 280,
+      width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
         const domainPlanName = params.row.domain_plan[0]?.name || '';
@@ -220,7 +227,7 @@ export default function ListServices() {
             {domainServiceName}
             {domainPlanName}
             <br />
-            NCC: {domainSupplierName}
+            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
         );
       }
@@ -229,19 +236,22 @@ export default function ListServices() {
       field: 'email',
       headerName: 'Dịch vụ Email',
       width: 220,
-      valueGetter: (params) => `${params.row.email_plan[0].name}`
+      valueGetter: (params) => params.row.email_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 150,
-      valueGetter: (params) => `${params.row.email_supplier[0].name}`
+      valueGetter: (params) => params.row.email_supplier[0]?.name || ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 180,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan[0].price)
+      headerName: 'Giá dịch vụ / tháng',
+      width: 220,
+      valueGetter: (params) =>
+        params.row.email_plan && params.row.email_plan[0] && params.row.email_plan[0].price
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan[0].price)
+          : ''
     },
     {
       field: 'status',
@@ -276,13 +286,13 @@ export default function ListServices() {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
       width: 200,
-      valueGetter: (params) => getCreatedAt(params.row.createdAt)
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
       width: 200,
-      valueGetter: (params) => getExpiredAt(params.row.expiredAt)
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
 
@@ -290,7 +300,7 @@ export default function ListServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 280,
+      width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
         const domainPlanName = params.row.domain_plan[0]?.name || '';
@@ -300,7 +310,7 @@ export default function ListServices() {
             {domainServiceName}
             {domainPlanName}
             <br />
-            NCC: {domainSupplierName}
+            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
         );
       }
@@ -309,19 +319,22 @@ export default function ListServices() {
       field: 'ssl',
       headerName: 'Dịch vụ SSL',
       width: 220,
-      valueGetter: (params) => `${params.row.ssl_plan[0].name}`
+      valueGetter: (params) => params.row.ssl_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 150,
-      valueGetter: (params) => `${params.row.ssl_supplier[0].name}`
+      valueGetter: (params) => params.row.ssl_supplier[0]?.name || ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 180,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan[0].price)
+      headerName: 'Giá dịch vụ / tháng',
+      width: 220,
+      valueGetter: (params) =>
+        params.row.ssl_plan && params.row.ssl_plan[0] && params.row.ssl_plan[0].price
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan[0].price)
+          : ''
     },
     {
       field: 'status',
@@ -356,13 +369,13 @@ export default function ListServices() {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
       width: 200,
-      valueGetter: (params) => getCreatedAt(params.row.createdAt)
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
       width: 200,
-      valueGetter: (params) => getExpiredAt(params.row.expiredAt)
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
 
@@ -371,14 +384,17 @@ export default function ListServices() {
       field: 'content',
       headerName: 'Dịch vụ Content',
       width: 300,
-      valueGetter: (params) => `${params.row.content_plan[0].name}`
+      valueGetter: (params) =>
+        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].name ? params.row.content_plan[0].name : ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 180,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 250,
       valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan[0].price)
+        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan[0].price)
+          : ''
     },
     {
       field: 'status',
@@ -413,13 +429,13 @@ export default function ListServices() {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
       width: 200,
-      valueGetter: (params) => getCreatedAt(params.row.createdAt)
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
       width: 200,
-      valueGetter: (params) => getExpiredAt(params.row.expiredAt)
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
 
@@ -442,7 +458,7 @@ export default function ListServices() {
                 <DataGrid
                   rows={domainServices}
                   columns={columnsDomainServices}
-                  getRowId={(row) => row._id}
+                  getRowId={(row) => (row._id ? row._id : '')}
                   pageSize={10}
                   rowsPerPageOptions={[10]}
                   disableSelectionOnClick
@@ -457,7 +473,7 @@ export default function ListServices() {
                 <DataGrid
                   rows={hostingServices}
                   columns={columnsHostingServices}
-                  getRowId={(row) => row._id}
+                  getRowId={(row) => (row._id ? row._id : '')}
                   pageSize={10}
                   rowsPerPageOptions={[10]}
                   disableSelectionOnClick
@@ -472,7 +488,7 @@ export default function ListServices() {
                 <DataGrid
                   rows={emailServices}
                   columns={columnsEmailServices}
-                  getRowId={(row) => row._id}
+                  getRowId={(row) => (row._id ? row._id : '')}
                   pageSize={10}
                   rowsPerPageOptions={[10]}
                   disableSelectionOnClick
@@ -487,7 +503,7 @@ export default function ListServices() {
                 <DataGrid
                   rows={sslServices}
                   columns={columnsSslServices}
-                  getRowId={(row) => row._id}
+                  getRowId={(row) => (row._id ? row._id : '')}
                   pageSize={10}
                   rowsPerPageOptions={[10]}
                   disableSelectionOnClick
@@ -502,7 +518,7 @@ export default function ListServices() {
                 <DataGrid
                   rows={contentServices}
                   columns={columnsContentServices}
-                  getRowId={(row) => row._id}
+                  getRowId={(row) => (row._id ? row._id : '')}
                   pageSize={10}
                   rowsPerPageOptions={[10]}
                   disableSelectionOnClick

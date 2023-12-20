@@ -49,7 +49,7 @@ export default function ListEmailServices() {
     {
       field: 'email',
       headerName: 'Gói email',
-      width: 130,
+      width: 180,
       renderCell: (params) => {
         return (
           <span>
@@ -62,14 +62,14 @@ export default function ListEmailServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 130,
+      headerName: 'Giá dịch vụ / tháng',
+      width: 170,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan_id.price)
     },
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 280,
+      width: 260,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (
@@ -127,8 +127,8 @@ export default function ListEmailServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 200 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
+    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 180 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',

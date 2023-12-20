@@ -34,7 +34,7 @@ export default function ListContracts() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/customers/update-customers/' + params.row._id}>
+            <Link to={'/customers/update-contracts/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -48,7 +48,7 @@ export default function ListContracts() {
 
   useEffect(() => {
     loadListCustomers();
-  });
+  }, []);
 
   const loadListCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}`);
@@ -70,7 +70,7 @@ export default function ListContracts() {
     <MainCard
       title="Danh sách"
       secondary={
-        <Button variant="contained" href="/customers/add-customers">
+        <Button variant="contained" href="/contracts/add-contracts">
           Thêm mới
         </Button>
       }
