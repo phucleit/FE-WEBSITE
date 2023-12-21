@@ -10,7 +10,7 @@ import { IconEdit } from '@tabler/icons';
 
 import config from '../../config';
 
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
 export default function ListContracts() {
   const getCreatedAt = (params) => {
@@ -20,12 +20,77 @@ export default function ListContracts() {
   };
 
   const columns = [
-    { field: 'fullname', headerName: 'Họ và tên', width: 200 },
-    { field: 'email', headerName: 'Email', width: 250 },
-    { field: 'gender', headerName: 'Giới tính', width: 100 },
-    { field: 'idNumber', headerName: 'Số CCCD', width: 150 },
-    { field: 'phone', headerName: 'Số điện thoại', width: 150 },
-    { field: 'address', headerName: 'Địa chỉ', width: 350 },
+    { field: 'contract_code', headerName: 'Mã hợp đồng', width: 150 },
+    {
+      field: 'customer',
+      headerName: 'Khách hàng',
+      width: 280,
+      renderCell: (params) => {
+        if (params.row.customer_id.gender == 'Nam') {
+          return (
+            <span>
+              Anh {params.row.customer_id.fullname}
+              <br />
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
+            </span>
+          );
+        } else if (params.row.customer_id.gender == 'nam') {
+          return (
+            <span>
+              Anh {params.row.customer_id.fullname}
+              <br />
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
+            </span>
+          );
+        } else {
+          return (
+            <span>
+              Chị {params.row.customer_id.fullname}
+              <br />
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
+            </span>
+          );
+        }
+      }
+    },
+    {
+      field: 'total_price',
+      headerName: 'Tổng chi phí',
+      width: 160,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.total_price)
+    },
+    {
+      field: 'deposit_amount',
+      headerName: 'Thanh toán trước',
+      width: 160,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)
+    },
+    {
+      field: 'remaining_cost',
+      headerName: 'Chi phí còn lại',
+      width: 160,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.remaining_cost)
+    },
+    {
+      field: 'status',
+      headerName: 'Trạng thái',
+      width: 300,
+      renderCell: (params) => {
+        if (params.row.status == 1) {
+          return (
+            <Button variant="contained" size="small">
+              Đã thanh toán
+            </Button>
+          );
+        } else if (params.row.status == 2) {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Thanh toán trước {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)}
+            </Button>
+          );
+        }
+      }
+    },
     { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
     {
       field: 'action',
@@ -34,7 +99,7 @@ export default function ListContracts() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/customers/update-contracts/' + params.row._id}>
+            <Link to={'/contracts/update-contracts/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -47,18 +112,18 @@ export default function ListContracts() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    loadListCustomers();
+    loadListContracts();
   }, []);
 
-  const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+  const loadListContracts = async () => {
+    const result = await axios.get(`${LIST_CONTRACTS}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_CUSTOMERS}/` + id)
+        .delete(`${LIST_CONTRACTS}/` + id)
         .then(() => {
           setData(data.filter((item) => item._id !== id));
         })

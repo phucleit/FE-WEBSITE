@@ -1,4 +1,4 @@
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -20,12 +20,15 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { DataGrid } from '@mui/x-data-grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_CONTRACT = `${config.API_URL}/contracts`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -36,7 +39,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function AddContracts() {
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const getCreatedAt = (params) => {
     var timeStamp = params;
@@ -54,8 +57,11 @@ export default function AddContracts() {
 
   const [contract_code, setContractCode] = useState('');
   const [customer_id, setCustomerId] = useState('');
+  const [deposit_amount, setDepositAmount] = useState(0);
+  const [remaining_cost, setRemainingCost] = useState(0);
 
   const [listCustomers, setListCustomers] = useState([]);
+  const [customer_detail, setCustomerDetail] = useState([]);
 
   const [domainServices, setDomainServices] = useState([]);
   const [hostingServices, setHostingServices] = useState([]);
@@ -63,8 +69,10 @@ export default function AddContracts() {
   const [sslServices, setSslServices] = useState([]);
   const [contentServices, setContentServices] = useState([]);
 
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [valueTab, setValueTab] = useState('1');
+
+  let total_price = 0;
 
   const handleChangeTab = (event, newValue) => {
     setValueTab(newValue);
@@ -72,8 +80,10 @@ export default function AddContracts() {
 
   useEffect(() => {
     loadListCustomers();
+    const calculatedRemainingCost = total_price - deposit_amount;
+    setRemainingCost(calculatedRemainingCost);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [total_price, deposit_amount]);
 
   const loadListCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}`);
@@ -84,6 +94,7 @@ export default function AddContracts() {
     setCustomerId(e.target.value);
     try {
       const result = await axios.get(`${LIST_CUSTOMERS}/${e.target.value}`);
+      setCustomerDetail(result.data);
       setDomainServices(result.data[0].domain_services);
       setHostingServices(result.data[0].hosting_services);
       setEmailServices(result.data[0].email_services);
@@ -93,6 +104,38 @@ export default function AddContracts() {
       console.error('Error fetching customer data: ', error);
     }
   };
+
+  if (customer_detail) {
+    domainServices.forEach((item) => {
+      if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
+        total_price += item.domain_plan[0].price;
+      }
+    });
+
+    hostingServices.forEach((item) => {
+      if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
+        total_price += item.hosting_plan[0].price;
+      }
+    });
+
+    emailServices.forEach((item) => {
+      if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
+        total_price += item.email_plan[0].price;
+      }
+    });
+
+    sslServices.forEach((item) => {
+      if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
+        total_price += item.ssl_plan[0].price;
+      }
+    });
+
+    contentServices.forEach((item) => {
+      if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
+        total_price += item.content_plan[0].price;
+      }
+    });
+  }
 
   const columnsDomainServices = [
     {
@@ -474,6 +517,34 @@ export default function AddContracts() {
 
   const handleAddContracts = (e) => {
     e.preventDefault();
+
+    if (contract_code == '') {
+      alert('Vui lòng nhập mã hợp đồng!');
+    }
+
+    const addContract = {
+      contract_code: contract_code,
+      customer_id: customer_id,
+      total_price: total_price,
+      deposit_amount: deposit_amount,
+      remaining_cost: remaining_cost
+    };
+
+    axios
+      .post(`${LIST_CONTRACT}`, addContract)
+      .then(() => {
+        setOpen(true);
+        setInterval(() => {
+          navigate('/contracts/list-contracts');
+        }, 1500);
+      })
+      .catch((error) => {
+        if (error.response.status == 409) {
+          alert('Mã hợp đồng đã tồn tại!');
+        } else {
+          console.log(error);
+        }
+      });
   };
 
   return (
@@ -522,7 +593,36 @@ export default function AddContracts() {
       </MainCard>
       {customer_id ? (
         <MainCard title="Chi phí thanh toán" sx={{ marginTop: '15px' }}>
-          asd
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h4" gutterBottom sx={{ color: '#f00' }}>
+                Tổng chi phí cần thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total_price)}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sx={{ pt: 0 }}>
+              <TextField
+                id="deposit_amount"
+                label="Thanh toán trước"
+                variant="standard"
+                onChange={(e) => setDepositAmount(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {deposit_amount ? (
+                <TextField
+                  id="remaining_cost"
+                  label="Chi phí còn lại"
+                  variant="standard"
+                  value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
+                  InputProps={{
+                    readOnly: true
+                  }}
+                />
+              ) : (
+                ''
+              )}
+            </Grid>
+          </Grid>
         </MainCard>
       ) : (
         ''
@@ -621,7 +721,7 @@ export default function AddContracts() {
       ) : (
         ''
       )}
-      <Snackbar open="" anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
