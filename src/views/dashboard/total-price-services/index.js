@@ -150,7 +150,7 @@ export default function TotalPriceServices() {
             <Grid container alignItems="center">
               <Grid item>
                 <Typography sx={{ fontSize: '18px', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                  • Chi phí chưa thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remainingCost)}
+                  • Chưa thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remainingCost)}
                 </Typography>
               </Grid>
             </Grid>
