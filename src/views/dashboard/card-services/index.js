@@ -11,6 +11,8 @@ import { IconWorldDownload, IconServer, IconMailOpened, IconAlignBoxBottomCenter
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 
+import TotalPriceServices from '../total-price-services';
+
 import config from '../../../config';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -336,7 +338,7 @@ export default function CardServices() {
             </Grid>
           </Grid>
           <Grid item xs={12} md={4}>
-            ASD
+            <TotalPriceServices />
           </Grid>
         </Grid>
       </Grid>
