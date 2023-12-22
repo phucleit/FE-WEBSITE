@@ -538,33 +538,49 @@ export default function AddContracts() {
   const handleUpdateContracts = (e) => {
     e.preventDefault();
 
-    if (contract_code == '') {
-      alert('Vui lòng nhập mã hợp đồng!');
+    if (remaining_cost == 0) {
+      const updateContract = {
+        contract_code: contract_code,
+        customer_id: customer_id,
+        total_price: total_price,
+        deposit_amount: 0,
+        remaining_cost: 0,
+        status: 1
+      };
+
+      axios
+        .put(`${LIST_CONTRACT}/${currentId}`, updateContract)
+        .then(() => {
+          setOpen(true);
+          setInterval(() => {
+            navigate('/contracts/list-contracts');
+          }, 1500);
+        })
+        .catch((error) => console.log(error));
     }
+    // const updateContract = {
+    //   contract_code: contract_code,
+    //   customer_id: customer_id,
+    //   total_price: total_price,
+    //   deposit_amount: deposit_amount,
+    //   remaining_cost: remaining_cost
+    // };
 
-    const updateContract = {
-      contract_code: contract_code,
-      customer_id: customer_id,
-      total_price: total_price,
-      deposit_amount: deposit_amount,
-      remaining_cost: remaining_cost
-    };
-
-    axios
-      .put(`${LIST_CONTRACT}/${currentId}`, updateContract)
-      .then(() => {
-        setOpen(true);
-        setInterval(() => {
-          navigate('/contracts/list-contracts');
-        }, 1500);
-      })
-      .catch((error) => {
-        if (error.response.status == 409) {
-          alert('Mã hợp đồng đã tồn tại!');
-        } else {
-          console.log(error);
-        }
-      });
+    // axios
+    //   .put(`${LIST_CONTRACT}/${currentId}`, updateContract)
+    //   .then(() => {
+    //     setOpen(true);
+    //     setInterval(() => {
+    //       navigate('/contracts/list-contracts');
+    //     }, 1500);
+    //   })
+    //   .catch((error) => {
+    //     if (error.response.status == 409) {
+    //       alert('Mã hợp đồng đã tồn tại!');
+    //     } else {
+    //       console.log(error);
+    //     }
+    //   });
   };
 
   return (
@@ -629,9 +645,11 @@ export default function AddContracts() {
                 <TextField
                   id="deposit_amount"
                   label="Thanh toán trước"
-                  value={deposit_amount}
+                  value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(deposit_amount)}
                   variant="standard"
-                  onChange={(e) => setDepositAmount(e.target.value)}
+                  InputProps={{
+                    readOnly: true
+                  }}
                 />
               </Grid>
             ) : (
@@ -645,6 +663,7 @@ export default function AddContracts() {
                   variant="standard"
                   value={remaining_cost}
                   // value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
+                  onChange={(e) => setRemainingCost(e.target.value)}
                 />
               ) : (
                 ''
