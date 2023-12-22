@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { IconWorldDownload, IconServer, IconMailOpened, IconAlignBoxBottomCenter, IconLockAccess } from '@tabler/icons';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 import config from '../../../config';
 
@@ -106,154 +107,236 @@ export default function CardServices() {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item lg={2.5} md={3} sm={3} xs={12}>
-            <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
-                  <IconWorldDownload /> <br />
-                  Tên miền
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }} />
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ đang sử dụng
-                  <Button sx={{ ml: 2 }} variant="contained" size="small">
-                    {countDomainServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ sắp hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                    {countDomainExpiringServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }} gutterBottom>
-                  Dịch vụ hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                    {countDomainExpiredServices}
-                  </Button>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={gridSpacing}>
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconWorldDownload /> <br />
+                      Tên miền
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countDomainServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countDomainExpiringServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countDomainExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-domain"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-          <Grid item lg={2.5} md={3} sm={3} xs={12}>
-            <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
-                  <IconServer /> <br />
-                  Hosting
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }} />
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ đang sử dụng
-                  <Button sx={{ ml: 2 }} variant="contained" size="small">
-                    {countHostingServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ sắp hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                    {countHostingExpiringServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }} gutterBottom>
-                  Dịch vụ hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                    {countHostingExpiredServices}
-                  </Button>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconServer /> <br />
+                      Hosting
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countHostingServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countHostingExpiringServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countHostingExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-hosting"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-          <Grid item lg={2.5} md={3} sm={3} xs={12}>
-            <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
-                  <IconLockAccess /> <br />
-                  SSL
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }} />
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ đang sử dụng
-                  <Button sx={{ ml: 2 }} variant="contained" size="small">
-                    {countSslServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ sắp hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                    {countSslExpiringServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }} gutterBottom>
-                  Dịch vụ hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                    {countSslExpiredServices}
-                  </Button>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconLockAccess /> <br />
+                      SSL
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countSslServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countSslExpiringServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countSslExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-ssl"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-          <Grid item lg={2.5} md={3} sm={3} xs={12}>
-            <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
-                  <IconMailOpened /> <br />
-                  Email
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }} />
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ đang sử dụng
-                  <Button sx={{ ml: 2 }} variant="contained" size="small">
-                    {countEmailServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ sắp hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                    {countEmailExpiringServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }} gutterBottom>
-                  Dịch vụ hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                    {countEmailExpiredServices}
-                  </Button>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconMailOpened /> <br />
+                      Email
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countEmailServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countEmailExpiringServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countEmailExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-email"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-          <Grid item lg={2.5} md={3} sm={3} xs={12}>
-            <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
-                  <IconAlignBoxBottomCenter /> <br />
-                  Viết bài Content & PR
-                </Typography>
-                <Divider sx={{ mt: 2, mb: 2 }} />
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ đang sử dụng
-                  <Button sx={{ ml: 2 }} variant="contained" size="small">
-                    {countContentServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
-                  Dịch vụ sắp hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                    {countContentExpiringServices}
-                  </Button>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }} gutterBottom>
-                  Dịch vụ hết hạn
-                  <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                    {countContentExpiredServices}
-                  </Button>
-                </Typography>
-              </CardContent>
-            </Card>
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconAlignBoxBottomCenter /> <br />
+                      Viết bài Content & PR
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countContentServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countContentExpiringServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countContentExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-content"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            ASD
           </Grid>
         </Grid>
       </Grid>
