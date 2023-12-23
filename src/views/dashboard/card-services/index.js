@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 
 import TotalPriceServices from '../total-price-services';
+import RemainingContracts from '../contracts';
 
 import config from '../../../config';
 
@@ -22,25 +23,36 @@ const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 
 export default function CardServices() {
+  const [dataDomainServices, setDataDomainServices] = useState([]);
   const [countDomainServices, setCountDomainServices] = useState('');
   const [countDomainExpiringServices, setCountDomainExpiringServices] = useState('');
   const [countDomainExpiredServices, setCountDomainExpiredServices] = useState('');
 
+  const [dataHostingServices, setDataHostingServices] = useState([]);
   const [countHostingServices, setCountHostingServices] = useState('');
   const [countHostingExpiringServices, setCountHostingExpiringServices] = useState('');
   const [countHostingExpiredServices, setCountHostingExpiredServices] = useState('');
 
+  const [dataSslServices, setDataSslServices] = useState([]);
   const [countSslServices, setCountSslServices] = useState('');
-  const [countSslExpiringServices, setCountSslExpiringServices] = useState('');
+  const [countSslExpiringServices, setCountSslExpiringServices] = useState([]);
   const [countSslExpiredServices, setCountSslExpiredServices] = useState('');
 
+  const [dataEmailServices, setDataEmailServices] = useState('');
   const [countEmailServices, setCountEmailServices] = useState('');
-  const [countEmailExpiringServices, setCountEmailExpiringServices] = useState('');
+  const [countEmailExpiringServices, setCountEmailExpiringServices] = useState([]);
   const [countEmailExpiredServices, setCountEmailExpiredServices] = useState('');
 
+  const [dataContentServices, setDataContentServices] = useState('');
   const [countContentServices, setCountContentServices] = useState('');
-  const [countContentExpiringServices, setCountContentExpiringServices] = useState('');
+  const [countContentExpiringServices, setCountContentExpiringServices] = useState([]);
   const [countContentExpiredServices, setCountContentExpiredServices] = useState('');
+
+  let totalPriceDomainServices = 0;
+  let totalPriceHostingServices = 0;
+  let totalPriceSslServices = 0;
+  let totalPriceEmailServices = 0;
+  let totalPriceContentServices = 0;
 
   useEffect(() => {
     loadListDomainServices();
@@ -52,6 +64,7 @@ export default function CardServices() {
 
   const loadListDomainServices = async () => {
     const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    setDataDomainServices(result.data);
     setCountDomainServices(result.data.length);
 
     const expiring = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
@@ -63,6 +76,7 @@ export default function CardServices() {
 
   const loadListHostingServices = async () => {
     const result = await axios.get(`${LIST_HOSTING_SERVICES}`);
+    setDataHostingServices(result.data);
     setCountHostingServices(result.data.length);
 
     const expiring = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
@@ -74,6 +88,7 @@ export default function CardServices() {
 
   const loadListSslServices = async () => {
     const result = await axios.get(`${LIST_SSL_SERVICES}`);
+    setDataSslServices(result.data);
     setCountSslServices(result.data.length);
 
     const expiring = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`);
@@ -85,6 +100,7 @@ export default function CardServices() {
 
   const loadListEmailServices = async () => {
     const result = await axios.get(`${LIST_EMAIL_SERVICES}`);
+    setDataEmailServices(result.data);
     setCountEmailServices(result.data.length);
 
     const expiring = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`);
@@ -96,6 +112,7 @@ export default function CardServices() {
 
   const loadListContentServices = async () => {
     const result = await axios.get(`${LIST_CONTENT_SERVICES}`);
+    setDataContentServices(result.data);
     setCountContentServices(result.data.length);
 
     const expiring = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`);
@@ -104,6 +121,36 @@ export default function CardServices() {
     const expired = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`);
     setCountContentExpiredServices(expired.data.length);
   };
+
+  if (dataDomainServices) {
+    dataDomainServices.forEach((item) => {
+      totalPriceDomainServices += item.domain_plan_id.price;
+    });
+  }
+
+  if (dataHostingServices) {
+    dataHostingServices.forEach((item) => {
+      totalPriceHostingServices += item.hosting_plan_id.price;
+    });
+  }
+
+  if (dataSslServices) {
+    dataSslServices.forEach((item) => {
+      totalPriceSslServices += item.ssl_plan_id.price;
+    });
+  }
+
+  if (dataEmailServices) {
+    dataEmailServices.forEach((item) => {
+      totalPriceEmailServices += item.email_plan_id.price;
+    });
+  }
+
+  if (dataContentServices) {
+    dataContentServices.forEach((item) => {
+      totalPriceContentServices += item.content_plan_id.price;
+    });
+  }
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -131,10 +178,16 @@ export default function CardServices() {
                         {countDomainExpiringServices}
                       </Button>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
                         {countDomainExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceDomainServices)}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -176,10 +229,16 @@ export default function CardServices() {
                         {countHostingExpiringServices}
                       </Button>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
                         {countHostingExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceHostingServices)}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -221,10 +280,16 @@ export default function CardServices() {
                         {countSslExpiringServices}
                       </Button>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
                         {countSslExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceSslServices)}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -266,10 +331,16 @@ export default function CardServices() {
                         {countEmailExpiringServices}
                       </Button>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
                         {countEmailExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceEmailServices)}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -311,10 +382,16 @@ export default function CardServices() {
                         {countContentExpiringServices}
                       </Button>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
                         {countContentExpiredServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -339,6 +416,7 @@ export default function CardServices() {
           </Grid>
           <Grid item xs={12} md={4}>
             <TotalPriceServices />
+            <RemainingContracts />
           </Grid>
         </Grid>
       </Grid>
