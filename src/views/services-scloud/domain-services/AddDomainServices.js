@@ -117,7 +117,7 @@ export default function AddDomainServices() {
                   >
                     {listDomainPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
-                        {item.name}
+                        {item.name} (NCC: {item.supplier_id.name})
                       </MenuItem>
                     ))}
                   </Select>

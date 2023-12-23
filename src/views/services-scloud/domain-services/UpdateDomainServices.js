@@ -112,7 +112,7 @@ export default function UpdateDomainServices() {
                   <Select id="domain_plan_id" value={domain_plan_id} label="Chọn gói dịch vụ..." disabled>
                     {listDomainPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
-                        {item.name}
+                        {item.name} (NCC: {item.supplier_id.name})
                       </MenuItem>
                     ))}
                   </Select>

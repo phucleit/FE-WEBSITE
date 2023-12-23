@@ -120,7 +120,7 @@ export default function AddSslServices() {
                   <Select id="ssl_plan_id" value={ssl_plan_id} label="Chọn gói dịch vụ..." onChange={(e) => setSslPlanId(e.target.value)}>
                     {listSslPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
-                        {item.name}
+                        {item.name} (NCC: {item.supplier_id.name})
                       </MenuItem>
                     ))}
                   </Select>
