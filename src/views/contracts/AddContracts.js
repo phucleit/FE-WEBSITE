@@ -108,31 +108,31 @@ export default function AddContracts() {
   if (customer_detail) {
     domainServices.forEach((item) => {
       if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
-        total_price += item.domain_plan[0].price;
+        total_price += item.domain_plan[0].price * item.periods;
       }
     });
 
     hostingServices.forEach((item) => {
       if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
-        total_price += item.hosting_plan[0].price;
+        total_price += item.periods * 12 * item.hosting_plan[0].price;
       }
     });
 
     emailServices.forEach((item) => {
       if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
-        total_price += item.email_plan[0].price;
+        total_price += item.periods * 12 * item.email_plan[0].price;
       }
     });
 
     sslServices.forEach((item) => {
       if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
-        total_price += item.ssl_plan[0].price;
+        total_price += item.periods * 12 * item.ssl_plan[0].price;
       }
     });
 
     contentServices.forEach((item) => {
       if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
-        total_price += item.content_plan[0].price;
+        total_price += item.periods * 12 * item.content_plan[0].price;
       }
     });
   }
@@ -156,7 +156,7 @@ export default function AddContracts() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
+      headerName: 'Giá dịch vụ / năm',
       width: 220,
       valueGetter: (params) =>
         params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price

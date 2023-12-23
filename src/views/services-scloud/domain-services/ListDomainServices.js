@@ -48,7 +48,7 @@ export default function ListDomainServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
+      headerName: 'Giá dịch vụ / năm',
       width: 170,
       valueGetter: (params) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)

@@ -80,7 +80,7 @@ export default function ListServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
+      headerName: 'Giá dịch vụ / năm',
       width: 220,
       valueGetter: (params) =>
         params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price

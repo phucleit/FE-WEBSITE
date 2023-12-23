@@ -124,31 +124,31 @@ export default function CardServices() {
 
   if (dataDomainServices) {
     dataDomainServices.forEach((item) => {
-      totalPriceDomainServices += item.domain_plan_id.price;
+      totalPriceDomainServices += item.domain_plan_id.price * item.periods;
     });
   }
 
   if (dataHostingServices) {
     dataHostingServices.forEach((item) => {
-      totalPriceHostingServices += item.hosting_plan_id.price;
+      totalPriceHostingServices += item.periods * 12 * item.hosting_plan_id.price;
     });
   }
 
   if (dataSslServices) {
     dataSslServices.forEach((item) => {
-      totalPriceSslServices += item.ssl_plan_id.price;
+      totalPriceSslServices += item.periods * 12 * item.ssl_plan_id.price;
     });
   }
 
   if (dataEmailServices) {
     dataEmailServices.forEach((item) => {
-      totalPriceEmailServices += item.email_plan_id.price;
+      totalPriceEmailServices += item.periods * 12 * item.email_plan_id.price;
     });
   }
 
   if (dataContentServices) {
     dataContentServices.forEach((item) => {
-      totalPriceContentServices += item.content_plan_id.price;
+      totalPriceContentServices += item.periods * 12 * item.content_plan_id.price;
     });
   }
 
