@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { CssBaseline, StyledEngineProvider, Grid } from '@mui/material';
 
 // routing
 import Routes from 'routes';
@@ -11,6 +11,7 @@ import themes from 'themes';
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
+import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // ==============================|| APP ||============================== //
 
@@ -25,6 +26,9 @@ const App = () => {
           <Routes />
         </NavigationScroll>
       </ThemeProvider>
+      <Grid item xs={12} sx={{ m: 1 }}>
+        <AuthFooter />
+      </Grid>
     </StyledEngineProvider>
   );
 };
