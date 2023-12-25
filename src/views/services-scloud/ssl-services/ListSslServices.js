@@ -69,7 +69,7 @@ export default function ListSslServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 280,
+      width: 240,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (
@@ -97,6 +97,12 @@ export default function ListSslServices() {
           );
         }
       }
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',

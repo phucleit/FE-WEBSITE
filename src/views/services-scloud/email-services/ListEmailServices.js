@@ -49,7 +49,7 @@ export default function ListEmailServices() {
     {
       field: 'email',
       headerName: 'Gói email',
-      width: 180,
+      width: 130,
       renderCell: (params) => {
         return (
           <span>
@@ -69,7 +69,7 @@ export default function ListEmailServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 260,
+      width: 240,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (
@@ -97,6 +97,12 @@ export default function ListEmailServices() {
           );
         }
       }
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',

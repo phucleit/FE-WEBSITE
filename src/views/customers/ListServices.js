@@ -154,23 +154,29 @@ export default function ListServices() {
     {
       field: 'hosting',
       headerName: 'Dịch vụ Hosting',
-      width: 220,
+      width: 200,
       valueGetter: (params) => params.row.hosting_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
-      width: 150,
+      width: 140,
       valueGetter: (params) => params.row.hosting_supplier[0]?.name || ''
     },
     {
       field: 'price',
       headerName: 'Giá dịch vụ / tháng',
-      width: 220,
+      width: 180,
       valueGetter: (params) =>
         params.row.hosting_plan && params.row.hosting_plan[0] && params.row.hosting_plan[0].price
           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan[0].price)
           : ''
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',
@@ -204,13 +210,13 @@ export default function ListServices() {
     {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
@@ -237,23 +243,29 @@ export default function ListServices() {
     {
       field: 'email',
       headerName: 'Dịch vụ Email',
-      width: 220,
+      width: 200,
       valueGetter: (params) => params.row.email_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
-      width: 150,
+      width: 140,
       valueGetter: (params) => params.row.email_supplier[0]?.name || ''
     },
     {
       field: 'price',
       headerName: 'Giá dịch vụ / tháng',
-      width: 220,
+      width: 180,
       valueGetter: (params) =>
         params.row.email_plan && params.row.email_plan[0] && params.row.email_plan[0].price
           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan[0].price)
           : ''
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',
@@ -287,13 +299,13 @@ export default function ListServices() {
     {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
@@ -320,23 +332,29 @@ export default function ListServices() {
     {
       field: 'ssl',
       headerName: 'Dịch vụ SSL',
-      width: 220,
+      width: 200,
       valueGetter: (params) => params.row.ssl_plan[0]?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
-      width: 150,
+      width: 140,
       valueGetter: (params) => params.row.ssl_supplier[0]?.name || ''
     },
     {
       field: 'price',
       headerName: 'Giá dịch vụ / tháng',
-      width: 220,
+      width: 180,
       valueGetter: (params) =>
         params.row.ssl_plan && params.row.ssl_plan[0] && params.row.ssl_plan[0].price
           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan[0].price)
           : ''
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',
@@ -370,13 +388,13 @@ export default function ListServices() {
     {
       field: 'createdAt',
       headerName: 'Ngày khỏi tạo',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
     {
       field: 'expiredAt',
       headerName: 'Ngày hết hạn',
-      width: 200,
+      width: 180,
       valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
     }
   ];
@@ -450,6 +468,12 @@ export default function ListServices() {
         params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price
           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan[0].price)
           : ''
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 150,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',

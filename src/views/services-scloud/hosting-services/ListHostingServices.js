@@ -49,7 +49,7 @@ export default function ListHostingServices() {
     {
       field: 'hosting',
       headerName: 'Gói hosting',
-      width: 160,
+      width: 130,
       renderCell: (params) => {
         return (
           <span>
@@ -70,7 +70,7 @@ export default function ListHostingServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 280,
+      width: 240,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (
@@ -98,6 +98,12 @@ export default function ListHostingServices() {
           );
         }
       }
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => `${params.row.periods} năm`
     },
     {
       field: 'status',

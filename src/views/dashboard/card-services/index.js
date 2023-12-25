@@ -163,7 +163,8 @@ export default function CardServices() {
   }
 
   if (dataWebsiteServices) {
-    dataEmailServices.forEach((item) => {
+    dataWebsiteServices.forEach((item) => {
+      console.log(item.price);
       totalPriceWebsiteServices += item.price;
     });
   }

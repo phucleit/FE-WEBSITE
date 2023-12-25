@@ -49,7 +49,7 @@ export default function ListContentServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 300,
+      width: 260,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 'Nam') {
           return (
@@ -77,6 +77,12 @@ export default function ListContentServices() {
           );
         }
       }
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'status',

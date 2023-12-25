@@ -133,7 +133,7 @@ export default function ListContracts() {
 
   return (
     <MainCard
-      title="Danh sách"
+      title="Danh sách hợp đồng"
       secondary={
         <Button variant="contained" href="/contracts/add-contracts">
           Thêm mới
