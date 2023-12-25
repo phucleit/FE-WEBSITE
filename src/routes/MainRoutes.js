@@ -69,6 +69,11 @@ const ListContentServices = Loadable(lazy(() => import('views/services-scloud/co
 const AddContentServices = Loadable(lazy(() => import('views/services-scloud/content-services/AddContentServices')));
 const UpdateContentServices = Loadable(lazy(() => import('views/services-scloud/content-services/UpdateContentServices')));
 
+// website serices
+const ListWebsiteServices = Loadable(lazy(() => import('views/services-scloud/website-services/ListWebsiteServices')));
+const AddWebsiteServices = Loadable(lazy(() => import('views/services-scloud/website-services/AddWebsiteServices')));
+const UpdateWebsiteServices = Loadable(lazy(() => import('views/services-scloud/website-services/UpdateWebsiteServices')));
+
 // contracts
 const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
 const AddContracts = Loadable(lazy(() => import('views/contracts/AddContracts')));
@@ -233,6 +238,18 @@ const MainRoutes = {
         {
           path: 'update-ssl/:id',
           element: <UpdateSslServices />
+        },
+        {
+          path: 'list-website',
+          element: <ListWebsiteServices />
+        },
+        {
+          path: 'add-website',
+          element: <AddWebsiteServices />
+        },
+        {
+          path: 'update-website/:id',
+          element: <UpdateWebsiteServices />
         },
         {
           path: 'list-content',

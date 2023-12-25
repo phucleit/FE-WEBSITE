@@ -46,6 +46,13 @@ const services = {
           breadcrumbs: false
         },
         {
+          id: 'website-services',
+          title: 'Thiết kế website',
+          type: 'item',
+          url: '/services/list-website',
+          breadcrumbs: false
+        },
+        {
           id: 'content-services',
           title: 'Viết bài Content & PR',
           type: 'item',
