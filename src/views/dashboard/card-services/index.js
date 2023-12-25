@@ -20,6 +20,7 @@ const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
+const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 
 export default function CardServices() {
@@ -43,6 +44,10 @@ export default function CardServices() {
   const [countEmailExpiringServices, setCountEmailExpiringServices] = useState([]);
   const [countEmailExpiredServices, setCountEmailExpiredServices] = useState('');
 
+  const [dataWebsiteServices, setDataWebsiteServices] = useState('');
+  const [countWebsiteServices, setCountWebsiteServices] = useState('');
+  const [countWebsiteClosedServices, setCountWebsiteClosedServices] = useState('');
+
   const [dataContentServices, setDataContentServices] = useState('');
   const [countContentServices, setCountContentServices] = useState('');
   const [countContentExpiringServices, setCountContentExpiringServices] = useState([]);
@@ -52,6 +57,7 @@ export default function CardServices() {
   let totalPriceHostingServices = 0;
   let totalPriceSslServices = 0;
   let totalPriceEmailServices = 0;
+  let totalPriceWebsiteServices = 0;
   let totalPriceContentServices = 0;
 
   useEffect(() => {
@@ -59,6 +65,7 @@ export default function CardServices() {
     loadListHostingServices();
     loadListSslServices();
     loadListEmailServices();
+    loadListWebsiteServices();
     loadListContentServices();
   }, []);
 
@@ -110,6 +117,15 @@ export default function CardServices() {
     setCountEmailExpiredServices(expired.data.length);
   };
 
+  const loadListWebsiteServices = async () => {
+    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`);
+    setDataWebsiteServices(result.data);
+    setCountWebsiteServices(result.data.length);
+
+    const closed = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`);
+    setCountWebsiteClosedServices(closed.data.length);
+  };
+
   const loadListContentServices = async () => {
     const result = await axios.get(`${LIST_CONTENT_SERVICES}`);
     setDataContentServices(result.data);
@@ -143,6 +159,12 @@ export default function CardServices() {
   if (dataEmailServices) {
     dataEmailServices.forEach((item) => {
       totalPriceEmailServices += item.periods * 12 * item.email_plan_id.price;
+    });
+  }
+
+  if (dataWebsiteServices) {
+    dataEmailServices.forEach((item) => {
+      totalPriceWebsiteServices += item.price;
     });
   }
 
@@ -346,6 +368,57 @@ export default function CardServices() {
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
                         href="/services/list-email"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconAlignBoxBottomCenter /> <br />
+                      Thiết kế Website
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang hoạt động
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countWebsiteServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đã đóng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countWebsiteClosedServices}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        0
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/services/list-website"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',

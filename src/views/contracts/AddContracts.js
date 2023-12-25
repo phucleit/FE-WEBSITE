@@ -67,6 +67,7 @@ export default function AddContracts() {
   const [hostingServices, setHostingServices] = useState([]);
   const [emailServices, setEmailServices] = useState([]);
   const [sslServices, setSslServices] = useState([]);
+  const [websiteServices, setWebsiteServices] = useState([]);
   const [contentServices, setContentServices] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -99,6 +100,7 @@ export default function AddContracts() {
       setHostingServices(result.data[0].hosting_services);
       setEmailServices(result.data[0].email_services);
       setSslServices(result.data[0].ssl_services);
+      setWebsiteServices(result.data[0].website_services);
       setContentServices(result.data[0].content_services);
     } catch (error) {
       console.error('Error fetching customer data: ', error);
@@ -106,35 +108,51 @@ export default function AddContracts() {
   };
 
   if (customer_detail) {
-    domainServices.forEach((item) => {
-      if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
-        total_price += item.domain_plan[0].price * item.periods;
-      }
-    });
+    if (domainServices) {
+      domainServices.forEach((item) => {
+        if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
+          total_price += item.domain_plan[0].price * item.periods;
+        }
+      });
+    }
 
-    hostingServices.forEach((item) => {
-      if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
-        total_price += item.periods * 12 * item.hosting_plan[0].price;
-      }
-    });
+    if (hostingServices) {
+      hostingServices.forEach((item) => {
+        if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
+          total_price += item.periods * 12 * item.hosting_plan[0].price;
+        }
+      });
+    }
 
-    emailServices.forEach((item) => {
-      if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
-        total_price += item.periods * 12 * item.email_plan[0].price;
-      }
-    });
+    if (emailServices) {
+      emailServices.forEach((item) => {
+        if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
+          total_price += item.periods * 12 * item.email_plan[0].price;
+        }
+      });
+    }
 
-    sslServices.forEach((item) => {
-      if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
-        total_price += item.periods * 12 * item.ssl_plan[0].price;
-      }
-    });
+    if (sslServices) {
+      sslServices.forEach((item) => {
+        if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
+          total_price += item.periods * 12 * item.ssl_plan[0].price;
+        }
+      });
+    }
 
-    contentServices.forEach((item) => {
-      if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
-        total_price += item.periods * 12 * item.content_plan[0].price;
-      }
-    });
+    if (websiteServices) {
+      websiteServices.forEach((item) => {
+        total_price += item.price;
+      });
+    }
+
+    if (contentServices) {
+      contentServices.forEach((item) => {
+        if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
+          total_price += item.periods * 12 * item.content_plan[0].price;
+        }
+      });
+    }
   }
 
   const columnsDomainServices = [
@@ -455,6 +473,59 @@ export default function AddContracts() {
     }
   ];
 
+  const columnsWebsiteServices = [
+    {
+      field: 'name',
+      headerName: 'Tên miền',
+      width: 300,
+      renderCell: (params) => {
+        const domainServiceName = params.row.domain_service[0]?.name || '';
+        const domainPlanName = params.row.domain_plan[0]?.name || '';
+        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
+        return (
+          <span>
+            {domainServiceName}
+            {domainPlanName}
+            <br />
+            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
+          </span>
+        );
+      }
+    },
+    {
+      field: 'price',
+      headerName: 'Giá dịch vụ',
+      width: 250,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+    },
+    {
+      field: 'status',
+      headerName: 'Trạng thái',
+      width: 280,
+      renderCell: (params) => {
+        if (params.row.status == 1) {
+          return (
+            <Button variant="contained" size="small">
+              Đang sử dụng
+            </Button>
+          );
+        } else if (params.row.status == 2) {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Đã đóng
+            </Button>
+          );
+        }
+      }
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Ngày khỏi tạo',
+      width: 250,
+      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+    }
+  ];
+
   const columnsContentServices = [
     {
       field: 'content',
@@ -637,7 +708,8 @@ export default function AddContracts() {
                   <Tab label="Dịch vụ Hosting" value="2" />
                   <Tab label="Dịch vụ Email" value="3" />
                   <Tab label="Dịch vụ SSL" value="4" />
-                  <Tab label="Dịch vụ Content" value="5" />
+                  <Tab label="Dịch vụ Thiết kế Website" value="5" />
+                  <Tab label="Dịch vụ Content" value="6" />
                 </TabList>
               </Box>
               <TabPanel value="1">
@@ -701,6 +773,21 @@ export default function AddContracts() {
                 )}
               </TabPanel>
               <TabPanel value="5">
+                {websiteServices.length !== 0 ? (
+                  <DataGrid
+                    rows={websiteServices}
+                    columns={columnsWebsiteServices}
+                    getRowId={(row) => (row._id ? row._id : '')}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    disableSelectionOnClick
+                    disableRowSelectionOnClick
+                  />
+                ) : (
+                  ''
+                )}
+              </TabPanel>
+              <TabPanel value="6">
                 {contentServices.length !== 0 ? (
                   <DataGrid
                     rows={contentServices}

@@ -12,6 +12,7 @@ import ListDomainServices from '../../services-scloud/domain-services/ListDomain
 import ListHostingServices from '../../services-scloud/hosting-services/ListHostingServices';
 import ListEmailServices from '../../services-scloud/email-services/ListEmailServices';
 import ListSslServices from '../../services-scloud/ssl-services/ListSslServices';
+import ListWebsiteServices from '../../services-scloud/website-services/ListWebsiteServices';
 import ListContentServices from '../../services-scloud/content-services/ListContentServices';
 
 export default function ListServices() {
@@ -32,7 +33,8 @@ export default function ListServices() {
                 <Tab label="Dịch vụ Hosting" value="2" />
                 <Tab label="Dịch vụ Email" value="3" />
                 <Tab label="Dịch vụ SSL" value="4" />
-                <Tab label="Dịch vụ Content" value="5" />
+                <Tab label="Dịch vụ Thiết kế Website" value="5" />
+                <Tab label="Dịch vụ Content" value="6" />
               </TabList>
             </Box>
             <TabPanel value="1">
@@ -48,6 +50,9 @@ export default function ListServices() {
               <ListSslServices />
             </TabPanel>
             <TabPanel value="5">
+              <ListWebsiteServices />
+            </TabPanel>
+            <TabPanel value="6">
               <ListContentServices />
             </TabPanel>
           </TabContext>
