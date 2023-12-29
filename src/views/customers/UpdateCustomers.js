@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FileUploader } from 'react-drag-drop-files';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,6 +13,8 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -39,6 +42,14 @@ export default function UpdateCustomers() {
   const [idNumber, setIdNumber] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [company, setCompany] = useState('');
+  const [taxCode, setTaxCode] = useState('');
+  const [addressCompany, setAddressCompany] = useState('');
+  const [representative, setRepresentative] = useState('');
+  const [representativeHotline, setRepresentativeHotline] = useState('');
+  const [mailVat, setMailVat] = useState('');
+  const [imageFrontView, setImageFrontView] = useState('');
+  const [imageBackView, setImageBackView] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -55,6 +66,14 @@ export default function UpdateCustomers() {
     setIdNumber(result.data[0].idNumber);
     setPhone(result.data[0].phone);
     setAddress(result.data[0].address);
+    setCompany(result.data[0].company);
+    setTaxCode(result.data[0].tax_code);
+    setAddressCompany(result.data[0].address_company);
+    setRepresentative(result.data[0].representative);
+    setRepresentativeHotline(result.data[0].representative_hotline);
+    setMailVat(result.data[0].mail_vat);
+    setImageFrontView(result.data[0].image_front_view);
+    setImageBackView(result.data[0].image_back_view);
   };
 
   const handleUpdateCustomers = (e) => {
@@ -85,7 +104,14 @@ export default function UpdateCustomers() {
       gender: gender,
       idNumber: idNumber,
       phone: phone,
-      address: address
+      address: address,
+      company: company,
+      tax_code: taxCode,
+      address_company: addressCompany,
+      representative: representative,
+      representative_hotline: representativeHotline,
+      image_front_view: imageFrontView,
+      image_back_view: imageBackView
     };
 
     axios
@@ -138,14 +164,10 @@ export default function UpdateCustomers() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Giới tính</InputLabel>
-                  <Input
-                    id="gender"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    required={true}
-                    placeholder="Nhập giới tính..."
-                  />
+                  <Select labelId="gender" id="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
+                    <MenuItem value={1}>Nam</MenuItem>
+                    <MenuItem value={2}>Nữ</MenuItem>
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>
@@ -192,6 +214,144 @@ export default function UpdateCustomers() {
                     placeholder="Nhập địa chỉ..."
                   />
                 </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên công ty</InputLabel>
+                  <Input
+                    id="company"
+                    name="company"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên công ty..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Mã số thuế</InputLabel>
+                  <Input
+                    id="taxCode"
+                    name="taxCode"
+                    value={taxCode}
+                    onChange={(e) => setTaxCode(e.target.value)}
+                    required={true}
+                    placeholder="Nhập mã số thuế..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Địa chỉ công ty</InputLabel>
+                  <Input
+                    id="addressCompany"
+                    name="addressCompany"
+                    value={addressCompany}
+                    onChange={(e) => setAddressCompany(e.target.value)}
+                    required={true}
+                    placeholder="Nhập địa chỉ công ty..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Người đại diện</InputLabel>
+                  <Input
+                    id="representative"
+                    name="representative"
+                    value={representative}
+                    onChange={(e) => setRepresentative(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên người đại diện..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Hotline người đại diện</InputLabel>
+                  <Input
+                    id="representativeHotline"
+                    name="representativeHotline"
+                    value={representativeHotline}
+                    onChange={(e) => setRepresentativeHotline(e.target.value)}
+                    required={true}
+                    placeholder="Nhập hotline người đại diện..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Mail VAT</InputLabel>
+                  <Input
+                    id="mailVat"
+                    name="mailVat"
+                    value={mailVat}
+                    onChange={(e) => setMailVat(e.target.value)}
+                    required={true}
+                    placeholder="Nhập mail VAT..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <InputLabel>Hình CCCD mặt trước</InputLabel>
+              </Item>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FileUploader
+                    label="Hình CCCD mặt trước"
+                    handleChange={handleChangeFrontView}
+                    name="imageFrontView"
+                    types={fileTypes}
+                    maxSize="10"
+                    fullWidth
+                  />
+                </FormControl>
+              </Item>
+              <Item>
+                {imageFrontView && (
+                  <div>
+                    <img src={URL.createObjectURL(imageFrontView)} alt="Hình CCCD mặt trước" />
+                  </div>
+                )}
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <InputLabel>Hình CCCD mặt trước</InputLabel>
+              </Item>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FileUploader
+                    label="Hình CCCD mặt sau"
+                    handleChange={handleChangeBackView}
+                    name="imageBackView"
+                    types={fileTypes}
+                    maxSize="10"
+                    fullWidth
+                  />
+                </FormControl>
+              </Item>
+              <Item>
+                {imageBackView && (
+                  <div>
+                    <img src={URL.createObjectURL(imageBackView)} alt="Hình CCCD mặt sau" />
+                  </div>
+                )}
               </Item>
             </Grid>
           </Grid>
