@@ -164,7 +164,6 @@ export default function CardServices() {
 
   if (dataWebsiteServices) {
     dataWebsiteServices.forEach((item) => {
-      console.log(item.price);
       totalPriceWebsiteServices += item.price;
     });
   }

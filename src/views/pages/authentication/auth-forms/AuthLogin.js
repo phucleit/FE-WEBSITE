@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { setAuthenticated } from '../../../../store/auth/authActions';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -15,6 +19,8 @@ import {
   OutlinedInput,
   Stack
 } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 // third party
 import * as Yup from 'yup';
@@ -31,6 +37,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
+  let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
   const theme = useTheme();
   const scriptedRef = useScriptRef();
   const [checked, setChecked] = useState(true);
@@ -48,8 +59,8 @@ const FirebaseLogin = ({ ...others }) => {
     <>
       <Formik
         initialValues={{
-          email: 'adminitv',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -59,8 +70,18 @@ const FirebaseLogin = ({ ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             if (scriptedRef.current) {
-              setStatus({ success: true });
-              setSubmitting(false);
+              if (values.email == 'adminitv@gmail.com' && values.password == '123456') {
+                localStorage.setItem('isAuthenticated', 'true');
+                dispatch(setAuthenticated(true));
+                setOpen(true);
+                setInterval(() => {
+                  navigate('/');
+                }, 1500);
+                setStatus({ success: true });
+                setSubmitting(true);
+              } else {
+                alert('Sai thông tin đăng nhập!');
+              }
             }
           } catch (err) {
             console.error(err);
@@ -148,6 +169,9 @@ const FirebaseLogin = ({ ...others }) => {
           </form>
         )}
       </Formik>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Đăng nhập thành công!</Alert>
+      </Snackbar>
     </>
   );
 };

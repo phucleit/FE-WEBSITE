@@ -35,7 +35,10 @@ export default function UpdateSuppliers() {
 
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
+  const [taxCode, setTaxCode] = useState('');
   const [phone, setPhone] = useState('');
+  const [nameSupport, setNameSupport] = useState('');
+  const [phoneSupport, setPhoneSupport] = useState('');
   const [address, setAddress] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -49,7 +52,10 @@ export default function UpdateSuppliers() {
     const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
     setName(result.data[0].name);
     setCompany(result.data[0].company);
+    setTaxCode(result.data[0].tax_code);
     setPhone(result.data[0].phone);
+    setNameSupport(result.data[0].name_support);
+    setPhoneSupport(result.data[0].phone_support);
     setAddress(result.data[0].address);
   };
 
@@ -78,7 +84,10 @@ export default function UpdateSuppliers() {
     const updateSuppliers = {
       name: name,
       company: company,
+      tax_code: taxCode,
       phone: phone,
+      name_support: nameSupport,
+      phone_support: phoneSupport,
       address: address
     };
 
@@ -131,6 +140,21 @@ export default function UpdateSuppliers() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
+                  <InputLabel>Mã số thuế</InputLabel>
+                  <Input
+                    id="taxCode"
+                    name="taxCode"
+                    value={taxCode}
+                    onChange={(e) => setTaxCode(e.target.value)}
+                    required={true}
+                    placeholder="Nhập mã số thuế..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
                   <InputLabel>Số điện thoại</InputLabel>
                   <Input
                     id="phone"
@@ -139,6 +163,36 @@ export default function UpdateSuppliers() {
                     onChange={(e) => setPhone(e.target.value)}
                     required={true}
                     placeholder="Nhập số điện thoại..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên hỗ trợ viên</InputLabel>
+                  <Input
+                    id="nameSupport"
+                    name="nameSupport"
+                    value={nameSupport}
+                    onChange={(e) => setNameSupport(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên hỗ trợ viên..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Hotline hỗ trợ viên</InputLabel>
+                  <Input
+                    id="phoneSupport"
+                    name="phoneSupport"
+                    value={phoneSupport}
+                    onChange={(e) => setPhoneSupport(e.target.value)}
+                    required={true}
+                    placeholder="Nhập hotline hỗ trợ viên..."
                   />
                 </FormControl>
               </Item>

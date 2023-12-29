@@ -14,7 +14,7 @@ import NavigationScroll from 'layout/NavigationScroll';
 
 // ==============================|| APP ||============================== //
 
-const App = () => {
+const Dashboard = () => {
   const customization = useSelector((state) => state.customization);
 
   return (
@@ -29,4 +29,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Dashboard;

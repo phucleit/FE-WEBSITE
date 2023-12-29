@@ -14,14 +14,17 @@ const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
 export default function ListSupplier() {
   const columns = [
-    { field: 'name', headerName: 'Tên nhà cung cấp', width: 250 },
-    { field: 'company', headerName: 'Tên công ty', width: 400 },
-    { field: 'phone', headerName: 'Số điện thoại', width: 200 },
-    { field: 'address', headerName: 'Địa chỉ', width: 400 },
+    { field: 'name', headerName: 'Tên nhà cung cấp', width: 140 },
+    { field: 'company', headerName: 'Tên công ty', width: 250 },
+    { field: 'tax_code', headerName: 'Mã số thuế', width: 150 },
+    { field: 'phone', headerName: 'Số điện thoại', width: 150 },
+    { field: 'name_support', headerName: 'Hỗ trợ viên', width: 180 },
+    { field: 'phone_support', headerName: 'Hotline hỗ trợ viên', width: 150 },
+    { field: 'address', headerName: 'Địa chỉ', width: 380 },
     {
       field: 'action',
       headerName: 'Hành động',
-      width: 150,
+      width: 120,
       renderCell: (params) => {
         return (
           <>
