@@ -8,6 +8,8 @@ import { DeleteOutline } from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { IconEdit } from '@tabler/icons';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -16,6 +18,8 @@ import config from '../../../config';
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 
 export default function ListHostingServices() {
+  const [open, setOpen] = useState(false);
+
   const getCreatedAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
@@ -39,7 +43,6 @@ export default function ListHostingServices() {
         return (
           <span>
             {params.row.domain_service_id.name}
-            {params.row.domain_plan_id.name}
             <br />
             Domain {params.row.domain_plan_id.name} / NCC {params.row.domain_supplier_id.name}
           </span>
@@ -72,15 +75,7 @@ export default function ListHostingServices() {
       headerName: 'Khách hàng',
       width: 240,
       renderCell: (params) => {
-        if (params.row.customer_id.gender == 'Nam') {
-          return (
-            <span>
-              Anh {params.row.customer_id.fullname}
-              <br />
-              {params.row.customer_id.email} / {params.row.customer_id.phone}
-            </span>
-          );
-        } else if (params.row.customer_id.gender == 'nam') {
+        if (params.row.customer_id.gender == 1) {
           return (
             <span>
               Anh {params.row.customer_id.fullname}
@@ -188,46 +183,55 @@ export default function ListHostingServices() {
       axios
         .delete(`${LIST_HOSTING_SERVICES}/` + id)
         .then(() => {
+          setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));
           setDataLength((prevCount) => prevCount - 1);
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách"
-      secondary={
-        <Button variant="contained" href="/services/add-hosting">
-          Thêm mới
-        </Button>
-      }
-    >
-      <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-        <Button variant="contained" size="small" onClick={loadListHostingServices}>
-          Đang sử dụng: {dataLength ? dataLength : '0'}
-        </Button>
-        <Button variant="contained" size="small" onClick={loadHostingServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
-          Sắp hết hạn: {countHostingServicesExpiring ? countHostingServicesExpiring : '0'}
-        </Button>
-        <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error">
-          Hết hạn: {countHostingServicesExpired ? countHostingServicesExpired : '0'}
-        </Button>
-      </Box>
-      {data.length ? (
-        <DataGrid
-          rows={data}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
-        />
-      ) : (
-        ''
-      )}
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách"
+        secondary={
+          <Button variant="contained" href="/services/add-hosting">
+            Thêm mới
+          </Button>
+        }
+      >
+        <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
+          <Button variant="contained" size="small" onClick={loadListHostingServices}>
+            Đang sử dụng: {dataLength ? dataLength : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadHostingServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+            Sắp hết hạn: {countHostingServicesExpiring ? countHostingServicesExpiring : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error">
+            Hết hạn: {countHostingServicesExpired ? countHostingServicesExpired : '0'}
+          </Button>
+        </Box>
+        {data.length ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

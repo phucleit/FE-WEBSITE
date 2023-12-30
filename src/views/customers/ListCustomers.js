@@ -7,12 +7,16 @@ import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 export default function ListCustomers() {
+  const [open, setOpen] = useState(false);
+
   const getCreatedAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
@@ -23,7 +27,18 @@ export default function ListCustomers() {
   const columns = [
     { field: 'fullname', headerName: 'Họ và tên', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
-    { field: 'gender', headerName: 'Giới tính', width: 100 },
+    {
+      field: 'gender',
+      headerName: 'Giới tính',
+      width: 100,
+      renderCell: (params) => {
+        if (params.row.gender == 1) {
+          return <span>Nam</span>;
+        } else {
+          return <span>Nữ</span>;
+        }
+      }
+    },
     { field: 'idNumber', headerName: 'Số CCCD', width: 150 },
     { field: 'phone', headerName: 'Số điện thoại', width: 150 },
     { field: 'address', headerName: 'Địa chỉ', width: 320 },
@@ -61,34 +76,43 @@ export default function ListCustomers() {
       axios
         .delete(`${LIST_CUSTOMERS}/` + id)
         .then(() => {
+          setOpen(true);
           setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách khách hàng"
-      secondary={
-        <Button variant="contained" href="/customers/add-customers">
-          Thêm mới
-        </Button>
-      }
-    >
-      {data.length !== 0 ? (
-        <DataGrid
-          rows={data}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
-        />
-      ) : (
-        ''
-      )}
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách khách hàng"
+        secondary={
+          <Button variant="contained" href="/customers/add-customers">
+            Thêm mới
+          </Button>
+        }
+      >
+        {data.length !== 0 ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

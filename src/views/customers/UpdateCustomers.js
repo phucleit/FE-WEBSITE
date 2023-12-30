@@ -21,6 +21,8 @@ import MainCard from 'ui-component/cards/MainCard';
 import config from '../../config';
 import ListServices from './ListServices';
 
+const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
+
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -51,6 +53,9 @@ export default function UpdateCustomers() {
   const [imageFrontView, setImageFrontView] = useState('');
   const [imageBackView, setImageBackView] = useState('');
 
+  const [previewImageFrontView, setPreviewImageFrontView] = useState('');
+  const [previewImageBackView, setPreviewImageBackView] = useState('');
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -72,8 +77,16 @@ export default function UpdateCustomers() {
     setRepresentative(result.data[0].representative);
     setRepresentativeHotline(result.data[0].representative_hotline);
     setMailVat(result.data[0].mail_vat);
-    setImageFrontView(result.data[0].image_front_view);
-    setImageBackView(result.data[0].image_back_view);
+    setPreviewImageFrontView(result.data[0].image_front_view[0]);
+    setPreviewImageBackView(result.data[0].image_back_view[0]);
+  };
+
+  const handleChangeFrontView = (file) => {
+    setImageFrontView(file);
+  };
+
+  const handleChangeBackView = (file) => {
+    setImageBackView(file);
   };
 
   const handleUpdateCustomers = (e) => {
@@ -98,24 +111,31 @@ export default function UpdateCustomers() {
       return;
     }
 
-    const updateCustomers = {
-      fullname: fullname,
-      email: email,
-      gender: gender,
-      idNumber: idNumber,
-      phone: phone,
-      address: address,
-      company: company,
-      tax_code: taxCode,
-      address_company: addressCompany,
-      representative: representative,
-      representative_hotline: representativeHotline,
-      image_front_view: imageFrontView,
-      image_back_view: imageBackView
+    const formDataCustomer = new FormData();
+    formDataCustomer.append('fullname', fullname);
+    formDataCustomer.append('email', email);
+    formDataCustomer.append('gender', gender);
+    formDataCustomer.append('idNumber', idNumber);
+    formDataCustomer.append('phone', phone);
+    formDataCustomer.append('address', address);
+    formDataCustomer.append('company', company);
+    formDataCustomer.append('tax_code', taxCode);
+    formDataCustomer.append('address_company', addressCompany);
+    formDataCustomer.append('representative', representative);
+    formDataCustomer.append('representative_hotline', representativeHotline);
+    formDataCustomer.append('mail_vat', mailVat);
+    formDataCustomer.append('image_front_view', imageFrontView);
+    formDataCustomer.append('image_back_view', imageBackView);
+
+    const config_header = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
     };
 
     axios
-      .put(`${LIST_CUSTOMERS}/${currentId}`, updateCustomers)
+      .put(`${LIST_CUSTOMERS}/${currentId}`, formDataCustomer, config_header)
       .then(() => {
         setOpen(true);
         setInterval(() => {
@@ -323,6 +343,13 @@ export default function UpdateCustomers() {
                 </FormControl>
               </Item>
               <Item>
+                {previewImageFrontView && (
+                  <div>
+                    <img src={`data:image/jpeg;base64,${previewImageFrontView}`} alt="Hình CCCD mặt trước" />
+                  </div>
+                )}
+              </Item>
+              <Item>
                 {imageFrontView && (
                   <div>
                     <img src={URL.createObjectURL(imageFrontView)} alt="Hình CCCD mặt trước" />
@@ -345,6 +372,13 @@ export default function UpdateCustomers() {
                     fullWidth
                   />
                 </FormControl>
+              </Item>
+              <Item>
+                {previewImageBackView && (
+                  <div>
+                    <img src={`data:image/jpeg;base64,${previewImageBackView}`} alt="Hình CCCD mặt sau" />
+                  </div>
+                )}
               </Item>
               <Item>
                 {imageBackView && (

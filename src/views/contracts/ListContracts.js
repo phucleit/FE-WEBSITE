@@ -7,12 +7,16 @@ import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
 export default function ListContracts() {
+  const [open, setOpen] = useState(false);
+
   const getCreatedAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
@@ -26,15 +30,7 @@ export default function ListContracts() {
       headerName: 'Khách hàng',
       width: 280,
       renderCell: (params) => {
-        if (params.row.customer_id.gender == 'Nam') {
-          return (
-            <span>
-              Anh {params.row.customer_id.fullname}
-              <br />
-              {params.row.customer_id.email} / {params.row.customer_id.phone}
-            </span>
-          );
-        } else if (params.row.customer_id.gender == 'nam') {
+        if (params.row.customer_id.gender == 1) {
           return (
             <span>
               Anh {params.row.customer_id.fullname}
@@ -125,34 +121,43 @@ export default function ListContracts() {
       axios
         .delete(`${LIST_CONTRACTS}/` + id)
         .then(() => {
+          setOpen(true);
           setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách hợp đồng"
-      secondary={
-        <Button variant="contained" href="/contracts/add-contracts">
-          Thêm mới
-        </Button>
-      }
-    >
-      {data.length !== 0 ? (
-        <DataGrid
-          rows={data}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
-        />
-      ) : (
-        ''
-      )}
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách hợp đồng"
+        secondary={
+          <Button variant="contained" href="/contracts/add-contracts">
+            Thêm mới
+          </Button>
+        }
+      >
+        {data.length !== 0 ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

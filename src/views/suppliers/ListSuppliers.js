@@ -7,12 +7,16 @@ import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
 export default function ListSupplier() {
+  const [open, setOpen] = useState(false);
+
   const columns = [
     { field: 'name', headerName: 'Tên nhà cung cấp', width: 140 },
     { field: 'company', headerName: 'Tên công ty', width: 250 },
@@ -54,34 +58,43 @@ export default function ListSupplier() {
       axios
         .delete(`${LIST_SUPPLIER}/` + id)
         .then(() => {
+          setOpen(true);
           setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách"
-      secondary={
-        <Button variant="contained" href="/suppliers/add-suppliers">
-          Thêm mới
-        </Button>
-      }
-    >
-      {data.length !== 0 ? (
-        <DataGrid
-          rows={data}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
-        />
-      ) : (
-        ''
-      )}
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách"
+        secondary={
+          <Button variant="contained" href="/suppliers/add-suppliers">
+            Thêm mới
+          </Button>
+        }
+      >
+        {data.length !== 0 ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

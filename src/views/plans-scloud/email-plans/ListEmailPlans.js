@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -29,6 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ListEmailPlans() {
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadListEmailPlans();
@@ -48,68 +51,77 @@ export default function ListEmailPlans() {
       axios
         .delete(`${LIST_EMAIL_PLANS}/` + id)
         .then(() => {
+          setOpen(true);
           setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách"
-      secondary={
-        <Button variant="contained" href="/plans/add-email">
-          Thêm mới
-        </Button>
-      }
-    >
-      <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-        <Grid container spacing={1}>
-          {data.map((item) => (
-            <Grid item xs={3} key={item._id}>
-              <Item>
-                <Card sx={{ maxWidth: 400, textAlign: 'center' }} variant="outlined">
-                  <CardContent sx={{ pb: 2 }}>
-                    <Typography gutterBottom variant="h2" component="div">
-                      {item.name}
-                    </Typography>
-                    <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>{convertPrice(item.price)} / tháng</Typography>
-                    <Typography sx={{ fontSize: 14, pt: 1, pb: 1, fontStyle: 'italic' }} color="text.secondary">
-                      (Giá trên chưa bao gồm VAT)
-                    </Typography>
-                    <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>Nhà cung cấp: {item.supplier_id.name}</Typography>
-                    <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity} GB</Typography>
-                    <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Địa chỉ Email: {item.account} tài khoản</Typography>
-                    <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>SSL Let&quot;s Encrypt: Miễn phí</Typography>
-                    <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Tùy chỉnh dung lượng từng tài khoản</Typography>
-                    <Divider />
-                    <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Sao lưu dữ liệu hàng tuần</Typography>
-                    <Divider />
-                  </CardContent>
-                  <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                    <Button size="small" variant="contained" href={`/plans/update-email/${item._id}`} sx={{ mr: 1 }}>
-                      Cập nhật
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="error"
-                      startIcon={<DeleteIcon />}
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Xóa
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách"
+        secondary={
+          <Button variant="contained" href="/plans/add-email">
+            Thêm mới
+          </Button>
+        }
+      >
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+          <Grid container spacing={1}>
+            {data.map((item) => (
+              <Grid item xs={3} key={item._id}>
+                <Item>
+                  <Card sx={{ maxWidth: 400, textAlign: 'center' }} variant="outlined">
+                    <CardContent sx={{ pb: 2 }}>
+                      <Typography gutterBottom variant="h2" component="div">
+                        {item.name}
+                      </Typography>
+                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>{convertPrice(item.price)} / tháng</Typography>
+                      <Typography sx={{ fontSize: 14, pt: 1, pb: 1, fontStyle: 'italic' }} color="text.secondary">
+                        (Giá trên chưa bao gồm VAT)
+                      </Typography>
+                      <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>Nhà cung cấp: {item.supplier_id.name}</Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity} GB</Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Địa chỉ Email: {item.account} tài khoản</Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>SSL Let&quot;s Encrypt: Miễn phí</Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Tùy chỉnh dung lượng từng tài khoản</Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Sao lưu dữ liệu hàng tuần</Typography>
+                      <Divider />
+                    </CardContent>
+                    <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
+                      <Button size="small" variant="contained" href={`/plans/update-email/${item._id}`} sx={{ mr: 1 }}>
+                        Cập nhật
+                      </Button>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color="error"
+                        startIcon={<DeleteIcon />}
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        Xóa
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Item>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

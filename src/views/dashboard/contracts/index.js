@@ -39,15 +39,7 @@ export default function RemainingContracts() {
       headerName: 'Khách hàng',
       width: 280,
       renderCell: (params) => {
-        if (params.row.customer_id.gender == 'Nam') {
-          return (
-            <span>
-              Anh {params.row.customer_id.fullname}
-              <br />
-              {params.row.customer_id.email} / {params.row.customer_id.phone}
-            </span>
-          );
-        } else if (params.row.customer_id.gender == 'nam') {
+        if (params.row.customer_id.gender == 1) {
           return (
             <span>
               Anh {params.row.customer_id.fullname}

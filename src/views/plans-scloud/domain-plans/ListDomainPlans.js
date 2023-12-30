@@ -7,12 +7,16 @@ import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../../config';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 
 export default function ListDomainPlans() {
+  const [open, setOpen] = useState(false);
+
   const columns = [
     { field: 'name', headerName: 'Tên miền', width: 300 },
     {
@@ -60,34 +64,43 @@ export default function ListDomainPlans() {
       axios
         .delete(`${LIST_DOMAIN_PLANS}/` + id)
         .then(() => {
+          setOpen(true);
           setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <MainCard
-      title="Danh sách"
-      secondary={
-        <Button variant="contained" href="/plans/add-domain">
-          Thêm mới
-        </Button>
-      }
-    >
-      {data.length ? (
-        <DataGrid
-          rows={data}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
-        />
-      ) : (
-        ''
-      )}
-    </MainCard>
+    <>
+      <MainCard
+        title="Danh sách"
+        secondary={
+          <Button variant="contained" href="/plans/add-domain">
+            Thêm mới
+          </Button>
+        }
+      >
+        {data.length ? (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        ) : (
+          ''
+        )}
+      </MainCard>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+    </>
   );
 }

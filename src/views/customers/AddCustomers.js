@@ -1,6 +1,6 @@
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { FileUploader } from 'react-drag-drop-files';
 
 import { styled } from '@mui/material/styles';
@@ -18,11 +18,11 @@ import Select from '@mui/material/Select';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-// import config from '../../config';
+import config from '../../config';
 
-const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF'];
+const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
-// const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -33,7 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function AddCustomers() {
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [fullname, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -50,7 +50,7 @@ export default function AddCustomers() {
   const [imageFrontView, setImageFrontView] = useState('');
   const [imageBackView, setImageBackView] = useState('');
 
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleChangeFrontView = (file) => {
     setImageFrontView(file);
@@ -82,32 +82,38 @@ export default function AddCustomers() {
       return;
     }
 
-    const addCustomers = {
-      fullname: fullname,
-      email: email,
-      gender: gender,
-      idNumber: idNumber,
-      phone: phone,
-      address: address,
-      company: company,
-      tax_code: taxCode,
-      address_company: addressCompany,
-      representative: representative,
-      representative_hotline: representativeHotline,
-      image_front_view: imageFrontView,
-      image_back_view: imageBackView
-    };
-    console.log(addCustomers);
+    const formDataCustomer = new FormData();
+    formDataCustomer.append('fullname', fullname);
+    formDataCustomer.append('email', email);
+    formDataCustomer.append('gender', gender);
+    formDataCustomer.append('idNumber', idNumber);
+    formDataCustomer.append('phone', phone);
+    formDataCustomer.append('address', address);
+    formDataCustomer.append('company', company);
+    formDataCustomer.append('tax_code', taxCode);
+    formDataCustomer.append('address_company', addressCompany);
+    formDataCustomer.append('representative', representative);
+    formDataCustomer.append('representative_hotline', representativeHotline);
+    formDataCustomer.append('mail_vat', mailVat);
+    formDataCustomer.append('image_front_view', imageFrontView);
+    formDataCustomer.append('image_back_view', imageBackView);
 
-    // axios
-    //   .post(`${LIST_CUSTOMERS}`, addCustomers)
-    //   .then(() => {
-    //     setOpen(true);
-    //     setInterval(() => {
-    //       navigate('/customers/list-customers');
-    //     }, 1500);
-    //   })
-    //   .catch((error) => console.log(error));
+    const config_header = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    axios
+      .post(`${LIST_CUSTOMERS}`, formDataCustomer, config_header)
+      .then(() => {
+        setOpen(true);
+        setInterval(() => {
+          navigate('/customers/list-customers');
+        }, 1500);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -349,7 +355,7 @@ export default function AddCustomers() {
           </Grid>
         </Box>
       </MainCard>
-      <Snackbar open="" anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
