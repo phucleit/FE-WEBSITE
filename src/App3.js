@@ -4,7 +4,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // routing
-import Routes from 'routes';
+import Signin from 'routes';
+import Main from './routes/main';
 
 // defaultTheme
 import themes from 'themes';
@@ -16,13 +17,14 @@ import NavigationScroll from 'layout/NavigationScroll';
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
         <NavigationScroll>
-          <Routes />
+          {isAuthenticated ? <Main /> : <Signin />}
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

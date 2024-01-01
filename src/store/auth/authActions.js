@@ -1,6 +1,8 @@
-import { SET_AUTHENTICATED } from './authTypes';
+export const signin = (userData) => ({
+  type: 'SIGNIN',
+  payload: userData
+});
 
-export const setAuthenticated = (isAuthenticated) => ({
-  type: SET_AUTHENTICATED,
-  payload: isAuthenticated
+export const logout = () => ({
+  type: 'LOGOUT'
 });

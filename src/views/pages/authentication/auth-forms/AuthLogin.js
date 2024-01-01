@@ -1,50 +1,39 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setAuthenticated } from '../../../../store/auth/authActions';
-
-// material-ui
-import { useTheme } from '@mui/material/styles';
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Stack
-} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import Button from '@mui/material/Button';
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-// third party
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { signin } from '../../../../store/auth/authActions';
 
-// project imports
-import useScriptRef from 'hooks/useScriptRef';
-import AnimateButton from 'ui-component/extended/AnimateButton';
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'left',
+  color: theme.palette.text.secondary
+}));
 
-// assets
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-// ============================|| FIREBASE - LOGIN ||============================ //
-
-const FirebaseLogin = ({ ...others }) => {
+export default function Signin() {
   let navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-
   const dispatch = useDispatch();
-
-  const theme = useTheme();
-  const scriptedRef = useScriptRef();
-  const [checked, setChecked] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [open, setOpen] = useState(false);
+  const [openErrorNotFound, setOpenErrorNotFound] = useState(false);
+  const [openErrorWrong, setOpenErrorWrong] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -55,74 +44,72 @@ const FirebaseLogin = ({ ...others }) => {
     event.preventDefault();
   };
 
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    const info = {
+      username: username,
+      password: password
+    };
+
+    const res = await fetch('http://localhost:8000/v1/users/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(info),
+      credentials: 'include'
+    });
+
+    const statusCode = res.status;
+    if (statusCode == 404) {
+      setOpenErrorNotFound(true);
+      setInterval(() => {
+        setOpenErrorNotFound(false);
+      }, 1100);
+    } else if (statusCode == 401) {
+      setOpenErrorWrong(true);
+      setInterval(() => {
+        setOpenErrorWrong(false);
+      }, 1100);
+    } else {
+      setOpen(true);
+      dispatch(signin(info));
+      setInterval(() => {
+        navigate('/');
+      }, 1100);
+    }
+  };
+
   return (
     <>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          submit: null
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
-        })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          try {
-            if (scriptedRef.current) {
-              if (values.email == 'adminitv@gmail.com' && values.password == '123456') {
-                localStorage.setItem('isAuthenticated', 'true');
-                dispatch(setAuthenticated(true));
-                setOpen(true);
-                setInterval(() => {
-                  navigate('/');
-                }, 1500);
-                setStatus({ success: true });
-                setSubmitting(true);
-              } else {
-                alert('Sai thông tin đăng nhập!');
-              }
-            }
-          } catch (err) {
-            console.error(err);
-            if (scriptedRef.current) {
-              setStatus({ success: false });
-              setErrors({ submit: err.message });
-              setSubmitting(false);
-            }
-          }
-        }}
-      >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-          <form noValidate onSubmit={handleSubmit} {...others}>
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-email-login"
-                type="email"
-                value={values.email}
-                name="email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                label="Email Address / Username"
-                inputProps={{}}
+      <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Grid item xs={12}>
+          <Item style={{ boxShadow: 'none' }}>
+            <FormControl variant="standard" fullWidth>
+              <InputLabel>Tên đăng nhập</InputLabel>
+              <Input
+                id="username"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required={true}
+                placeholder="Nhập tên đăng nhập..."
               />
-              {touched.email && errors.email && (
-                <FormHelperText error id="standard-weight-helper-text-email-login">
-                  {errors.email}
-                </FormHelperText>
-              )}
             </FormControl>
-
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-login"
+          </Item>
+        </Grid>
+        <Grid item xs={12}>
+          <Item style={{ boxShadow: 'none' }}>
+            <FormControl variant="standard" fullWidth>
+              <InputLabel>Mật khẩu</InputLabel>
+              <Input
                 type={showPassword ? 'text' : 'password'}
-                value={values.password}
+                id="password"
                 name="password"
-                onBlur={handleBlur}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required={true}
+                placeholder="Nhập mật khẩu..."
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -136,44 +123,27 @@ const FirebaseLogin = ({ ...others }) => {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
-                inputProps={{}}
               />
-              {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-login">
-                  {errors.password}
-                </FormHelperText>
-              )}
             </FormControl>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-              <FormControlLabel
-                control={
-                  <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
-                }
-                label="Remember me"
-              />
-            </Stack>
-            {errors.submit && (
-              <Box sx={{ mt: 3 }}>
-                <FormHelperText error>{errors.submit}</FormHelperText>
-              </Box>
-            )}
-
-            <Box sx={{ mt: 2 }}>
-              <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                  Đăng nhập
-                </Button>
-              </AnimateButton>
-            </Box>
-          </form>
-        )}
-      </Formik>
+          </Item>
+        </Grid>
+        <Grid item xs={12}>
+          <Item style={{ boxShadow: 'none', textAlign: 'center' }}>
+            <Button variant="contained" size="medium" onClick={handleSignin}>
+              Đăng nhập
+            </Button>
+          </Item>
+        </Grid>
+      </Box>
+      <Snackbar open={openErrorNotFound} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="error">Tài khoản không tồn tại!</Alert>
+      </Snackbar>
+      <Snackbar open={openErrorWrong} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+        <Alert severity="error">Vui lòng nhập đúng tài khoản!</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Đăng nhập thành công!</Alert>
       </Snackbar>
     </>
   );
-};
-
-export default FirebaseLogin;
+}

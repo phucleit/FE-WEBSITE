@@ -1,15 +1,21 @@
-import { SET_AUTHENTICATED } from './authTypes';
-
 const initialState = {
-  isAuthenticated: false
+  isAuthenticated: false,
+  user: null
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTHENTICATED:
+    case 'SIGNIN':
       return {
         ...state,
-        isAuthenticated: action.payload
+        isAuthenticated: true,
+        user: action.payload
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null
       };
     default:
       return state;
