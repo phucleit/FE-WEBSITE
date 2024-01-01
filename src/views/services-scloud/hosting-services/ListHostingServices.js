@@ -199,7 +199,7 @@ export default function ListHostingServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-hosting">
+          <Button variant="contained" component={Link} to="/services/add-hosting">
             Thêm mới
           </Button>
         }

@@ -185,7 +185,7 @@ export default function ListDomainServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-domain">
+          <Button variant="contained" component={Link} to="/services/add-domain">
             Thêm mới
           </Button>
         }

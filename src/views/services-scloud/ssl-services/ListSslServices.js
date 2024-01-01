@@ -198,7 +198,7 @@ export default function ListSslServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-ssl">
+          <Button variant="contained" component={Link} to="/services/add-ssl">
             Thêm mới
           </Button>
         }

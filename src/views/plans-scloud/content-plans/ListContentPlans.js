@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -66,7 +67,7 @@ export default function ListContentPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/plans/add-content">
+          <Button variant="contained" component={Link} to="/plans/add-content">
             Thêm mới
           </Button>
         }
@@ -89,7 +90,7 @@ export default function ListContentPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button size="small" variant="contained" href={`/plans/update-content/${item._id}`} sx={{ mr: 1 }}>
+                      <Button size="small" variant="contained" component={Link} to={`/plans/update-content/${item._id}`} sx={{ mr: 1 }}>
                         Cập nhật
                       </Button>
                       <Button

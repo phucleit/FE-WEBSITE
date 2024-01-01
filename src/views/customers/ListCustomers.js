@@ -91,7 +91,7 @@ export default function ListCustomers() {
       <MainCard
         title="Danh sách khách hàng"
         secondary={
-          <Button variant="contained" href="/customers/add-customers">
+          <Button variant="contained" component={Link} to="/customers/add-customers">
             Thêm mới
           </Button>
         }

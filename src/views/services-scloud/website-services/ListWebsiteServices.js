@@ -152,7 +152,7 @@ export default function ListWebsiteServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-website">
+          <Button variant="contained" component={Link} to="/services/add-website">
             Thêm mới
           </Button>
         }

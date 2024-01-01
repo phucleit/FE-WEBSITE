@@ -132,7 +132,8 @@ export default function TotalPriceServices() {
             <Grid container alignItems="center">
               <Grid item>
                 <Typography sx={{ fontSize: '18px', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                  • Tổng chi phí: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}
+                  • Tổng chi phí:<span> </span>
+                  {totalPrice ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice) : '0 ₫'}
                 </Typography>
               </Grid>
             </Grid>
@@ -141,7 +142,8 @@ export default function TotalPriceServices() {
             <Grid container alignItems="center">
               <Grid item>
                 <Typography sx={{ fontSize: '18px', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                  • Đã thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(depositAmount)}
+                  • Đã thanh toán:<span> </span>
+                  {depositAmount ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(depositAmount) : '0 ₫'}
                 </Typography>
               </Grid>
             </Grid>
@@ -150,7 +152,8 @@ export default function TotalPriceServices() {
             <Grid container alignItems="center">
               <Grid item>
                 <Typography sx={{ fontSize: '18px', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                  • Chưa thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remainingCost)}
+                  • Chưa thanh toán:<span> </span>
+                  {remainingCost ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remainingCost) : '0 ₫'}
                 </Typography>
               </Grid>
             </Grid>

@@ -179,7 +179,7 @@ export default function ListContentServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-content">
+          <Button variant="contained" component={Link} to="/services/add-content">
             Thêm mới
           </Button>
         }

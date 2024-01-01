@@ -79,7 +79,7 @@ export default function ListDomainPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/plans/add-domain">
+          <Button variant="contained" component={Link} to="/plans/add-domain">
             Thêm mới
           </Button>
         }

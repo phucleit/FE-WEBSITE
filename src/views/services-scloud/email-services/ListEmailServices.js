@@ -198,7 +198,7 @@ export default function ListEmailServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/services/add-email">
+          <Button variant="contained" component={Link} to="/services/add-email">
             Thêm mới
           </Button>
         }

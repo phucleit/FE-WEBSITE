@@ -191,25 +191,27 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang sử dụng
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countDomainServices}
+                        {countDomainServices ? countDomainServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ sắp hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countDomainExpiringServices}
+                        {countDomainExpiringServices ? countDomainExpiringServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                        {countDomainExpiredServices}
+                        {countDomainExpiredServices ? countDomainExpiredServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceDomainServices)}
+                        {totalPriceDomainServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceDomainServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -242,25 +244,27 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang sử dụng
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countHostingServices}
+                        {countHostingServices ? countHostingServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ sắp hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countHostingExpiringServices}
+                        {countHostingExpiringServices ? countHostingExpiringServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                        {countHostingExpiredServices}
+                        {countHostingExpiredServices ? countHostingExpiredServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceHostingServices)}
+                        {totalPriceHostingServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceHostingServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -293,25 +297,27 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang sử dụng
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countSslServices}
+                        {countSslServices ? countSslServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ sắp hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countSslExpiringServices}
+                        {countSslExpiringServices ? countSslExpiringServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                        {countSslExpiredServices}
+                        {countSslExpiredServices ? countSslExpiredServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceSslServices)}
+                        {totalPriceSslServices
+                          ? Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceSslServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -344,25 +350,27 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang sử dụng
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countEmailServices}
+                        {countEmailServices ? countEmailServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ sắp hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countEmailExpiringServices}
+                        {countEmailExpiringServices ? countEmailExpiringServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                        {countEmailExpiredServices}
+                        {countEmailExpiredServices ? countEmailExpiredServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceEmailServices)}
+                        {totalPriceEmailServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceEmailServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -395,13 +403,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang hoạt động
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countWebsiteServices}
+                        {countWebsiteServices ? countWebsiteServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đã đóng
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countWebsiteClosedServices}
+                        {countWebsiteClosedServices ? countWebsiteClosedServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
@@ -413,7 +421,9 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)}
+                        {totalPriceWebsiteServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -446,25 +456,27 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ đang sử dụng
                       <Button sx={{ ml: 2 }} variant="contained" size="small">
-                        {countContentServices}
+                        {countContentServices ? countContentServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ sắp hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
-                        {countContentExpiringServices}
+                        {countContentExpiringServices ? countContentExpiringServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Dịch vụ hết hạn
                       <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
-                        {countContentExpiredServices}
+                        {countContentExpiredServices ? countContentExpiredServices : '0'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)}
+                        {totalPriceContentServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)
+                          : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>

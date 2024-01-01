@@ -73,7 +73,7 @@ export default function ListSupplier() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" href="/suppliers/add-suppliers">
+          <Button variant="contained" component={Link} to="/suppliers/add-suppliers">
             Thêm mới
           </Button>
         }

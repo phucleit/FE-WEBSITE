@@ -4,9 +4,10 @@ import plans from './plans';
 import services from './services';
 import customers from './customers';
 import contracts from './contracts';
+import users from './users';
 
 const menuItems = {
-  items: [dashboard, suppliers, plans, customers, services, contracts]
+  items: [dashboard, users, suppliers, plans, customers, services, contracts]
 };
 
 export default menuItems;
