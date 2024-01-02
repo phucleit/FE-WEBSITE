@@ -61,7 +61,8 @@ export default function AddUser() {
 
     const config_header = {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
       }
     };
 
@@ -71,6 +72,7 @@ export default function AddUser() {
         setOpen(true);
         setInterval(() => {
           navigate('/users/list-users');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

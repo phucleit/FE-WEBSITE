@@ -67,7 +67,11 @@ export default function ListCustomers() {
   }, []);
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 

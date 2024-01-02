@@ -160,19 +160,31 @@ export default function ListSslServices() {
   }, []);
 
   const loadListSslServices = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}`);
+    const result = await axios.get(`${LIST_SSL_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadSslServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`);
+    const result = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountSslServicesExpiring(result.data.length);
   };
 
   const loadSslServicesExpired = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/expired/all`);
+    const result = await axios.get(`${LIST_SSL_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountSslServicesExpired(result.data.length);
   };
@@ -180,7 +192,11 @@ export default function ListSslServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_SSL_SERVICES}/` + id)
+        .delete(`${LIST_SSL_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

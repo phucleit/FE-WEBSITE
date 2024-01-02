@@ -52,7 +52,11 @@ export default function UpdateEmailPlans() {
   }, []);
 
   const loadDetailEmailPlans = async () => {
-    const result = await axios.get(`${LIST_EMAIL_PLANS}/${currentId}`);
+    const result = await axios.get(`${LIST_EMAIL_PLANS}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPrice(result.data.price);
     setAccount(result.data.account);
@@ -61,7 +65,11 @@ export default function UpdateEmailPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -96,11 +104,16 @@ export default function UpdateEmailPlans() {
     };
 
     axios
-      .put(`${LIST_EMAIL_PLANS}/${currentId}`, updateEmailPlans)
+      .put(`${LIST_EMAIL_PLANS}/${currentId}`, updateEmailPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-email');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

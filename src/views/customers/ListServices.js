@@ -48,7 +48,11 @@ export default function ListServices() {
   }, []);
 
   const loadListServicesSuppliers = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/${currentId}`);
+    const result = await axios.get(`${CUSTOMER_DETAIL}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDomainServices(result.data[0].domain_services);
     setHostingServices(result.data[0].hosting_services);
     setEmailServices(result.data[0].email_services);

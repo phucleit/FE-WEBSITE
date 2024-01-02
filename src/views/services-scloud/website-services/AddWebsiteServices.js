@@ -50,12 +50,20 @@ export default function AddWebsiteServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainServices(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -69,11 +77,16 @@ export default function AddWebsiteServices() {
     };
 
     axios
-      .post(`${LIST_WEBSITE_SERVICES}`, addWebsiteServices)
+      .post(`${LIST_WEBSITE_SERVICES}`, addWebsiteServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-website');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

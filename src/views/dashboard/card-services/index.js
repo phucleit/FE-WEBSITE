@@ -70,26 +70,50 @@ export default function CardServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDataDomainServices(result.data);
     setCountDomainServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
+    const expiring = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountDomainExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
+    const expired = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountDomainExpiredServices(expired.data.length);
   };
 
   const loadListHostingServices = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}`);
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDataHostingServices(result.data);
     setCountHostingServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
+    const expiring = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountHostingExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`);
+    const expired = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountHostingExpiredServices(expired.data.length);
   };
 
@@ -98,43 +122,83 @@ export default function CardServices() {
     setDataSslServices(result.data);
     setCountSslServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`);
+    const expiring = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountSslExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_SSL_SERVICES}/expired/all`);
+    const expired = await axios.get(`${LIST_SSL_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountSslExpiredServices(expired.data.length);
   };
 
   const loadListEmailServices = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}`);
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDataEmailServices(result.data);
     setCountEmailServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`);
+    const expiring = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountEmailExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`);
+    const expired = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountEmailExpiredServices(expired.data.length);
   };
 
   const loadListWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`);
+    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDataWebsiteServices(result.data);
     setCountWebsiteServices(result.data.length);
 
-    const closed = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`);
+    const closed = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountWebsiteClosedServices(closed.data.length);
   };
 
   const loadListContentServices = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}`);
+    const result = await axios.get(`${LIST_CONTENT_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDataContentServices(result.data);
     setCountContentServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`);
+    const expiring = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountContentExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`);
+    const expired = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setCountContentExpiredServices(expired.data.length);
   };
 

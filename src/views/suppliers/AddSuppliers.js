@@ -73,11 +73,16 @@ export default function AddSuppliers() {
     };
 
     axios
-      .post(`${LIST_SUPPLIER}`, addSuppliers)
+      .post(`${LIST_SUPPLIER}`, addSuppliers, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/suppliers/list-suppliers');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

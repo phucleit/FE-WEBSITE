@@ -112,7 +112,11 @@ export default function ListContracts() {
   }, []);
 
   const loadListContracts = async () => {
-    const result = await axios.get(`${LIST_CONTRACTS}`);
+    const result = await axios.get(`${LIST_CONTRACTS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 

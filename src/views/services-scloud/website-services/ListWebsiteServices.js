@@ -120,13 +120,21 @@ export default function ListWebsiteServices() {
   }, []);
 
   const loadListWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`);
+    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListWebsiteClosed = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`);
+    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountWebsiteServicesClosed(result.data.length);
   };
@@ -134,7 +142,11 @@ export default function ListWebsiteServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_WEBSITE_SERVICES}/` + id)
+        .delete(`${LIST_WEBSITE_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

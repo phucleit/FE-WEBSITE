@@ -49,7 +49,11 @@ export default function UpdateSuppliers() {
   }, []);
 
   const loadDetailSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
+    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data[0].name);
     setCompany(result.data[0].company);
     setTaxCode(result.data[0].tax_code);
@@ -92,11 +96,16 @@ export default function UpdateSuppliers() {
     };
 
     axios
-      .put(`${LIST_SUPPLIER}/${currentId}`, updateSuppliers)
+      .put(`${LIST_SUPPLIER}/${currentId}`, updateSuppliers, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/suppliers/list-suppliers');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

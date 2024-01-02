@@ -49,14 +49,22 @@ export default function ListSupplier() {
   }, []);
 
   const loadListSupplier = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_SUPPLIER}/` + id)
+        .delete(`${LIST_SUPPLIER}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

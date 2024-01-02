@@ -54,7 +54,11 @@ export default function UpdateWebsiteServices() {
   }, []);
 
   const loadDetailWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/${currentId}`);
+    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDomainServiceId(result.data.domain_service_id._id);
     setPrice(result.data.price);
     setCustomerId(result.data.customer_id._id);
@@ -62,12 +66,20 @@ export default function UpdateWebsiteServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainServices(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -82,11 +94,16 @@ export default function UpdateWebsiteServices() {
     };
 
     axios
-      .put(`${LIST_WEBSITE_SERVICES}/${currentId}`, updateWebsiteServices)
+      .put(`${LIST_WEBSITE_SERVICES}/${currentId}`, updateWebsiteServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-website');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

@@ -141,19 +141,31 @@ export default function ListContentServices() {
   }, []);
 
   const loadListContentServices = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}`);
+    const result = await axios.get(`${LIST_CONTENT_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadContentServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`);
+    const result = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     // setData(result.data);
     setCountContentServicesExpiring(result.data.length);
   };
 
   const loadContentServicesExpired = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`);
+    const result = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     // setData(result.data);
     setCountContentServicesExpired(result.data.length);
   };
@@ -161,7 +173,11 @@ export default function ListContentServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_CONTENT_SERVICES}/` + id)
+        .delete(`${LIST_CONTENT_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

@@ -51,12 +51,20 @@ export default function AddDomainServices() {
   }, []);
 
   const loadListDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}`);
+    const result = await axios.get(`${LIST_DOMAIN_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -75,11 +83,16 @@ export default function AddDomainServices() {
     };
 
     axios
-      .post(`${LIST_DOMAIN_SERVICES}`, addDomainServices)
+      .post(`${LIST_DOMAIN_SERVICES}`, addDomainServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-domain');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

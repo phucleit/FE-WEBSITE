@@ -53,17 +53,29 @@ export default function AddHostingServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainServices(result.data);
   };
 
   const loadListHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}`);
+    const result = await axios.get(`${LIST_HOSTING_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListHostingPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -78,11 +90,16 @@ export default function AddHostingServices() {
     };
 
     axios
-      .post(`${LIST_HOSTING_SERVICES}`, addHostingServices)
+      .post(`${LIST_HOSTING_SERVICES}`, addHostingServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-hosting');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

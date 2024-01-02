@@ -47,7 +47,11 @@ export default function AddDomainPlans() {
   }, []);
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -70,11 +74,16 @@ export default function AddDomainPlans() {
     };
 
     axios
-      .post(`${LIST_DOMAIN_PLANS}`, addDomainPlans)
+      .post(`${LIST_DOMAIN_PLANS}`, addDomainPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-domain');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

@@ -56,7 +56,11 @@ export default function UpdateSslServices() {
   }, []);
 
   const loadDetailSslServices = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/${currentId}`);
+    const result = await axios.get(`${LIST_SSL_SERVICES}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDomainServiceId(result.data.domain_service_id._id);
     setSslPlanId(result.data.ssl_plan_id._id);
     setPeriods(result.data.periods);
@@ -64,17 +68,29 @@ export default function UpdateSslServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainServices(result.data);
   };
 
   const loadListSslPlans = async () => {
-    const result = await axios.get(`${LIST_SSL_PLANS}`);
+    const result = await axios.get(`${LIST_SSL_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSslPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -89,11 +105,16 @@ export default function UpdateSslServices() {
     };
 
     axios
-      .put(`${LIST_SSL_SERVICES}/${currentId}`, updateSslServices)
+      .put(`${LIST_SSL_SERVICES}/${currentId}`, updateSslServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-ssl');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

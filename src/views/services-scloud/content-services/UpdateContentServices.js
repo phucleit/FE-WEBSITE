@@ -52,19 +52,31 @@ export default function UpdateContentServices() {
   }, []);
 
   const loadDetailContentServices = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}/${currentId}`);
+    const result = await axios.get(`${LIST_CONTENT_SERVICES}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setContentPlanId(result.data.content_plan_id._id);
     setPeriods(result.data.periods);
     setCustomerId(result.data.customer_id._id);
   };
 
   const loadListContentPlans = async () => {
-    const result = await axios.get(`${LIST_CONTENT_PLANS}`);
+    const result = await axios.get(`${LIST_CONTENT_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListContentPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -78,11 +90,16 @@ export default function UpdateContentServices() {
     };
 
     axios
-      .put(`${LIST_CONTENT_SERVICES}/${currentId}`, updateContentServices)
+      .put(`${LIST_CONTENT_SERVICES}/${currentId}`, updateContentServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-content');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

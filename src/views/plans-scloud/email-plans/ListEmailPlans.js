@@ -39,7 +39,11 @@ export default function ListEmailPlans() {
   }, []);
 
   const loadListEmailPlans = async () => {
-    const result = await axios.get(`${LIST_EMAIL_PLANS}`);
+    const result = await axios.get(`${LIST_EMAIL_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
@@ -50,7 +54,11 @@ export default function ListEmailPlans() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_EMAIL_PLANS}/` + id)
+        .delete(`${LIST_EMAIL_PLANS}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

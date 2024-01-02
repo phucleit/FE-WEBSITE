@@ -130,7 +130,8 @@ export default function UpdateCustomers() {
     const config_header = {
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Cache-Control': 'no-cache'
       }
     };
 
@@ -140,6 +141,7 @@ export default function UpdateCustomers() {
         setOpen(true);
         setInterval(() => {
           navigate('/customers/list-customers');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

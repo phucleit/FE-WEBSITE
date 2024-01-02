@@ -50,14 +50,22 @@ export default function UpdateDomainPlans() {
   }, []);
 
   const loadDetailDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}/${currentId}`);
+    const result = await axios.get(`${LIST_DOMAIN_PLANS}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPrice(result.data.price);
     setSupplier(result.data.supplier_id._id);
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -80,11 +88,16 @@ export default function UpdateDomainPlans() {
     };
 
     axios
-      .put(`${LIST_DOMAIN_PLANS}/${currentId}`, updateDomainPlans)
+      .put(`${LIST_DOMAIN_PLANS}/${currentId}`, updateDomainPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-domain');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

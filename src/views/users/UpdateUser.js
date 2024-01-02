@@ -44,7 +44,11 @@ export default function UpdateUser() {
   }, []);
 
   const loadDetailUser = async () => {
-    const result = await axios.get(`${LIST_USER}/${currentId}`);
+    const result = await axios.get(`${LIST_USER}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setUsername(result.data.username);
     setEmail(result.data.email);
     setPassword(result.data.password);
@@ -75,7 +79,8 @@ export default function UpdateUser() {
 
     const config_header = {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
       }
     };
 
@@ -85,6 +90,7 @@ export default function UpdateUser() {
         setOpen(true);
         setInterval(() => {
           navigate('/users/list-users');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

@@ -51,7 +51,11 @@ export default function UpdateSslPlans() {
   }, []);
 
   const loadDetailSslPlans = async () => {
-    const result = await axios.get(`${LIST_SSL_PLANS}/${currentId}`);
+    const result = await axios.get(`${LIST_SSL_PLANS}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPrice(result.data.price);
     setFeature(result.data.feature);
@@ -59,7 +63,11 @@ export default function UpdateSslPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -83,11 +91,16 @@ export default function UpdateSslPlans() {
     };
 
     axios
-      .put(`${LIST_SSL_PLANS}/${currentId}`, updateSslPlans)
+      .put(`${LIST_SSL_PLANS}/${currentId}`, updateSslPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-ssl');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

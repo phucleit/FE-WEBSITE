@@ -161,19 +161,31 @@ export default function ListHostingServices() {
   }, []);
 
   const loadListHostingServices = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}`);
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadHostingServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`);
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountHostingServicesExpiring(result.data.length);
   };
 
   const loadHostingServicesExpired = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`);
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountHostingServicesExpired(result.data.length);
   };
@@ -181,7 +193,11 @@ export default function ListHostingServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_HOSTING_SERVICES}/` + id)
+        .delete(`${LIST_HOSTING_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

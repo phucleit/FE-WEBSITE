@@ -52,7 +52,11 @@ export default function UpdateHostinglPlans() {
   }, []);
 
   const loadDetailHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}/${currentId}`);
+    const result = await axios.get(`${LIST_HOSTING_PLANS}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPrice(result.data.price);
     setAccount(result.data.account);
@@ -61,7 +65,11 @@ export default function UpdateHostinglPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -96,11 +104,16 @@ export default function UpdateHostinglPlans() {
     };
 
     axios
-      .put(`${LIST_HOSTING_PLANS}/${currentId}`, updateHostingPlans)
+      .put(`${LIST_HOSTING_PLANS}/${currentId}`, updateHostingPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-hosting');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

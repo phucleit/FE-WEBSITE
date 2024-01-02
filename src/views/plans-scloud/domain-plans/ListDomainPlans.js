@@ -55,14 +55,22 @@ export default function ListDomainPlans() {
   }, []);
 
   const loadListDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}`);
+    const result = await axios.get(`${LIST_DOMAIN_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_DOMAIN_PLANS}/` + id)
+        .delete(`${LIST_DOMAIN_PLANS}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

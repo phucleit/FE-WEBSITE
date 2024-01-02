@@ -51,14 +51,22 @@ export default function ListUser() {
   }, []);
 
   const loadListUsers = async () => {
-    const result = await axios.get(`${LIST_USERS}`);
+    const result = await axios.get(`${LIST_USERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_CONTRACTS}/` + id)
+        .delete(`${LIST_USERS}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

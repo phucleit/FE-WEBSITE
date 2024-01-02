@@ -31,7 +31,11 @@ export default function ListSupplierPlans() {
   }, []);
 
   const loadListPlanSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`);
+    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setDomainPlans(result.data[0].domainPlans);
     setEmailPlans(result.data[0].emailPlans);
     setHostingPlans(result.data[0].hostingPlans);

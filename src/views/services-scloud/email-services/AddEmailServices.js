@@ -53,17 +53,29 @@ export default function AddEmailServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainServices(result.data);
   };
 
   const loadListEmailPlans = async () => {
-    const result = await axios.get(`${LIST_EMAIL_PLANS}`);
+    const result = await axios.get(`${LIST_EMAIL_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListEmailPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -78,11 +90,16 @@ export default function AddEmailServices() {
     };
 
     axios
-      .post(`${LIST_EMAIL_SERVICES}`, addEmailServices)
+      .post(`${LIST_EMAIL_SERVICES}`, addEmailServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-email');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

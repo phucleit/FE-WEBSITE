@@ -39,7 +39,11 @@ export default function ListSslPlans() {
   }, []);
 
   const loadListSslPlans = async () => {
-    const result = await axios.get(`${LIST_SSL_PLANS}`);
+    const result = await axios.get(`${LIST_SSL_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
@@ -50,7 +54,11 @@ export default function ListSslPlans() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_SSL_PLANS}/` + id)
+        .delete(`${LIST_SSL_PLANS}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

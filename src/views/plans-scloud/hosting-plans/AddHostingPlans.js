@@ -49,7 +49,11 @@ export default function AddEmailPlans() {
   }, []);
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`);
+    const result = await axios.get(`${LIST_SUPPLIER}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListSupplier(result.data);
   };
 
@@ -84,11 +88,16 @@ export default function AddEmailPlans() {
     };
 
     axios
-      .post(`${LIST_HOSTING_PLANS}`, addHostingPlans)
+      .post(`${LIST_HOSTING_PLANS}`, addHostingPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-hosting');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

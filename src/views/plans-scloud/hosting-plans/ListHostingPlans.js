@@ -39,7 +39,11 @@ export default function ListHostingPlans() {
   }, []);
 
   const loadListHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}`);
+    const result = await axios.get(`${LIST_HOSTING_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
   };
 
@@ -50,7 +54,11 @@ export default function ListHostingPlans() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_HOSTING_PLANS}/` + id)
+        .delete(`${LIST_HOSTING_PLANS}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

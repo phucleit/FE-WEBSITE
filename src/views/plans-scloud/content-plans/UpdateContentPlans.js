@@ -44,7 +44,11 @@ export default function UpdateContentPlans() {
   }, []);
 
   const loadDetailSslPlans = async () => {
-    const result = await axios.get(`${LIST_CONTENT_PLANS}/${currentId}`);
+    const result = await axios.get(`${LIST_CONTENT_PLANS}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPrice(result.data.price);
     setNumberOfArticles(result.data.number_of_articles);
@@ -79,6 +83,7 @@ export default function UpdateContentPlans() {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-content');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

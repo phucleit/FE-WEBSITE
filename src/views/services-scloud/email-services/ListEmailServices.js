@@ -160,19 +160,31 @@ export default function ListEmailServices() {
   }, []);
 
   const loadListEmailServices = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}`);
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadEmailServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`);
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountEmailServicesExpiring(result.data.length);
   };
 
   const loadEmailServicesExpired = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`);
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountEmailServicesExpired(result.data.length);
   };
@@ -180,7 +192,11 @@ export default function ListEmailServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_EMAIL_SERVICES}/` + id)
+        .delete(`${LIST_EMAIL_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

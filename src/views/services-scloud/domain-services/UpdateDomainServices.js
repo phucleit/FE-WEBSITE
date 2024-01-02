@@ -54,7 +54,11 @@ export default function UpdateDomainServices() {
   }, []);
 
   const loadDetailDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/${currentId}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setName(result.data.name);
     setPeriods(result.data.periods);
     setDomainPlanId(result.data.domain_plan_id._id);
@@ -62,12 +66,20 @@ export default function UpdateDomainServices() {
   };
 
   const loadListDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}`);
+    const result = await axios.get(`${LIST_DOMAIN_PLANS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListDomainPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
@@ -82,11 +94,16 @@ export default function UpdateDomainServices() {
     };
 
     axios
-      .put(`${LIST_DOMAIN_SERVICES}/${currentId}`, updateDomainServices)
+      .put(`${LIST_DOMAIN_SERVICES}/${currentId}`, updateDomainServices, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/services/list-domain');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

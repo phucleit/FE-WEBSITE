@@ -88,14 +88,22 @@ export default function AddContracts() {
   }, [total_price, deposit_amount]);
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`);
+    const result = await axios.get(`${LIST_CUSTOMERS}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setListCustomers(result.data);
   };
 
   const handChangeCustomer = async (e) => {
     setCustomerId(e.target.value);
     try {
-      const result = await axios.get(`${LIST_CUSTOMERS}/${e.target.value}`);
+      const result = await axios.get(`${LIST_CUSTOMERS}/${e.target.value}`, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
       setCustomerDetail(result.data);
       setDomainServices(result.data[0].domain_services);
       setHostingServices(result.data[0].hosting_services);
@@ -628,11 +636,16 @@ export default function AddContracts() {
     };
 
     axios
-      .post(`${LIST_CONTRACT}`, addContract)
+      .post(`${LIST_CONTRACT}`, addContract, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/contracts/list-contracts');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => {

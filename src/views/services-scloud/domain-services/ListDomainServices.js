@@ -147,19 +147,31 @@ export default function ListDomainServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountDomainServicesExpiring(result.data.length);
   };
 
   const loadListDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`);
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
     setData(result.data);
     setCountDomainServicesExpired(result.data.length);
   };
@@ -167,7 +179,11 @@ export default function ListDomainServices() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_DOMAIN_SERVICES}/` + id)
+        .delete(`${LIST_DOMAIN_SERVICES}/` + id, {
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        })
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

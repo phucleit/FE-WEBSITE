@@ -60,11 +60,16 @@ export default function AddContentPlans() {
     };
 
     axios
-      .post(`${LIST_CONTENT_PLANS}`, addContentPlans)
+      .post(`${LIST_CONTENT_PLANS}`, addContentPlans, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then(() => {
         setOpen(true);
         setInterval(() => {
           navigate('/plans/list-content');
+          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));
