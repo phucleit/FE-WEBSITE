@@ -17,6 +17,8 @@
     "apexcharts": "^3.35.3",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
     "dayjs": "^1.11.10",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.16",

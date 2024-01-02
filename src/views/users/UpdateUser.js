@@ -12,6 +12,9 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -37,6 +40,15 @@ export default function UpdateUser() {
   const [password, setPassword] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   useEffect(() => {
     loadDetailUser();
@@ -136,12 +148,26 @@ export default function UpdateUser() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Mật khẩu</InputLabel>
                   <Input
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required={true}
                     placeholder="Nhập mật khẩu..."
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
                 </FormControl>
               </Item>
