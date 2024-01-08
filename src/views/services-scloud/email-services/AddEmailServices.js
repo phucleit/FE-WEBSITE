@@ -98,7 +98,7 @@ export default function AddEmailServices() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-email');
+          navigate('/dashboard/services/list-email');
           window.location.reload(true);
         }, 1500);
       })

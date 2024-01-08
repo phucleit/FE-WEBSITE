@@ -24,6 +24,7 @@ export default function ListUser() {
   };
 
   const columns = [
+    { field: 'display_name', headerName: 'Tên hiển thị', width: 200 },
     { field: 'username', headerName: 'Tên đăng nhập', width: 150 },
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
@@ -34,7 +35,7 @@ export default function ListUser() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/users/update-users/' + params.row._id}>
+            <Link to={'/dashboard/users/update-users/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -83,7 +84,7 @@ export default function ListUser() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/users/add-users">
+          <Button variant="contained" component={Link} to="/dashboard/users/add-users">
             Thêm mới
           </Button>
         }

@@ -68,7 +68,7 @@ export default function AddContentPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-content');
+          navigate('/dashboard/plans/list-content');
           window.location.reload(true);
         }, 1500);
       })

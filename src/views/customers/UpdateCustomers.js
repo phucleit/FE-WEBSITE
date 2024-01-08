@@ -140,7 +140,7 @@ export default function UpdateCustomers() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/customers/list-customers');
+          navigate('/dashboard/customers/list-customers');
           window.location.reload(true);
         }, 1500);
       })

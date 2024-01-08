@@ -18,6 +18,10 @@ import Snackbar from '@mui/material/Snackbar';
 
 import { signin } from '../../../../store/auth/authActions';
 
+import config from '../../../../config';
+
+const SIGNIN_USER = `${config.API_URL}/users/signin`;
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -51,31 +55,32 @@ export default function Signin() {
       password: password
     };
 
-    const res = await fetch('http://localhost:8000/v1/users/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(info),
-      credentials: 'include'
-    });
+    try {
+      const res = await fetch(`${SIGNIN_USER}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(info),
+        credentials: 'include'
+      });
 
-    const statusCode = res.status;
-    if (statusCode == 404) {
-      setOpenErrorNotFound(true);
-      setInterval(() => {
+      const statusCode = res.status;
+      if (statusCode === 404) {
+        setOpenErrorNotFound(true);
+      } else if (statusCode === 401) {
+        setOpenErrorWrong(true);
+      } else {
+        setOpen(true);
+        dispatch(signin(info));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    } finally {
+      setTimeout(() => {
         setOpenErrorNotFound(false);
-      }, 1100);
-    } else if (statusCode == 401) {
-      setOpenErrorWrong(true);
-      setInterval(() => {
         setOpenErrorWrong(false);
-      }, 1100);
-    } else {
-      setOpen(true);
-      dispatch(signin(info));
-      setInterval(() => {
-        navigate('/');
       }, 1100);
     }
   };

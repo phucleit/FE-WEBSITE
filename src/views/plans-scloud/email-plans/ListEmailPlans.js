@@ -75,7 +75,7 @@ export default function ListEmailPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/plans/add-email">
+          <Button variant="contained" component={Link} to="/dashboard/plans/add-email">
             Thêm mới
           </Button>
         }
@@ -108,7 +108,13 @@ export default function ListEmailPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button size="small" variant="contained" component={Link} to={`/plans/update-email/${item._id}`} sx={{ mr: 1 }}>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        component={Link}
+                        to={`/dashboard/plans/update-email/${item._id}`}
+                        sx={{ mr: 1 }}
+                      >
                         Cập nhật
                       </Button>
                       <Button

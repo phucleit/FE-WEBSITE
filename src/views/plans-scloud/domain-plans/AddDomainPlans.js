@@ -82,7 +82,7 @@ export default function AddDomainPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-domain');
+          navigate('/dashboard/plans/list-domain');
           window.location.reload(true);
         }, 1500);
       })

@@ -137,7 +137,7 @@ export default function ListEmailServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-email/' + params.row._id}>
+            <Link to={'/dashboard/services/update-email/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -214,7 +214,7 @@ export default function ListEmailServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-email">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-email">
             Thêm mới
           </Button>
         }

@@ -98,7 +98,7 @@ export default function UpdateContentServices() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-content');
+          navigate('/dashboard/services/list-content');
           window.location.reload(true);
         }, 1500);
       })

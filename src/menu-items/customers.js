@@ -21,14 +21,14 @@ const customers = {
           id: 'list-customers',
           title: 'Danh sách',
           type: 'item',
-          url: '/customers/list-customers',
+          url: '/dashboard/customers/list-customers',
           breadcrumbs: false
         },
         {
           id: 'add-customers',
           title: 'Thêm mới',
           type: 'item',
-          url: '/customers/add-customers',
+          url: '/dashboard/customers/add-customers',
           breadcrumbs: false
         }
       ]

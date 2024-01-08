@@ -21,14 +21,14 @@ const users = {
           id: 'list-users',
           title: 'Danh sách',
           type: 'item',
-          url: '/users/list-users',
+          url: '/dashboard/users/list-users',
           breadcrumbs: false
         },
         {
           id: 'add-users',
           title: 'Thêm mới',
           type: 'item',
-          url: '/users/add-users',
+          url: '/dashboard/users/add-users',
           breadcrumbs: false
         }
       ]

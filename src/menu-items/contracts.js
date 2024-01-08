@@ -21,14 +21,14 @@ const contracts = {
           id: 'list-contracts',
           title: 'Danh sách',
           type: 'item',
-          url: '/contracts/list-contracts',
+          url: '/dashboard/contracts/list-contracts',
           breadcrumbs: false
         },
         {
           id: 'add-contracts',
           title: 'Thêm mới',
           type: 'item',
-          url: '/contracts/add-contracts',
+          url: '/dashboard/contracts/add-contracts',
           breadcrumbs: false
         }
       ]

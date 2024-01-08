@@ -102,7 +102,7 @@ export default function UpdateDomainServices() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-domain');
+          navigate('/dashboard/services/list-domain');
           window.location.reload(true);
         }, 1500);
       })

@@ -113,7 +113,7 @@ export default function UpdateHostingServices() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-hosting');
+          navigate('/dashboard/services/list-hosting');
           window.location.reload(true);
         }, 1500);
       })

@@ -118,7 +118,7 @@ export default function ListContentServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-content/' + params.row._id}>
+            <Link to={'/dashboard/services/update-content/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -195,7 +195,7 @@ export default function ListContentServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-content">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-content">
             Thêm mới
           </Button>
         }

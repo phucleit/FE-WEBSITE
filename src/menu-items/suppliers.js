@@ -21,14 +21,14 @@ const suppliers = {
           id: 'list-suppliers',
           title: 'Danh sách',
           type: 'item',
-          url: '/suppliers/list-suppliers',
+          url: '/dashboard/suppliers/list-suppliers',
           breadcrumbs: false
         },
         {
           id: 'add-suppliers',
           title: 'Thêm mới',
           type: 'item',
-          url: '/suppliers/add-suppliers',
+          url: '/dashboard/suppliers/add-suppliers',
           breadcrumbs: false
         }
       ]

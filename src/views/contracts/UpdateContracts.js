@@ -672,7 +672,7 @@ export default function AddContracts() {
         .then(() => {
           setOpen(true);
           setInterval(() => {
-            navigate('/contracts/list-contracts');
+            navigate('/dashboard/contracts/list-contracts');
             window.location.reload(true);
           }, 1500);
         })

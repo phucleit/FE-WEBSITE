@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -31,19 +31,41 @@ import User1 from 'assets/images/users/user.jpg';
 // assets
 import { IconLogout, IconSettings } from '@tabler/icons';
 
-// ==============================|| PROFILE MENU ||============================== //
+import { logout } from '../../../../store/auth/authActions';
+
+import config from '../../../../config';
+
+const LOGOUT_USER = `${config.API_URL}/users/logout`;
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userInfo = useSelector((state) => state.auth.user);
 
   const [open, setOpen] = useState(false);
-  /**
-   * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-   * */
   const anchorRef = useRef(null);
+
   const handleLogout = async () => {
-    console.log('Logout');
+    try {
+      const res = await fetch(`${LOGOUT_USER}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (res.status === 200) {
+        dispatch(logout());
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error during logou:', error);
+    }
   };
 
   const handleClose = (event) => {
@@ -138,7 +160,7 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Xin Chào,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Phúc Lê
+                          {isAuthenticated && <p>{userInfo.username}!</p>}
                         </Typography>
                       </Stack>
                       <Typography variant="subtitle2">Admin Manager</Typography>

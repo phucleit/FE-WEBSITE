@@ -14,7 +14,7 @@ const dashboard = {
       id: 'default',
       title: 'Tổng quát',
       type: 'item',
-      url: '/',
+      url: '/dashboard',
       icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
     }

@@ -85,7 +85,7 @@ export default function AddWebsiteServices() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/services/list-website');
+          navigate('/dashboard/services/list-website');
           window.location.reload(true);
         }, 1500);
       })

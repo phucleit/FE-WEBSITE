@@ -75,7 +75,7 @@ export default function ListHostingPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/plans/add-hosting">
+          <Button variant="contained" component={Link} to="/dashboard/plans/add-hosting">
             Thêm mới
           </Button>
         }
@@ -106,7 +106,13 @@ export default function ListHostingPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button size="small" variant="contained" component={Link} to={`/plans/update-hosting/${item._id}`} sx={{ mr: 1 }}>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        component={Link}
+                        to={`/dashboard/plans/update-hosting/${item._id}`}
+                        sx={{ mr: 1 }}
+                      >
                         Cập nhật
                       </Button>
                       <Button

@@ -35,6 +35,7 @@ export default function UpdateUser() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [displayname, setDisplayname] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,6 +62,7 @@ export default function UpdateUser() {
         'Cache-Control': 'no-cache'
       }
     });
+    setDisplayname(result.data.display_name);
     setUsername(result.data.username);
     setEmail(result.data.email);
     setPassword(result.data.password);
@@ -84,6 +86,7 @@ export default function UpdateUser() {
     }
 
     const updateUser = {
+      display_name: displayname,
       username: username,
       email: email,
       password: password
@@ -101,7 +104,7 @@ export default function UpdateUser() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/users/list-users');
+          navigate('/dashboard/users/list-users');
           window.location.reload(true);
         }, 1500);
       })
@@ -113,7 +116,22 @@ export default function UpdateUser() {
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên hiển thị</InputLabel>
+                  <Input
+                    id="displayname"
+                    name="displayname"
+                    value={displayname}
+                    onChange={(e) => setDisplayname(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên hiển thị..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên đăng nhập</InputLabel>
@@ -128,7 +146,7 @@ export default function UpdateUser() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Email</InputLabel>
@@ -143,7 +161,7 @@ export default function UpdateUser() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Mật khẩu</InputLabel>

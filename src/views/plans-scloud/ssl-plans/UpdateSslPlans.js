@@ -99,7 +99,7 @@ export default function UpdateSslPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-ssl');
+          navigate('/dashboard/plans/list-ssl');
           window.location.reload(true);
         }, 1500);
       })

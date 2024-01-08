@@ -124,7 +124,7 @@ export default function ListDomainServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-domain/' + params.row._id}>
+            <Link to={'/dashboard/services/update-domain/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -201,7 +201,7 @@ export default function ListDomainServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-domain">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-domain">
             Thêm mới
           </Button>
         }

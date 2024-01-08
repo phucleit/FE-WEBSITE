@@ -104,7 +104,7 @@ export default function UpdateSuppliers() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/suppliers/list-suppliers');
+          navigate('/dashboard/suppliers/list-suppliers');
           window.location.reload(true);
         }, 1500);
       })

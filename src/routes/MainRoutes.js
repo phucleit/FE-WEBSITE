@@ -87,11 +87,11 @@ const UpdateUser = Loadable(lazy(() => import('views/users/UpdateUser')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-  path: '/',
+  path: '/dashboard',
   element: <MainLayout />,
   children: [
     {
-      path: '/',
+      path: '/dashboard',
       element: <DashboardDefault />
     },
     {

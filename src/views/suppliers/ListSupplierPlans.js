@@ -63,7 +63,7 @@ export default function ListSupplierPlans() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/plans/update-domain/' + params.row._id}>
+            <Link to={'/dashboard/plans/update-domain/' + params.row._id}>
               <IconEdit />
             </Link>
           </>
@@ -99,7 +99,7 @@ export default function ListSupplierPlans() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/plans/update-email/' + params.row._id}>
+            <Link to={'/dashboard/plans/update-email/' + params.row._id}>
               <IconEdit />
             </Link>
           </>
@@ -135,7 +135,7 @@ export default function ListSupplierPlans() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/plans/update-hosting/' + params.row._id}>
+            <Link to={'/dashboard/plans/update-hosting/' + params.row._id}>
               <IconEdit />
             </Link>
           </>
@@ -160,7 +160,7 @@ export default function ListSupplierPlans() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/plans/update-ssl/' + params.row._id}>
+            <Link to={'/dashboard/plans/update-ssl/' + params.row._id}>
               <IconEdit />
             </Link>
           </>

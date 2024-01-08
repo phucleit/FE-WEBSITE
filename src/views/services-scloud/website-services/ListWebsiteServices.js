@@ -99,7 +99,7 @@ export default function ListWebsiteServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-website/' + params.row._id}>
+            <Link to={'/dashboard/services/update-website/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -164,7 +164,7 @@ export default function ListWebsiteServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-website">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-website">
             Thêm mới
           </Button>
         }

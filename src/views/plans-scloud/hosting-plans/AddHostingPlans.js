@@ -96,7 +96,7 @@ export default function AddEmailPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-hosting');
+          navigate('/dashboard/plans/list-hosting');
           window.location.reload(true);
         }, 1500);
       })

@@ -38,7 +38,7 @@ export default function ListDomainPlans() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/plans/update-domain/' + params.row._id}>
+            <Link to={'/dashboard/plans/update-domain/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -87,7 +87,7 @@ export default function ListDomainPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/plans/add-domain">
+          <Button variant="contained" component={Link} to="/dashboard/plans/add-domain">
             Thêm mới
           </Button>
         }

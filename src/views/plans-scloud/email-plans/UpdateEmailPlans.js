@@ -112,7 +112,7 @@ export default function UpdateEmailPlans() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/plans/list-email');
+          navigate('/dashboard/plans/list-email');
           window.location.reload(true);
         }, 1500);
       })

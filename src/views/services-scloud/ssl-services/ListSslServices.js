@@ -137,7 +137,7 @@ export default function ListSslServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-ssl/' + params.row._id}>
+            <Link to={'/dashboard/services/update-ssl/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -214,7 +214,7 @@ export default function ListSslServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-ssl">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-ssl">
             Thêm mới
           </Button>
         }

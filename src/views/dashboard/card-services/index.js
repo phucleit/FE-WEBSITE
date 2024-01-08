@@ -280,7 +280,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-domain"
+                        href="/dashboard/services/list-domain"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -333,7 +333,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-hosting"
+                        href="/dashboard/services/list-hosting"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -386,7 +386,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-ssl"
+                        href="/dashboard/services/list-ssl"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -439,7 +439,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-email"
+                        href="/dashboard/services/list-email"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -492,7 +492,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-website"
+                        href="/dashboard/services/list-website"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -545,7 +545,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/services/list-content"
+                        href="/dashboard/services/list-content"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',

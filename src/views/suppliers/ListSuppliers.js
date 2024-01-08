@@ -32,7 +32,7 @@ export default function ListSupplier() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/suppliers/update-suppliers/' + params.row._id}>
+            <Link to={'/dashboard/suppliers/update-suppliers/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -81,7 +81,7 @@ export default function ListSupplier() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/suppliers/add-suppliers">
+          <Button variant="contained" component={Link} to="/dashboard/suppliers/add-suppliers">
             Thêm mới
           </Button>
         }

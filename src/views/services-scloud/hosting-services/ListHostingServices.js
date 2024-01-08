@@ -138,7 +138,7 @@ export default function ListHostingServices() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/services/update-hosting/' + params.row._id}>
+            <Link to={'/dashboard/services/update-hosting/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -215,7 +215,7 @@ export default function ListHostingServices() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/services/add-hosting">
+          <Button variant="contained" component={Link} to="/dashboard/services/add-hosting">
             Thêm mới
           </Button>
         }

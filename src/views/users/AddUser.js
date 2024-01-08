@@ -12,6 +12,9 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -30,11 +33,21 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddUser() {
   let navigate = useNavigate();
 
+  const [displayname, setDisplayname] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleAddUser = (e) => {
     e.preventDefault();
@@ -54,6 +67,7 @@ export default function AddUser() {
     }
 
     const addUser = {
+      display_name: displayname,
       username: username,
       email: email,
       password: password
@@ -71,7 +85,7 @@ export default function AddUser() {
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/users/list-users');
+          navigate('/dashboard/users/list-users');
           window.location.reload(true);
         }, 1500);
       })
@@ -83,7 +97,22 @@ export default function AddUser() {
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên hiển thị</InputLabel>
+                  <Input
+                    id="displayname"
+                    name="displayname"
+                    value={displayname}
+                    onChange={(e) => setDisplayname(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên hiển thị..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên đăng nhập</InputLabel>
@@ -98,7 +127,7 @@ export default function AddUser() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Email</InputLabel>
@@ -113,17 +142,31 @@ export default function AddUser() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Mật khẩu</InputLabel>
                   <Input
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required={true}
                     placeholder="Nhập mật khẩu..."
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
                 </FormControl>
               </Item>
