@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -14,6 +15,9 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import './styles.css';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -36,6 +40,7 @@ export default function AddDomainServices() {
 
   const [name, setName] = useState('');
   const [periods, setPeriods] = useState('');
+  const [registeredAt, setRegisteredAt] = useState(new Date());
   const [domain_plan_id, setDomainPlanId] = useState('');
   const [customer_id, setCustomerId] = useState('');
 
@@ -78,6 +83,7 @@ export default function AddDomainServices() {
     const addDomainServices = {
       name: name,
       periods: periods,
+      registeredAt: registeredAt.getTime(),
       domain_plan_id: domain_plan_id,
       customer_id: customer_id
     };
@@ -134,6 +140,18 @@ export default function AddDomainServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6} className="registeredAt">
+              <Item style={{ paddingTop: '4px' }}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel className="customText">Ngày đăng ký</InputLabel>
+                </FormControl>
+              </Item>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <DateTimePicker locale="vi-VN" onChange={(date) => setRegisteredAt(date)} value={registeredAt} />
                 </FormControl>
               </Item>
             </Grid>

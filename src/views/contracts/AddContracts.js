@@ -221,7 +221,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 200,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
@@ -310,7 +310,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
@@ -399,7 +399,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
@@ -488,7 +488,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 180,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },
@@ -547,7 +547,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 250,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     }
@@ -607,7 +607,7 @@ export default function AddContracts() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày khởi tạo',
       width: 200,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     },

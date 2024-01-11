@@ -20,8 +20,8 @@ const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 export default function ListHostingServices() {
   const [open, setOpen] = useState(false);
 
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
+  const getRegisteredAt = (params) => {
+    var timeStamp = params.row.registeredAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
     return date + ' ' + time;
@@ -129,7 +129,7 @@ export default function ListHostingServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 180 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 180 },
     { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
     {
       field: 'action',

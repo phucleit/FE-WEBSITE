@@ -91,7 +91,7 @@ export default function ListWebsiteServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 230 },
+    { field: 'createdAt', headerName: 'Ngày khởi tạo', valueGetter: getCreatedAt, width: 230 },
     {
       field: 'action',
       headerName: 'Hành động',

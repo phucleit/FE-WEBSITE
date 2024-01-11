@@ -20,8 +20,8 @@ const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 export default function ListDomainServices() {
   const [open, setOpen] = useState(false);
 
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
+  const getRegisteredAt = (params) => {
+    var timeStamp = params.row.registeredAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
     return date + ' ' + time;
@@ -115,7 +115,7 @@ export default function ListDomainServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 200 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 200 },
     { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
     {
       field: 'action',

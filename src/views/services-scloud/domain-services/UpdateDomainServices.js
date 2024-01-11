@@ -38,6 +38,8 @@ export default function UpdateDomainServices() {
 
   const [name, setName] = useState('');
   const [periods, setPeriods] = useState('');
+  const [registeredAt, setRegisteredAt] = useState('');
+  const [expiredAt, setExpiredAt] = useState('');
   const [domain_plan_id, setDomainPlanId] = useState('');
   const [customer_id, setCustomerId] = useState('');
 
@@ -45,6 +47,20 @@ export default function UpdateDomainServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+
+  const getRegisteredAt = (registeredAt) => {
+    var timeStamp = registeredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
+
+  const getExpiredAt = (expiredAt) => {
+    var timeStamp = expiredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
 
   useEffect(() => {
     loadDetailDomainServices();
@@ -61,6 +77,8 @@ export default function UpdateDomainServices() {
     });
     setName(result.data.name);
     setPeriods(result.data.periods);
+    setRegisteredAt(getRegisteredAt(result.data.registeredAt));
+    setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainPlanId(result.data.domain_plan_id._id);
     setCustomerId(result.data.customer_id._id);
   };
@@ -133,6 +151,22 @@ export default function UpdateDomainServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày đăng ký</InputLabel>
+                  <Input id="registeredAt" name="registeredAt" value={registeredAt} disabled />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày hết hạn</InputLabel>
+                  <Input id="expiredAt" name="expiredAt" value={expiredAt} disabled />
                 </FormControl>
               </Item>
             </Grid>

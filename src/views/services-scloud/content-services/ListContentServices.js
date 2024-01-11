@@ -20,7 +20,7 @@ const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 export default function ListContentServices() {
   const [open, setOpen] = useState(false);
 
-  const getCreatedAt = (params) => {
+  const getRegisteredAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
@@ -109,7 +109,7 @@ export default function ListContentServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 220 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 220 },
     { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 220 },
     {
       field: 'action',

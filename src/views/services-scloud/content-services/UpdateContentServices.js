@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
@@ -35,6 +36,8 @@ export default function UpdateContentServices() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [registeredAt, setRegisteredAt] = useState('');
+  const [expiredAt, setExpiredAt] = useState('');
   const [content_plan_id, setContentPlanId] = useState('');
   const [periods, setPeriods] = useState('');
   const [customer_id, setCustomerId] = useState('');
@@ -43,6 +46,20 @@ export default function UpdateContentServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+
+  const getRegisteredAt = (registeredAt) => {
+    var timeStamp = registeredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
+
+  const getExpiredAt = (expiredAt) => {
+    var timeStamp = expiredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
 
   useEffect(() => {
     loadDetailContentServices();
@@ -57,6 +74,8 @@ export default function UpdateContentServices() {
         'Cache-Control': 'no-cache'
       }
     });
+    setRegisteredAt(getRegisteredAt(result.data.registeredAt));
+    setExpiredAt(getExpiredAt(result.data.expiredAt));
     setContentPlanId(result.data.content_plan_id._id);
     setPeriods(result.data.periods);
     setCustomerId(result.data.customer_id._id);
@@ -127,6 +146,22 @@ export default function UpdateContentServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày đăng ký</InputLabel>
+                  <Input id="registeredAt" name="registeredAt" value={registeredAt} disabled />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày hết hạn</InputLabel>
+                  <Input id="expiredAt" name="expiredAt" value={expiredAt} disabled />
                 </FormControl>
               </Item>
             </Grid>

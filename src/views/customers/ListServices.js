@@ -28,6 +28,13 @@ export default function ListServices() {
     return date + ' ' + time;
   };
 
+  const getRegisteredAt = (params) => {
+    var timeStamp = params;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
+
   const getExpiredAt = (params) => {
     var timeStamp = params;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
@@ -123,10 +130,10 @@ export default function ListServices() {
       }
     },
     {
-      field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
       width: 200,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',
@@ -212,10 +219,10 @@ export default function ListServices() {
       }
     },
     {
-      field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
       width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',
@@ -301,10 +308,10 @@ export default function ListServices() {
       }
     },
     {
-      field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
       width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',
@@ -390,10 +397,10 @@ export default function ListServices() {
       }
     },
     {
-      field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
       width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',
@@ -426,7 +433,8 @@ export default function ListServices() {
       field: 'price',
       headerName: 'Giá dịch vụ',
       width: 250,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+      valueGetter: (params) =>
+        params.row.price ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price) : ''
     },
     {
       field: 'status',
@@ -450,7 +458,7 @@ export default function ListServices() {
     },
     {
       field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      headerName: 'Ngày đăng ký',
       width: 250,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
     }
@@ -509,10 +517,10 @@ export default function ListServices() {
       }
     },
     {
-      field: 'createdAt',
-      headerName: 'Ngày khỏi tạo',
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
       width: 200,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,6 +14,9 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import './styles.css';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -33,6 +37,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddContentServices() {
   let navigate = useNavigate();
 
+  const [registeredAt, setRegisteredAt] = useState(new Date());
   const [content_plan_id, setContentPlanId] = useState('');
   const [periods, setPeriods] = useState('');
   const [customer_id, setCustomerId] = useState('');
@@ -70,6 +75,7 @@ export default function AddContentServices() {
     e.preventDefault();
 
     const addContentServices = {
+      registeredAt: registeredAt.getTime(),
       content_plan_id: content_plan_id,
       periods: periods,
       customer_id: customer_id
@@ -112,6 +118,18 @@ export default function AddContentServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6} className="registeredAt">
+              <Item style={{ paddingTop: '4px' }}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel className="customText">Ngày đăng ký</InputLabel>
+                </FormControl>
+              </Item>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <DateTimePicker locale="vi-VN" onChange={(date) => setRegisteredAt(date)} value={registeredAt} />
                 </FormControl>
               </Item>
             </Grid>

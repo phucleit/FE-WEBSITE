@@ -20,7 +20,7 @@ const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 export default function ListSslServices() {
   const [open, setOpen] = useState(false);
 
-  const getCreatedAt = (params) => {
+  const getRegisteredAt = (params) => {
     var timeStamp = params.row.createdAt;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
@@ -128,8 +128,8 @@ export default function ListSslServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khỏi tạo', valueGetter: getCreatedAt, width: 200 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 180 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',

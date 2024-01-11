@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,6 +14,9 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import './styles.css';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -34,6 +38,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddHostingServices() {
   let navigate = useNavigate();
 
+  const [registeredAt, setRegisteredAt] = useState(new Date());
   const [domain_service_id, setDomainServiceId] = useState('');
   const [hosting_plan_id, setHostingPlanId] = useState('');
   const [periods, setPeriods] = useState('');
@@ -83,6 +88,7 @@ export default function AddHostingServices() {
     e.preventDefault();
 
     const addHostingServices = {
+      registeredAt: registeredAt.getTime(),
       domain_service_id: domain_service_id,
       hosting_plan_id: hosting_plan_id,
       periods: periods,
@@ -123,7 +129,7 @@ export default function AddHostingServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
+                        {/* {item.domain_plan_id.name} */}
                       </MenuItem>
                     ))}
                   </Select>
@@ -146,6 +152,18 @@ export default function AddHostingServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6} className="registeredAt">
+              <Item style={{ paddingTop: '4px' }}>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel className="customText">Ngày đăng ký</InputLabel>
+                </FormControl>
+              </Item>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <DateTimePicker locale="vi-VN" onChange={(date) => setRegisteredAt(date)} value={registeredAt} />
                 </FormControl>
               </Item>
             </Grid>

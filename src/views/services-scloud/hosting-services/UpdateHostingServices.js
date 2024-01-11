@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
@@ -36,6 +37,8 @@ export default function UpdateHostingServices() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [registeredAt, setRegisteredAt] = useState('');
+  const [expiredAt, setExpiredAt] = useState('');
   const [domain_service_id, setDomainServiceId] = useState('');
   const [hosting_plan_id, setHostingPlanId] = useState('');
   const [periods, setPeriods] = useState('');
@@ -46,6 +49,20 @@ export default function UpdateHostingServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+
+  const getRegisteredAt = (registeredAt) => {
+    var timeStamp = registeredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
+
+  const getExpiredAt = (expiredAt) => {
+    var timeStamp = expiredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
 
   useEffect(() => {
     loadDetailHostingServices();
@@ -61,6 +78,8 @@ export default function UpdateHostingServices() {
         'Cache-Control': 'no-cache'
       }
     });
+    setRegisteredAt(getRegisteredAt(result.data.registeredAt));
+    setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainServiceId(result.data.domain_service_id._id);
     setHostingPlanId(result.data.hosting_plan_id._id);
     setPeriods(result.data.periods);
@@ -139,7 +158,7 @@ export default function UpdateHostingServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
+                        {/* {item.domain_plan_id.name} */}
                       </MenuItem>
                     ))}
                   </Select>
@@ -163,6 +182,22 @@ export default function UpdateHostingServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày đăng ký</InputLabel>
+                  <Input id="registeredAt" name="registeredAt" value={registeredAt} disabled />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Ngày hết hạn</InputLabel>
+                  <Input id="expiredAt" name="expiredAt" value={expiredAt} disabled />
                 </FormControl>
               </Item>
             </Grid>
