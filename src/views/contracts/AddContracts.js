@@ -48,6 +48,13 @@ export default function AddContracts() {
     return date + ' ' + time;
   };
 
+  const getRegisteredAt = (params) => {
+    var timeStamp = params;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  };
+
   const getExpiredAt = (params) => {
     var timeStamp = params;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
@@ -70,6 +77,7 @@ export default function AddContracts() {
   const [sslServices, setSslServices] = useState([]);
   const [websiteServices, setWebsiteServices] = useState([]);
   const [contentServices, setContentServices] = useState([]);
+  const [toplistServices, setToplistServices] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [valueTab, setValueTab] = useState('1');
@@ -111,6 +119,7 @@ export default function AddContracts() {
       setSslServices(result.data[0].ssl_services);
       setWebsiteServices(result.data[0].website_services);
       setContentServices(result.data[0].content_services);
+      setToplistServices(result.data[0].toplist_services);
     } catch (error) {
       console.error('Error fetching customer data: ', error);
     }
@@ -151,7 +160,9 @@ export default function AddContracts() {
 
     if (websiteServices) {
       websiteServices.forEach((item) => {
-        total_price += item.price;
+        if (item.price) {
+          total_price += item.price;
+        }
       });
     }
 
@@ -159,6 +170,14 @@ export default function AddContracts() {
       contentServices.forEach((item) => {
         if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
           total_price += item.periods * 12 * item.content_plan[0].price;
+        }
+      });
+    }
+
+    if (toplistServices) {
+      toplistServices.forEach((item) => {
+        if (item.price) {
+          total_price += item.periods * 12 * item.price;
         }
       });
     }
@@ -523,7 +542,8 @@ export default function AddContracts() {
       field: 'price',
       headerName: 'Giá dịch vụ',
       width: 250,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+      valueGetter: (params) =>
+        params.row.price ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price) : ''
     },
     {
       field: 'status',
@@ -610,6 +630,68 @@ export default function AddContracts() {
       headerName: 'Ngày khởi tạo',
       width: 200,
       valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
+    },
+    {
+      field: 'expiredAt',
+      headerName: 'Ngày hết hạn',
+      width: 200,
+      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
+    }
+  ];
+
+  const columnsToplistServices = [
+    {
+      field: 'post',
+      headerName: 'Tiêu đề bài viết',
+      width: 300,
+      valueGetter: (params) => `${params.row.post}`
+    },
+    {
+      field: 'price',
+      headerName: 'Giá dịch vụ / năm',
+      width: 170,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+    },
+    {
+      field: 'rental_location',
+      headerName: 'Vị trí hiển thị',
+      width: 200,
+      valueGetter: (params) => `${params.row.rental_location}`
+    },
+    {
+      field: 'status',
+      headerName: 'Trạng thái',
+      width: 250,
+      renderCell: (params) => {
+        if (params.row.status == 1) {
+          return (
+            <Button variant="contained" size="small">
+              Đang sử dụng
+            </Button>
+          );
+        } else if (params.row.status == 2) {
+          const startDate = new Date();
+          const endDate = dayjs(params.row.expiredAt);
+          const differenceInDays = endDate.diff(startDate, 'day');
+          return (
+            <Button variant="contained" size="small" color="warning">
+              Còn {differenceInDays} ngày hết hạn
+            </Button>
+          );
+        } else if (params.row.status == 3) {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Hết hạn
+            </Button>
+          );
+        }
+      }
+    },
+    {
+      field: 'registeredAt',
+      headerName: 'Ngày đăng ký',
+      width: 200,
+      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
     },
     {
       field: 'expiredAt',
@@ -764,6 +846,7 @@ export default function AddContracts() {
                   <Tab label="Dịch vụ SSL" value="4" />
                   <Tab label="Dịch vụ Thiết kế Website" value="5" />
                   <Tab label="Dịch vụ Content" value="6" />
+                  <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
                 </TabList>
               </Box>
               <TabPanel value="1">
@@ -846,6 +929,21 @@ export default function AddContracts() {
                   <DataGrid
                     rows={contentServices}
                     columns={columnsContentServices}
+                    getRowId={(row) => (row._id ? row._id : '')}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    disableSelectionOnClick
+                    disableRowSelectionOnClick
+                  />
+                ) : (
+                  ''
+                )}
+              </TabPanel>
+              <TabPanel value="7">
+                {toplistServices.length !== 0 ? (
+                  <DataGrid
+                    rows={toplistServices}
+                    columns={columnsToplistServices}
                     getRowId={(row) => (row._id ? row._id : '')}
                     pageSize={10}
                     rowsPerPageOptions={[10]}

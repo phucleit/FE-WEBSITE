@@ -58,6 +58,13 @@ const services = {
           type: 'item',
           url: '/dashboard/services/list-content',
           breadcrumbs: false
+        },
+        {
+          id: 'toplist-services',
+          title: 'Toplist Vũng Tàu',
+          type: 'item',
+          url: '/dashboard/services/list-toplist',
+          breadcrumbs: false
         }
       ]
     }

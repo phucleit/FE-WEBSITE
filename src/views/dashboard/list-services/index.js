@@ -14,6 +14,7 @@ import ListEmailServices from '../../services-scloud/email-services/ListEmailSer
 import ListSslServices from '../../services-scloud/ssl-services/ListSslServices';
 import ListWebsiteServices from '../../services-scloud/website-services/ListWebsiteServices';
 import ListContentServices from '../../services-scloud/content-services/ListContentServices';
+import ListToplistServices from '../../services-scloud/toplist-services/ListToplistServices';
 
 export default function ListServices() {
   const [valueTab, setValueTab] = useState('1');
@@ -34,6 +35,7 @@ export default function ListServices() {
               <Tab label="Dịch vụ SSL" value="4" />
               <Tab label="Dịch vụ Thiết kế Website" value="5" />
               <Tab label="Dịch vụ Content" value="6" />
+              <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -53,6 +55,9 @@ export default function ListServices() {
           </TabPanel>
           <TabPanel value="6">
             <ListContentServices />
+          </TabPanel>
+          <TabPanel value="7">
+            <ListToplistServices />
           </TabPanel>
         </TabContext>
       </MainCard>
