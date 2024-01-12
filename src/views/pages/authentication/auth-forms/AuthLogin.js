@@ -62,6 +62,7 @@ export default function Signin() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(info),
+        mode: 'cors',
         credentials: 'include'
       });
 
