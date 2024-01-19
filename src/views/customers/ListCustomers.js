@@ -11,18 +11,12 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
+import { formatPhoneNumber, getCreatedAt } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 export default function ListCustomers() {
   const [open, setOpen] = useState(false);
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   const columns = [
     { field: 'fullname', headerName: 'Họ và tên', width: 200 },
@@ -40,7 +34,12 @@ export default function ListCustomers() {
       }
     },
     { field: 'idNumber', headerName: 'Số CCCD', width: 150 },
-    { field: 'phone', headerName: 'Số điện thoại', width: 150 },
+    {
+      field: 'phone',
+      headerName: 'Số điện thoại',
+      width: 150,
+      valueGetter: (params) => formatPhoneNumber(params.row.phone)
+    },
     { field: 'address', headerName: 'Địa chỉ', width: 320 },
     { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 180 },
     {

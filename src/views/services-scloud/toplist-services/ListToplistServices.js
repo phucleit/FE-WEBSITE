@@ -14,25 +14,12 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 
 export default function ListToplistServices() {
   const [open, setOpen] = useState(false);
-
-  const getRegisteredAt = (params) => {
-    var timeStamp = params.row.registeredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (params) => {
-    var timeStamp = params.row.expiredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   const columns = [
     {

@@ -14,25 +14,12 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 
 export default function ListEmailServices() {
   const [open, setOpen] = useState(false);
-
-  const getRegisteredAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (params) => {
-    var timeStamp = params.row.expiredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   const columns = [
     {
@@ -65,9 +52,20 @@ export default function ListEmailServices() {
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
+      headerName: 'Giá dịch vụ',
       width: 170,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan_id.price)
+      renderCell: (params) => {
+        return (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan_id.price)} / tháng
+            <br />
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.email_plan_id.price * 12 * params.row.periods
+            )}
+            / năm
+          </span>
+        );
+      }
     },
     {
       field: 'customer',

@@ -9,6 +9,7 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getCreatedAt } from '../../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
@@ -26,12 +27,6 @@ export default function RemainingContracts() {
       }
     });
     setData(result.data);
-  };
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    return date;
   };
 
   const filteredContracts = data.filter((contract) => contract.status === 2);

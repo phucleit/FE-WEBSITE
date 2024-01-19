@@ -11,17 +11,12 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
+import { getCreatedAt } from '../../utils/formatUtils';
 
 const LIST_USERS = `${config.API_URL}/users`;
 
 export default function ListUser() {
   const [open, setOpen] = useState(false);
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    return date;
-  };
 
   const columns = [
     { field: 'display_name', headerName: 'Tên hiển thị', width: 200 },

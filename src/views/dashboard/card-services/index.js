@@ -59,6 +59,13 @@ export default function CardServices() {
   const [countToplistExpiringServices, setCountToplistExpiringServices] = useState('');
   const [countToplistExpiredServices, setCountToplistExpiredServices] = useState('');
 
+  // chi phí nhập
+  let totalImportPriceDomainServices = 0;
+  let totalImportPriceHostingServices = 0;
+  let totalImportPriceSslServices = 0;
+  let totalImportPriceEmailServices = 0;
+
+  // chi phí bán ra
   let totalPriceDomainServices = 0;
   let totalPriceHostingServices = 0;
   let totalPriceSslServices = 0;
@@ -236,24 +243,28 @@ export default function CardServices() {
 
   if (dataDomainServices) {
     dataDomainServices.forEach((item) => {
+      totalImportPriceDomainServices += item.domain_plan_id.import_price * item.periods;
       totalPriceDomainServices += item.domain_plan_id.price * item.periods;
     });
   }
 
   if (dataHostingServices) {
     dataHostingServices.forEach((item) => {
+      totalImportPriceHostingServices += item.periods * 12 * item.hosting_plan_id.import_price;
       totalPriceHostingServices += item.periods * 12 * item.hosting_plan_id.price;
     });
   }
 
   if (dataSslServices) {
     dataSslServices.forEach((item) => {
-      totalPriceSslServices += item.periods * 12 * item.ssl_plan_id.price;
+      totalImportPriceSslServices += item.periods * item.ssl_plan_id.import_price;
+      totalPriceSslServices += item.periods * item.ssl_plan_id.price;
     });
   }
 
   if (dataEmailServices) {
     dataEmailServices.forEach((item) => {
+      totalImportPriceEmailServices += item.periods * 12 * item.email_plan_id.import_price;
       totalPriceEmailServices += item.periods * 12 * item.email_plan_id.price;
     });
   }
@@ -308,8 +319,16 @@ export default function CardServices() {
                         {countDomainExpiredServices ? countDomainExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalImportPriceDomainServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceDomainServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceDomainServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceDomainServices)
@@ -361,8 +380,16 @@ export default function CardServices() {
                         {countHostingExpiredServices ? countHostingExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalImportPriceHostingServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceHostingServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceHostingServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceHostingServices)
@@ -414,8 +441,16 @@ export default function CardServices() {
                         {countSslExpiredServices ? countSslExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalImportPriceSslServices
+                          ? Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceSslServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceSslServices
                           ? Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceSslServices)
@@ -467,8 +502,16 @@ export default function CardServices() {
                         {countEmailExpiredServices ? countEmailExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalImportPriceEmailServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceEmailServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceEmailServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceEmailServices)
@@ -520,8 +563,16 @@ export default function CardServices() {
                         0
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceWebsiteServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceWebsiteServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)
@@ -573,8 +624,16 @@ export default function CardServices() {
                         {countContentExpiredServices ? countContentExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceContentServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceContentServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)
@@ -626,8 +685,16 @@ export default function CardServices() {
                         {countToplistExpiredServices ? countToplistExpiredServices : '0'}
                       </Button>
                     </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceToplistServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceToplistServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      Tổng chi phí
+                      Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
                         {totalPriceToplistServices
                           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceToplistServices)

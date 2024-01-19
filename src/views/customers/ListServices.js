@@ -82,9 +82,7 @@ export default function ListServices() {
       headerName: 'Dịch vụ Domain',
       width: 250,
       valueGetter: (params) =>
-        params.row.name && params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].name
-          ? `${params.row.name}${params.row.domain_plan[0].name}`
-          : ''
+        params.row.name && params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].name ? `${params.row.name}` : ''
     },
     {
       field: 'supplier',
@@ -152,12 +150,10 @@ export default function ListServices() {
       width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
         const domainSupplierName = params.row.domain_supplier[0]?.name || '';
         return (
           <span>
             {domainServiceName}
-            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
@@ -241,12 +237,10 @@ export default function ListServices() {
       width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
         const domainSupplierName = params.row.domain_supplier[0]?.name || '';
         return (
           <span>
             {domainServiceName}
-            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
@@ -330,12 +324,10 @@ export default function ListServices() {
       width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
         const domainSupplierName = params.row.domain_supplier[0]?.name || '';
         return (
           <span>
             {domainServiceName}
-            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
@@ -419,12 +411,10 @@ export default function ListServices() {
       width: 300,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
         const domainSupplierName = params.row.domain_supplier[0]?.name || '';
         return (
           <span>
             {domainServiceName}
-            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>

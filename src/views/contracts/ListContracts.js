@@ -11,17 +11,12 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
+import { getCreatedAt } from '../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
 export default function ListContracts() {
   const [open, setOpen] = useState(false);
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    return date;
-  };
 
   const columns = [
     { field: 'contract_code', headerName: 'Mã hợp đồng', width: 150 },

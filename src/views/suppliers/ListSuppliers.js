@@ -11,6 +11,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
+import { formatPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -18,12 +19,22 @@ export default function ListSupplier() {
   const [open, setOpen] = useState(false);
 
   const columns = [
-    { field: 'name', headerName: 'Tên nhà cung cấp', width: 140 },
+    { field: 'name', headerName: 'Tên NCC', width: 140 },
     { field: 'company', headerName: 'Tên công ty', width: 250 },
     { field: 'tax_code', headerName: 'Mã số thuế', width: 150 },
-    { field: 'phone', headerName: 'Số điện thoại', width: 150 },
+    {
+      field: 'phone',
+      headerName: 'Số điện thoại',
+      width: 150,
+      valueGetter: (params) => formatPhoneNumber(params.row.phone)
+    },
     { field: 'name_support', headerName: 'Hỗ trợ viên', width: 180 },
-    { field: 'phone_support', headerName: 'Hotline hỗ trợ viên', width: 150 },
+    {
+      field: 'phone_support',
+      headerName: 'Hotline hỗ trợ viên',
+      width: 150,
+      valueGetter: (params) => formatPhoneNumber(params.row.phone_support)
+    },
     { field: 'address', headerName: 'Địa chỉ', width: 380 },
     {
       field: 'action',

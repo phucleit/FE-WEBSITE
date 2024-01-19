@@ -13,18 +13,12 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getCreatedAt } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 
 export default function ListWebsiteServices() {
   const [open, setOpen] = useState(false);
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params.row.createdAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   const columns = [
     {
