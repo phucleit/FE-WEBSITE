@@ -36,6 +36,7 @@ export default function UpdateSslPlans() {
   const currentId = paramId.id;
 
   const [name, setName] = useState('');
+  const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
   const [feature, setFeature] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -57,6 +58,7 @@ export default function UpdateSslPlans() {
       }
     });
     setName(result.data.name);
+    setImportPrice(result.data.import_price);
     setPrice(result.data.price);
     setFeature(result.data.feature);
     setSupplier(result.data.supplier_id._id);
@@ -85,6 +87,7 @@ export default function UpdateSslPlans() {
 
     const updateSslPlans = {
       name: name,
+      import_price: importPrice,
       price: price,
       feature: feature,
       supplier_id: supplier
@@ -129,14 +132,29 @@ export default function UpdateSslPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Chi phí</InputLabel>
+                  <InputLabel>Giá nhập</InputLabel>
+                  <Input
+                    id="importPrice"
+                    name="importPrice"
+                    value={importPrice}
+                    onChange={(e) => setImportPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá nhập email..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá bán</InputLabel>
                   <Input
                     id="price"
                     name="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required={true}
-                    placeholder="Nhập chi phí ssl..."
+                    placeholder="Nhập giá bán email..."
                   />
                 </FormControl>
               </Item>

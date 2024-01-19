@@ -34,6 +34,7 @@ export default function AddSslPlans() {
   let navigate = useNavigate();
 
   const [name, setName] = useState('');
+  const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
   const [feature, setFeature] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -70,6 +71,7 @@ export default function AddSslPlans() {
 
     const addSslPlans = {
       name: name,
+      import_price: importPrice,
       price: price,
       feature: feature,
       supplier_id: supplier
@@ -114,14 +116,29 @@ export default function AddSslPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Chi phí</InputLabel>
+                  <InputLabel>Giá nhập</InputLabel>
+                  <Input
+                    id="importPrice"
+                    name="importPrice"
+                    value={importPrice}
+                    onChange={(e) => setImportPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá nhập email..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá bán</InputLabel>
                   <Input
                     id="price"
                     name="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required={true}
-                    placeholder="Nhập chi phí ssl..."
+                    placeholder="Nhập giá bán email..."
                   />
                 </FormControl>
               </Item>

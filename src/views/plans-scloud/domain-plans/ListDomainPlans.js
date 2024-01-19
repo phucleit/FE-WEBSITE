@@ -20,9 +20,15 @@ export default function ListDomainPlans() {
   const columns = [
     { field: 'name', headerName: 'Tên miền', width: 300 },
     {
+      field: 'importPrice',
+      headerName: 'Giá nhập / năm',
+      width: 230,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.import_price)
+    },
+    {
       field: 'price',
-      headerName: 'Giá tên miền',
-      width: 180,
+      headerName: 'Giá bán / năm',
+      width: 230,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {

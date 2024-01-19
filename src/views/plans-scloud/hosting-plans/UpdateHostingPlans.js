@@ -36,6 +36,7 @@ export default function UpdateHostinglPlans() {
   const currentId = paramId.id;
 
   const [name, setName] = useState('');
+  const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
   const [account, setAccount] = useState('');
   const [capacity, setCapacity] = useState('');
@@ -58,6 +59,7 @@ export default function UpdateHostinglPlans() {
       }
     });
     setName(result.data.name);
+    setImportPrice(result.data.import_price);
     setPrice(result.data.price);
     setAccount(result.data.account);
     setCapacity(result.data.capacity);
@@ -97,6 +99,7 @@ export default function UpdateHostinglPlans() {
 
     const updateHostingPlans = {
       name: name,
+      import_price: importPrice,
       price: price,
       account: account,
       capacity: capacity,
@@ -142,21 +145,6 @@ export default function UpdateHostinglPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Chi phí</InputLabel>
-                  <Input
-                    id="price"
-                    name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required={true}
-                    placeholder="Nhập chi phí email..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
                   <InputLabel>Số lượng website</InputLabel>
                   <Input
                     id="account"
@@ -165,6 +153,36 @@ export default function UpdateHostinglPlans() {
                     onChange={(e) => setAccount(e.target.value)}
                     required={true}
                     placeholder="Nhập số lượng website..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá nhập</InputLabel>
+                  <Input
+                    id="importPrice"
+                    name="importPrice"
+                    value={importPrice}
+                    onChange={(e) => setImportPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá nhập hosting..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá bán</InputLabel>
+                  <Input
+                    id="price"
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá bán hosting..."
                   />
                 </FormControl>
               </Item>
@@ -184,7 +202,7 @@ export default function UpdateHostinglPlans() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Nhà cung cấp</InputLabel>

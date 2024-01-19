@@ -34,6 +34,7 @@ export default function AddEmailPlans() {
   let navigate = useNavigate();
 
   const [name, setName] = useState('');
+  const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
   const [account, setAccount] = useState('');
   const [capacity, setCapacity] = useState('');
@@ -81,6 +82,7 @@ export default function AddEmailPlans() {
 
     const addEmailPlans = {
       name: name,
+      import_price: importPrice,
       price: price,
       account: account,
       capacity: capacity,
@@ -126,21 +128,6 @@ export default function AddEmailPlans() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Chi phí</InputLabel>
-                  <Input
-                    id="price"
-                    name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required={true}
-                    placeholder="Nhập chi phí email..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
                   <InputLabel>Số lượng tài khoản</InputLabel>
                   <Input
                     id="account"
@@ -149,6 +136,36 @@ export default function AddEmailPlans() {
                     onChange={(e) => setAccount(e.target.value)}
                     required={true}
                     placeholder="Nhập số lượng tài khoản..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá nhập</InputLabel>
+                  <Input
+                    id="importPrice"
+                    name="importPrice"
+                    value={importPrice}
+                    onChange={(e) => setImportPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá nhập email..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá bán</InputLabel>
+                  <Input
+                    id="price"
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá bán email..."
                   />
                 </FormControl>
               </Item>
@@ -168,7 +185,7 @@ export default function AddEmailPlans() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Nhà cung cấp</InputLabel>

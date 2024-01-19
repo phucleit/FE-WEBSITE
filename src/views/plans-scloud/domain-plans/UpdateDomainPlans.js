@@ -36,6 +36,7 @@ export default function UpdateDomainPlans() {
   const currentId = paramId.id;
 
   const [name, setName] = useState('');
+  const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
   const [supplier, setSupplier] = useState('');
 
@@ -56,6 +57,7 @@ export default function UpdateDomainPlans() {
       }
     });
     setName(result.data.name);
+    setImportPrice(result.data.import_price);
     setPrice(result.data.price);
     setSupplier(result.data.supplier_id._id);
   };
@@ -83,6 +85,7 @@ export default function UpdateDomainPlans() {
 
     const updateDomainPlans = {
       name: name,
+      import_price: importPrice,
       price: price,
       supplier_id: supplier
     };
@@ -108,7 +111,7 @@ export default function UpdateDomainPlans() {
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền</InputLabel>
@@ -123,22 +126,37 @@ export default function UpdateDomainPlans() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Chi phí</InputLabel>
+                  <InputLabel>Giá nhập</InputLabel>
+                  <Input
+                    id="importPrice"
+                    name="importPrice"
+                    value={importPrice}
+                    onChange={(e) => setImportPrice(e.target.value)}
+                    required={true}
+                    placeholder="Nhập giá nhập tên miền..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Giá bán</InputLabel>
                   <Input
                     id="price"
                     name="price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required={true}
-                    placeholder="Nhập chi phí tên miền..."
+                    placeholder="Nhập giá bán tên miền..."
                   />
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Nhà cung cấp</InputLabel>
