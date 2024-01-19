@@ -51,9 +51,15 @@ export default function ListSupplierPlans() {
   const columnsDomain = [
     { field: 'name', headerName: 'Tên miền', width: 300 },
     {
+      field: 'importPrice',
+      headerName: 'Giá nhập / năm',
+      width: 250,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.import_price)
+    },
+    {
       field: 'price',
-      headerName: 'Giá tên miền',
-      width: 180,
+      headerName: 'Giá bán / năm',
+      width: 250,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
@@ -75,9 +81,15 @@ export default function ListSupplierPlans() {
   const columnsEmail = [
     { field: 'name', headerName: 'Tên gói email', width: 300 },
     {
+      field: 'importPrice',
+      headerName: 'Giá nhập / tháng',
+      width: 250,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.import_price)
+    },
+    {
       field: 'price',
-      headerName: 'Giá gói email',
-      width: 180,
+      headerName: 'Giá bán / tháng',
+      width: 250,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
@@ -111,9 +123,15 @@ export default function ListSupplierPlans() {
   const columnsHosting = [
     { field: 'name', headerName: 'Tên gói hosting', width: 300 },
     {
+      field: 'importPrice',
+      headerName: 'Giá nhập / tháng',
+      width: 250,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.import_price)
+    },
+    {
       field: 'price',
-      headerName: 'Giá gói hosting',
-      width: 180,
+      headerName: 'Giá bán / tháng',
+      width: 250,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
@@ -147,9 +165,15 @@ export default function ListSupplierPlans() {
   const columnsSsl = [
     { field: 'name', headerName: 'Tên gói ssl', width: 300 },
     {
+      field: 'importPrice',
+      headerName: 'Giá nhập / năm',
+      width: 250,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.import_price)
+    },
+    {
       field: 'price',
-      headerName: 'Giá gói ssl',
-      width: 180,
+      headerName: 'Giá bán / năm',
+      width: 250,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     { field: 'feature', headerName: 'Tính năng', width: 500 },
