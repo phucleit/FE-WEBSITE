@@ -138,16 +138,18 @@ export default function AddContentServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Thời gian</InputLabel>
                   <Select id="setPeriods" value={periods} label="Thời gian" onChange={(e) => setPeriods(e.target.value)}>
-                    <MenuItem value={1}>1 năm</MenuItem>
-                    <MenuItem value={2}>2 năm</MenuItem>
-                    <MenuItem value={3}>3 năm</MenuItem>
-                    <MenuItem value={4}>4 năm</MenuItem>
-                    <MenuItem value={5}>5 năm</MenuItem>
-                    <MenuItem value={6}>6 năm</MenuItem>
-                    <MenuItem value={7}>7 năm</MenuItem>
-                    <MenuItem value={8}>8 năm</MenuItem>
-                    <MenuItem value={9}>9 năm</MenuItem>
-                    <MenuItem value={10}>10 năm</MenuItem>
+                    <MenuItem value={1}>1 tháng</MenuItem>
+                    <MenuItem value={2}>2 tháng</MenuItem>
+                    <MenuItem value={3}>3 tháng</MenuItem>
+                    <MenuItem value={4}>4 tháng</MenuItem>
+                    <MenuItem value={5}>5 tháng</MenuItem>
+                    <MenuItem value={6}>6 tháng</MenuItem>
+                    <MenuItem value={7}>7 tháng</MenuItem>
+                    <MenuItem value={8}>8 tháng</MenuItem>
+                    <MenuItem value={9}>9 tháng</MenuItem>
+                    <MenuItem value={10}>10 tháng</MenuItem>
+                    <MenuItem value={11}>11 tháng</MenuItem>
+                    <MenuItem value={12}>12 tháng</MenuItem>
                   </Select>
                 </FormControl>
               </Item>

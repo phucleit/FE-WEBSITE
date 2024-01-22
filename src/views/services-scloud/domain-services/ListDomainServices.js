@@ -25,13 +25,13 @@ export default function ListDomainServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 200,
+      width: 230,
       renderCell: (params) => {
         return (
           <span>
             {params.row.name}
             <br />
-            Domain {params.row.domain_plan_id.name}
+            Domain {params.row.domain_plan_id.name} (NCC: {params.row.supplier_id.name})
           </span>
         );
       }
@@ -42,12 +42,6 @@ export default function ListDomainServices() {
       width: 170,
       valueGetter: (params) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 140,
-      valueGetter: (params) => `${params.row.supplier_id.name}`
     },
     {
       field: 'customer',
@@ -72,6 +66,12 @@ export default function ListDomainServices() {
           );
         }
       }
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => `${params.row.periods} năm`
     },
     {
       field: 'status',

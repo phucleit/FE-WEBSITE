@@ -169,7 +169,7 @@ export default function AddContracts() {
     if (contentServices) {
       contentServices.forEach((item) => {
         if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
-          total_price += item.periods * 12 * item.content_plan[0].price;
+          total_price += item.periods * item.content_plan[0].price;
         }
       });
     }
@@ -208,6 +208,12 @@ export default function AddContracts() {
         params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price
           ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan[0].price)
           : ''
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 100,
+      valueGetter: (params) => `${params.row.periods} năm`
     },
     {
       field: 'status',
@@ -585,16 +591,24 @@ export default function AddContracts() {
       field: 'price',
       headerName: 'Giá dịch vụ / tháng',
       width: 250,
-      valueGetter: (params) =>
-        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan[0].price)
-          : ''
+      renderCell: (params) => {
+        return params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price ? (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.content_plan[0].price * params.row.periods
+            )}
+            / {params.row.periods} tháng
+          </span>
+        ) : (
+          ''
+        );
+      }
     },
     {
       field: 'periods',
       headerName: 'Thời gian',
       width: 150,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} tháng` : '')
     },
     {
       field: 'status',

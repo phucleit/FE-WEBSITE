@@ -37,12 +37,10 @@ export default function ListContentServices() {
       renderCell: (params) => {
         return (
           <span>
-            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan_id.price)} / tháng
-            <br />
             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.content_plan_id.price * 12 * params.row.periods
+              params.row.content_plan_id.price * params.row.periods
             )}
-            / năm
+            / {params.row.periods} tháng
           </span>
         );
       }
@@ -75,7 +73,7 @@ export default function ListContentServices() {
       field: 'periods',
       headerName: 'Thời gian',
       width: 100,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} tháng` : '')
     },
     {
       field: 'status',

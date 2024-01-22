@@ -277,7 +277,7 @@ export default function CardServices() {
 
   if (dataContentServices) {
     dataContentServices.forEach((item) => {
-      totalPriceContentServices += item.periods * 12 * item.content_plan_id.price;
+      totalPriceContentServices += item.periods * item.content_plan_id.price;
     });
   }
 
