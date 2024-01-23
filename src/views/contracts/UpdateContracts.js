@@ -200,7 +200,7 @@ export default function AddContracts() {
     if (contentServices) {
       contentServices.forEach((item) => {
         if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
-          total_price += item.periods * 12 * item.content_plan[0].price;
+          total_price += item.periods * item.content_plan[0].price;
         }
       });
     }

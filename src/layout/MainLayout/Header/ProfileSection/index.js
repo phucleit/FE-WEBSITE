@@ -160,7 +160,7 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Xin Chào,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          {/* {isAuthenticated && <p>{userInfo.username}!</p>} */}
+                          {isAuthenticated && <p>{userInfo.username}!</p>}
                         </Typography>
                       </Stack>
                       <Typography variant="subtitle2">Admin Manager</Typography>
