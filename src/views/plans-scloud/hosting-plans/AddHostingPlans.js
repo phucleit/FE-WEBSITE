@@ -30,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function AddEmailPlans() {
+export default function AddHostingPlans() {
   let navigate = useNavigate();
 
   const [name, setName] = useState('');

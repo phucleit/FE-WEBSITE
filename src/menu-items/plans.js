@@ -51,6 +51,13 @@ const plans = {
           type: 'item',
           url: '/dashboard/plans/list-content',
           breadcrumbs: false
+        },
+        {
+          id: 'maintenance-plans',
+          title: 'Bảo trì',
+          type: 'item',
+          url: '/dashboard/plans/list-maintenance',
+          breadcrumbs: false
         }
       ]
     }
