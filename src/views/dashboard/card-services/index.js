@@ -23,6 +23,7 @@ const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
+const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 
 export default function CardServices() {
   const [dataDomainServices, setDataDomainServices] = useState([]);
@@ -59,6 +60,11 @@ export default function CardServices() {
   const [countToplistExpiringServices, setCountToplistExpiringServices] = useState('');
   const [countToplistExpiredServices, setCountToplistExpiredServices] = useState('');
 
+  const [dataMaintenanceServices, setDataMaintenanceServices] = useState('');
+  const [countMaintenanceServices, setCountMaintenanceServices] = useState('');
+  const [countMaintenanceExpiringServices, setCountMaintenanceExpiringServices] = useState('');
+  const [countMaintenanceExpiredServices, setCountMaintenanceExpiredServices] = useState('');
+
   // chi phí nhập
   let totalImportPriceDomainServices = 0;
   let totalImportPriceHostingServices = 0;
@@ -73,6 +79,7 @@ export default function CardServices() {
   let totalPriceWebsiteServices = 0;
   let totalPriceContentServices = 0;
   let totalPriceToplistServices = 0;
+  let totalPriceMaintenanceServices = 0;
 
   useEffect(() => {
     loadListDomainServices();
@@ -82,6 +89,7 @@ export default function CardServices() {
     loadListWebsiteServices();
     loadListContentServices();
     loadListToplistServices();
+    loadListMaintenanceServices();
   }, []);
 
   const loadListDomainServices = async () => {
@@ -241,6 +249,30 @@ export default function CardServices() {
     setCountToplistExpiredServices(expired.data.length);
   };
 
+  const loadListMaintenanceServices = async () => {
+    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setDataMaintenanceServices(result.data);
+    setCountMaintenanceServices(result.data.length);
+
+    const expiring = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setCountMaintenanceExpiringServices(expiring.data.length);
+
+    const expired = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setCountMaintenanceExpiredServices(expired.data.length);
+  };
+
   if (dataDomainServices) {
     dataDomainServices.forEach((item) => {
       totalImportPriceDomainServices += item.domain_plan_id.import_price * item.periods;
@@ -284,6 +316,12 @@ export default function CardServices() {
   if (dataToplistServices) {
     dataToplistServices.forEach((item) => {
       totalPriceToplistServices += item.periods * 12 * item.price;
+    });
+  }
+
+  if (dataMaintenanceServices) {
+    dataMaintenanceServices.forEach((item) => {
+      totalPriceMaintenanceServices += item.periods * item.maintenance_plan_id.price;
     });
   }
 
@@ -704,6 +742,67 @@ export default function CardServices() {
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
                         href="/dashboard/services/list-toplist"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconAlignBoxBottomCenter /> <br />
+                      Bảo trì
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countMaintenanceServices ? countMaintenanceServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countMaintenanceExpiringServices ? countMaintenanceExpiringServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countMaintenanceExpiredServices ? countMaintenanceExpiredServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceMaintenanceServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMaintenanceServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí bán
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceMaintenanceServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMaintenanceServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/dashboard/services/list-maintenance"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
