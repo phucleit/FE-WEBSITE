@@ -84,6 +84,11 @@ const ListToplistServices = Loadable(lazy(() => import('views/services-scloud/to
 const AddToplistServices = Loadable(lazy(() => import('views/services-scloud/toplist-services/AddToplistServices')));
 const UpdateToplistServices = Loadable(lazy(() => import('views/services-scloud/toplist-services/UpdateToplistServices')));
 
+// maintenance serices
+const ListMaintenanceServices = Loadable(lazy(() => import('views/services-scloud/maintenance-services/ListMaintenanceServices')));
+const AddMaintenanceServices = Loadable(lazy(() => import('views/services-scloud/maintenance-services/AddMaintenanceServices')));
+const UpdateMaintenanceServices = Loadable(lazy(() => import('views/services-scloud/maintenance-services/UpdateMaintenanceServices')));
+
 // contracts
 const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
 const AddContracts = Loadable(lazy(() => import('views/contracts/AddContracts')));
@@ -318,6 +323,18 @@ const MainRoutes = {
         {
           path: 'update-toplist/:id',
           element: <UpdateToplistServices />
+        },
+        {
+          path: 'list-maintenance',
+          element: <ListMaintenanceServices />
+        },
+        {
+          path: 'add-maintenance',
+          element: <AddMaintenanceServices />
+        },
+        {
+          path: 'update-maintenance/:id',
+          element: <UpdateMaintenanceServices />
         }
       ]
     },

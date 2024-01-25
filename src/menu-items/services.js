@@ -65,6 +65,13 @@ const services = {
           type: 'item',
           url: '/dashboard/services/list-toplist',
           breadcrumbs: false
+        },
+        {
+          id: 'maintenance-services',
+          title: 'Bảo trì',
+          type: 'item',
+          url: '/dashboard/services/list-maintenance',
+          breadcrumbs: false
         }
       ]
     }
