@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import dayjs from 'dayjs';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,13 +18,21 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+
+import ListDomainById from './services/ListDomainById';
+import ListHostingById from './services/ListHostingById';
+import ListEmailById from './services/ListEmailById';
+import ListSslById from './services/ListSslById';
+import ListWebsiteById from './services/ListWebsiteById';
+import ListContentById from './services/ListContentById';
+import ListToplistById from './services/ListToplistById';
+import ListMaintenanceById from './services/ListMaintenanceById';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
@@ -41,27 +48,6 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddContracts() {
   let navigate = useNavigate();
 
-  const getCreatedAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getRegisteredAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
   const [contract_code, setContractCode] = useState('');
   const [customer_id, setCustomerId] = useState('');
   const [note, setNote] = useState('');
@@ -70,14 +56,6 @@ export default function AddContracts() {
 
   const [listCustomers, setListCustomers] = useState([]);
   const [customer_detail, setCustomerDetail] = useState([]);
-
-  const [domainServices, setDomainServices] = useState([]);
-  const [hostingServices, setHostingServices] = useState([]);
-  const [emailServices, setEmailServices] = useState([]);
-  const [sslServices, setSslServices] = useState([]);
-  const [websiteServices, setWebsiteServices] = useState([]);
-  const [contentServices, setContentServices] = useState([]);
-  const [toplistServices, setToplistServices] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [valueTab, setValueTab] = useState('1');
@@ -113,607 +91,68 @@ export default function AddContracts() {
         }
       });
       setCustomerDetail(result.data);
-      setDomainServices(result.data[0].domain_services);
-      setHostingServices(result.data[0].hosting_services);
-      setEmailServices(result.data[0].email_services);
-      setSslServices(result.data[0].ssl_services);
-      setWebsiteServices(result.data[0].website_services);
-      setContentServices(result.data[0].content_services);
-      setToplistServices(result.data[0].toplist_services);
     } catch (error) {
       console.error('Error fetching customer data: ', error);
     }
   };
 
   if (customer_detail) {
-    if (domainServices) {
-      domainServices.forEach((item) => {
-        if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
-          total_price += item.domain_plan[0].price * item.periods;
-        }
-      });
-    }
+    // if (domainServices) {
+    //   domainServices.forEach((item) => {
+    //     if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
+    //       total_price += item.domain_plan[0].price * item.periods;
+    //     }
+    //   });
+    // }
 
-    if (hostingServices) {
-      hostingServices.forEach((item) => {
-        if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
-          total_price += item.periods * 12 * item.hosting_plan[0].price;
-        }
-      });
-    }
+    // if (hostingServices) {
+    //   hostingServices.forEach((item) => {
+    //     if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
+    //       total_price += item.periods * 12 * item.hosting_plan[0].price;
+    //     }
+    //   });
+    // }
 
-    if (emailServices) {
-      emailServices.forEach((item) => {
-        if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
-          total_price += item.periods * 12 * item.email_plan[0].price;
-        }
-      });
-    }
+    // if (emailServices) {
+    //   emailServices.forEach((item) => {
+    //     if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
+    //       total_price += item.periods * 12 * item.email_plan[0].price;
+    //     }
+    //   });
+    // }
 
-    if (sslServices) {
-      sslServices.forEach((item) => {
-        if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
-          total_price += item.periods * 12 * item.ssl_plan[0].price;
-        }
-      });
-    }
+    // if (sslServices) {
+    //   sslServices.forEach((item) => {
+    //     if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
+    //       total_price += item.periods * 12 * item.ssl_plan[0].price;
+    //     }
+    //   });
+    // }
 
-    if (websiteServices) {
-      websiteServices.forEach((item) => {
-        if (item.price) {
-          total_price += item.price;
-        }
-      });
-    }
+    // if (websiteServices) {
+    //   websiteServices.forEach((item) => {
+    //     if (item.price) {
+    //       total_price += item.price;
+    //     }
+    //   });
+    // }
 
-    if (contentServices) {
-      contentServices.forEach((item) => {
-        if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
-          total_price += item.periods * item.content_plan[0].price;
-        }
-      });
-    }
+    // if (contentServices) {
+    //   contentServices.forEach((item) => {
+    //     if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
+    //       total_price += item.periods * item.content_plan[0].price;
+    //     }
+    //   });
+    // }
 
-    if (toplistServices) {
-      toplistServices.forEach((item) => {
-        if (item.price) {
-          total_price += item.periods * 12 * item.price;
-        }
-      });
-    }
+    // if (toplistServices) {
+    //   toplistServices.forEach((item) => {
+    //     if (item.price) {
+    //       total_price += item.periods * 12 * item.price;
+    //     }
+    //   });
+    // }
   }
-
-  const columnsDomainServices = [
-    {
-      field: 'name',
-      headerName: 'Dịch vụ Domain',
-      width: 250,
-      valueGetter: (params) =>
-        params.row.name && params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].name
-          ? `${params.row.name}${params.row.domain_plan[0].name}`
-          : ''
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 170,
-      valueGetter: (params) =>
-        params.row.supplier && params.row.supplier[0] && params.row.supplier[0].name ? params.row.supplier[0].name : ''
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / năm',
-      width: 220,
-      valueGetter: (params) =>
-        params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan[0].price)
-          : ''
-    },
-    {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 100,
-      valueGetter: (params) => `${params.row.periods} năm`
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 220,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 200,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 200,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
-
-  const columnsHostingServices = [
-    {
-      field: 'name',
-      headerName: 'Tên miền',
-      width: 250,
-      renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
-        return (
-          <span>
-            {domainServiceName}
-            {domainPlanName}
-            <br />
-            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
-          </span>
-        );
-      }
-    },
-    {
-      field: 'hosting',
-      headerName: 'Dịch vụ Hosting',
-      width: 200,
-      valueGetter: (params) => params.row.hosting_plan[0]?.name || ''
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 140,
-      valueGetter: (params) => params.row.hosting_supplier[0]?.name || ''
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 180,
-      valueGetter: (params) =>
-        params.row.hosting_plan && params.row.hosting_plan[0] && params.row.hosting_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan[0].price)
-          : ''
-    },
-    {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 100,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 220,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 180,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
-
-  const columnsEmailServices = [
-    {
-      field: 'name',
-      headerName: 'Tên miền',
-      width: 250,
-      renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
-        return (
-          <span>
-            {domainServiceName}
-            {domainPlanName}
-            <br />
-            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
-          </span>
-        );
-      }
-    },
-    {
-      field: 'email',
-      headerName: 'Dịch vụ Email',
-      width: 200,
-      valueGetter: (params) => params.row.email_plan[0]?.name || ''
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 140,
-      valueGetter: (params) => params.row.email_supplier[0]?.name || ''
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 180,
-      valueGetter: (params) =>
-        params.row.email_plan && params.row.email_plan[0] && params.row.email_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan[0].price)
-          : ''
-    },
-    {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 100,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 220,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 180,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
-
-  const columnsSslServices = [
-    {
-      field: 'name',
-      headerName: 'Tên miền',
-      width: 250,
-      renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
-        return (
-          <span>
-            {domainServiceName}
-            {domainPlanName}
-            <br />
-            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
-          </span>
-        );
-      }
-    },
-    {
-      field: 'ssl',
-      headerName: 'Dịch vụ SSL',
-      width: 200,
-      valueGetter: (params) => params.row.ssl_plan[0]?.name || ''
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 140,
-      valueGetter: (params) => params.row.ssl_supplier[0]?.name || ''
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 180,
-      valueGetter: (params) =>
-        params.row.ssl_plan && params.row.ssl_plan[0] && params.row.ssl_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan[0].price)
-          : ''
-    },
-    {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 100,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 220,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 180,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 180,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
-
-  const columnsWebsiteServices = [
-    {
-      field: 'name',
-      headerName: 'Tên miền',
-      width: 300,
-      renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainPlanName = params.row.domain_plan[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
-        return (
-          <span>
-            {domainServiceName}
-            {domainPlanName}
-            <br />
-            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
-          </span>
-        );
-      }
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 250,
-      valueGetter: (params) =>
-        params.row.price ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price) : ''
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 280,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Đã đóng
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 250,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    }
-  ];
-
-  const columnsContentServices = [
-    {
-      field: 'content',
-      headerName: 'Dịch vụ Content',
-      width: 300,
-      valueGetter: (params) =>
-        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].name ? params.row.content_plan[0].name : ''
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 250,
-      renderCell: (params) => {
-        return params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price ? (
-          <span>
-            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.content_plan[0].price * params.row.periods
-            )}
-            / {params.row.periods} tháng
-          </span>
-        ) : (
-          ''
-        );
-      }
-    },
-    {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 150,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} tháng` : '')
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 220,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Ngày khởi tạo',
-      width: 200,
-      valueGetter: (params) => (params.row.createdAt ? getCreatedAt(params.row.createdAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 200,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
-
-  const columnsToplistServices = [
-    {
-      field: 'post',
-      headerName: 'Tiêu đề bài viết',
-      width: 300,
-      valueGetter: (params) => `${params.row.post}`
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / năm',
-      width: 170,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
-    },
-    {
-      field: 'rental_location',
-      headerName: 'Vị trí hiển thị',
-      width: 200,
-      valueGetter: (params) => `${params.row.rental_location}`
-    },
-    {
-      field: 'status',
-      headerName: 'Trạng thái',
-      width: 250,
-      renderCell: (params) => {
-        if (params.row.status == 1) {
-          return (
-            <Button variant="contained" size="small">
-              Đang sử dụng
-            </Button>
-          );
-        } else if (params.row.status == 2) {
-          const startDate = new Date();
-          const endDate = dayjs(params.row.expiredAt);
-          const differenceInDays = endDate.diff(startDate, 'day');
-          return (
-            <Button variant="contained" size="small" color="warning">
-              Còn {differenceInDays} ngày hết hạn
-            </Button>
-          );
-        } else if (params.row.status == 3) {
-          return (
-            <Button variant="contained" size="small" color="error">
-              Hết hạn
-            </Button>
-          );
-        }
-      }
-    },
-    {
-      field: 'registeredAt',
-      headerName: 'Ngày đăng ký',
-      width: 200,
-      valueGetter: (params) => (params.row.registeredAt ? getRegisteredAt(params.row.registeredAt) : '')
-    },
-    {
-      field: 'expiredAt',
-      headerName: 'Ngày hết hạn',
-      width: 200,
-      valueGetter: (params) => (params.row.expiredAt ? getExpiredAt(params.row.expiredAt) : '')
-    }
-  ];
 
   const handleAddContracts = (e) => {
     e.preventDefault();
@@ -861,112 +300,32 @@ export default function AddContracts() {
                   <Tab label="Dịch vụ Thiết kế Website" value="5" />
                   <Tab label="Dịch vụ Content" value="6" />
                   <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
+                  <Tab label="Dịch vụ Bảo trì" value="8" />
                 </TabList>
               </Box>
               <TabPanel value="1">
-                {domainServices.length !== 0 ? (
-                  <DataGrid
-                    rows={domainServices}
-                    columns={columnsDomainServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListDomainById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="2">
-                {hostingServices.length !== 0 ? (
-                  <DataGrid
-                    rows={hostingServices}
-                    columns={columnsHostingServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListHostingById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="3">
-                {emailServices.length !== 0 ? (
-                  <DataGrid
-                    rows={emailServices}
-                    columns={columnsEmailServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListEmailById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="4">
-                {sslServices.length !== 0 ? (
-                  <DataGrid
-                    rows={sslServices}
-                    columns={columnsSslServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListSslById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="5">
-                {websiteServices.length !== 0 ? (
-                  <DataGrid
-                    rows={websiteServices}
-                    columns={columnsWebsiteServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListWebsiteById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="6">
-                {contentServices.length !== 0 ? (
-                  <DataGrid
-                    rows={contentServices}
-                    columns={columnsContentServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListContentById customer_id={customer_id} />
               </TabPanel>
               <TabPanel value="7">
-                {toplistServices.length !== 0 ? (
-                  <DataGrid
-                    rows={toplistServices}
-                    columns={columnsToplistServices}
-                    getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    disableSelectionOnClick
-                    disableRowSelectionOnClick
-                  />
-                ) : (
-                  ''
-                )}
+                <ListToplistById customer_id={customer_id} />
+              </TabPanel>
+              <TabPanel value="8">
+                <ListMaintenanceById customer_id={customer_id} />
               </TabPanel>
             </TabContext>
           </Box>

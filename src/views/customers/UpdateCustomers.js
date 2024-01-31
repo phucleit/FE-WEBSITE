@@ -65,20 +65,20 @@ export default function UpdateCustomers() {
 
   const loadDetailCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}/${currentId}`);
-    setFullName(result.data[0].fullname);
-    setEmail(result.data[0].email);
-    setGender(result.data[0].gender);
-    setIdNumber(result.data[0].idNumber);
-    setPhone(result.data[0].phone);
-    setAddress(result.data[0].address);
-    setCompany(result.data[0].company);
-    setTaxCode(result.data[0].tax_code);
-    setAddressCompany(result.data[0].address_company);
-    setRepresentative(result.data[0].representative);
-    setRepresentativeHotline(result.data[0].representative_hotline);
-    setMailVat(result.data[0].mail_vat);
-    setPreviewImageFrontView(result.data[0].image_front_view[0]);
-    setPreviewImageBackView(result.data[0].image_back_view[0]);
+    setFullName(result.data.fullname);
+    setEmail(result.data.email);
+    setGender(result.data.gender);
+    setIdNumber(result.data.idNumber);
+    setPhone(result.data.phone);
+    setAddress(result.data.address);
+    setCompany(result.data.company);
+    setTaxCode(result.data.tax_code);
+    setAddressCompany(result.data.address_company);
+    setRepresentative(result.data.representative);
+    setRepresentativeHotline(result.data.representative_hotline);
+    setMailVat(result.data.mail_vat);
+    setPreviewImageFrontView(result.data.image_front_view[0]);
+    setPreviewImageBackView(result.data.image_back_view[0]);
   };
 
   const handleChangeFrontView = (file) => {

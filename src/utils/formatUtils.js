@@ -5,22 +5,28 @@ export function formatPhoneNumber(phoneNumber) {
 }
 
 export function getCreatedAt(params) {
-  var timeStamp = params.row.createdAt;
-  var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-  var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-  return date + ' ' + time;
+  if (params) {
+    var timeStamp = params.row.createdAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  }
 }
 
 export function getRegisteredAt(params) {
-  var timeStamp = params.row.registeredAt;
-  var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-  var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-  return date + ' ' + time;
+  if (params) {
+    var timeStamp = params.row.registeredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  }
 }
 
 export function getExpiredAt(params) {
-  var timeStamp = params.row.expiredAt;
-  var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-  var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-  return date + ' ' + time;
+  if (params) {
+    var timeStamp = params.row.expiredAt;
+    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
+    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
+    return date + ' ' + time;
+  }
 }
