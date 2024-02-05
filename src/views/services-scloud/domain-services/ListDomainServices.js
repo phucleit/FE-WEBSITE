@@ -25,7 +25,7 @@ export default function ListDomainServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 230,
+      width: 250,
       renderCell: (params) => {
         return (
           <span>
@@ -37,16 +37,9 @@ export default function ListDomainServices() {
       }
     },
     {
-      field: 'price',
-      headerName: 'Giá dịch vụ / năm',
-      width: 170,
-      valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
-    },
-    {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 260,
+      width: 350,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 1) {
           return (
@@ -68,10 +61,31 @@ export default function ListDomainServices() {
       }
     },
     {
+      field: 'price',
+      headerName: 'Giá dịch vụ / năm',
+      width: 200,
+      valueGetter: (params) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
+    },
+    {
       field: 'periods',
       headerName: 'Thời gian',
-      width: 100,
+      width: 130,
       valueGetter: (params) => `${params.row.periods} năm`
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.domain_plan_id.price * params.row.periods
+            )}
+          </span>
+        );
+      }
     },
     {
       field: 'status',

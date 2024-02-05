@@ -25,7 +25,7 @@ export default function ListHostingServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 200,
+      width: 250,
       renderCell: (params) => {
         return (
           <span>
@@ -39,7 +39,7 @@ export default function ListHostingServices() {
     {
       field: 'hosting',
       headerName: 'Gói hosting',
-      width: 130,
+      width: 180,
       renderCell: (params) => {
         return (
           <span>
@@ -51,26 +51,9 @@ export default function ListHostingServices() {
       }
     },
     {
-      field: 'price',
-      headerName: 'Giá dịch vụ',
-      width: 170,
-      renderCell: (params) => {
-        return (
-          <span>
-            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan_id.price)} / tháng
-            <br />
-            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.hosting_plan_id.price * 12 * params.row.periods
-            )}
-            / năm
-          </span>
-        );
-      }
-    },
-    {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 240,
+      width: 350,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 1) {
           return (
@@ -92,15 +75,36 @@ export default function ListHostingServices() {
       }
     },
     {
+      field: 'price',
+      headerName: 'Giá dịch vụ / tháng',
+      width: 200,
+      valueGetter: (params) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan_id.price)
+    },
+    {
       field: 'periods',
       headerName: 'Thời gian',
-      width: 100,
+      width: 130,
       valueGetter: (params) => `${params.row.periods} năm`
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.hosting_plan_id.price * 12 * params.row.periods
+            )}
+          </span>
+        );
+      }
     },
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 200,
+      width: 220,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -126,8 +130,8 @@ export default function ListHostingServices() {
         }
       }
     },
-    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 180 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 200 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
     {
       field: 'action',
       headerName: 'Hành động',

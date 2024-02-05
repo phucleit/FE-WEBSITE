@@ -44,7 +44,7 @@ export default function ListWebsiteServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 330,
+      width: 350,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 1) {
           return (

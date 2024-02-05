@@ -25,14 +25,8 @@ export default function ListToplistServices() {
     {
       field: 'post',
       headerName: 'Tiêu đề bài viết',
-      width: 250,
+      width: 300,
       valueGetter: (params) => `${params.row.post}`
-    },
-    {
-      field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 160,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
       field: 'rental_location',
@@ -43,7 +37,7 @@ export default function ListToplistServices() {
     {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 260,
+      width: 350,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 1) {
           return (
@@ -63,6 +57,25 @@ export default function ListToplistServices() {
           );
         }
       }
+    },
+    {
+      field: 'price',
+      headerName: 'Giá dịch vụ / năm',
+      width: 200,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+    },
+    {
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 130,
+      valueGetter: (params) => `${params.row.periods} năm`
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
+      width: 200,
+      valueGetter: (params) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price * params.row.periods)
     },
     {
       field: 'status',
@@ -93,8 +106,8 @@ export default function ListToplistServices() {
         }
       }
     },
-    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 180 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 200 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
     {
       field: 'action',
       headerName: 'Hành động',

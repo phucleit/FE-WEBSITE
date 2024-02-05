@@ -25,7 +25,7 @@ export default function ListSslServices() {
     {
       field: 'name',
       headerName: 'Tên miền',
-      width: 200,
+      width: 250,
       renderCell: (params) => {
         return (
           <span>
@@ -39,7 +39,7 @@ export default function ListSslServices() {
     {
       field: 'ssl',
       headerName: 'Gói ssl',
-      width: 130,
+      width: 180,
       renderCell: (params) => {
         return (
           <span>
@@ -51,16 +51,9 @@ export default function ListSslServices() {
       }
     },
     {
-      field: 'price',
-      headerName: 'Giá dịch vụ / năm',
-      width: 170,
-      valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price * params.row.periods)
-    },
-    {
       field: 'customer',
       headerName: 'Khách hàng',
-      width: 240,
+      width: 350,
       renderCell: (params) => {
         if (params.row.customer_id.gender == 1) {
           return (
@@ -82,15 +75,28 @@ export default function ListSslServices() {
       }
     },
     {
+      field: 'price',
+      headerName: 'Giá dịch vụ / năm',
+      width: 200,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price)
+    },
+    {
       field: 'periods',
       headerName: 'Thời gian',
-      width: 100,
+      width: 120,
       valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
+      width: 200,
+      valueGetter: (params) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price * params.row.periods)
     },
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 200,
+      width: 220,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -116,8 +122,8 @@ export default function ListSslServices() {
         }
       }
     },
-    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 180 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 180 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 200 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
     {
       field: 'action',
       headerName: 'Hành động',
