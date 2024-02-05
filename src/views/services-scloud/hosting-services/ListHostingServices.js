@@ -174,11 +174,13 @@ export default function ListHostingServices() {
 
   const [countHostingServicesExpiring, setCountHostingServicesExpiring] = useState([]);
   const [countHostingServicesExpired, setCountHostingServicesExpired] = useState([]);
+  const [countHostingServicesBeforePayment, setCountHostingServicesBeforePayment] = useState([]);
 
   useEffect(() => {
     loadListHostingServices();
     loadHostingServicesExpiring();
     loadHostingServicesExpired();
+    loadHostingServicesBeforePayment();
   }, []);
 
   const loadListHostingServices = async () => {
@@ -209,6 +211,16 @@ export default function ListHostingServices() {
     });
     setData(result.data);
     setCountHostingServicesExpired(result.data.length);
+  };
+
+  const loadHostingServicesBeforePayment = async () => {
+    const result = await axios.get(`${LIST_HOSTING_SERVICES}/before-payment/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setData(result.data);
+    setCountHostingServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
@@ -248,8 +260,11 @@ export default function ListHostingServices() {
           <Button variant="contained" size="small" onClick={loadHostingServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
             Sắp hết hạn: {countHostingServicesExpiring ? countHostingServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error">
+          <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
             Hết hạn: {countHostingServicesExpired ? countHostingServicesExpired : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadHostingServicesBeforePayment} color="error">
+            Công nợ: {countHostingServicesBeforePayment ? countHostingServicesBeforePayment : '0'}
           </Button>
         </Box>
         {data.length ? (

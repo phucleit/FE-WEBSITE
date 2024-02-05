@@ -166,11 +166,13 @@ export default function ListSslServices() {
 
   const [countSslServicesExpiring, setCountSslServicesExpiring] = useState([]);
   const [countSslServicesExpired, setCountSslServicesExpired] = useState([]);
+  const [countSslServicesBeforePayment, setCountSslServicesBeforePayment] = useState([]);
 
   useEffect(() => {
     loadListSslServices();
     loadSslServicesExpiring();
     loadSslServicesExpired();
+    loadSslServicesBeforePayment();
   }, []);
 
   const loadListSslServices = async () => {
@@ -201,6 +203,16 @@ export default function ListSslServices() {
     });
     setData(result.data);
     setCountSslServicesExpired(result.data.length);
+  };
+
+  const loadSslServicesBeforePayment = async () => {
+    const result = await axios.get(`${LIST_SSL_SERVICES}/before-payment/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setData(result.data);
+    setCountSslServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
@@ -240,8 +252,11 @@ export default function ListSslServices() {
           <Button variant="contained" size="small" onClick={loadSslServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
             Sắp hết hạn: {countSslServicesExpiring ? countSslServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadSslServicesExpired} color="error">
+          <Button variant="contained" size="small" onClick={loadSslServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
             Hết hạn: {countSslServicesExpired ? countSslServicesExpired : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadSslServicesBeforePayment} color="error">
+            Công nợ: {countSslServicesBeforePayment ? countSslServicesBeforePayment : '0'}
           </Button>
         </Box>
         {data.length ? (

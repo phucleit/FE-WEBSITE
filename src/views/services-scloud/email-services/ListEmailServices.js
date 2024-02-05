@@ -173,11 +173,13 @@ export default function ListEmailServices() {
 
   const [countEmailServicesExpiring, setCountEmailServicesExpiring] = useState([]);
   const [countEmailServicesExpired, setCountEmailServicesExpired] = useState([]);
+  const [countEmailServicesBeforePayment, setCountEmailServicesBeforePayment] = useState([]);
 
   useEffect(() => {
     loadListEmailServices();
     loadEmailServicesExpiring();
     loadEmailServicesExpired();
+    loadEmailServicesBeforePayment();
   }, []);
 
   const loadListEmailServices = async () => {
@@ -208,6 +210,16 @@ export default function ListEmailServices() {
     });
     setData(result.data);
     setCountEmailServicesExpired(result.data.length);
+  };
+
+  const loadEmailServicesBeforePayment = async () => {
+    const result = await axios.get(`${LIST_EMAIL_SERVICES}/before-payment/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setData(result.data);
+    setCountEmailServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
@@ -247,8 +259,11 @@ export default function ListEmailServices() {
           <Button variant="contained" size="small" onClick={loadEmailServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
             Sắp hết hạn: {countEmailServicesExpiring ? countEmailServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadEmailServicesExpired} color="error">
+          <Button variant="contained" size="small" onClick={loadEmailServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
             Hết hạn: {countEmailServicesExpired ? countEmailServicesExpired : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadEmailServicesBeforePayment} color="error">
+            Công nợ: {countEmailServicesBeforePayment ? countEmailServicesBeforePayment : '0'}
           </Button>
         </Box>
         {data.length ? (

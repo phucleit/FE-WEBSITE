@@ -160,11 +160,13 @@ export default function ListDomainServices() {
 
   const [countDomainServicesExpiring, setCountDomainServicesExpiring] = useState([]);
   const [countDomainServicesExpired, setCountDomainServicesExpired] = useState([]);
+  const [countDomainServicesBeforePayment, setCountDomainServicesBeforePayment] = useState([]);
 
   useEffect(() => {
     loadListDomainServices();
     loadListDomainServicesExpiring();
     loadListDomainServicesExpired();
+    loadListDomainServicesBeforePayment();
   }, []);
 
   const loadListDomainServices = async () => {
@@ -195,6 +197,16 @@ export default function ListDomainServices() {
     });
     setData(result.data);
     setCountDomainServicesExpired(result.data.length);
+  };
+
+  const loadListDomainServicesBeforePayment = async () => {
+    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/before-payment/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setData(result.data);
+    setCountDomainServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
@@ -234,8 +246,11 @@ export default function ListDomainServices() {
           <Button variant="contained" size="small" onClick={loadListDomainServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
             Sắp hết hạn: {countDomainServicesExpiring ? countDomainServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadListDomainServicesExpired} color="error">
+          <Button variant="contained" size="small" onClick={loadListDomainServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
             Hết hạn: {countDomainServicesExpired ? countDomainServicesExpired : '0'}
+          </Button>
+          <Button variant="contained" size="small" onClick={loadListDomainServicesBeforePayment} color="error">
+            Công nợ: {countDomainServicesBeforePayment ? countDomainServicesBeforePayment : '0'}
           </Button>
         </Box>
         {data.length ? (
