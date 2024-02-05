@@ -26,6 +26,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { getCreatedAt, getRegisteredAt, getExpiredAt } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
@@ -42,27 +43,6 @@ export default function AddContracts() {
   let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
-
-  const getCreatedAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getRegisteredAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (params) => {
-    var timeStamp = params;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   const [contract_code, setContractCode] = useState('');
   const [customer_id, setCustomerId] = useState('');

@@ -116,8 +116,28 @@ export default function ListDomainServices() {
         }
       }
     },
-    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: getRegisteredAt, width: 200 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: getExpiredAt, width: 200 },
+    { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: (params) => getRegisteredAt(params.row.registeredAt), width: 200 },
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: (params) => getExpiredAt(params.row.expiredAt), width: 200 },
+    {
+      field: 'before_payment',
+      headerName: 'Gia hạn trước khi thanh toán',
+      width: 200,
+      renderCell: (params) => {
+        if (params.row.before_payment == true) {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Công nợ
+            </Button>
+          );
+        } else if (params.row.before_payment == false) {
+          return (
+            <Button variant="contained" size="small">
+              Đã thanh toán
+            </Button>
+          );
+        }
+      }
+    },
     {
       field: 'action',
       headerName: 'Hành động',

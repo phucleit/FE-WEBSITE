@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
@@ -14,10 +15,12 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
 
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -43,26 +46,13 @@ export default function UpdateEmailServices() {
   const [email_plan_id, setEmailPlanId] = useState('');
   const [periods, setPeriods] = useState('');
   const [customer_id, setCustomerId] = useState('');
+  const [before_payment, setBeforePayment] = useState(false);
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listEmailPlans, setListEmailPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
-
-  const getRegisteredAt = (registeredAt) => {
-    var timeStamp = registeredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (expiredAt) => {
-    var timeStamp = expiredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   useEffect(() => {
     loadDetailHostingServices();
@@ -84,6 +74,7 @@ export default function UpdateEmailServices() {
     setEmailPlanId(result.data.email_plan_id._id);
     setPeriods(result.data.periods);
     setCustomerId(result.data.customer_id._id);
+    setBeforePayment(result.data.before_payment);
   };
 
   const loadListDomainServices = async () => {
@@ -113,6 +104,10 @@ export default function UpdateEmailServices() {
     setListCustomers(result.data);
   };
 
+  const handleChangeBeforePayment = (e) => {
+    setBeforePayment(e.target.checked);
+  };
+
   const handleUpdateEmailServices = (e) => {
     e.preventDefault();
 
@@ -120,7 +115,8 @@ export default function UpdateEmailServices() {
       domain_service_id: domain_service_id,
       email_plan_id: email_plan_id,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customer_id,
+      before_payment: before_payment
     };
 
     axios
@@ -158,7 +154,6 @@ export default function UpdateEmailServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {/* {item.domain_plan_id.name} */}
                       </MenuItem>
                     ))}
                   </Select>
@@ -237,6 +232,14 @@ export default function UpdateEmailServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
+                  <Switch checked={before_payment} onChange={handleChangeBeforePayment} />
                 </FormControl>
               </Item>
             </Grid>

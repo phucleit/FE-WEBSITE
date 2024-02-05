@@ -73,7 +73,7 @@ export default function ListWebsiteById(props) {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày đăng ký', valueGetter: getCreatedAt, width: 250 }
+    { field: 'createdAt', headerName: 'Ngày đăng ký', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 250 }
   ];
 
   return (

@@ -18,6 +18,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
@@ -46,20 +47,6 @@ export default function UpdateToplistServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
-
-  const getRegisteredAt = (registeredAt) => {
-    var timeStamp = registeredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
-
-  const getExpiredAt = (expiredAt) => {
-    var timeStamp = expiredAt;
-    var date = new Date(timeStamp).toLocaleDateString('vi-VI');
-    var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
-    return date + ' ' + time;
-  };
 
   useEffect(() => {
     loadDetailToplistServices();

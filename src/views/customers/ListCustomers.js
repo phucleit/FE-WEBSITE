@@ -41,7 +41,7 @@ export default function ListCustomers() {
       valueGetter: (params) => formatPhoneNumber(params.row.phone)
     },
     { field: 'address', headerName: 'Địa chỉ', width: 320 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 180 },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',

@@ -6,7 +6,7 @@ export function formatPhoneNumber(phoneNumber) {
 
 export function getCreatedAt(params) {
   if (params) {
-    var timeStamp = params.row.createdAt;
+    var timeStamp = params;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
     return date + ' ' + time;
@@ -15,7 +15,7 @@ export function getCreatedAt(params) {
 
 export function getRegisteredAt(params) {
   if (params) {
-    var timeStamp = params.row.registeredAt;
+    var timeStamp = params;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
     return date + ' ' + time;
@@ -24,7 +24,7 @@ export function getRegisteredAt(params) {
 
 export function getExpiredAt(params) {
   if (params) {
-    var timeStamp = params.row.expiredAt;
+    var timeStamp = params;
     var date = new Date(timeStamp).toLocaleDateString('vi-VI');
     var time = new Date(timeStamp).toLocaleTimeString('vi-VI');
     return date + ' ' + time;

@@ -69,7 +69,7 @@ export default function RemainingContracts() {
         );
       }
     },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 150 },
     {
       field: 'action',
       headerName: 'Hành động',
