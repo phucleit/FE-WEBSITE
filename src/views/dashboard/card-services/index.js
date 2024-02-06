@@ -315,7 +315,7 @@ export default function CardServices() {
 
   if (dataToplistServices) {
     dataToplistServices.forEach((item) => {
-      totalPriceToplistServices += item.periods * 12 * item.price;
+      totalPriceToplistServices += item.periods * item.price;
     });
   }
 
