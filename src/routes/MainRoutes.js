@@ -7,10 +7,16 @@ import Loadable from 'ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 
+/***** supplier *****/
 // supplier
 const ListSuppliers = Loadable(lazy(() => import('views/suppliers/ListSuppliers')));
 const AddSuppliers = Loadable(lazy(() => import('views/suppliers/AddSuppliers')));
 const UpdateSuppliers = Loadable(lazy(() => import('views/suppliers/UpdateSuppliers')));
+
+// home network
+const ListMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/ListMobileNetwork')));
+const AddMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/AddMobileNetwork')));
+const UpdateMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/UpdateMobileNetwork')));
 
 /***** plans *****/
 // domain plans
@@ -140,6 +146,18 @@ const MainRoutes = {
         {
           path: 'update-suppliers/:id',
           element: <UpdateSuppliers />
+        },
+        {
+          path: 'mobile-network/list-mobile-network',
+          element: <ListMobileNetwork />
+        },
+        {
+          path: 'mobile-network/add-mobile-network',
+          element: <AddMobileNetwork />
+        },
+        {
+          path: 'mobile-network/update-mobile-network/:id',
+          element: <UpdateMobileNetwork />
         }
       ]
     },

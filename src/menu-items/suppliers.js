@@ -30,6 +30,20 @@ const suppliers = {
           type: 'item',
           url: '/dashboard/suppliers/add-suppliers',
           breadcrumbs: false
+        },
+        {
+          id: 'list-mobile-network',
+          title: 'Danh sách nhà mạng',
+          type: 'item',
+          url: '/dashboard/suppliers/mobile-network/list-mobile-network',
+          breadcrumbs: false
+        },
+        {
+          id: 'add-mobile-network',
+          title: 'Thêm mới nhà mạng',
+          type: 'item',
+          url: '/dashboard/suppliers/mobile-network/add-mobile-network',
+          breadcrumbs: false
         }
       ]
     }
