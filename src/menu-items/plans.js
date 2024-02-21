@@ -58,6 +58,13 @@ const plans = {
           type: 'item',
           url: '/dashboard/plans/list-maintenance',
           breadcrumbs: false
+        },
+        {
+          id: 'mobile-network-plans',
+          title: 'Sim 4G',
+          type: 'item',
+          url: '/dashboard/plans/list-mobile-network',
+          breadcrumbs: false
         }
       ]
     }

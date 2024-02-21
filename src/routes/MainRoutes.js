@@ -49,6 +49,11 @@ const ListMaintenancePlans = Loadable(lazy(() => import('views/plans-scloud/main
 const AddMaintenancePlans = Loadable(lazy(() => import('views/plans-scloud/maintenance-plans/AddMaintenancePlans')));
 const UpdateMaintenancePlans = Loadable(lazy(() => import('views/plans-scloud/maintenance-plans/UpdateMaintenancePlans')));
 
+// mobile network plans
+const ListMobileNetworkPlans = Loadable(lazy(() => import('views/plans-scloud/mobile-network-plans/ListMobileNetworkPlans')));
+const AddMobileNetworkPlans = Loadable(lazy(() => import('views/plans-scloud/mobile-network-plans/AddMobileNetworkPlans')));
+const UpdateMobileNetworkPlans = Loadable(lazy(() => import('views/plans-scloud/mobile-network-plans/UpdateMobileNetworkPlans')));
+
 /***** customers *****/
 const ListCustomers = Loadable(lazy(() => import('views/customers/ListCustomers')));
 const AddCustomers = Loadable(lazy(() => import('views/customers/AddCustomers')));
@@ -235,6 +240,18 @@ const MainRoutes = {
         {
           path: 'update-maintenance/:id',
           element: <UpdateMaintenancePlans />
+        },
+        {
+          path: 'list-mobile-network',
+          element: <ListMobileNetworkPlans />
+        },
+        {
+          path: 'add-mobile-network',
+          element: <AddMobileNetworkPlans />
+        },
+        {
+          path: 'update-mobile-network/:id',
+          element: <UpdateMobileNetworkPlans />
         }
       ]
     },

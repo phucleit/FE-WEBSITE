@@ -15,13 +15,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-
 import MainCard from 'ui-component/cards/MainCard';
+import CheckIcon from '@mui/icons-material/Check';
 
 import config from '../../../config';
 import { convertPrice } from '../../../utils/formatUtils';
 
-const LIST_EMAIL_PLANS = `${config.API_URL}/plans/email`;
+const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,16 +31,16 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function ListEmailPlans() {
+export default function ListMobileNetworkPlans() {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    loadListEmailPlans();
+    loadListMobileNetworkPlans();
   }, []);
 
-  const loadListEmailPlans = async () => {
-    const result = await axios.get(`${LIST_EMAIL_PLANS}`, {
+  const loadListMobileNetworkPlans = async () => {
+    const result = await axios.get(`${LIST_MOBILE_NETWORK_PLANS}`, {
       headers: {
         'Cache-Control': 'no-cache'
       }
@@ -51,7 +51,7 @@ export default function ListEmailPlans() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_EMAIL_PLANS}/` + id, {
+        .delete(`${LIST_MOBILE_NETWORK_PLANS}/` + id, {
           headers: {
             'Cache-Control': 'no-cache'
           }
@@ -72,7 +72,7 @@ export default function ListEmailPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/plans/add-email">
+          <Button variant="contained" component={Link} to="/dashboard/plans/add-mobile-network">
             Thêm mới
           </Button>
         }
@@ -87,24 +87,24 @@ export default function ListEmailPlans() {
                       <Typography gutterBottom variant="h2" component="div">
                         {item.name}
                       </Typography>
-                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>
-                        Giá nhập: {convertPrice(item.import_price)} / tháng
-                      </Typography>
-                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá bán: {convertPrice(item.price)} / tháng</Typography>
+                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá nhập: {convertPrice(item.importPrice)}</Typography>
+                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá bán: {convertPrice(item.price)}</Typography>
                       <Typography sx={{ fontSize: 14, pt: 1, pb: 1, fontStyle: 'italic' }} color="text.secondary">
                         (Giá trên chưa bao gồm VAT)
                       </Typography>
-                      <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>Nhà cung cấp: {item.supplier_id.name}</Typography>
+                      <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>
+                        Nhà mạng di động: {item.supplierMobileNetworkId.name}
+                      </Typography>
                       <Divider />
-                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity} GB</Typography>
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity}GB/tháng</Typography>
                       <Divider />
-                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Địa chỉ Email: {item.account} tài khoản</Typography>
+                      {item.content.split('\n').map((value, index) => (
+                        <Typography key={index} sx={{ fontSize: 15, pt: 1, pb: 1 }}>
+                          <CheckIcon style={{ fontSize: 15, color: '#74cb35' }} /> {value}
+                        </Typography>
+                      ))}
                       <Divider />
-                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>SSL Let&quot;s Encrypt: Miễn phí</Typography>
-                      <Divider />
-                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Tùy chỉnh dung lượng từng tài khoản</Typography>
-                      <Divider />
-                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Sao lưu dữ liệu hàng tuần</Typography>
+                      <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Hỗ trợ Esim: {item.esim == false ? 'Không' : 'Có'}</Typography>
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
@@ -112,7 +112,7 @@ export default function ListEmailPlans() {
                         size="small"
                         variant="contained"
                         component={Link}
-                        to={`/dashboard/plans/update-email/${item._id}`}
+                        to={`/dashboard/plans/update-mobile-network/${item._id}`}
                         sx={{ mr: 1 }}
                       >
                         Cập nhật
