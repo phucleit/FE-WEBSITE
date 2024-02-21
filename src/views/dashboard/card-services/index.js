@@ -24,6 +24,7 @@ const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
+const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 
 export default function CardServices() {
   const [dataDomainServices, setDataDomainServices] = useState([]);
@@ -65,11 +66,17 @@ export default function CardServices() {
   const [countMaintenanceExpiringServices, setCountMaintenanceExpiringServices] = useState('');
   const [countMaintenanceExpiredServices, setCountMaintenanceExpiredServices] = useState('');
 
+  const [dataMobileNetworkServices, setDataMobileNetworkServices] = useState('');
+  const [countMobileNetworkServices, setCountMobileNetworkServices] = useState('');
+  const [countMobileNetworkExpiringServices, setCountMobileNetworkExpiringServices] = useState('');
+  const [countMobileNetworkExpiredServices, setCountMobileNetworkExpiredServices] = useState('');
+
   // chi phí nhập
   let totalImportPriceDomainServices = 0;
   let totalImportPriceHostingServices = 0;
   let totalImportPriceSslServices = 0;
   let totalImportPriceEmailServices = 0;
+  let totalImportPriceMobileNetworkServices = 0;
 
   // chi phí bán ra
   let totalPriceDomainServices = 0;
@@ -80,6 +87,7 @@ export default function CardServices() {
   let totalPriceContentServices = 0;
   let totalPriceToplistServices = 0;
   let totalPriceMaintenanceServices = 0;
+  let totalPriceMobileNetworkServices = 0;
 
   useEffect(() => {
     loadListDomainServices();
@@ -90,6 +98,7 @@ export default function CardServices() {
     loadListContentServices();
     loadListToplistServices();
     loadListMaintenanceServices();
+    loadListMobileNetworkServices();
   }, []);
 
   const loadListDomainServices = async () => {
@@ -273,6 +282,30 @@ export default function CardServices() {
     setCountMaintenanceExpiredServices(expired.data.length);
   };
 
+  const loadListMobileNetworkServices = async () => {
+    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setDataMobileNetworkServices(result.data);
+    setCountMobileNetworkServices(result.data.length);
+
+    const expiring = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setCountMobileNetworkExpiringServices(expiring.data.length);
+
+    const expired = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setCountMobileNetworkExpiredServices(expired.data.length);
+  };
+
   if (dataDomainServices) {
     dataDomainServices.forEach((item) => {
       totalImportPriceDomainServices += item.domain_plan_id.import_price * item.periods;
@@ -322,6 +355,13 @@ export default function CardServices() {
   if (dataMaintenanceServices) {
     dataMaintenanceServices.forEach((item) => {
       totalPriceMaintenanceServices += item.periods * item.maintenance_plan_id.price;
+    });
+  }
+
+  if (dataMobileNetworkServices) {
+    dataMobileNetworkServices.forEach((item) => {
+      totalImportPriceMobileNetworkServices += item.periods * item.mobileNetworkPlanId.importPrice;
+      totalPriceMobileNetworkServices += item.periods * item.mobileNetworkPlanId.price;
     });
   }
 
@@ -803,6 +843,69 @@ export default function CardServices() {
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
                         href="/dashboard/services/list-maintenance"
+                        sx={{
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '5px',
+                          background: '#00c47f',
+                          boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
+                        }}
+                        underline="none"
+                      >
+                        Đăng ký mới
+                      </Link>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+
+              <Grid item lg={4} md={4} sm={6} xs={12}>
+                <Card sx={{ boxShadow: '0 3px 6px -4px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23)' }}>
+                  <CardContent>
+                    <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
+                      <IconMailOpened /> <br />
+                      Sim 4G
+                    </Typography>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ đang sử dụng
+                      <Button sx={{ ml: 2 }} variant="contained" size="small">
+                        {countMobileNetworkServices ? countMobileNetworkServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ sắp hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="warning">
+                        {countMobileNetworkExpiringServices ? countMobileNetworkExpiringServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Dịch vụ hết hạn
+                      <Button sx={{ ml: 2 }} variant="contained" size="small" color="error">
+                        {countMobileNetworkExpiredServices ? countMobileNetworkExpiredServices : '0'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
+                      Tổng chi phí nhập
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalImportPriceMobileNetworkServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+                              totalImportPriceMobileNetworkServices
+                            )
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }} gutterBottom>
+                      Tổng chi phí bán
+                      <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
+                        {totalPriceMobileNetworkServices
+                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMobileNetworkServices)
+                          : '0 ₫'}
+                      </Button>
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
+                      <Link
+                        href="/dashboard/services/list-mobile-network"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',

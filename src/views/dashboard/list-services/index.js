@@ -16,6 +16,7 @@ import ListWebsiteServices from '../../services-scloud/website-services/ListWebs
 import ListContentServices from '../../services-scloud/content-services/ListContentServices';
 import ListToplistServices from '../../services-scloud/toplist-services/ListToplistServices';
 import ListMaintenanceServices from '../../services-scloud/maintenance-services/ListMaintenanceServices';
+import ListMobileNetworkServices from '../../services-scloud/mobile-network-services/ListMobileNetworkServices';
 
 export default function ListServices() {
   const [valueTab, setValueTab] = useState('1');
@@ -38,6 +39,7 @@ export default function ListServices() {
               <Tab label="Dịch vụ Content" value="6" />
               <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
               <Tab label="Dịch vụ Bảo trì" value="8" />
+              <Tab label="Dịch vụ Sim 4G" value="9" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -63,6 +65,9 @@ export default function ListServices() {
           </TabPanel>
           <TabPanel value="8">
             <ListMaintenanceServices />
+          </TabPanel>
+          <TabPanel value="9">
+            <ListMobileNetworkServices />
           </TabPanel>
         </TabContext>
       </MainCard>
