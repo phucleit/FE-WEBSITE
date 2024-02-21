@@ -34,9 +34,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddWebsiteServices() {
   let navigate = useNavigate();
 
-  const [domain_service_id, setDomainServiceId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
   const [price, setPrice] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
@@ -71,9 +71,9 @@ export default function AddWebsiteServices() {
     e.preventDefault();
 
     const addWebsiteServices = {
-      domain_service_id: domain_service_id,
+      domain_service_id: domainServiceId,
       price: price,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -102,8 +102,8 @@ export default function AddWebsiteServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                   >
@@ -135,7 +135,7 @@ export default function AddWebsiteServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

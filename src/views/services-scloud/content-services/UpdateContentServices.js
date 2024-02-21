@@ -39,9 +39,9 @@ export default function UpdateContentServices() {
 
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
-  const [content_plan_id, setContentPlanId] = useState('');
+  const [contentPlanId, setContentPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listContentPlans, setListContentPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
@@ -90,9 +90,9 @@ export default function UpdateContentServices() {
     e.preventDefault();
 
     const updateContentServices = {
-      content_plan_id: content_plan_id,
+      content_plan_id: contentPlanId,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -121,8 +121,8 @@ export default function UpdateContentServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ content</InputLabel>
                   <Select
-                    id="content_plan_id"
-                    value={content_plan_id}
+                    id="contentPlanId"
+                    value={contentPlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setContentPlanId(e.target.value)}
                     disabled
@@ -178,8 +178,8 @@ export default function UpdateContentServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
                   <Select
-                    id="customer_id"
-                    value={customer_id}
+                    id="customerId"
+                    value={customerId}
                     label="Chọn khách hàng..."
                     onChange={(e) => setCustomerId(e.target.value)}
                     disabled

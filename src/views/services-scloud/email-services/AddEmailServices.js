@@ -39,10 +39,10 @@ export default function AddEmailServices() {
   let navigate = useNavigate();
 
   const [registeredAt, setRegisteredAt] = useState(new Date());
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [email_plan_id, setEmailPlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [emailPlanId, setEmailPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listEmailPlans, setListEmailPlans] = useState([]);
@@ -89,10 +89,10 @@ export default function AddEmailServices() {
 
     const addEmailServices = {
       registeredAt: registeredAt.getTime(),
-      domain_service_id: domain_service_id,
-      email_plan_id: email_plan_id,
+      domain_service_id: domainServiceId,
+      email_plan_id: emailPlanId,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -121,8 +121,8 @@ export default function AddEmailServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                   >
@@ -140,12 +140,7 @@ export default function AddEmailServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ email</InputLabel>
-                  <Select
-                    id="email_plan_id"
-                    value={email_plan_id}
-                    label="Chọn gói dịch vụ..."
-                    onChange={(e) => setEmailPlanId(e.target.value)}
-                  >
+                  <Select id="emailPlanId" value={emailPlanId} label="Chọn gói dịch vụ..." onChange={(e) => setEmailPlanId(e.target.value)}>
                     {listEmailPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name} (NCC: {item.supplier_id.name})
@@ -190,7 +185,7 @@ export default function AddEmailServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

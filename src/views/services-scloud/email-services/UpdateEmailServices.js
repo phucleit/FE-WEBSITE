@@ -42,11 +42,11 @@ export default function UpdateEmailServices() {
 
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [email_plan_id, setEmailPlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [emailPlanId, setEmailPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
-  const [before_payment, setBeforePayment] = useState(false);
+  const [customerId, setCustomerId] = useState('');
+  const [beforePayment, setBeforePayment] = useState(false);
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listEmailPlans, setListEmailPlans] = useState([]);
@@ -112,11 +112,11 @@ export default function UpdateEmailServices() {
     e.preventDefault();
 
     const updateEmailServices = {
-      domain_service_id: domain_service_id,
-      email_plan_id: email_plan_id,
+      domain_service_id: domainServiceId,
+      email_plan_id: emailPlanId,
       periods: periods,
-      customer_id: customer_id,
-      before_payment: before_payment
+      customer_id: customerId,
+      before_payment: beforePayment
     };
 
     axios
@@ -145,8 +145,8 @@ export default function UpdateEmailServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                     disabled
@@ -165,8 +165,8 @@ export default function UpdateEmailServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ email</InputLabel>
                   <Select
-                    id="email_plan_id"
-                    value={email_plan_id}
+                    id="emailPlanId"
+                    value={emailPlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setEmailPlanId(e.target.value)}
                     disabled
@@ -220,8 +220,8 @@ export default function UpdateEmailServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
                   <Select
-                    id="customer_id"
-                    value={customer_id}
+                    id="customerId"
+                    value={customerId}
                     label="Chọn khách hàng..."
                     onChange={(e) => setCustomerId(e.target.value)}
                     disabled
@@ -239,7 +239,7 @@ export default function UpdateEmailServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
-                  <Switch checked={before_payment} onChange={handleChangeBeforePayment} />
+                  <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
                 </FormControl>
               </Item>
             </Grid>

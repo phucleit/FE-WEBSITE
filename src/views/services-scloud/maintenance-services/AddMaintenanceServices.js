@@ -38,11 +38,11 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddMaintenanceServices() {
   let navigate = useNavigate();
 
-  const [maintenance_plan_id, setMaintenancePlanId] = useState('');
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [service_type, setServiceType] = useState('');
+  const [maintenancePlanId, setMaintenancePlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [serviceType, setServiceType] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
 
   const [listMaintenancePlans, setListMaintenancePlans] = useState([]);
@@ -89,11 +89,11 @@ export default function AddMaintenanceServices() {
     e.preventDefault();
 
     const addMaintenanceServices = {
-      maintenance_plan_id: maintenance_plan_id,
-      domain_service_id: domain_service_id,
-      service_type: service_type,
+      maintenance_plan_id: maintenancePlanId,
+      domain_service_id: domainServiceId,
+      service_type: serviceType,
       periods: periods,
-      customer_id: customer_id,
+      customer_id: customerId,
       registeredAt: registeredAt.getTime()
     };
 
@@ -123,8 +123,8 @@ export default function AddMaintenanceServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ bảo trì</InputLabel>
                   <Select
-                    id="maintenance_plan_id"
-                    value={maintenance_plan_id}
+                    id="maintenancePlanId"
+                    value={maintenancePlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setMaintenancePlanId(e.target.value)}
                   >
@@ -142,8 +142,8 @@ export default function AddMaintenanceServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                   >
@@ -160,7 +160,7 @@ export default function AddMaintenanceServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Loại dịch vụ</InputLabel>
-                  <Select id="service_type" value={service_type} label="Loại dịch vụ" onChange={(e) => setServiceType(e.target.value)}>
+                  <Select id="serviceType" value={serviceType} label="Loại dịch vụ" onChange={(e) => setServiceType(e.target.value)}>
                     <MenuItem value={13}>Tên miền</MenuItem>
                     <MenuItem value={14}>Hosting</MenuItem>
                     <MenuItem value={15}>Email</MenuItem>
@@ -209,7 +209,7 @@ export default function AddMaintenanceServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

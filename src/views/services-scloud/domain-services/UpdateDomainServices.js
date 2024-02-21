@@ -43,8 +43,8 @@ export default function UpdateDomainServices() {
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
-  const [domain_plan_id, setDomainPlanId] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [domainPlanId, setDomainPlanId] = useState('');
+  const [customerId, setCustomerId] = useState('');
   const [before_payment, setBeforePayment] = useState(false);
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
@@ -102,8 +102,8 @@ export default function UpdateDomainServices() {
     const updateDomainServices = {
       name: name,
       periods: periods,
-      domain_plan_id: domain_plan_id,
-      customer_id: customer_id,
+      domain_plan_id: domainPlanId,
+      customer_id: customerId,
       before_payment: before_payment
     };
 
@@ -140,7 +140,7 @@ export default function UpdateDomainServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ tên miền</InputLabel>
-                  <Select id="domain_plan_id" value={domain_plan_id} label="Chọn gói dịch vụ..." disabled>
+                  <Select id="domainPlanId" value={domainPlanId} label="Chọn gói dịch vụ..." disabled>
                     {listDomainPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name} (NCC: {item.supplier_id.name})
@@ -189,7 +189,7 @@ export default function UpdateDomainServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." disabled>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." disabled>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

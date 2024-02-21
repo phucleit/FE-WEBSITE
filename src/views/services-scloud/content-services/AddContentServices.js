@@ -38,9 +38,9 @@ export default function AddContentServices() {
   let navigate = useNavigate();
 
   const [registeredAt, setRegisteredAt] = useState(new Date());
-  const [content_plan_id, setContentPlanId] = useState('');
+  const [contentPlanId, setContentPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listContentPlans, setListContentPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
@@ -76,9 +76,9 @@ export default function AddContentServices() {
 
     const addContentServices = {
       registeredAt: registeredAt.getTime(),
-      content_plan_id: content_plan_id,
+      content_plan_id: contentPlanId,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -107,8 +107,8 @@ export default function AddContentServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ content</InputLabel>
                   <Select
-                    id="content_plan_id"
-                    value={content_plan_id}
+                    id="contentPlanId"
+                    value={contentPlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setContentPlanId(e.target.value)}
                   >
@@ -158,7 +158,7 @@ export default function AddContentServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

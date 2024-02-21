@@ -39,10 +39,10 @@ export default function AddSslServices() {
   let navigate = useNavigate();
 
   const [registeredAt, setRegisteredAt] = useState(new Date());
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [ssl_plan_id, setSslPlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [sslPlanId, setSslPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listSslPlans, setListSslPlans] = useState([]);
@@ -89,10 +89,10 @@ export default function AddSslServices() {
 
     const addSslServices = {
       registeredAt: registeredAt.getTime(),
-      domain_service_id: domain_service_id,
-      ssl_plan_id: ssl_plan_id,
+      domain_service_id: domainServiceId,
+      ssl_plan_id: sslPlanId,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -121,8 +121,8 @@ export default function AddSslServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                   >
@@ -140,7 +140,7 @@ export default function AddSslServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ SSL</InputLabel>
-                  <Select id="ssl_plan_id" value={ssl_plan_id} label="Chọn gói dịch vụ..." onChange={(e) => setSslPlanId(e.target.value)}>
+                  <Select id="sslPlanId" value={sslPlanId} label="Chọn gói dịch vụ..." onChange={(e) => setSslPlanId(e.target.value)}>
                     {listSslPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name} (NCC: {item.supplier_id.name})
@@ -185,7 +185,7 @@ export default function AddSslServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

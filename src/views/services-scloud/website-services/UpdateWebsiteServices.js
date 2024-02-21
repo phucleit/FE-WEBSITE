@@ -36,9 +36,9 @@ export default function UpdateWebsiteServices() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [domain_service_id, setDomainServiceId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
   const [price, setPrice] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
   const [status, setStatusService] = useState('');
 
   const [listDomainServices, setListDomainServices] = useState([]);
@@ -87,9 +87,9 @@ export default function UpdateWebsiteServices() {
     e.preventDefault();
 
     const updateWebsiteServices = {
-      domain_service_id: domain_service_id,
+      domain_service_id: domainServiceId,
       price: price,
-      customer_id: customer_id,
+      customer_id: customerId,
       status: status
     };
 
@@ -119,8 +119,8 @@ export default function UpdateWebsiteServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                     disabled
@@ -154,8 +154,8 @@ export default function UpdateWebsiteServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
                   <Select
-                    id="customer_id"
-                    value={customer_id}
+                    id="customerId"
+                    value={customerId}
                     label="Chọn khách hàng..."
                     onChange={(e) => setCustomerId(e.target.value)}
                     disabled

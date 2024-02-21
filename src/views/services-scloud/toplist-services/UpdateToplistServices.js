@@ -42,7 +42,7 @@ export default function UpdateToplistServices() {
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listCustomers, setListCustomers] = useState([]);
 
@@ -194,7 +194,7 @@ export default function UpdateToplistServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." disabled>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." disabled>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}

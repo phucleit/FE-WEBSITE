@@ -38,11 +38,11 @@ export default function UpdateMaintenanceServices() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [maintenance_plan_id, setMaintenancePlanId] = useState('');
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [service_type, setServiceType] = useState('');
+  const [maintenancePlanId, setMaintenancePlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [serviceType, setServiceType] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
 
@@ -106,11 +106,11 @@ export default function UpdateMaintenanceServices() {
     e.preventDefault();
 
     const updateMaintenanceServices = {
-      maintenance_plan_id: maintenance_plan_id,
-      domain_service_id: domain_service_id,
-      service_type: service_type,
+      maintenance_plan_id: maintenancePlanId,
+      domain_service_id: domainServiceId,
+      service_type: serviceType,
       periods: periods,
-      customer_id: customer_id
+      customer_id: customerId
     };
 
     axios
@@ -139,8 +139,8 @@ export default function UpdateMaintenanceServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ bảo trì</InputLabel>
                   <Select
-                    id="maintenance_plan_id"
-                    value={maintenance_plan_id}
+                    id="maintenancePlanId"
+                    value={maintenancePlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setMaintenancePlanId(e.target.value)}
                     disabled
@@ -159,8 +159,8 @@ export default function UpdateMaintenanceServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                     disabled
@@ -180,8 +180,8 @@ export default function UpdateMaintenanceServices() {
                   <InputLabel>Loại dịch vụ</InputLabel>
                   <Select
                     disabled
-                    id="service_type"
-                    value={service_type}
+                    id="serviceType"
+                    value={serviceType}
                     label="Loại dịch vụ"
                     onChange={(e) => setServiceType(e.target.value)}
                   >
@@ -238,8 +238,8 @@ export default function UpdateMaintenanceServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
                   <Select
-                    id="customer_id"
-                    value={customer_id}
+                    id="customerId"
+                    value={customerId}
                     label="Chọn khách hàng..."
                     onChange={(e) => setCustomerId(e.target.value)}
                     disabled

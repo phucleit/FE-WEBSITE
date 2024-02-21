@@ -42,11 +42,11 @@ export default function UpdateSslServices() {
 
   const [registeredAt, setRegisteredAt] = useState('');
   const [expiredAt, setExpiredAt] = useState('');
-  const [domain_service_id, setDomainServiceId] = useState('');
-  const [ssl_plan_id, setSslPlanId] = useState('');
+  const [domainServiceId, setDomainServiceId] = useState('');
+  const [sslPlanId, setSslPlanId] = useState('');
   const [periods, setPeriods] = useState('');
-  const [customer_id, setCustomerId] = useState('');
-  const [before_payment, setBeforePayment] = useState(false);
+  const [customerId, setCustomerId] = useState('');
+  const [beforePayment, setBeforePayment] = useState(false);
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listSslPlans, setListSslPlans] = useState([]);
@@ -112,11 +112,11 @@ export default function UpdateSslServices() {
     e.preventDefault();
 
     const updateSslServices = {
-      domain_service_id: domain_service_id,
-      ssl_plan_id: ssl_plan_id,
+      domain_service_id: domainServiceId,
+      ssl_plan_id: sslPlanId,
       periods: periods,
-      customer_id: customer_id,
-      before_payment: before_payment
+      customer_id: customerId,
+      before_payment: beforePayment
     };
 
     axios
@@ -145,8 +145,8 @@ export default function UpdateSslServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Tên miền đăng ký</InputLabel>
                   <Select
-                    id="domain_service_id"
-                    value={domain_service_id}
+                    id="domainServiceId"
+                    value={domainServiceId}
                     label="Chọn tên miền đăng ký..."
                     onChange={(e) => setDomainServiceId(e.target.value)}
                     disabled
@@ -165,8 +165,8 @@ export default function UpdateSslServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ SSL</InputLabel>
                   <Select
-                    id="ssl_plan_id"
-                    value={ssl_plan_id}
+                    id="sslPlanId"
+                    value={sslPlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setSslPlanId(e.target.value)}
                     disabled
@@ -220,8 +220,8 @@ export default function UpdateSslServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
                   <Select
-                    id="customer_id"
-                    value={customer_id}
+                    id="customerId"
+                    value={customerId}
                     label="Chọn khách hàng..."
                     onChange={(e) => setCustomerId(e.target.value)}
                     disabled
@@ -239,7 +239,7 @@ export default function UpdateSslServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
-                  <Switch checked={before_payment} onChange={handleChangeBeforePayment} />
+                  <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
                 </FormControl>
               </Item>
             </Grid>

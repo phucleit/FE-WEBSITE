@@ -41,7 +41,7 @@ export default function AddDomainServices() {
   const [name, setName] = useState('');
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
-  const [domain_plan_id, setDomainPlanId] = useState('');
+  const [domainPlanId, setDomainPlanId] = useState('');
   const [customer_id, setCustomerId] = useState('');
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
@@ -84,7 +84,7 @@ export default function AddDomainServices() {
       name: name,
       periods: periods,
       registeredAt: registeredAt.getTime(),
-      domain_plan_id: domain_plan_id,
+      domain_plan_id: domainPlanId,
       customer_id: customer_id
     };
 
@@ -129,8 +129,8 @@ export default function AddDomainServices() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Gói dịch vụ tên miền</InputLabel>
                   <Select
-                    id="domain_plan_id"
-                    value={domain_plan_id}
+                    id="domainPlanId"
+                    value={domainPlanId}
                     label="Chọn gói dịch vụ..."
                     onChange={(e) => setDomainPlanId(e.target.value)}
                   >
