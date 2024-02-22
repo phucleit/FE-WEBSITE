@@ -283,7 +283,7 @@ export default function ListDomainServices() {
             onClick={() => setSelectedData('dataDomainServicesBeforePayment')}
             component={Link}
             to={{ pathname: '/dashboard/services/list-domain', search: '?data=payment' }}
-            color="error"
+            color="success"
           >
             Công nợ: {countDomainServicesBeforePayment ? countDomainServicesBeforePayment : '0'}
           </Button>

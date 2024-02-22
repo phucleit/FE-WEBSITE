@@ -296,7 +296,7 @@ export default function ListEmailServices() {
             onClick={() => setSelectedData('dataEmailServicesBeforePayment')}
             component={Link}
             to={{ pathname: '/dashboard/services/list-email', search: '?data=payment' }}
-            color="error"
+            color="success"
           >
             Công nợ: {countEmailServicesBeforePayment ? countEmailServicesBeforePayment : '0'}
           </Button>

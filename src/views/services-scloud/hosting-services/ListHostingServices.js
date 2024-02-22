@@ -297,7 +297,7 @@ export default function ListHostingServices() {
             onClick={() => setSelectedData('dataHostingServicesBeforePayment')}
             component={Link}
             to={{ pathname: '/dashboard/services/list-hosting', search: '?data=payment' }}
-            color="error"
+            color="success"
           >
             Công nợ: {countHostingServicesBeforePayment ? countHostingServicesBeforePayment : '0'}
           </Button>

@@ -289,7 +289,7 @@ export default function ListSslServices() {
             onClick={() => setSelectedData('dataSslServicesBeforePayment')}
             component={Link}
             to={{ pathname: '/dashboard/services/list-ssl', search: '?data=payment' }}
-            color="error"
+            color="success"
           >
             Công nợ: {countSslServicesBeforePayment ? countSslServicesBeforePayment : '0'}
           </Button>
