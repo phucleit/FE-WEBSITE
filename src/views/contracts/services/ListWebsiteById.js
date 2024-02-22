@@ -83,8 +83,14 @@ export default function ListWebsiteById(props) {
           rows={websiteServices}
           columns={columnsWebsiteServices}
           getRowId={(row) => (row._id ? row._id : '')}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 20
+              }
+            }
+          }}
+          pageSizeOptions={[20]}
           disableSelectionOnClick
           disableRowSelectionOnClick
         />

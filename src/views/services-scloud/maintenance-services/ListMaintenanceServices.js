@@ -265,8 +265,14 @@ export default function ListMaintenanceServices() {
             rows={data}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -276,8 +282,14 @@ export default function ListMaintenanceServices() {
             rows={dataMaintenanceServicesExpiring}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -287,8 +299,14 @@ export default function ListMaintenanceServices() {
             rows={dataMaintenanceServicesExpired}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />

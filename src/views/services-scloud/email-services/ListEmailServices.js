@@ -306,8 +306,14 @@ export default function ListEmailServices() {
             rows={data}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -317,8 +323,14 @@ export default function ListEmailServices() {
             rows={dataEmailServicesExpiring}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -328,8 +340,14 @@ export default function ListEmailServices() {
             rows={dataEmailServicesExpired}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -339,8 +357,14 @@ export default function ListEmailServices() {
             rows={dataEmailServicesBeforePayment}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />

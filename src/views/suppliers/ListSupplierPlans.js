@@ -212,8 +212,14 @@ export default function ListSupplierPlans() {
                   rows={domainPlans}
                   columns={columnsDomain}
                   getRowId={(row) => row._id}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 20
+                      }
+                    }
+                  }}
+                  pageSizeOptions={[20]}
                   disableSelectionOnClick
                   disableRowSelectionOnClick
                 />
@@ -227,8 +233,14 @@ export default function ListSupplierPlans() {
                   rows={emailPlans}
                   columns={columnsEmail}
                   getRowId={(row) => row._id}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 20
+                      }
+                    }
+                  }}
+                  pageSizeOptions={[20]}
                   disableSelectionOnClick
                   disableRowSelectionOnClick
                 />
@@ -242,8 +254,14 @@ export default function ListSupplierPlans() {
                   rows={hostingPlans}
                   columns={columnsHosting}
                   getRowId={(row) => row._id}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 20
+                      }
+                    }
+                  }}
+                  pageSizeOptions={[20]}
                   disableSelectionOnClick
                   disableRowSelectionOnClick
                 />
@@ -257,8 +275,14 @@ export default function ListSupplierPlans() {
                   rows={sslPlans}
                   columns={columnsSsl}
                   getRowId={(row) => row._id}
-                  pageSize={10}
-                  rowsPerPageOptions={[10]}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 20
+                      }
+                    }
+                  }}
+                  pageSizeOptions={[20]}
                   disableSelectionOnClick
                   disableRowSelectionOnClick
                 />

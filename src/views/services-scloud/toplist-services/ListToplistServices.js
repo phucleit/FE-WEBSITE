@@ -238,8 +238,14 @@ export default function ListToplistServices() {
             rows={data}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -249,8 +255,14 @@ export default function ListToplistServices() {
             rows={dataToplistServicesExpiring}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -260,8 +272,14 @@ export default function ListToplistServices() {
             rows={dataToplistServicesExpired}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />

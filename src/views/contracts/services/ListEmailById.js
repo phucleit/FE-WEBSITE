@@ -114,8 +114,14 @@ export default function ListEmailById(props) {
           rows={emailServices}
           columns={columnsEmailServices}
           getRowId={(row) => (row._id ? row._id : '')}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 20
+              }
+            }
+          }}
+          pageSizeOptions={[20]}
           disableSelectionOnClick
           disableRowSelectionOnClick
         />

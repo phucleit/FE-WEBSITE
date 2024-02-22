@@ -879,8 +879,14 @@ export default function AddContracts() {
                     rows={domainServices}
                     columns={columnsDomainServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -894,8 +900,14 @@ export default function AddContracts() {
                     rows={hostingServices}
                     columns={columnsHostingServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -909,8 +921,14 @@ export default function AddContracts() {
                     rows={emailServices}
                     columns={columnsEmailServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -924,8 +942,14 @@ export default function AddContracts() {
                     rows={sslServices}
                     columns={columnsSslServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -939,8 +963,14 @@ export default function AddContracts() {
                     rows={websiteServices}
                     columns={columnsWebsiteServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -954,8 +984,14 @@ export default function AddContracts() {
                     rows={contentServices}
                     columns={columnsContentServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />
@@ -969,8 +1005,14 @@ export default function AddContracts() {
                     rows={toplistServices}
                     columns={columnsToplistServices}
                     getRowId={(row) => (row._id ? row._id : '')}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 20
+                        }
+                      }
+                    }}
+                    pageSizeOptions={[20]}
                     disableSelectionOnClick
                     disableRowSelectionOnClick
                   />

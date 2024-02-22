@@ -299,8 +299,14 @@ export default function ListSslServices() {
             rows={data}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -310,8 +316,14 @@ export default function ListSslServices() {
             rows={dataSslServicesExpiring}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -321,8 +333,14 @@ export default function ListSslServices() {
             rows={dataSslServicesExpired}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
@@ -332,8 +350,14 @@ export default function ListSslServices() {
             rows={dataSslServicesBeforePayment}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
