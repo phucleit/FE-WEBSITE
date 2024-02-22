@@ -139,7 +139,7 @@ export default function ListEmailServices() {
       renderCell: (params) => {
         if (params.row.before_payment == true) {
           return (
-            <Button variant="contained" size="small" color="error">
+            <Button variant="contained" size="small" color="success">
               Công nợ
             </Button>
           );
