@@ -20,6 +20,7 @@ const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 
 export default function ListSslServices() {
   const [open, setOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState('data');
 
   const columns = [
     {
@@ -164,8 +165,13 @@ export default function ListSslServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
+  const [dataSslServicesExpiring, setDataSslServicesExpiring] = useState([]);
   const [countSslServicesExpiring, setCountSslServicesExpiring] = useState([]);
+
+  const [dataSslServicesExpired, setDataSslServicesExpired] = useState([]);
   const [countSslServicesExpired, setCountSslServicesExpired] = useState([]);
+
+  const [dataSslServicesBeforePayment, setDataSslServicesBeforePayment] = useState([]);
   const [countSslServicesBeforePayment, setCountSslServicesBeforePayment] = useState([]);
 
   useEffect(() => {
@@ -191,7 +197,7 @@ export default function ListSslServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataSslServicesExpiring(result.data);
     setCountSslServicesExpiring(result.data.length);
   };
 
@@ -201,7 +207,7 @@ export default function ListSslServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataSslServicesExpired(result.data);
     setCountSslServicesExpired(result.data.length);
   };
 
@@ -211,7 +217,7 @@ export default function ListSslServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataSslServicesBeforePayment(result.data);
     setCountSslServicesBeforePayment(result.data.length);
   };
 
@@ -246,20 +252,49 @@ export default function ListSslServices() {
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-          <Button variant="contained" size="small" onClick={loadListSslServices}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('data')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-ssl' }}
+          >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadSslServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataSslServicesExpiring')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=expiring' }}
+            color="warning"
+            sx={{ ml: '10px', mr: '10px' }}
+          >
             Sắp hết hạn: {countSslServicesExpiring ? countSslServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadSslServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataSslServicesExpired')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=expired' }}
+            color="error"
+            sx={{ ml: '10px', mr: '10px' }}
+          >
             Hết hạn: {countSslServicesExpired ? countSslServicesExpired : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadSslServicesBeforePayment} color="error">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataSslServicesBeforePayment')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=payment' }}
+            color="error"
+          >
             Công nợ: {countSslServicesBeforePayment ? countSslServicesBeforePayment : '0'}
           </Button>
         </Box>
-        {data.length ? (
+        {selectedData === 'data' && data.length > 0 && (
           <DataGrid
             rows={data}
             columns={columns}
@@ -269,8 +304,39 @@ export default function ListSslServices() {
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
-        ) : (
-          ''
+        )}
+        {selectedData === 'dataSslServicesExpiring' && dataSslServicesExpiring.length > 0 && (
+          <DataGrid
+            rows={dataSslServicesExpiring}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataSslServicesExpired' && dataSslServicesExpired.length > 0 && (
+          <DataGrid
+            rows={dataSslServicesExpired}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataSslServicesBeforePayment' && dataSslServicesBeforePayment.length > 0 && (
+          <DataGrid
+            rows={dataSslServicesBeforePayment}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
         )}
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>

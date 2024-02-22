@@ -20,6 +20,7 @@ const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 
 export default function ListContentServices() {
   const [open, setOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState('data');
 
   const columns = [
     {
@@ -132,7 +133,10 @@ export default function ListContentServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
+  const [dataContentServicesExpiring, setDataContentServicesExpiring] = useState([]);
   const [countContentServicesExpiring, setCountContentServicesExpiring] = useState([]);
+
+  const [dataContentServicesExpired, setDataContentServicesExpired] = useState([]);
   const [countContentServicesExpired, setCountContentServicesExpired] = useState([]);
 
   useEffect(() => {
@@ -157,7 +161,7 @@ export default function ListContentServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataContentServicesExpiring(result.data);
     setCountContentServicesExpiring(result.data.length);
   };
 
@@ -167,7 +171,7 @@ export default function ListContentServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataContentServicesExpired(result.data);
     setCountContentServicesExpired(result.data.length);
   };
 
@@ -202,17 +206,38 @@ export default function ListContentServices() {
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-          <Button variant="contained" size="small" onClick={loadListContentServices}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('data')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-content' }}
+          >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadContentServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataContentServicesExpiring')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-content', search: '?data=expiring' }}
+            color="warning"
+            sx={{ ml: '10px', mr: '10px' }}
+          >
             Sắp hết hạn: {countContentServicesExpiring ? countContentServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadContentServicesExpired} color="error">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataContentServicesExpired')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-content', search: '?data=expired' }}
+            color="error"
+          >
             Hết hạn: {countContentServicesExpired ? countContentServicesExpired : '0'}
           </Button>
         </Box>
-        {data.length ? (
+        {selectedData === 'data' && data.length > 0 && (
           <DataGrid
             rows={data}
             columns={columns}
@@ -222,8 +247,28 @@ export default function ListContentServices() {
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
-        ) : (
-          ''
+        )}
+        {selectedData === 'dataContentServicesExpiring' && dataContentServicesExpiring.length > 0 && (
+          <DataGrid
+            rows={dataContentServicesExpiring}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataContentServicesExpired' && dataContentServicesExpired.length > 0 && (
+          <DataGrid
+            rows={dataContentServicesExpired}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
         )}
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>

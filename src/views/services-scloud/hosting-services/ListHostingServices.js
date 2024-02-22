@@ -20,6 +20,7 @@ const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 
 export default function ListHostingServices() {
   const [open, setOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState('data');
 
   const columns = [
     {
@@ -172,8 +173,13 @@ export default function ListHostingServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
+  const [dataHostingServicesExpiring, setDataHostingServicesExpiring] = useState([]);
   const [countHostingServicesExpiring, setCountHostingServicesExpiring] = useState([]);
+
+  const [dataHostingServicesExpired, setDataHostingServicesExpired] = useState([]);
   const [countHostingServicesExpired, setCountHostingServicesExpired] = useState([]);
+
+  const [dataHostingServicesBeforePayment, setDataHostingServicesBeforePayment] = useState([]);
   const [countHostingServicesBeforePayment, setCountHostingServicesBeforePayment] = useState([]);
 
   useEffect(() => {
@@ -199,7 +205,7 @@ export default function ListHostingServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataHostingServicesExpiring(result.data);
     setCountHostingServicesExpiring(result.data.length);
   };
 
@@ -209,7 +215,7 @@ export default function ListHostingServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataHostingServicesExpired(result.data);
     setCountHostingServicesExpired(result.data.length);
   };
 
@@ -219,7 +225,7 @@ export default function ListHostingServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataHostingServicesBeforePayment(result.data);
     setCountHostingServicesBeforePayment(result.data.length);
   };
 
@@ -254,20 +260,49 @@ export default function ListHostingServices() {
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-          <Button variant="contained" size="small" onClick={loadListHostingServices}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('data')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-hosting' }}
+          >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadHostingServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataHostingServicesExpiring')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=expiring' }}
+            color="warning"
+            sx={{ ml: '10px', mr: '10px' }}
+          >
             Sắp hết hạn: {countHostingServicesExpiring ? countHostingServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadHostingServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataHostingServicesExpired')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=expired' }}
+            color="error"
+            sx={{ mr: '10px' }}
+          >
             Hết hạn: {countHostingServicesExpired ? countHostingServicesExpired : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadHostingServicesBeforePayment} color="error">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataHostingServicesBeforePayment')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=payment' }}
+            color="error"
+          >
             Công nợ: {countHostingServicesBeforePayment ? countHostingServicesBeforePayment : '0'}
           </Button>
         </Box>
-        {data.length ? (
+        {selectedData === 'data' && data.length > 0 && (
           <DataGrid
             rows={data}
             columns={columns}
@@ -277,8 +312,39 @@ export default function ListHostingServices() {
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
-        ) : (
-          ''
+        )}
+        {selectedData === 'dataHostingServicesExpiring' && dataHostingServicesExpiring.length > 0 && (
+          <DataGrid
+            rows={dataHostingServicesExpiring}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataHostingServicesExpired' && dataHostingServicesExpired.length > 0 && (
+          <DataGrid
+            rows={dataHostingServicesExpired}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataHostingServicesBeforePayment' && dataHostingServicesBeforePayment.length > 0 && (
+          <DataGrid
+            rows={dataHostingServicesBeforePayment}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
         )}
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>

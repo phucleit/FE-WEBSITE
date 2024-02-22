@@ -20,6 +20,7 @@ const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 
 export default function ListEmailServices() {
   const [open, setOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState('data');
 
   const columns = [
     {
@@ -171,8 +172,13 @@ export default function ListEmailServices() {
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 
+  const [dataEmailServicesExpiring, setDataEmailServicesExpiring] = useState([]);
   const [countEmailServicesExpiring, setCountEmailServicesExpiring] = useState([]);
+
+  const [dataEmailServicesExpired, setDataEmailServicesExpired] = useState([]);
   const [countEmailServicesExpired, setCountEmailServicesExpired] = useState([]);
+
+  const [dataEmailServicesBeforePayment, setDataEmailServicesBeforePayment] = useState([]);
   const [countEmailServicesBeforePayment, setCountEmailServicesBeforePayment] = useState([]);
 
   useEffect(() => {
@@ -198,7 +204,7 @@ export default function ListEmailServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataEmailServicesExpiring(result.data);
     setCountEmailServicesExpiring(result.data.length);
   };
 
@@ -208,7 +214,7 @@ export default function ListEmailServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataEmailServicesExpired(result.data);
     setCountEmailServicesExpired(result.data.length);
   };
 
@@ -218,7 +224,7 @@ export default function ListEmailServices() {
         'Cache-Control': 'no-cache'
       }
     });
-    setData(result.data);
+    setDataEmailServicesBeforePayment(result.data);
     setCountEmailServicesBeforePayment(result.data.length);
   };
 
@@ -253,20 +259,49 @@ export default function ListEmailServices() {
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
-          <Button variant="contained" size="small" onClick={loadListEmailServices}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('data')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-email' }}
+          >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadEmailServicesExpiring} color="warning" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataEmailServicesExpiring')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-email', search: '?data=expiring' }}
+            color="warning"
+            sx={{ ml: '10px', mr: '10px' }}
+          >
             Sắp hết hạn: {countEmailServicesExpiring ? countEmailServicesExpiring : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadEmailServicesExpired} color="error" sx={{ ml: '10px', mr: '10px' }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataEmailServicesExpired')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-email', search: '?data=expired' }}
+            color="error"
+            sx={{ mr: '10px' }}
+          >
             Hết hạn: {countEmailServicesExpired ? countEmailServicesExpired : '0'}
           </Button>
-          <Button variant="contained" size="small" onClick={loadEmailServicesBeforePayment} color="error">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataEmailServicesBeforePayment')}
+            component={Link}
+            to={{ pathname: '/dashboard/services/list-email', search: '?data=payment' }}
+            color="error"
+          >
             Công nợ: {countEmailServicesBeforePayment ? countEmailServicesBeforePayment : '0'}
           </Button>
         </Box>
-        {data.length ? (
+        {selectedData === 'data' && data.length > 0 && (
           <DataGrid
             rows={data}
             columns={columns}
@@ -276,8 +311,39 @@ export default function ListEmailServices() {
             disableSelectionOnClick
             disableRowSelectionOnClick
           />
-        ) : (
-          ''
+        )}
+        {selectedData === 'dataEmailServicesExpiring' && dataEmailServicesExpiring.length > 0 && (
+          <DataGrid
+            rows={dataEmailServicesExpiring}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataEmailServicesExpired' && dataEmailServicesExpired.length > 0 && (
+          <DataGrid
+            rows={dataEmailServicesExpired}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataEmailServicesBeforePayment' && dataEmailServicesBeforePayment.length > 0 && (
+          <DataGrid
+            rows={dataEmailServicesBeforePayment}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            disableSelectionOnClick
+            disableRowSelectionOnClick
+          />
         )}
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
