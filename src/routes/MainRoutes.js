@@ -117,6 +117,11 @@ const ListUser = Loadable(lazy(() => import('views/users/ListUser')));
 const AddUser = Loadable(lazy(() => import('views/users/AddUser')));
 const UpdateUser = Loadable(lazy(() => import('views/users/UpdateUser')));
 
+// group users
+const ListGroupUser = Loadable(lazy(() => import('views/group-users/ListGroupUser')));
+const AddGroupUser = Loadable(lazy(() => import('views/group-users/AddGroupUser')));
+const UpdateGroupUser = Loadable(lazy(() => import('views/group-users/UpdateGroupUser')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -141,6 +146,18 @@ const MainRoutes = {
         {
           path: 'update-users/:id',
           element: <UpdateUser />
+        },
+        {
+          path: 'list-group-users',
+          element: <ListGroupUser />
+        },
+        {
+          path: 'add-group-users',
+          element: <AddGroupUser />
+        },
+        {
+          path: 'update-group-users/:id',
+          element: <UpdateGroupUser />
         }
       ]
     },

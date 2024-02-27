@@ -30,6 +30,20 @@ const users = {
           type: 'item',
           url: '/dashboard/users/add-users',
           breadcrumbs: false
+        },
+        {
+          id: 'list-group-users',
+          title: 'Nhóm người dùng',
+          type: 'item',
+          url: '/dashboard/users/list-group-users',
+          breadcrumbs: false
+        },
+        {
+          id: 'add-group-users',
+          title: 'Thêm nhóm người dùng',
+          type: 'item',
+          url: '/dashboard/users/add-group-users',
+          breadcrumbs: false
         }
       ]
     }
