@@ -11,18 +11,15 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { getCreatedAt } from '../../utils/formatUtils';
 
-const LIST_USERS = `${config.API_URL}/users`;
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
 export default function ListGroupUser() {
   const [open, setOpen] = useState(false);
 
   const columns = [
-    { field: 'display_name', headerName: 'Tên hiển thị', width: 200 },
-    { field: 'username', headerName: 'Tên đăng nhập', width: 150 },
-    { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
+    { field: 'name', headerName: 'Tên nhóm', width: 300 },
+    { field: 'description', headerName: 'Mô tả nhóm', width: 500 },
     {
       field: 'action',
       headerName: 'Hành động',
@@ -30,7 +27,7 @@ export default function ListGroupUser() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/dashboard/users/update-users/' + params.row._id}>
+            <Link to={'/dashboard/users/update-group-users/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -43,11 +40,11 @@ export default function ListGroupUser() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    loadListUsers();
+    loadListGroupUsers();
   }, []);
 
-  const loadListUsers = async () => {
-    const result = await axios.get(`${LIST_USERS}`, {
+  const loadListGroupUsers = async () => {
+    const result = await axios.get(`${LIST_GROUP_USER}`, {
       headers: {
         'Cache-Control': 'no-cache'
       }
@@ -58,7 +55,7 @@ export default function ListGroupUser() {
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
       axios
-        .delete(`${LIST_USERS}/` + id, {
+        .delete(`${LIST_GROUP_USER}/` + id, {
           headers: {
             'Cache-Control': 'no-cache'
           }
@@ -77,9 +74,9 @@ export default function ListGroupUser() {
   return (
     <>
       <MainCard
-        title="Danh sách a"
+        title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/users/add-users">
+          <Button variant="contained" component={Link} to="/dashboard/users/add-group-users">
             Thêm mới
           </Button>
         }

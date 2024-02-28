@@ -1,6 +1,6 @@
-// import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-// import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,9 +19,9 @@ import Checkbox from '@mui/material/Checkbox';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-// import config from '../../config';
+import config from '../../config';
 
-// const LIST_USER = `${config.API_URL}/users`;
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -32,12 +32,30 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UpdateGroupUser() {
-  // let navigate = useNavigate();
-  // const [open, setOpen] = useState(false);
+  let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const paramId = useParams();
+  const currentId = paramId.id;
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [group, setGroup] = useState('');
+
+  useEffect(() => {
+    loadDetailGroupUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadDetailGroupUser = async () => {
+    const result = await axios.get(`${LIST_GROUP_USER}/${currentId}`, {
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
+    });
+    setName(result.data.name);
+    setDescription(result.data.description);
+    setGroup(result.data.group);
+  };
 
   const handleChangeGroupUser = (event) => {
     setGroup({
@@ -46,7 +64,7 @@ export default function UpdateGroupUser() {
     });
   };
 
-  const handleAddGroupUser = (e) => {
+  const handleUpdateGroupUser = (e) => {
     e.preventDefault();
 
     if (name == '') {
@@ -59,35 +77,31 @@ export default function UpdateGroupUser() {
       return;
     }
 
-    const addGroupUser = {
+    const updateGroupUser = {
       name: name,
       description: description,
       group: group
     };
-    console.log(addGroupUser);
 
-    // const config_header = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Cache-Control': 'no-cache'
-    //   }
-    // };
-
-    // axios
-    //   .post(`${LIST_USER}`, addGroupUser, config_header)
-    //   .then(() => {
-    //     setOpen(true);
-    //     setInterval(() => {
-    //       navigate('/dashboard/users/list-users');
-    //       window.location.reload(true);
-    //     }, 1500);
-    //   })
-    //   .catch((error) => console.log(error));
+    axios
+      .put(`${LIST_GROUP_USER}/${currentId}`, updateGroupUser, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      })
+      .then(() => {
+        setOpen(true);
+        setInterval(() => {
+          navigate('/dashboard/users/list-group-users');
+          window.location.reload(true);
+        }, 1500);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
     <>
-      <MainCard title="Tạo dịch vụ mới">
+      <MainCard title="Cập nhật nhóm người dùng">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -126,7 +140,7 @@ export default function UpdateGroupUser() {
               <Item>Tài khoản</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addUser" />} label="Tạo tài khoản mới" />
+                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addUser" value={group.addUser} />} label="Tạo tài khoản mới" />
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="resetPassword" />} label="Reset mật khẩu" />
@@ -136,7 +150,7 @@ export default function UpdateGroupUser() {
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="addGroupUser" />}
+                    control={<Checkbox onChange={handleChangeGroupUser} name="updateGroupUser" />}
                     label="Tạo nhóm người dùng"
                   />
                 </FormGroup>
@@ -379,7 +393,7 @@ export default function UpdateGroupUser() {
             </Grid>
             <Grid item xs={12}>
               <Item>
-                <Button variant="contained" size="medium" onClick={handleAddGroupUser}>
+                <Button variant="contained" size="medium" onClick={handleUpdateGroupUser}>
                   Tạo nhóm
                 </Button>
               </Item>
@@ -387,7 +401,7 @@ export default function UpdateGroupUser() {
           </Grid>
         </Box>
       </MainCard>
-      <Snackbar open="" anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>

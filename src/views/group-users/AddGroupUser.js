@@ -1,6 +1,6 @@
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,9 +19,9 @@ import Checkbox from '@mui/material/Checkbox';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-// import config from '../../config';
+import config from '../../config';
 
-// const LIST_USER = `${config.API_URL}/users`;
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -32,8 +32,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function AddGroupUser() {
-  // let navigate = useNavigate();
-  // const [open, setOpen] = useState(false);
+  let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -66,28 +66,28 @@ export default function AddGroupUser() {
     };
     console.log(addGroupUser);
 
-    // const config_header = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Cache-Control': 'no-cache'
-    //   }
-    // };
+    const config_header = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
+      }
+    };
 
-    // axios
-    //   .post(`${LIST_USER}`, addGroupUser, config_header)
-    //   .then(() => {
-    //     setOpen(true);
-    //     setInterval(() => {
-    //       navigate('/dashboard/users/list-users');
-    //       window.location.reload(true);
-    //     }, 1500);
-    //   })
-    //   .catch((error) => console.log(error));
+    axios
+      .post(`${LIST_GROUP_USER}`, addGroupUser, config_header)
+      .then(() => {
+        setOpen(true);
+        setInterval(() => {
+          navigate('/dashboard/users/list-group-users');
+          window.location.reload(true);
+        }, 1500);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
     <>
-      <MainCard title="Tạo dịch vụ mới">
+      <MainCard title="Tạo nhóm người dùng">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -387,7 +387,7 @@ export default function AddGroupUser() {
           </Grid>
         </Box>
       </MainCard>
-      <Snackbar open="" anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
+      <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Tạo nhóm thành công!</Alert>
       </Snackbar>
     </>
