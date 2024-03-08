@@ -140,7 +140,10 @@ export default function UpdateGroupUser() {
               <Item>Tài khoản</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addUser" value={group.addUser} />} label="Tạo tài khoản mới" />
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleChangeGroupUser} name="addUser" value={group.addUser} />}
+                    label="Tạo tài khoản mới"
+                  />
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="resetPassword" />} label="Reset mật khẩu" />
