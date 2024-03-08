@@ -301,8 +301,9 @@ export default function ListDomainServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataDomainServicesExpiring' && dataDomainServicesExpiring.length > 0 && (
@@ -318,8 +319,9 @@ export default function ListDomainServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataDomainServicesExpired' && dataDomainServicesExpired.length > 0 && (
@@ -335,8 +337,9 @@ export default function ListDomainServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataDomainServicesBeforePayment' && dataDomainServicesBeforePayment.length > 0 && (
@@ -352,8 +355,9 @@ export default function ListDomainServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

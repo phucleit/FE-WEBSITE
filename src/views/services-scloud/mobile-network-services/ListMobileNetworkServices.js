@@ -257,8 +257,9 @@ export default function ListMobileNetworkServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataMobileNetworkServicesExpiring' && dataMobileNetworkServicesExpiring.length > 0 && (
@@ -274,8 +275,9 @@ export default function ListMobileNetworkServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataMobileNetworkServicesExpired' && dataMobileNetworkServicesExpired.length > 0 && (
@@ -291,8 +293,9 @@ export default function ListMobileNetworkServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

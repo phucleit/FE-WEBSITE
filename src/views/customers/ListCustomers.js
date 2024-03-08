@@ -112,8 +112,9 @@ export default function ListCustomers() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         ) : (
           ''

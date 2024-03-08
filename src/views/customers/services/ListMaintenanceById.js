@@ -137,8 +137,9 @@ export default function ListMaintenanceById() {
             }
           }}
           pageSizeOptions={[20]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
+          checkboxSelection
+          // disableSelectionOnClick
+          // disableRowSelectionOnClick
         />
       ) : (
         ''

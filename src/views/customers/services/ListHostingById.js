@@ -123,8 +123,9 @@ export default function ListHostingById() {
             }
           }}
           pageSizeOptions={[20]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
+          checkboxSelection
+          // disableSelectionOnClick
+          // disableRowSelectionOnClick
         />
       ) : (
         ''

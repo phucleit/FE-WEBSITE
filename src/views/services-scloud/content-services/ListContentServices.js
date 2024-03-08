@@ -250,8 +250,9 @@ export default function ListContentServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataContentServicesExpiring' && dataContentServicesExpiring.length > 0 && (
@@ -267,8 +268,9 @@ export default function ListContentServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataContentServicesExpired' && dataContentServicesExpired.length > 0 && (
@@ -284,8 +286,9 @@ export default function ListContentServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

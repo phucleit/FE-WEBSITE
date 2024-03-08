@@ -246,8 +246,9 @@ export default function ListToplistServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataToplistServicesExpiring' && dataToplistServicesExpiring.length > 0 && (
@@ -263,8 +264,9 @@ export default function ListToplistServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataToplistServicesExpired' && dataToplistServicesExpired.length > 0 && (
@@ -280,8 +282,9 @@ export default function ListToplistServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

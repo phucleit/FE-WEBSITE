@@ -200,8 +200,9 @@ export default function ListWebsiteServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataWebsiteServicesClosed' && dataWebsiteServicesClosed.length > 0 && (
@@ -217,8 +218,9 @@ export default function ListWebsiteServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

@@ -220,8 +220,9 @@ export default function ListSupplierPlans() {
                     }
                   }}
                   pageSizeOptions={[20]}
-                  disableSelectionOnClick
-                  disableRowSelectionOnClick
+                  checkboxSelection
+                  // disableSelectionOnClick
+                  // disableRowSelectionOnClick
                 />
               ) : (
                 ''
@@ -241,8 +242,9 @@ export default function ListSupplierPlans() {
                     }
                   }}
                   pageSizeOptions={[20]}
-                  disableSelectionOnClick
-                  disableRowSelectionOnClick
+                  checkboxSelection
+                  // disableSelectionOnClick
+                  // disableRowSelectionOnClick
                 />
               ) : (
                 ''
@@ -262,8 +264,9 @@ export default function ListSupplierPlans() {
                     }
                   }}
                   pageSizeOptions={[20]}
-                  disableSelectionOnClick
-                  disableRowSelectionOnClick
+                  checkboxSelection
+                  // disableSelectionOnClick
+                  // disableRowSelectionOnClick
                 />
               ) : (
                 ''
@@ -283,8 +286,9 @@ export default function ListSupplierPlans() {
                     }
                   }}
                   pageSizeOptions={[20]}
-                  disableSelectionOnClick
-                  disableRowSelectionOnClick
+                  checkboxSelection
+                  // disableSelectionOnClick
+                  // disableRowSelectionOnClick
                 />
               ) : (
                 ''

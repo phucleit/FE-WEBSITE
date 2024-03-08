@@ -314,8 +314,9 @@ export default function ListEmailServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataEmailServicesExpiring' && dataEmailServicesExpiring.length > 0 && (
@@ -331,8 +332,9 @@ export default function ListEmailServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataEmailServicesExpired' && dataEmailServicesExpired.length > 0 && (
@@ -348,8 +350,9 @@ export default function ListEmailServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataEmailServicesBeforePayment' && dataEmailServicesBeforePayment.length > 0 && (
@@ -365,8 +368,9 @@ export default function ListEmailServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>

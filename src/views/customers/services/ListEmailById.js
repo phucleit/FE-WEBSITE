@@ -123,8 +123,9 @@ export default function ListEmailById() {
             }
           }}
           pageSizeOptions={[20]}
-          disableSelectionOnClick
-          disableRowSelectionOnClick
+          checkboxSelection
+          // disableSelectionOnClick
+          // disableRowSelectionOnClick
         />
       ) : (
         ''

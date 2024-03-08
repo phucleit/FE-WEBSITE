@@ -273,8 +273,9 @@ export default function ListMaintenanceServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataMaintenanceServicesExpiring' && dataMaintenanceServicesExpiring.length > 0 && (
@@ -290,8 +291,9 @@ export default function ListMaintenanceServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
         {selectedData === 'dataMaintenanceServicesExpired' && dataMaintenanceServicesExpired.length > 0 && (
@@ -307,8 +309,9 @@ export default function ListMaintenanceServices() {
               }
             }}
             pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
           />
         )}
       </MainCard>
