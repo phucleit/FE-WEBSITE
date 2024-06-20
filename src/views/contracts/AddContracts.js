@@ -104,7 +104,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (hostingServices) {
     //   hostingServices.forEach((item) => {
     //     if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
@@ -112,7 +111,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (emailServices) {
     //   emailServices.forEach((item) => {
     //     if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
@@ -120,7 +118,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (sslServices) {
     //   sslServices.forEach((item) => {
     //     if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
@@ -128,7 +125,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (websiteServices) {
     //   websiteServices.forEach((item) => {
     //     if (item.price) {
@@ -136,7 +132,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (contentServices) {
     //   contentServices.forEach((item) => {
     //     if (item.content_plan && item.content_plan[0] && item.content_plan[0].price) {
@@ -144,7 +139,6 @@ export default function AddContracts() {
     //     }
     //   });
     // }
-
     // if (toplistServices) {
     //   toplistServices.forEach((item) => {
     //     if (item.price) {

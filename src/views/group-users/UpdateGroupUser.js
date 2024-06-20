@@ -140,10 +140,7 @@ export default function UpdateGroupUser() {
               <Item>Tài khoản</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="addUser" value={group.addUser} />}
-                    label="Tạo tài khoản mới"
-                  />
+                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addUser" />} label="Tạo tài khoản mới" />
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="resetPassword" />} label="Reset mật khẩu" />
@@ -152,8 +149,11 @@ export default function UpdateGroupUser() {
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateUser" />} label="Sửa tài khoản" />
                 </FormGroup>
                 <FormGroup>
+                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteUser" />} label="Xóa tài khoản" />
+                </FormGroup>
+                <FormGroup>
                   <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="updateGroupUser" />}
+                    control={<Checkbox onChange={handleChangeGroupUser} name="addGroupUser" />}
                     label="Tạo nhóm người dùng"
                   />
                 </FormGroup>
@@ -161,6 +161,12 @@ export default function UpdateGroupUser() {
                   <FormControlLabel
                     control={<Checkbox onChange={handleChangeGroupUser} name="updateGroupUser" />}
                     label="Sửa nhóm người dùng"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteGroupUser" />}
+                    label="Xóa nhóm người dùng"
                   />
                 </FormGroup>
               </Box>
@@ -178,12 +184,24 @@ export default function UpdateGroupUser() {
                   />
                 </FormGroup>
                 <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteSuppliers" />}
+                    label="Xóa nhà cung cấp"
+                  />
+                </FormGroup>
+                <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetwork" />} label="Tạo nhà mạng" />
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel
                     control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetwork" />}
                     label="Sửa nhà mạng"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetwork" />}
+                    label="Xóa nhà mạng"
                   />
                 </FormGroup>
               </Box>
@@ -207,6 +225,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteDomainPlan" />}
+                        label="Xóa gói tên miền"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listHostingPlan" />}
                         label="Tạo gói hosting"
                       />
@@ -215,6 +239,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateHostingPlan" />}
                         label="Sửa gói hosting"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteHostingPlan" />}
+                        label="Xóa gói hosting"
                       />
                     </FormGroup>
                     <FormGroup>
@@ -230,12 +260,21 @@ export default function UpdateGroupUser() {
                       />
                     </FormGroup>
                     <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteEmailPlan" />}
+                        label="Xóa gói email"
+                      />
+                    </FormGroup>
+                    <FormGroup>
                       <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="listSslPlan" />} label="Tạo gói ssl" />
                     </FormGroup>
                   </Grid>
                   <Grid item xs={6}>
                     <FormGroup>
                       <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateSslPlan" />} label="Sửa gói ssl" />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteSslPlan" />} label="Xóa gói ssl" />
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
@@ -247,6 +286,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateContentPlan" />}
                         label="Sửa gói viết bài content & PR"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteContentPlan" />}
+                        label="Xóa gói viết bài content & PR"
                       />
                     </FormGroup>
                     <FormGroup>
@@ -263,6 +308,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMaintenancePlan" />}
+                        label="Xóa gói bảo trì"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetworkPlan" />}
                         label="Tạo gói sim 4G"
                       />
@@ -271,6 +322,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetworkPlan" />}
                         label="Sửa gói sim 4G"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetworkPlan" />}
+                        label="Xóa gói sim 4G"
                       />
                     </FormGroup>
                   </Grid>
@@ -286,6 +343,9 @@ export default function UpdateGroupUser() {
                 <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateCustomer" />} label="Sửa khách hàng" />
                 </FormGroup>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteCustomer" />} label="Xóa khách hàng" />
+                </FormGroup>
               </Box>
             </Grid>
             <Grid item xs={3}>
@@ -296,6 +356,9 @@ export default function UpdateGroupUser() {
                 </FormGroup>
                 <FormGroup>
                   <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateContract" />} label="Sửa hợp đồng" />
+                </FormGroup>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteContract" />} label="Xóa hợp đồng" />
                 </FormGroup>
               </Box>
             </Grid>
@@ -318,6 +381,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteDomainService" />}
+                        label="Xóa dịch vụ tên miền"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listHostingService" />}
                         label="Tạo dịch vụ hosting"
                       />
@@ -330,6 +399,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteHostingService" />}
+                        label="Xóa dịch vụ hosting"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listEmailService" />}
                         label="Tạo dịch vụ email"
                       />
@@ -338,6 +413,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateEmailService" />}
                         label="Sửa dịch vụ email"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteEmailService" />}
+                        label="Xóa dịch vụ email"
                       />
                     </FormGroup>
                     <FormGroup>
@@ -356,6 +437,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteSslService" />}
+                        label="Xóa dịch vụ ssl"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listContentService" />}
                         label="Tạo dịch vụ viết bài content & PR"
                       />
@@ -364,6 +451,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateContentService" />}
                         label="Sửa dịch vụ viết bài content & PR"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteContentService" />}
+                        label="Xóa dịch vụ viết bài content & PR"
                       />
                     </FormGroup>
                     <FormGroup>
@@ -380,6 +473,12 @@ export default function UpdateGroupUser() {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMaintenanceService" />}
+                        label="Xóa dịch vụ bảo trì"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetworkService" />}
                         label="Tạo dịch vụ sim 4G"
                       />
@@ -388,6 +487,12 @@ export default function UpdateGroupUser() {
                       <FormControlLabel
                         control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetworkService" />}
                         label="Sửa dịch vụ sim 4G"
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetworkService" />}
+                        label="Xóa dịch vụ sim 4G"
                       />
                     </FormGroup>
                   </Grid>
