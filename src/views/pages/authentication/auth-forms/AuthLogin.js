@@ -15,7 +15,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-
 import { signin } from '../../../../store/auth/authActions';
 
 import config from '../../../../config';
@@ -38,6 +37,18 @@ export default function Signin() {
   const [open, setOpen] = useState(false);
   const [openErrorNotFound, setOpenErrorNotFound] = useState(false);
   const [openErrorWrong, setOpenErrorWrong] = useState(false);
+
+  let [token, setToken] = useState(localStorage.getItem('token') || '');
+
+  const saveToken = (newToken) => {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+  };
+
+  // const removeToken = () => {
+  //   localStorage.removeItem('token');
+  //   setToken('');
+  // };
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -65,15 +76,18 @@ export default function Signin() {
         credentials: 'include'
       });
 
-      const statusCode = res.status;
-      if (statusCode === 404) {
-        setOpenErrorNotFound(true);
-      } else if (statusCode === 401) {
-        setOpenErrorWrong(true);
-      } else {
+      const status = res.status;
+
+      if (status == 200) {
+        token = await res.json();
+        saveToken(token.token);
+
         setOpen(true);
         dispatch(signin(info));
         navigate('/dashboard');
+      } else {
+        const message = await res.text();
+        alert(message);
       }
     } catch (error) {
       console.error('Error during sign-in:', error);
