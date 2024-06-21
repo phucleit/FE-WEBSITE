@@ -1,3 +1,27 @@
+import axios from 'axios';
+
+export function apiGet(url, token, headers = {}) {
+  return axios.get(url, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiDelete(url, id, token, headers = {}) {
+  return axios.delete(`${url}/` + id, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: token,
+      ...headers
+    }
+  });
+}
+
 export function formatPhoneNumber(phoneNumber) {
   const digitsOnly = phoneNumber.replace(/\D/g, '');
   const formattedNumber = digitsOnly.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');

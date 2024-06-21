@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
@@ -11,9 +10,10 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { formatPhoneNumber } from '../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
+const token = localStorage.getItem('token');
 
 export default function ListSupplier() {
   const [open, setOpen] = useState(false);
@@ -60,22 +60,13 @@ export default function ListSupplier() {
   }, []);
 
   const loadListSupplier = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SUPPLIER}`, token);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_SUPPLIER}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete()
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));
@@ -84,6 +75,20 @@ export default function ListSupplier() {
           }, 1100);
         })
         .catch((error) => console.log(error));
+      // axios
+      //   .delete(`${LIST_SUPPLIER}/` + id, {
+      //     headers: {
+      //       'Cache-Control': 'no-cache'
+      //     }
+      //   })
+      //   .then(() => {
+      //     setOpen(true);
+      //     setData(data.filter((item) => item._id !== id));
+      //     setInterval(() => {
+      //       setOpen(false);
+      //     }, 1100);
+      //   })
+      //   .catch((error) => console.log(error));
     }
   };
 
