@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiPost } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
 
@@ -31,7 +31,6 @@ export default function AddMobileNetwork() {
   let navigate = useNavigate();
 
   const [name, setName] = useState('');
-
   const [open, setOpen] = useState(false);
 
   const handleAddMobileNetwork = (e) => {
@@ -45,12 +44,7 @@ export default function AddMobileNetwork() {
       name: name
     };
 
-    axios
-      .post(`${LIST_MOBILE_NETWORK}`, addMobileNetwork, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_MOBILE_NETWORK}`, addMobileNetwork)
       .then(() => {
         setOpen(true);
         setInterval(() => {

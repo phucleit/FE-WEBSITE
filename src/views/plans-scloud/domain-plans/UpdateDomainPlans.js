@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGetById, apiGet, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -51,11 +51,7 @@ export default function UpdateDomainPlans() {
   }, []);
 
   const loadDetailDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_DOMAIN_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
     setPrice(result.data.price);
@@ -63,11 +59,7 @@ export default function UpdateDomainPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SUPPLIER}`);
     setListSupplier(result.data);
   };
 
@@ -90,12 +82,7 @@ export default function UpdateDomainPlans() {
       supplier_id: supplier
     };
 
-    axios
-      .put(`${LIST_DOMAIN_PLANS}/${currentId}`, updateDomainPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_DOMAIN_PLANS}`, currentId, updateDomainPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

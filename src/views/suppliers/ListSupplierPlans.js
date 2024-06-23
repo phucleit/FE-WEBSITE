@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -13,6 +12,7 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiGetById } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -31,11 +31,7 @@ export default function ListSupplierPlans() {
   }, []);
 
   const loadListPlanSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_SUPPLIER}/${currentId}`);
     setDomainPlans(result.data[0].domainPlans);
     setEmailPlans(result.data[0].emailPlans);
     setHostingPlans(result.data[0].hostingPlans);

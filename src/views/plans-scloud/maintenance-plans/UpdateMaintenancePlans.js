@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -17,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
 
@@ -46,11 +46,7 @@ export default function UpdateMaintenancePlans() {
   }, []);
 
   const loadDetailMaintenancePlans = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_PLANS}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_MAINTENANCE_PLANS}`, currentId);
     setName(result.data.name);
     setContent(result.data.content);
     setPrice(result.data.price);
@@ -81,12 +77,7 @@ export default function UpdateMaintenancePlans() {
       note: note
     };
 
-    axios
-      .put(`${LIST_MAINTENANCE_PLANS}/${currentId}`, updateMaintenancePlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_MAINTENANCE_PLANS}`, currentId, updateMaintenancePlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

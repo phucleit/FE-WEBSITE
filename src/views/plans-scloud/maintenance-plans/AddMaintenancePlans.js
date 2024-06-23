@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -17,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiPost } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
 
@@ -62,12 +62,7 @@ export default function AddMaintenancePlans() {
       note: note
     };
 
-    axios
-      .post(`${LIST_MAINTENANCE_PLANS}`, addMaintenancePlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_MAINTENANCE_PLANS}`, addMaintenancePlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

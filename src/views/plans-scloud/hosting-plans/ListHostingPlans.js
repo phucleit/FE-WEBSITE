@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -19,7 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { convertPrice } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, convertPrice } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_PLANS = `${config.API_URL}/plans/hosting`;
 
@@ -40,22 +39,13 @@ export default function ListHostingPlans() {
   }, []);
 
   const loadListHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_PLANS}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_HOSTING_PLANS}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_HOSTING_PLANS}/`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

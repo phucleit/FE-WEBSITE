@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { FileUploader } from 'react-drag-drop-files';
 
 import { styled } from '@mui/material/styles';
@@ -19,6 +18,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiPostFile } from '../../utils/formatUtils';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
@@ -98,16 +98,7 @@ export default function AddCustomers() {
     formDataCustomer.append('image_front_view', imageFrontView);
     formDataCustomer.append('image_back_view', imageBackView);
 
-    const config_header = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-        'Cache-Control': 'no-cache'
-      }
-    };
-
-    axios
-      .post(`${LIST_CUSTOMERS}`, formDataCustomer, config_header)
+    apiPostFile(`${LIST_CUSTOMERS}`, formDataCustomer)
       .then(() => {
         setOpen(true);
         setInterval(() => {

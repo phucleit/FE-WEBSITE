@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,7 +19,7 @@ import Switch from '@mui/material/Switch';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
@@ -60,11 +59,7 @@ export default function UpdateDomainServices() {
   }, []);
 
   const loadDetailDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_DOMAIN_SERVICES}`, currentId);
     setName(result.data.name);
     setPeriods(result.data.periods);
     setRegisteredAt(getRegisteredAt(result.data.expiredAt));
@@ -75,20 +70,12 @@ export default function UpdateDomainServices() {
   };
 
   const loadListDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_PLANS}`);
     setListDomainPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -107,12 +94,7 @@ export default function UpdateDomainServices() {
       before_payment: before_payment
     };
 
-    axios
-      .put(`${LIST_DOMAIN_SERVICES}/${currentId}`, updateDomainServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_DOMAIN_SERVICES}`, currentId, updateDomainServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

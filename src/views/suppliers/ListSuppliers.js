@@ -13,7 +13,6 @@ import config from '../../config';
 import { apiGet, apiDelete, formatPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
-const token = localStorage.getItem('token');
 
 export default function ListSupplier() {
   const [open, setOpen] = useState(false);
@@ -60,7 +59,7 @@ export default function ListSupplier() {
   }, []);
 
   const loadListSupplier = async () => {
-    const result = await apiGet(`${LIST_SUPPLIER}`, token);
+    const result = await apiGet(`${LIST_SUPPLIER}`);
     setData(result.data);
   };
 
@@ -75,20 +74,6 @@ export default function ListSupplier() {
           }, 1100);
         })
         .catch((error) => console.log(error));
-      // axios
-      //   .delete(`${LIST_SUPPLIER}/` + id, {
-      //     headers: {
-      //       'Cache-Control': 'no-cache'
-      //     }
-      //   })
-      //   .then(() => {
-      //     setOpen(true);
-      //     setData(data.filter((item) => item._id !== id));
-      //     setInterval(() => {
-      //       setOpen(false);
-      //     }, 1100);
-      //   })
-      //   .catch((error) => console.log(error));
     }
   };
 

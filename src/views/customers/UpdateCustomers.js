@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { FileUploader } from 'react-drag-drop-files';
 
 import { styled } from '@mui/material/styles';
@@ -19,6 +18,8 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiGetById, apiUpdateFile } from '../../utils/formatUtils';
+
 import ListServices from './ListServices';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
@@ -64,7 +65,7 @@ export default function UpdateCustomers() {
   }, []);
 
   const loadDetailCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}/${currentId}`);
+    const result = await apiGetById(`${LIST_CUSTOMERS}`, currentId);
     setFullName(result.data.fullname);
     setEmail(result.data.email);
     setGender(result.data.gender);
@@ -127,16 +128,7 @@ export default function UpdateCustomers() {
     formDataCustomer.append('image_front_view', imageFrontView);
     formDataCustomer.append('image_back_view', imageBackView);
 
-    const config_header = {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-        'Cache-Control': 'no-cache'
-      }
-    };
-
-    axios
-      .put(`${LIST_CUSTOMERS}/${currentId}`, formDataCustomer, config_header)
+    apiUpdateFile(`${LIST_CUSTOMERS}`, currentId, formDataCustomer)
       .then(() => {
         setOpen(true);
         setInterval(() => {

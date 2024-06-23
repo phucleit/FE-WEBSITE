@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 
@@ -152,43 +151,26 @@ export default function ListMobileNetworkServices() {
   }, []);
 
   const loadListMobileNetworkServices = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListMobileNetworkServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`);
     setDataMobileNetworkServicesExpiring(result.data);
     setCountMobileNetworkServicesExpiring(result.data.length);
   };
 
   const loadListMobileNetworkServicesExpired = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`);
     setDataMobileNetworkServicesExpired(result.data);
     setCountMobileNetworkServicesExpired(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_MOBILE_NETWORK_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_MOBILE_NETWORK_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
@@ -11,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../../config';
+import { apiGet, apiDelete } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 
@@ -61,22 +61,13 @@ export default function ListDomainPlans() {
   }, []);
 
   const loadListDomainPlans = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_PLANS}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_DOMAIN_PLANS}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_DOMAIN_PLANS}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

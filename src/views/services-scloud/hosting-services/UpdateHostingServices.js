@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,7 +19,7 @@ import Switch from '@mui/material/Switch';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -63,11 +62,7 @@ export default function UpdateHostingServices() {
   }, []);
 
   const loadDetailHostingServices = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_HOSTING_SERVICES}`, currentId);
     setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainServiceId(result.data.domain_service_id._id);
@@ -78,29 +73,17 @@ export default function UpdateHostingServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_PLANS}`);
     setListHostingPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -119,12 +102,7 @@ export default function UpdateHostingServices() {
       before_payment: beforePayment
     };
 
-    axios
-      .put(`${LIST_HOSTING_SERVICES}/${currentId}`, updateHostingServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_HOSTING_SERVICES}`, currentId, updateHostingServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

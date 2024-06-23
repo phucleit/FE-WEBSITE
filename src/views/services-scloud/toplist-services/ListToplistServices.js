@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 
@@ -142,43 +141,26 @@ export default function ListToplistServices() {
   }, []);
 
   const loadListToplistServices = async () => {
-    const result = await axios.get(`${LIST_TOPLIST_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_TOPLIST_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListToplistServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_TOPLIST_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_TOPLIST_SERVICES}/expiring/all`);
     setDataToplistServicesExpiring(result.data);
     setCountToplistServicesExpiring(result.data.length);
   };
 
   const loadListToplistServicesExpired = async () => {
-    const result = await axios.get(`${LIST_TOPLIST_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_TOPLIST_SERVICES}/expired/all`);
     setDataToplistServicesExpired(result.data);
     setCountToplistServicesExpired(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_TOPLIST_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_TOPLIST_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

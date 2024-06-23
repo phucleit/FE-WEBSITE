@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
@@ -61,11 +60,7 @@ export default function UpdateMaintenanceServices() {
   }, []);
 
   const loadDetailMaintenanceServices = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_MAINTENANCE_SERVICES}`, currentId);
     setServiceType(result.data.service_type);
     setMaintenancePlanId(result.data.maintenance_plan_id._id);
     setDomainServiceId(result.data.domain_service_id._id);
@@ -76,29 +71,17 @@ export default function UpdateMaintenanceServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListMaintenacePlans = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_PLANS}`);
     setListMaintenancePlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -113,12 +96,7 @@ export default function UpdateMaintenanceServices() {
       customer_id: customerId
     };
 
-    axios
-      .put(`${LIST_MAINTENANCE_SERVICES}/${currentId}`, updateMaintenanceServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_MAINTENANCE_SERVICES}`, currentId, updateMaintenanceServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

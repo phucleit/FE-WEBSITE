@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiPost } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -59,12 +59,7 @@ export default function AddContentPlans() {
       number_of_articles: number_of_articles
     };
 
-    axios
-      .post(`${LIST_CONTENT_PLANS}`, addContentPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_CONTENT_PLANS}`, addContentPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

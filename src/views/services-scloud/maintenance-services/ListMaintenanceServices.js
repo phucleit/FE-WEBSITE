@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 
@@ -169,43 +168,26 @@ export default function ListMaintenanceServices() {
   }, []);
 
   const loadListMaintenanceServices = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadMaintenanceServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expiring/all`);
     setDataMaintenanceServicesExpiring(result.data);
     setCountMaintenanceServicesExpiring(result.data.length);
   };
 
   const loadMaintenanceServicesExpired = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expired/all`);
     setDataMaintenanceServicesExpired(result.data);
     setCountMaintenanceServicesExpired(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_MAINTENANCE_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_MAINTENANCE_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

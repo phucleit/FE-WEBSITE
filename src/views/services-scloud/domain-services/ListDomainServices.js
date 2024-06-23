@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 
@@ -176,53 +175,32 @@ export default function ListDomainServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListDomainServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}/expiring/all`);
     setDataDomainServicesExpiring(result.data);
     setCountDomainServicesExpiring(result.data.length);
   };
 
   const loadListDomainServicesExpired = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}/expired/all`);
     setDataDomainServicesExpired(result.data);
     setCountDomainServicesExpired(result.data.length);
   };
 
   const loadListDomainServicesBeforePayment = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}/before-payment/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}/before-payment/all`);
     setDataDomainServicesBeforePayment(result.data);
     setCountDomainServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_DOMAIN_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_DOMAIN_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

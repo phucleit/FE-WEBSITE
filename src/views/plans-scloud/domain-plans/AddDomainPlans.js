@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -48,11 +48,7 @@ export default function AddDomainPlans() {
   }, []);
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SUPPLIER}`);
     setListSupplier(result.data);
   };
 
@@ -75,12 +71,7 @@ export default function AddDomainPlans() {
       supplier_id: supplier
     };
 
-    axios
-      .post(`${LIST_DOMAIN_PLANS}`, addDomainPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_DOMAIN_PLANS}`, addDomainPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -15,8 +14,10 @@ import Snackbar from '@mui/material/Snackbar';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-import config from '../../config';
 import ListSupplierPlans from './ListSupplierPlans';
+
+import config from '../../config';
+import { apiGetById, apiUpdate } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -49,11 +50,7 @@ export default function UpdateSuppliers() {
   }, []);
 
   const loadDetailSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_SUPPLIER}`, currentId);
     setName(result.data[0].name);
     setCompany(result.data[0].company);
     setTaxCode(result.data[0].tax_code);
@@ -95,12 +92,7 @@ export default function UpdateSuppliers() {
       address: address
     };
 
-    axios
-      .put(`${LIST_SUPPLIER}/${currentId}`, updateSuppliers, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_SUPPLIER}`, currentId, updateSuppliers)
       .then(() => {
         setOpen(true);
         setInterval(() => {

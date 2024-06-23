@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,7 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
@@ -59,11 +58,7 @@ export default function UpdateMobileNetworkServices() {
   }, []);
 
   const loadDetailMobileNetworkServices = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_MOBILE_NETWORK_SERVICES}`, currentId);
     setPeriods(result.data.periods);
     setRegisteredAt(getRegisteredAt(result.data.expiredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
@@ -72,20 +67,12 @@ export default function UpdateMobileNetworkServices() {
   };
 
   const loadListMobileNetworkPlans = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_PLANS}`);
     setListMobileNetworkPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -98,15 +85,10 @@ export default function UpdateMobileNetworkServices() {
       customerId: customerId
     };
 
-    axios
-      .put(`${LIST_MOBILE_NETWORK_SERVICES}/${currentId}`, updateMobileNetworkServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_MOBILE_NETWORK_SERVICES}`, currentId, updateMobileNetworkServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setIntervapiUpdateal(() => {
           navigate('/dashboard/services/list-mobile-network');
           window.location.reload(true);
         }, 1500);

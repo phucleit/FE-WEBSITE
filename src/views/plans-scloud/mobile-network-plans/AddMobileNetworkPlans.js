@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,6 +20,7 @@ import FormLabel from '@mui/material/FormLabel';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiPost, apiGet } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
@@ -54,11 +54,7 @@ export default function AddMobileNetworkPlans() {
   }, []);
 
   const loadListMobileNetworkSuppliers = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK}`);
     setListMobileNetworkSuppliers(result.data);
   };
 
@@ -93,12 +89,7 @@ export default function AddMobileNetworkPlans() {
       supplierMobileNetworkId: supplierMobileNetworkId
     };
 
-    axios
-      .post(`${LIST_MOBILE_NETWORK_PLANS}`, addMobileNetworkPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_MOBILE_NETWORK_PLANS}`, addMobileNetworkPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 
@@ -190,53 +189,32 @@ export default function ListHostingServices() {
   }, []);
 
   const loadListHostingServices = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadHostingServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expiring/all`);
     setDataHostingServicesExpiring(result.data);
     setCountHostingServicesExpiring(result.data.length);
   };
 
   const loadHostingServicesExpired = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expired/all`);
     setDataHostingServicesExpired(result.data);
     setCountHostingServicesExpired(result.data.length);
   };
 
   const loadHostingServicesBeforePayment = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}/before-payment/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/before-payment/all`);
     setDataHostingServicesBeforePayment(result.data);
     setCountHostingServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_HOSTING_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_HOSTING_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

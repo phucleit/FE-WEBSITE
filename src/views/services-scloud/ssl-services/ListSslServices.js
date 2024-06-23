@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 
@@ -182,53 +181,32 @@ export default function ListSslServices() {
   }, []);
 
   const loadListSslServices = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SSL_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadSslServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SSL_SERVICES}/expiring/all`);
     setDataSslServicesExpiring(result.data);
     setCountSslServicesExpiring(result.data.length);
   };
 
   const loadSslServicesExpired = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SSL_SERVICES}/expired/all`);
     setDataSslServicesExpired(result.data);
     setCountSslServicesExpired(result.data.length);
   };
 
   const loadSslServicesBeforePayment = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/before-payment/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SSL_SERVICES}/before-payment/all`);
     setDataSslServicesBeforePayment(result.data);
     setCountSslServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_SSL_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_SSL_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

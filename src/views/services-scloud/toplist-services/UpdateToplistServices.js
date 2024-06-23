@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
@@ -55,11 +54,7 @@ export default function UpdateToplistServices() {
   }, []);
 
   const loadDetailToplistServices = async () => {
-    const result = await axios.get(`${LIST_TOPLIST_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_TOPLIST_SERVICES}`, currentId);
     setPost(result.data.post);
     setPrice(result.data.price);
     setRentalLocation(result.data.rental_location);
@@ -70,11 +65,7 @@ export default function UpdateToplistServices() {
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -88,12 +79,7 @@ export default function UpdateToplistServices() {
       periods: periods
     };
 
-    axios
-      .put(`${LIST_TOPLIST_SERVICES}/${currentId}`, updateToplistServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_TOPLIST_SERVICES}`, currentId, updateToplistServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

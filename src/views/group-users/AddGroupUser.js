@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
@@ -21,7 +21,17 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
 
-const LIST_GROUP_USER = `${config.API_URL}/group-user`;
+import { apiPost } from '../../utils/formatUtils';
+
+// const LIST_GROUP_USER = `${config.API_URL}/group-user`;
+const LIST_FUNCTION = `${config.API_URL}/functions`;
+
+const parent_id_tai_khoan = '667460e3d19aa9fcecc69fa6';
+const parent_id_nha_cung_cap = '667463d04bede188dfb46d75';
+const parent_id_goi_dich_vu = '667464b5500bf3ad04c24f47';
+const parent_id_dich_vu = '667467eb263fb998b9925d2d';
+const parent_id_khach_hang = '667463d04bede188dfb46d7d';
+const parent_id_hop_dong = '667463d04bede188dfb46d7a';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -34,15 +44,36 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddGroupUser() {
   let navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [dataFunctions, setDataFunctions] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [group, setGroup] = useState('');
+
+  useEffect(() => {
+    loadListFunctions();
+  }, []);
+
+  const loadListFunctions = async () => {
+    const result = await axios.get(`${LIST_FUNCTION}`);
+    setDataFunctions(result.data);
+  };
+
+  const filteredItemsTaiKhoan = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_tai_khoan);
+  const filteredItemsNCC = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_nha_cung_cap);
+  const filteredItemsGoiDV = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_goi_dich_vu);
+  const filteredItemsDV = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_dich_vu);
+  const filteredItemsKH = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_khach_hang);
+  const filteredItemsHD = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_hop_dong);
 
   const handleChangeGroupUser = (event) => {
-    setGroup({
-      ...group,
-      [event.target.name]: event.target.checked
+    const { name, checked } = event.target;
+    setCheckedItems((prevItems) => {
+      if (checked) {
+        return [...prevItems, name];
+      } else {
+        return prevItems.filter((item) => item !== name);
+      }
     });
   };
 
@@ -62,19 +93,10 @@ export default function AddGroupUser() {
     const addGroupUser = {
       name: name,
       description: description,
-      group: group
-    };
-    console.log(addGroupUser);
-
-    const config_header = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      }
+      group: checkedItems
     };
 
-    axios
-      .post(`${LIST_GROUP_USER}`, addGroupUser, config_header)
+    apiPost(`${LIST_FUNCTION}`, addGroupUser)
       .then(() => {
         setOpen(true);
         setInterval(() => {
@@ -82,7 +104,10 @@ export default function AddGroupUser() {
           window.location.reload(true);
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const message = error.response ? error.response.data : '';
+        alert(message);
+      });
   };
 
   return (
@@ -126,34 +151,13 @@ export default function AddGroupUser() {
               <Item>Tài khoản</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addUser" />} label="Tạo tài khoản mới" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="resetPassword" />} label="Reset mật khẩu" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateUser" />} label="Sửa tài khoản" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteUser" />} label="Xóa tài khoản" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="addGroupUser" />}
-                    label="Tạo nhóm người dùng"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="updateGroupUser" />}
-                    label="Sửa nhóm người dùng"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteGroupUser" />}
-                    label="Xóa nhóm người dùng"
-                  />
+                  {filteredItemsTaiKhoan.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
                 </FormGroup>
               </Box>
             </Grid>
@@ -161,176 +165,27 @@ export default function AddGroupUser() {
               <Item>Nhà cung cấp</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="listSuppliers" />} label="Tạo nhà cung cấp" />
+                  {filteredItemsNCC.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
                 </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="updateSuppliers" />}
-                    label="Sửa nhà cung cấp"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteSuppliers" />}
-                    label="Xóa nhà cung cấp"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetwork" />} label="Tạo nhà mạng" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetwork" />}
-                    label="Sửa nhà mạng"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetwork" />}
-                    label="Xóa nhà mạng"
-                  />
-                </FormGroup>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>Gói dịch vụ</Item>
-              <Box component="section">
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listDomainPlan" />}
-                        label="Tạo gói tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateDomainPlan" />}
-                        label="Sửa gói tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteDomainPlan" />}
-                        label="Xóa gói tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listHostingPlan" />}
-                        label="Tạo gói hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateHostingPlan" />}
-                        label="Sửa gói hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteHostingPlan" />}
-                        label="Xóa gói hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listEmailPlan" />}
-                        label="Tạo gói email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateEmailPlan" />}
-                        label="Sửa gói email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteEmailPlan" />}
-                        label="Xóa gói email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="listSslPlan" />} label="Tạo gói ssl" />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormGroup>
-                      <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateSslPlan" />} label="Sửa gói ssl" />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteSslPlan" />} label="Xóa gói ssl" />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listContentPlan" />}
-                        label="Tạo gói viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateContentPlan" />}
-                        label="Sửa gói viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteContentPlan" />}
-                        label="Xóa gói viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listMaintenancePlan" />}
-                        label="Tạo gói bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateMaintenancePlan" />}
-                        label="Sửa gói bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMaintenancePlan" />}
-                        label="Xóa gói bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetworkPlan" />}
-                        label="Tạo gói sim 4G"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetworkPlan" />}
-                        label="Sửa gói sim 4G"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetworkPlan" />}
-                        label="Xóa gói sim 4G"
-                      />
-                    </FormGroup>
-                  </Grid>
-                </Grid>
               </Box>
             </Grid>
             <Grid item xs={3}>
               <Item>Khách hàng</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addCustomer" />} label="Tạo khách hàng" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateCustomer" />} label="Sửa khách hàng" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteCustomer" />} label="Xóa khách hàng" />
+                  {filteredItemsKH.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
                 </FormGroup>
               </Box>
             </Grid>
@@ -338,151 +193,42 @@ export default function AddGroupUser() {
               <Item>Hợp đồng</Item>
               <Box component="section">
                 <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="addContract" />} label="Tạo hợp đồng" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="updateContract" />} label="Sửa hợp đồng" />
-                </FormGroup>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox onChange={handleChangeGroupUser} name="deleteContract" />} label="Xóa hợp đồng" />
+                  {filteredItemsHD.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
                 </FormGroup>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
+              <Item>Gói dịch vụ</Item>
+              <Box component="section">
+                <FormGroup>
+                  {filteredItemsGoiDV.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
+                </FormGroup>
+              </Box>
+            </Grid>
+            <Grid item xs={3}>
               <Item>Dịch vụ</Item>
               <Box component="section">
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listDomainService" />}
-                        label="Tạo dịch vụ tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateDomainService" />}
-                        label="Sửa dịch vụ tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteDomainService" />}
-                        label="Xóa dịch vụ tên miền"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listHostingService" />}
-                        label="Tạo dịch vụ hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateHostingService" />}
-                        label="Sửa dịch vụ hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteHostingService" />}
-                        label="Xóa dịch vụ hosting"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listEmailService" />}
-                        label="Tạo dịch vụ email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateEmailService" />}
-                        label="Sửa dịch vụ email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteEmailService" />}
-                        label="Xóa dịch vụ email"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listSslService" />}
-                        label="Tạo dịch vụ ssl"
-                      />
-                    </FormGroup>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateSslService" />}
-                        label="Sửa dịch vụ ssl"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteSslService" />}
-                        label="Xóa dịch vụ ssl"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listContentService" />}
-                        label="Tạo dịch vụ viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateContentService" />}
-                        label="Sửa dịch vụ viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteContentService" />}
-                        label="Xóa dịch vụ viết bài content & PR"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listMaintenanceService" />}
-                        label="Tạo dịch vụ bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateMaintenanceService" />}
-                        label="Sửa dịch vụ bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMaintenanceService" />}
-                        label="Xóa dịch vụ bảo trì"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="listMobileNetworkService" />}
-                        label="Tạo dịch vụ sim 4G"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="updateMobileNetworkService" />}
-                        label="Sửa dịch vụ sim 4G"
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<Checkbox onChange={handleChangeGroupUser} name="deleteMobileNetworkService" />}
-                        label="Xóa dịch vụ sim 4G"
-                      />
-                    </FormGroup>
-                  </Grid>
-                </Grid>
+                <FormGroup>
+                  {filteredItemsDV.map((item) => (
+                    <FormControlLabel
+                      key={item._id}
+                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      label={item.name}
+                    />
+                  ))}
+                </FormGroup>
               </Box>
             </Grid>
             <Grid item xs={12}>

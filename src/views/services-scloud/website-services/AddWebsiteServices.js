@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -50,20 +50,12 @@ export default function AddWebsiteServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -76,12 +68,7 @@ export default function AddWebsiteServices() {
       customer_id: customerId
     };
 
-    axios
-      .post(`${LIST_WEBSITE_SERVICES}`, addWebsiteServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_WEBSITE_SERVICES}`, addWebsiteServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

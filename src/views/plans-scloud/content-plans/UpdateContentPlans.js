@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -44,11 +44,7 @@ export default function UpdateContentPlans() {
   }, []);
 
   const loadDetailSslPlans = async () => {
-    const result = await axios.get(`${LIST_CONTENT_PLANS}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_CONTENT_PLANS}`, currentId);
     setName(result.data.name);
     setPrice(result.data.price);
     setNumberOfArticles(result.data.number_of_articles);
@@ -77,8 +73,7 @@ export default function UpdateContentPlans() {
       number_of_articles: number_of_articles
     };
 
-    axios
-      .put(`${LIST_CONTENT_PLANS}/${currentId}`, updateContentPlans)
+    apiUpdate(`${LIST_CONTENT_PLANS}`, currentId, updateContentPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

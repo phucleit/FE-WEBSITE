@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,7 +19,7 @@ import Switch from '@mui/material/Switch';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -63,11 +62,7 @@ export default function UpdateSslServices() {
   }, []);
 
   const loadDetailSslServices = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_SSL_SERVICES}`, currentId);
     setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainServiceId(result.data.domain_service_id._id);
@@ -78,29 +73,17 @@ export default function UpdateSslServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListSslPlans = async () => {
-    const result = await axios.get(`${LIST_SSL_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SSL_PLANS}`);
     setListSslPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -119,12 +102,7 @@ export default function UpdateSslServices() {
       before_payment: beforePayment
     };
 
-    axios
-      .put(`${LIST_SSL_SERVICES}/${currentId}`, updateSslServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_SSL_SERVICES}`, currentId, updateSslServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

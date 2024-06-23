@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -19,6 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiDelete } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
 
@@ -39,13 +39,8 @@ export default function ListMaintenancePlans() {
   }, []);
 
   const loadListMaintenancePlans = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_PLANS}`);
     setData(result.data);
-    console.log(result.data);
   };
 
   const convertPrice = (price) => {
@@ -54,12 +49,7 @@ export default function ListMaintenancePlans() {
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_MAINTENANCE_PLANS}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_MAINTENANCE_PLANS}/`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

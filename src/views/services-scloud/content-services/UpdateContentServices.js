@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
@@ -56,11 +55,7 @@ export default function UpdateContentServices() {
   }, []);
 
   const loadDetailContentServices = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_CONTENT_SERVICES}`, currentId);
     setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setContentPlanId(result.data.content_plan_id._id);
@@ -69,20 +64,12 @@ export default function UpdateContentServices() {
   };
 
   const loadListContentPlans = async () => {
-    const result = await axios.get(`${LIST_CONTENT_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CONTENT_PLANS}`);
     setListContentPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -95,12 +82,7 @@ export default function UpdateContentServices() {
       customer_id: customerId
     };
 
-    axios
-      .put(`${LIST_CONTENT_SERVICES}/${currentId}`, updateContentServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_CONTENT_SERVICES}`, currentId, updateContentServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

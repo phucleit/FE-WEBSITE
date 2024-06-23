@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
 
@@ -42,11 +42,7 @@ export default function UpdateMobileNetwork() {
   }, []);
 
   const loadDetailMobileNetwork = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_MOBILE_NETWORK}`, currentId);
     setName(result.data.name);
   };
 
@@ -61,12 +57,7 @@ export default function UpdateMobileNetwork() {
       name: name
     };
 
-    axios
-      .put(`${LIST_MOBILE_NETWORK}/${currentId}`, updateMobileNetwork, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_MOBILE_NETWORK}`, currentId, updateMobileNetwork)
       .then(() => {
         setOpen(true);
         setInterval(() => {

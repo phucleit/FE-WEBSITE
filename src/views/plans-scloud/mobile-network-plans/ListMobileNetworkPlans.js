@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -19,7 +18,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import CheckIcon from '@mui/icons-material/Check';
 
 import config from '../../../config';
-import { convertPrice } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, convertPrice } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 
@@ -40,22 +39,13 @@ export default function ListMobileNetworkPlans() {
   }, []);
 
   const loadListMobileNetworkPlans = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_PLANS}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_MOBILE_NETWORK_PLANS}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_MOBILE_NETWORK_PLANS}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

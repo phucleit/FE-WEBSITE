@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 
@@ -189,53 +188,32 @@ export default function ListEmailServices() {
   }, []);
 
   const loadListEmailServices = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadEmailServicesExpiring = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expiring/all`);
     setDataEmailServicesExpiring(result.data);
     setCountEmailServicesExpiring(result.data.length);
   };
 
   const loadEmailServicesExpired = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expired/all`);
     setDataEmailServicesExpired(result.data);
     setCountEmailServicesExpired(result.data.length);
   };
 
   const loadEmailServicesBeforePayment = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/before-payment/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/before-payment/all`);
     setDataEmailServicesBeforePayment(result.data);
     setCountEmailServicesBeforePayment(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_EMAIL_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_EMAIL_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

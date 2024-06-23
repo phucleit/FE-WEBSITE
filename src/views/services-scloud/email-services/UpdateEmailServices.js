@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,7 +19,7 @@ import Switch from '@mui/material/Switch';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -63,11 +62,7 @@ export default function UpdateEmailServices() {
   }, []);
 
   const loadDetailHostingServices = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_EMAIL_SERVICES}`, currentId);
     setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainServiceId(result.data.domain_service_id._id);
@@ -78,29 +73,17 @@ export default function UpdateEmailServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListEmailPlans = async () => {
-    const result = await axios.get(`${LIST_EMAIL_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_PLANS}`);
     setListEmailPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -119,12 +102,7 @@ export default function UpdateEmailServices() {
       before_payment: beforePayment
     };
 
-    axios
-      .put(`${LIST_EMAIL_SERVICES}/${currentId}`, updateEmailServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_EMAIL_SERVICES}`, currentId, updateEmailServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

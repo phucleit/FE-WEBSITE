@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
@@ -21,6 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
@@ -54,20 +54,12 @@ export default function AddContentServices() {
   }, []);
 
   const loadListContentPlans = async () => {
-    const result = await axios.get(`${LIST_CONTENT_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CONTENT_PLANS}`);
     setListContentPlans(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -81,12 +73,7 @@ export default function AddContentServices() {
       customer_id: customerId
     };
 
-    axios
-      .post(`${LIST_CONTENT_SERVICES}`, addContentServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_CONTENT_SERVICES}`, addContentServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

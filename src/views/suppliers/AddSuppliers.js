@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiPost } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -72,12 +72,7 @@ export default function AddSuppliers() {
       address: address
     };
 
-    axios
-      .post(`${LIST_SUPPLIER}`, addSuppliers, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_SUPPLIER}`, addSuppliers)
       .then(() => {
         setOpen(true);
         setInterval(() => {

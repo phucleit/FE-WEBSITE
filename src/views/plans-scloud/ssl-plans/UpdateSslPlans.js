@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiUpdate, apiGetById } from '../../../utils/formatUtils';
 
 const LIST_SSL_PLANS = `${config.API_URL}/plans/ssl`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -52,11 +52,7 @@ export default function UpdateSslPlans() {
   }, []);
 
   const loadDetailSslPlans = async () => {
-    const result = await axios.get(`${LIST_SSL_PLANS}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_SSL_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
     setPrice(result.data.price);
@@ -65,11 +61,7 @@ export default function UpdateSslPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SUPPLIER}`);
     setListSupplier(result.data);
   };
 
@@ -93,12 +85,7 @@ export default function UpdateSslPlans() {
       supplier_id: supplier
     };
 
-    axios
-      .put(`${LIST_SSL_PLANS}/${currentId}`, updateSslPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_SSL_PLANS}`, currentId, updateSslPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

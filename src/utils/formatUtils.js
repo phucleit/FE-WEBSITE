@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export function apiGet(url, token, headers = {}) {
+const token = localStorage.getItem('token');
+
+export function apiGet(url, headers = {}) {
   return axios.get(url, {
     headers: {
       'Cache-Control': 'no-cache',
@@ -11,8 +13,65 @@ export function apiGet(url, token, headers = {}) {
   });
 }
 
-export function apiDelete(url, id, token, headers = {}) {
-  return axios.delete(`${url}/` + id, {
+export function apiPost(url, data, headers = {}) {
+  return axios.post(url, data, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiPostFile(url, data, headers = {}) {
+  return axios.post(url, data, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiGetById(url, id, headers = {}) {
+  return axios.get(`${url}/${id}`, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiUpdate(url, id, data, headers = {}) {
+  return axios.put(`${url}/${id}`, data, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiUpdateFile(url, id, data, headers = {}) {
+  return axios.put(`${url}/${id}`, data, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      token: token,
+      ...headers
+    }
+  });
+}
+
+export function apiDelete(url, id, headers = {}) {
+  return axios.delete(`${url}/${id}`, {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',

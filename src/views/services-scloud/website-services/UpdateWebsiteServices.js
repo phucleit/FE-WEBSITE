@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -54,11 +54,7 @@ export default function UpdateWebsiteServices() {
   }, []);
 
   const loadDetailWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_WEBSITE_SERVICES}`, currentId);
     setDomainServiceId(result.data.domain_service_id._id);
     setPrice(result.data.price);
     setCustomerId(result.data.customer_id._id);
@@ -66,20 +62,12 @@ export default function UpdateWebsiteServices() {
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -93,12 +81,7 @@ export default function UpdateWebsiteServices() {
       status: status
     };
 
-    axios
-      .put(`${LIST_WEBSITE_SERVICES}/${currentId}`, updateWebsiteServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_WEBSITE_SERVICES}`, currentId, updateWebsiteServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

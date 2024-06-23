@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
@@ -11,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { formatPhoneNumber, getCreatedAt } from '../../utils/formatUtils';
+import { apiGet, formatPhoneNumber, getCreatedAt } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
@@ -66,11 +65,7 @@ export default function ListCustomers() {
   }, []);
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setData(result.data);
   };
 

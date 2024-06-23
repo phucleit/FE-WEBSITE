@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
@@ -21,6 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
@@ -59,29 +59,17 @@ export default function AddMaintenanceServices() {
   }, []);
 
   const loadListMaintenancePlans = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_PLANS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_PLANS}`);
     setListMaintenancePlans(result.data);
   };
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setListDomainServices(result.data);
   };
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -97,12 +85,7 @@ export default function AddMaintenanceServices() {
       registeredAt: registeredAt.getTime()
     };
 
-    axios
-      .post(`${LIST_MAINTENANCE_SERVICES}`, addMaintenanceServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_MAINTENANCE_SERVICES}`, addMaintenanceServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {

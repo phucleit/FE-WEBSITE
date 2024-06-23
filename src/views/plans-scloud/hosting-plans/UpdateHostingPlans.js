@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_PLANS = `${config.API_URL}/plans/HOSTING`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -53,11 +53,7 @@ export default function UpdateHostinglPlans() {
   }, []);
 
   const loadDetailHostingPlans = async () => {
-    const result = await axios.get(`${LIST_HOSTING_PLANS}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_HOSTING_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
     setPrice(result.data.price);
@@ -67,11 +63,7 @@ export default function UpdateHostinglPlans() {
   };
 
   const loadSuppliers = async () => {
-    const result = await axios.get(`${LIST_SUPPLIER}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_SUPPLIER}`);
     setListSupplier(result.data);
   };
 
@@ -106,12 +98,7 @@ export default function UpdateHostinglPlans() {
       supplier_id: supplier
     };
 
-    axios
-      .put(`${LIST_HOSTING_PLANS}/${currentId}`, updateHostingPlans, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiUpdate(`${LIST_HOSTING_PLANS}`, currentId, updateHostingPlans)
       .then(() => {
         setOpen(true);
         setInterval(() => {

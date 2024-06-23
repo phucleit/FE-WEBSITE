@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
@@ -13,7 +12,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getCreatedAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getCreatedAt } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 
@@ -116,33 +115,20 @@ export default function ListWebsiteServices() {
   }, []);
 
   const loadListWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_WEBSITE_SERVICES}`);
     setData(result.data);
     setDataLength(result.data.length);
   };
 
   const loadListWebsiteClosed = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_WEBSITE_SERVICES}/closed/all`);
     setDataWebsiteServicesClosed(result.data);
     setCountWebsiteServicesClosed(result.data.length);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_WEBSITE_SERVICES}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_WEBSITE_SERVICES}`, id)
         .then(() => {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));

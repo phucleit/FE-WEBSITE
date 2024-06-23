@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DateTimePicker from 'react-datetime-picker';
 
 import { styled } from '@mui/material/styles';
@@ -22,6 +21,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
+import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
@@ -54,11 +54,7 @@ export default function AddToplistServices() {
   }, []);
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -88,12 +84,7 @@ export default function AddToplistServices() {
       customer_id: customerId
     };
 
-    axios
-      .post(`${LIST_TOPLIST_SERVICES}`, addToplistServices, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_TOPLIST_SERVICES}`, addToplistServices)
       .then(() => {
         setOpen(true);
         setInterval(() => {
