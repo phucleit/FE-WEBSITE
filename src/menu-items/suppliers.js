@@ -44,6 +44,20 @@ const suppliers = {
           type: 'item',
           url: '/dashboard/suppliers/mobile-network/add-mobile-network',
           breadcrumbs: false
+        },
+        {
+          id: 'list-server',
+          title: 'Danh sách server',
+          type: 'item',
+          url: '/dashboard/suppliers/server/list-server',
+          breadcrumbs: false
+        },
+        {
+          id: 'add-server',
+          title: 'Thêm mới server',
+          type: 'item',
+          url: '/dashboard/suppliers/server/add-server',
+          breadcrumbs: false
         }
       ]
     }

@@ -13,10 +13,15 @@ const ListSuppliers = Loadable(lazy(() => import('views/suppliers/ListSuppliers'
 const AddSuppliers = Loadable(lazy(() => import('views/suppliers/AddSuppliers')));
 const UpdateSuppliers = Loadable(lazy(() => import('views/suppliers/UpdateSuppliers')));
 
-// home network
+// mobile network
 const ListMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/ListMobileNetwork')));
 const AddMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/AddMobileNetwork')));
 const UpdateMobileNetwork = Loadable(lazy(() => import('views/suppliers/mobile-network/UpdateMobileNetwork')));
+
+// server
+const ListServer = Loadable(lazy(() => import('views/suppliers/server/ListServer')));
+const AddServer = Loadable(lazy(() => import('views/suppliers/server/AddServer')));
+const UpdateServer = Loadable(lazy(() => import('views/suppliers/server/UpdateServer')));
 
 /***** plans *****/
 // domain plans
@@ -187,6 +192,18 @@ const MainRoutes = {
         {
           path: 'mobile-network/update-mobile-network/:id',
           element: <UpdateMobileNetwork />
+        },
+        {
+          path: 'server/list-server',
+          element: <ListServer />
+        },
+        {
+          path: 'server/add-server',
+          element: <AddServer />
+        },
+        {
+          path: 'server/update-server/:id',
+          element: <UpdateServer />
         }
       ]
     },
