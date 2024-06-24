@@ -10,15 +10,31 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../../config';
-import { apiGet, apiDelete } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumber } from '../../../utils/formatUtils';
 
-const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
+const LIST_SERVER = `${config.API_URL}/server`;
 
 export default function ListServer() {
   const [open, setOpen] = useState(false);
 
   const columns = [
-    { field: 'name', headerName: 'Tên nhà mạng di động', width: 300 },
+    { field: 'name', headerName: 'Tên NCC', width: 140 },
+    { field: 'company', headerName: 'Tên công ty', width: 250 },
+    { field: 'tax_code', headerName: 'Mã số thuế', width: 150 },
+    {
+      field: 'phone',
+      headerName: 'Số điện thoại',
+      width: 150,
+      valueGetter: (params) => formatPhoneNumber(params.row.phone)
+    },
+    { field: 'name_support', headerName: 'Hỗ trợ viên', width: 180 },
+    {
+      field: 'phone_support',
+      headerName: 'Hotline hỗ trợ viên',
+      width: 150,
+      valueGetter: (params) => formatPhoneNumber(params.row.phone_support)
+    },
+    { field: 'address', headerName: 'Địa chỉ', width: 380 },
     {
       field: 'action',
       headerName: 'Hành động',
@@ -26,7 +42,7 @@ export default function ListServer() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/dashboard/suppliers/mobile-network/update-mobile-network/' + params.row._id}>
+            <Link to={'/dashboard/suppliers/server/update-server/' + params.row._id}>
               <IconEdit />
             </Link>
             <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
@@ -39,17 +55,17 @@ export default function ListServer() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    loadListMobileNetwork();
+    loadListServer();
   }, []);
 
-  const loadListMobileNetwork = async () => {
-    const result = await apiGet(`${LIST_MOBILE_NETWORK}`);
+  const loadListServer = async () => {
+    const result = await apiGet(`${LIST_SERVER}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_MOBILE_NETWORK}`, id)
+      apiDelete(`${LIST_SERVER}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));
@@ -66,7 +82,7 @@ export default function ListServer() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/suppliers/mobile-network/add-mobile-network">
+          <Button variant="contained" component={Link} to="/dashboard/suppliers/server/add-server">
             Thêm mới
           </Button>
         }

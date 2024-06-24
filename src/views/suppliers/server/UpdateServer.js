@@ -17,7 +17,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import config from '../../../config';
 import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
 
-const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
+const LIST_SERVER = `${config.API_URL}/server`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -33,35 +33,68 @@ export default function UpdateServer() {
   const currentId = paramId.id;
 
   const [name, setName] = useState('');
+  const [company, setCompany] = useState('');
+  const [taxCode, setTaxCode] = useState('');
+  const [phone, setPhone] = useState('');
+  const [nameSupport, setNameSupport] = useState('');
+  const [phoneSupport, setPhoneSupport] = useState('');
+  const [address, setAddress] = useState('');
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    loadDetailMobileNetwork();
+    loadDetailServer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadDetailMobileNetwork = async () => {
-    const result = await apiGetById(`${LIST_MOBILE_NETWORK}`, currentId);
+  const loadDetailServer = async () => {
+    const result = await apiGetById(`${LIST_SERVER}`, currentId);
     setName(result.data.name);
+    setCompany(result.data.company);
+    setTaxCode(result.data.tax_code);
+    setPhone(result.data.phone);
+    setNameSupport(result.data.name_support);
+    setPhoneSupport(result.data.phone_support);
+    setAddress(result.data.address);
   };
 
-  const handleUpdateMobileNetwork = (e) => {
+  const handleUpdateServer = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên nhà mạng di động!');
+      alert('Vui lòng nhập tên nhà cung cấp!');
       return;
     }
 
-    const updateMobileNetwork = {
-      name: name
+    if (company == '') {
+      alert('Vui lòng nhập tên công ty!');
+      return;
+    }
+
+    if (phone == '') {
+      alert('Vui lòng nhập số điện thoại!');
+      return;
+    }
+
+    if (address == '') {
+      alert('Vui lòng nhập địa chỉ!');
+      return;
+    }
+
+    const updateServer = {
+      name: name,
+      company: company,
+      tax_code: taxCode,
+      phone: phone,
+      name_support: nameSupport,
+      phone_support: phoneSupport,
+      address: address
     };
 
-    apiUpdate(`${LIST_MOBILE_NETWORK}`, currentId, updateMobileNetwork)
+    apiUpdate(`${LIST_SERVER}`, currentId, updateServer)
       .then(() => {
         setOpen(true);
         setInterval(() => {
-          navigate('/dashboard/suppliers/mobile-network/list-mobile-network');
+          navigate('/dashboard/suppliers/server/list-server');
           window.location.reload(true);
         }, 1500);
       })
@@ -76,14 +109,104 @@ export default function UpdateServer() {
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tên nhà mạng di động</InputLabel>
+                  <InputLabel>Tên nhà cung cấp</InputLabel>
                   <Input
                     id="name"
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required={true}
-                    placeholder="Nhập tên nhà mạng di động..."
+                    placeholder="Nhập tên nhà cung cấp..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên công ty</InputLabel>
+                  <Input
+                    id="company"
+                    name="company"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên công ty..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Mã số thuế</InputLabel>
+                  <Input
+                    id="taxCode"
+                    name="taxCode"
+                    value={taxCode}
+                    onChange={(e) => setTaxCode(e.target.value)}
+                    required={true}
+                    placeholder="Nhập mã số thuế..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Số điện thoại</InputLabel>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required={true}
+                    placeholder="Nhập số điện thoại..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Tên hỗ trợ viên</InputLabel>
+                  <Input
+                    id="nameSupport"
+                    name="nameSupport"
+                    value={nameSupport}
+                    onChange={(e) => setNameSupport(e.target.value)}
+                    required={true}
+                    placeholder="Nhập tên hỗ trợ viên..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Hotline hỗ trợ viên</InputLabel>
+                  <Input
+                    id="phoneSupport"
+                    name="phoneSupport"
+                    value={phoneSupport}
+                    onChange={(e) => setPhoneSupport(e.target.value)}
+                    required={true}
+                    placeholder="Nhập hotline hỗ trợ viên..."
+                  />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Địa chỉ</InputLabel>
+                  <Input
+                    id="address"
+                    name="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required={true}
+                    placeholder="Nhập địa chỉ..."
                   />
                 </FormControl>
               </Item>
@@ -91,7 +214,7 @@ export default function UpdateServer() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleUpdateMobileNetwork}>
+              <Button variant="contained" size="medium" onClick={handleUpdateServer}>
                 Cập nhật
               </Button>
             </Item>
