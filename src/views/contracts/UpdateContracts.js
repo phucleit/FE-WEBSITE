@@ -30,6 +30,7 @@ import { getCreatedAt, getRegisteredAt, getExpiredAt } from '../../utils/formatU
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
+const token = localStorage.getItem('token');
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -82,7 +83,9 @@ export default function AddContracts() {
   const loadDetailContract = async () => {
     const result = await axios.get(`${LIST_CONTRACT}/${currentId}`, {
       headers: {
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     setContractCode(result.data.contract_code);
@@ -94,7 +97,9 @@ export default function AddContracts() {
 
     const result_service = await axios.get(`${LIST_CUSTOMERS}/${result.data.customer_id._id}`, {
       headers: {
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     setDomainServices(result_service.data[0].domain_services);
@@ -109,7 +114,9 @@ export default function AddContracts() {
   const loadListCustomers = async () => {
     const result = await axios.get(`${LIST_CUSTOMERS}`, {
       headers: {
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     setListCustomers(result.data);
@@ -120,7 +127,9 @@ export default function AddContracts() {
     try {
       const result = await axios.get(`${LIST_CUSTOMERS}/${e.target.value}`, {
         headers: {
-          'Cache-Control': 'no-cache'
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+          token: token
         }
       });
       setCustomerDetail(result.data);

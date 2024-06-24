@@ -10,6 +10,7 @@ import config from '../../../config';
 import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const token = localStorage.getItem('token');
 
 export default function ListEmailById(props) {
   const currentId = props.customer_id;
@@ -24,7 +25,9 @@ export default function ListEmailById(props) {
   const loadListEmailById = async () => {
     const result = await axios.get(`${CUSTOMER_DETAIL}/email-service/${currentId}`, {
       headers: {
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     setEmailServices(result.data[0].email_services);

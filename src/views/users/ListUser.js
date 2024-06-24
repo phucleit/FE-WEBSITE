@@ -22,7 +22,7 @@ export default function ListUser() {
     { field: 'display_name', headerName: 'Tên hiển thị', width: 200 },
     { field: 'username', headerName: 'Tên đăng nhập', width: 150 },
     { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 150 },
     {
       field: 'action',
       headerName: 'Hành động',

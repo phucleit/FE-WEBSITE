@@ -10,6 +10,7 @@ import config from '../../../config';
 import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const token = localStorage.getItem('token');
 
 export default function ListDomainById(props) {
   const currentId = props.customer_id;
@@ -24,7 +25,9 @@ export default function ListDomainById(props) {
   const loadListDomainById = async () => {
     const result = await axios.get(`${CUSTOMER_DETAIL}/domain-service/${currentId}`, {
       headers: {
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        token: token
       }
     });
     setDomainServices(result.data[0].domain_services);

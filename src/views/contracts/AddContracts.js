@@ -24,6 +24,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiGet, apiPost } from '../../utils/formatUtils';
 
 import ListDomainById from './services/ListDomainById';
 import ListHostingById from './services/ListHostingById';
@@ -36,6 +37,7 @@ import ListMaintenanceById from './services/ListMaintenanceById';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
+const token = localStorage.getItem('token');
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -57,6 +59,10 @@ export default function AddContracts() {
   const [listCustomers, setListCustomers] = useState([]);
   const [customer_detail, setCustomerDetail] = useState([]);
 
+  const [domainServices, setDomainServices] = useState([]);
+  const [hostingServices, setHostingServices] = useState([]);
+  const [emailServices, setEmailServices] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [valueTab, setValueTab] = useState('1');
 
@@ -74,11 +80,7 @@ export default function AddContracts() {
   }, [total_price, deposit_amount]);
 
   const loadListCustomers = async () => {
-    const result = await axios.get(`${LIST_CUSTOMERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
   };
 
@@ -87,7 +89,9 @@ export default function AddContracts() {
     try {
       const result = await axios.get(`${LIST_CUSTOMERS}/${e.target.value}`, {
         headers: {
-          'Cache-Control': 'no-cache'
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+          token: token
         }
       });
       setCustomerDetail(result.data);
@@ -96,28 +100,69 @@ export default function AddContracts() {
     }
   };
 
+  const test = async (id) => {
+    if (id) {
+      const result_domain_service = await axios.get(`${LIST_CUSTOMERS}/domain-service/${id}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
+      setDomainServices(result_domain_service);
+
+      const result_hosting_service = await axios.get(`${LIST_CUSTOMERS}/hosting-service/${id}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
+      setHostingServices(result_hosting_service);
+
+      const result_email_service = await axios.get(`${LIST_CUSTOMERS}/email-service/${id}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
+          token: token
+        }
+      });
+      setEmailServices(result_email_service);
+    }
+  };
+
   if (customer_detail) {
-    // if (domainServices) {
-    //   domainServices.forEach((item) => {
-    //     if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
-    //       total_price += item.domain_plan[0].price * item.periods;
-    //     }
-    //   });
-    // }
-    // if (hostingServices) {
-    //   hostingServices.forEach((item) => {
-    //     if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
-    //       total_price += item.periods * 12 * item.hosting_plan[0].price;
-    //     }
-    //   });
-    // }
-    // if (emailServices) {
-    //   emailServices.forEach((item) => {
-    //     if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
-    //       total_price += item.periods * 12 * item.email_plan[0].price;
-    //     }
-    //   });
-    // }
+    test(customer_detail._id);
+    if (domainServices) {
+      if (domainServices.data) {
+        domainServices.data[0].domain_services.forEach((item) => {
+          if (item.domain_plan && item.domain_plan[0] && item.domain_plan[0].price) {
+            total_price += item.domain_plan[0].price * item.periods;
+          }
+        });
+      }
+    }
+
+    if (hostingServices) {
+      if (hostingServices.data) {
+        hostingServices.data[0].hosting_services.forEach((item) => {
+          if (item.hosting_plan && item.hosting_plan[0] && item.hosting_plan[0].price) {
+            total_price += item.periods * 12 * item.hosting_plan[0].price;
+          }
+        });
+      }
+    }
+
+    if (emailServices.data) {
+      if (emailServices.data) {
+        emailServices.data[0].email_services.forEach((item) => {
+          if (item.email_plan && item.email_plan[0] && item.email_plan[0].price) {
+            total_price += item.periods * 12 * item.email_plan[0].price;
+          }
+        });
+      }
+    }
+
     // if (sslServices) {
     //   sslServices.forEach((item) => {
     //     if (item.ssl_plan && item.ssl_plan[0] && item.ssl_plan[0].price) {
@@ -164,12 +209,7 @@ export default function AddContracts() {
       remaining_cost: remaining_cost
     };
 
-    axios
-      .post(`${LIST_CONTRACT}`, addContract, {
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
-      })
+    apiPost(`${LIST_CONTRACT}`, addContract)
       .then(() => {
         setOpen(true);
         setInterval(() => {
