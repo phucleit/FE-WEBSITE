@@ -46,6 +46,7 @@ export default function UpdateEmailServices() {
   const [periods, setPeriods] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [beforePayment, setBeforePayment] = useState(false);
+  const [after_payment, setAfterPayment] = useState(false);
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listEmailPlans, setListEmailPlans] = useState([]);
@@ -70,6 +71,7 @@ export default function UpdateEmailServices() {
     setPeriods(result.data.periods);
     setCustomerId(result.data.customer_id._id);
     setBeforePayment(result.data.before_payment);
+    setAfterPayment(result.data.after_payment);
   };
 
   const loadListDomainServices = async () => {
@@ -91,6 +93,10 @@ export default function UpdateEmailServices() {
     setBeforePayment(e.target.checked);
   };
 
+  const handleChangeAfterPayment = (e) => {
+    setAfterPayment(e.target.checked);
+  };
+
   const handleUpdateEmailServices = (e) => {
     e.preventDefault();
 
@@ -99,7 +105,8 @@ export default function UpdateEmailServices() {
       email_plan_id: emailPlanId,
       periods: periods,
       customer_id: customerId,
-      before_payment: beforePayment
+      before_payment: beforePayment,
+      after_payment: after_payment
     };
 
     apiUpdate(`${LIST_EMAIL_SERVICES}`, currentId, updateEmailServices)
@@ -218,6 +225,14 @@ export default function UpdateEmailServices() {
                 <FormControl variant="standard" fullWidth>
                   <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
                   <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
+                  <Switch checked={after_payment} onChange={handleChangeAfterPayment} />
                 </FormControl>
               </Item>
             </Grid>

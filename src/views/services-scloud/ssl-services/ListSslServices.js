@@ -23,6 +23,21 @@ export default function ListSslServices() {
 
   const columns = [
     {
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={'/dashboard/services/update-ssl/' + params.row._id}>
+              <IconEdit />
+            </Link>
+            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+          </>
+        );
+      }
+    },
+    {
       field: 'name',
       headerName: 'Tên miền',
       width: 250,
@@ -125,38 +140,29 @@ export default function ListSslServices() {
     { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: (params) => getRegisteredAt(params.row.registeredAt), width: 200 },
     { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: (params) => getExpiredAt(params.row.expiredAt), width: 200 },
     {
-      field: 'before_payment',
-      headerName: 'Gia hạn trước khi thanh toán',
+      field: 'payment',
+      headerName: 'Thanh toán',
       width: 200,
       renderCell: (params) => {
         if (params.row.before_payment == true) {
           return (
             <Button variant="contained" size="small" color="success">
-              Công nợ
+              Khách công nợ
             </Button>
           );
-        } else if (params.row.before_payment == false) {
+        } else if (params.row.after_payment == true) {
+          return (
+            <Button variant="contained" size="small">
+              Đã thanh toán
+            </Button>
+          );
+        } else {
           return (
             <Button variant="contained" size="small">
               Đã thanh toán
             </Button>
           );
         }
-      }
-    },
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-ssl/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
       }
     }
   ];

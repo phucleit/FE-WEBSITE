@@ -45,6 +45,7 @@ export default function UpdateDomainServices() {
   const [domainPlanId, setDomainPlanId] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [before_payment, setBeforePayment] = useState(false);
+  const [after_payment, setAfterPayment] = useState(false);
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
@@ -67,6 +68,7 @@ export default function UpdateDomainServices() {
     setDomainPlanId(result.data.domain_plan_id._id);
     setCustomerId(result.data.customer_id._id);
     setBeforePayment(result.data.before_payment);
+    setAfterPayment(result.data.after_payment);
   };
 
   const loadListDomainPlans = async () => {
@@ -83,6 +85,10 @@ export default function UpdateDomainServices() {
     setBeforePayment(e.target.checked);
   };
 
+  const handleChangeAfterPayment = (e) => {
+    setAfterPayment(e.target.checked);
+  };
+
   const handleUpdateDomainServices = (e) => {
     e.preventDefault();
 
@@ -91,7 +97,8 @@ export default function UpdateDomainServices() {
       periods: periods,
       domain_plan_id: domainPlanId,
       customer_id: customerId,
-      before_payment: before_payment
+      before_payment: before_payment,
+      after_payment: after_payment
     };
 
     apiUpdate(`${LIST_DOMAIN_SERVICES}`, currentId, updateDomainServices)
@@ -186,6 +193,14 @@ export default function UpdateDomainServices() {
                 <FormControl variant="standard" fullWidth>
                   <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
                   <Switch checked={before_payment} onChange={handleChangeBeforePayment} />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
+                  <Switch checked={after_payment} onChange={handleChangeAfterPayment} />
                 </FormControl>
               </Item>
             </Grid>

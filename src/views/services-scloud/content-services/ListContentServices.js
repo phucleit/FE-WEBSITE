@@ -23,6 +23,21 @@ export default function ListContentServices() {
 
   const columns = [
     {
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={'/dashboard/services/update-content/' + params.row._id}>
+              <IconEdit />
+            </Link>
+            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+          </>
+        );
+      }
+    },
+    {
       field: 'name',
       headerName: 'Tên gói content',
       width: 220,
@@ -111,22 +126,7 @@ export default function ListContentServices() {
       }
     },
     { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: (params) => getRegisteredAt(params.row.registeredAt), width: 200 },
-    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: (params) => getExpiredAt(params.row.expiredAt), width: 200 },
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-content/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    }
+    { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: (params) => getExpiredAt(params.row.expiredAt), width: 200 }
   ];
 
   const [data, setData] = useState([]);

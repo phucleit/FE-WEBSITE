@@ -18,6 +18,21 @@ export default function ListCustomers() {
   const [open, setOpen] = useState(false);
 
   const columns = [
+    {
+      field: 'action',
+      headerName: 'Hành động',
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={'/dashboard/customers/update-customers/' + params.row._id}>
+              <IconEdit />
+            </Link>
+            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+          </>
+        );
+      }
+    },
     { field: 'fullname', headerName: 'Họ và tên', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
     {
@@ -40,22 +55,7 @@ export default function ListCustomers() {
       valueGetter: (params) => formatPhoneNumber(params.row.phone)
     },
     { field: 'address', headerName: 'Địa chỉ', width: 320 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 },
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 100,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/customers/update-customers/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    }
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 }
   ];
 
   const [data, setData] = useState([]);

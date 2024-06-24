@@ -22,6 +22,21 @@ export default function ListWebsiteServices() {
 
   const columns = [
     {
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={'/dashboard/services/update-website/' + params.row._id}>
+              <IconEdit />
+            </Link>
+            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+          </>
+        );
+      }
+    },
+    {
       field: 'name',
       headerName: 'Tên miền',
       width: 250,
@@ -85,22 +100,7 @@ export default function ListWebsiteServices() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày khởi tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 230 },
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-website/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    }
+    { field: 'createdAt', headerName: 'Ngày khởi tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 230 }
   ];
 
   const [data, setData] = useState([]);
