@@ -60,6 +60,13 @@ const plans = {
           breadcrumbs: false
         },
         {
+          id: 'server-plans',
+          title: 'Server',
+          type: 'item',
+          url: '/dashboard/plans/list-server',
+          breadcrumbs: false
+        },
+        {
           id: 'mobile-network-plans',
           title: 'Sim 4G',
           type: 'item',
