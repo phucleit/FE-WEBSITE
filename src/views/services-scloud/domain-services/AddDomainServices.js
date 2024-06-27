@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
@@ -14,6 +15,8 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
+
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import './styles.css';
@@ -25,6 +28,7 @@ import { apiGet, apiPost } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
+const LIST_SERVER_PLANS = `${config.API_URL}/plans/server`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -42,15 +46,19 @@ export default function AddDomainServices() {
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
   const [domainPlanId, setDomainPlanId] = useState('');
+  const [serverPlanId, setServerPlanId] = useState('');
+  const [pingCloudflare, setPingCloudflare] = useState('');
   const [customer_id, setCustomerId] = useState('');
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
+  const [listServerPlans, setListServerPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadListDomainPlans();
+    loadListServerPlans();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,9 +68,18 @@ export default function AddDomainServices() {
     setListDomainPlans(result.data);
   };
 
+  const loadListServerPlans = async () => {
+    const result = await apiGet(`${LIST_SERVER_PLANS}`);
+    setListServerPlans(result.data);
+  };
+
   const loadListCustomers = async () => {
     const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
+  };
+
+  const handleChangePingCloudflare = (e) => {
+    setPingCloudflare(e.target.checked);
   };
 
   const handleAddDomainServices = (e) => {
@@ -77,6 +94,8 @@ export default function AddDomainServices() {
       periods: periods,
       registeredAt: registeredAt.getTime(),
       domain_plan_id: domainPlanId,
+      server_plan_id: serverPlanId,
+      ping_cloudflare: pingCloudflare,
       customer_id: customer_id
     };
 
@@ -172,6 +191,28 @@ export default function AddDomainServices() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Server</InputLabel>
+                  <Select id="serverPlanId" value={serverPlanId} label="Chọn server..." onChange={(e) => setServerPlanId(e.target.value)}>
+                    {listServerPlans.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Ping qua cloudflare</FormLabel>
+                  <Switch checked={pingCloudflare} onChange={handleChangePingCloudflare} />
                 </FormControl>
               </Item>
             </Grid>

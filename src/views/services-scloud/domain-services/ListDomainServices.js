@@ -131,6 +131,26 @@ export default function ListDomainServices() {
         }
       }
     },
+    {
+      field: 'ping_cloudflare',
+      headerName: 'Ping cloudflare',
+      width: 150,
+      renderCell: (params) => {
+        if (params.row.ping_cloudflare == true) {
+          return (
+            <Button variant="contained" size="small">
+              Đã ping
+            </Button>
+          );
+        } else {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Chưa ping
+            </Button>
+          );
+        }
+      }
+    },
     { field: 'registeredAt', headerName: 'Ngày đăng ký', valueGetter: (params) => getRegisteredAt(params.row.registeredAt), width: 200 },
     { field: 'expiredAt', headerName: 'Ngày hết hạn', valueGetter: (params) => getExpiredAt(params.row.expiredAt), width: 200 },
     {

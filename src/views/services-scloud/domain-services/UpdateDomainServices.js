@@ -44,6 +44,7 @@ export default function UpdateDomainServices() {
   const [expiredAt, setExpiredAt] = useState('');
   const [domainPlanId, setDomainPlanId] = useState('');
   const [customerId, setCustomerId] = useState('');
+  const [pingCloudflare, setPingCloudflare] = useState('');
   const [before_payment, setBeforePayment] = useState(false);
   const [after_payment, setAfterPayment] = useState(false);
 
@@ -67,6 +68,7 @@ export default function UpdateDomainServices() {
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainPlanId(result.data.domain_plan_id._id);
     setCustomerId(result.data.customer_id._id);
+    setPingCloudflare(result.data.ping_cloudflare);
     setBeforePayment(result.data.before_payment);
     setAfterPayment(result.data.after_payment);
   };
@@ -89,6 +91,10 @@ export default function UpdateDomainServices() {
     setAfterPayment(e.target.checked);
   };
 
+  const handleChangePingCloudflare = (e) => {
+    setPingCloudflare(e.target.checked);
+  };
+
   const handleUpdateDomainServices = (e) => {
     e.preventDefault();
 
@@ -97,6 +103,7 @@ export default function UpdateDomainServices() {
       periods: periods,
       domain_plan_id: domainPlanId,
       customer_id: customerId,
+      ping_cloudflare: pingCloudflare,
       before_payment: before_payment,
       after_payment: after_payment
     };
@@ -201,6 +208,14 @@ export default function UpdateDomainServices() {
                 <FormControl variant="standard" fullWidth>
                   <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
                   <Switch checked={after_payment} onChange={handleChangeAfterPayment} />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Ping qua cloudflare</FormLabel>
+                  <Switch checked={pingCloudflare} onChange={handleChangePingCloudflare} />
                 </FormControl>
               </Item>
             </Grid>
