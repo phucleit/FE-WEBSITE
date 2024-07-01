@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -9,7 +8,7 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { getCreatedAt } from '../../../utils/formatUtils';
+import { getCreatedAt, apiGet } from '../../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
@@ -21,11 +20,7 @@ export default function RemainingContracts() {
   }, []);
 
   const loadListContracts = async () => {
-    const result = await axios.get(`${LIST_CONTRACTS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CONTRACTS}`);
     setData(result.data);
   };
 

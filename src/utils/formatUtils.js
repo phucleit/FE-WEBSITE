@@ -1,6 +1,7 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const token = localStorage.getItem('token');
+const token = Cookies.get('token');
 
 export function apiGet(url, headers = {}) {
   return axios.get(url, {

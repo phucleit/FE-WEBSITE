@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -36,15 +37,13 @@ import { logout } from '../../../../store/auth/authActions';
 import config from '../../../../config';
 
 const LOGOUT_USER = `${config.API_URL}/users/logout`;
+const display_name = Cookies.get('display_name');
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const dispatch = useDispatch();
   let navigate = useNavigate();
-
-  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  // const userInfo = useSelector((state) => state.auth.user);
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -61,10 +60,12 @@ const ProfileSection = () => {
 
       if (res.status === 200) {
         dispatch(logout());
+        Cookies.remove('token');
+        Cookies.remove('display_name');
         navigate('/');
       }
     } catch (error) {
-      console.error('Error during logou:', error);
+      console.error('Lỗi khi đăng xuất:', error);
     }
   };
 
@@ -160,10 +161,9 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Xin Chào,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          {isAuthenticated && <p>{userInfo.username}!</p>}
+                          {display_name}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Admin Manager</Typography>
                     </Stack>
                   </Box>
                   <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>

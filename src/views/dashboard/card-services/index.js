@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { Grid } from '@mui/material';
 import { gridSpacing } from 'store/constant';
@@ -15,6 +14,7 @@ import TotalPriceServices from '../total-price-services';
 import RemainingContracts from '../contracts';
 
 import config from '../../../config';
+import { apiGet } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
@@ -102,207 +102,107 @@ export default function CardServices() {
   }, []);
 
   const loadListDomainServices = async () => {
-    const result = await axios.get(`${LIST_DOMAIN_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
     setDataDomainServices(result.data);
     setCountDomainServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_DOMAIN_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_DOMAIN_SERVICES}/expiring/all`);
     setCountDomainExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_DOMAIN_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_DOMAIN_SERVICES}/expired/all`);
     setCountDomainExpiredServices(expired.data.length);
   };
 
   const loadListHostingServices = async () => {
-    const result = await axios.get(`${LIST_HOSTING_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}`);
     setDataHostingServices(result.data);
     setCountHostingServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_HOSTING_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_HOSTING_SERVICES}/expiring/all`);
     setCountHostingExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_HOSTING_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_HOSTING_SERVICES}/expired/all`);
     setCountHostingExpiredServices(expired.data.length);
   };
 
   const loadListSslServices = async () => {
-    const result = await axios.get(`${LIST_SSL_SERVICES}`);
+    const result = await apiGet(`${LIST_SSL_SERVICES}`);
     setDataSslServices(result.data);
     setCountSslServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_SSL_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_SSL_SERVICES}/expiring/all`);
     setCountSslExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_SSL_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_SSL_SERVICES}/expired/all`);
     setCountSslExpiredServices(expired.data.length);
   };
 
   const loadListEmailServices = async () => {
-    const result = await axios.get(`${LIST_EMAIL_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}`);
     setDataEmailServices(result.data);
     setCountEmailServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_EMAIL_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_EMAIL_SERVICES}/expiring/all`);
     setCountEmailExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_EMAIL_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_EMAIL_SERVICES}/expired/all`);
     setCountEmailExpiredServices(expired.data.length);
   };
 
   const loadListWebsiteServices = async () => {
-    const result = await axios.get(`${LIST_WEBSITE_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_WEBSITE_SERVICES}`);
     setDataWebsiteServices(result.data);
     setCountWebsiteServices(result.data.length);
 
-    const closed = await axios.get(`${LIST_WEBSITE_SERVICES}/closed/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const closed = await apiGet(`${LIST_WEBSITE_SERVICES}/closed/all`);
     setCountWebsiteClosedServices(closed.data.length);
   };
 
   const loadListContentServices = async () => {
-    const result = await axios.get(`${LIST_CONTENT_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CONTENT_SERVICES}`);
     setDataContentServices(result.data);
     setCountContentServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_CONTENT_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_CONTENT_SERVICES}/expiring/all`);
     setCountContentExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_CONTENT_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_CONTENT_SERVICES}/expired/all`);
     setCountContentExpiredServices(expired.data.length);
   };
 
   const loadListToplistServices = async () => {
-    const result = await axios.get(`${LIST_TOPLIST_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_TOPLIST_SERVICES}`);
     setDataToplistServices(result.data);
     setCountToplistServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_TOPLIST_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_TOPLIST_SERVICES}/expiring/all`);
     setCountToplistExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_TOPLIST_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_TOPLIST_SERVICES}/expired/all`);
     setCountToplistExpiredServices(expired.data.length);
   };
 
   const loadListMaintenanceServices = async () => {
-    const result = await axios.get(`${LIST_MAINTENANCE_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MAINTENANCE_SERVICES}`);
     setDataMaintenanceServices(result.data);
     setCountMaintenanceServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expiring/all`);
     setCountMaintenanceExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_MAINTENANCE_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expired/all`);
     setCountMaintenanceExpiredServices(expired.data.length);
   };
 
   const loadListMobileNetworkServices = async () => {
-    const result = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}`);
     setDataMobileNetworkServices(result.data);
     setCountMobileNetworkServices(result.data.length);
 
-    const expiring = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expiring = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`);
     setCountMobileNetworkExpiringServices(expiring.data.length);
 
-    const expired = await axios.get(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const expired = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`);
     setCountMobileNetworkExpiredServices(expired.data.length);
   };
 

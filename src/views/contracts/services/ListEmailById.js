@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
+import Cookies from 'js-cookie';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -10,7 +11,7 @@ import config from '../../../config';
 import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
 
 const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
-const token = localStorage.getItem('token');
+const token = Cookies.get('token');
 
 export default function ListEmailById(props) {
   const currentId = props.customer_id;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -35,20 +36,7 @@ export default function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
-  const [openErrorNotFound, setOpenErrorNotFound] = useState(false);
-  const [openErrorWrong, setOpenErrorWrong] = useState(false);
-
-  let [token, setToken] = useState(localStorage.getItem('token') || '');
-
-  const saveToken = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
-  };
-
-  // const removeToken = () => {
-  //   localStorage.removeItem('token');
-  //   setToken('');
-  // };
+  const [openError, setopenError] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -79,23 +67,27 @@ export default function Signin() {
       const status = res.status;
 
       if (status == 200) {
-        token = await res.json();
-        saveToken(token.token);
-
+        const data = await res.json();
+        const token = data.token;
+        const display_name = data.display_name;
+        Cookies.set('token', token, { expires: 7 });
+        Cookies.set('display_name', display_name, { expires: 7 });
         setOpen(true);
-        dispatch(signin(info));
-        navigate('/dashboard');
+        setTimeout(() => {
+          dispatch(signin(info));
+          navigate('/dashboard');
+        }, 1100);
       } else {
-        const message = await res.text();
-        alert(message);
+        setopenError(true);
       }
     } catch (error) {
-      console.error('Error during sign-in:', error);
-    } finally {
-      setTimeout(() => {
-        setOpenErrorNotFound(false);
-        setOpenErrorWrong(false);
-      }, 1100);
+      setopenError(true);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSignin(e);
     }
   };
 
@@ -111,6 +103,7 @@ export default function Signin() {
                 name="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                onKeyDown={handleKeyDown}
                 required={true}
                 placeholder="Nhập tên đăng nhập..."
               />
@@ -127,6 +120,7 @@ export default function Signin() {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
                 required={true}
                 placeholder="Nhập mật khẩu..."
                 endAdornment={
@@ -154,11 +148,8 @@ export default function Signin() {
           </Item>
         </Grid>
       </Box>
-      <Snackbar open={openErrorNotFound} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
-        <Alert severity="error">Tài khoản không tồn tại!</Alert>
-      </Snackbar>
-      <Snackbar open={openErrorWrong} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
-        <Alert severity="error">Vui lòng nhập đúng tài khoản!</Alert>
+      <Snackbar open={openError} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={2000}>
+        <Alert severity="error">Tên đăng nhập hoặc mật khẩu không đúng! Vui lòng nhập lại thông tin!</Alert>
       </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Đăng nhập thành công!</Alert>
