@@ -139,7 +139,7 @@ export default function UpdateHostingServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {/* {item.domain_plan_id.name} */}
+                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>

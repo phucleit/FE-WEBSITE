@@ -81,7 +81,7 @@ export default function ListContracts() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: getCreatedAt, width: 150 },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',
@@ -128,11 +128,11 @@ export default function ListContracts() {
     <>
       <MainCard
         title="Danh sách hợp đồng"
-        secondary={
-          <Button variant="contained" component={Link} to="/dashboard/contracts/add-contracts">
-            Thêm mới
-          </Button>
-        }
+        // secondary={
+        //   <Button variant="contained" component={Link} to="/dashboard/contracts/add-contracts">
+        //     Thêm mới
+        //   </Button>
+        // }
       >
         {data.length !== 0 ? (
           <DataGrid

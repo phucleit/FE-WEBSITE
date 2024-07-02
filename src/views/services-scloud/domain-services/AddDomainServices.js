@@ -47,7 +47,7 @@ export default function AddDomainServices() {
   const [registeredAt, setRegisteredAt] = useState(new Date());
   const [domainPlanId, setDomainPlanId] = useState('');
   const [serverPlanId, setServerPlanId] = useState('');
-  const [pingCloudflare, setPingCloudflare] = useState('');
+  const [pingCloudflare, setPingCloudflare] = useState(false);
   const [customer_id, setCustomerId] = useState('');
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
