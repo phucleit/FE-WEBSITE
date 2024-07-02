@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
@@ -11,18 +10,29 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { getCreatedAt } from '../../utils/formatUtils';
+import { getCreatedAt, apiGet, apiDelete } from '../../utils/formatUtils';
 
 const LIST_USERS = `${config.API_URL}/users`;
 
 export default function ListUser() {
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
 
   const columns = [
     { field: 'display_name', headerName: 'Tên hiển thị', width: 200 },
-    { field: 'username', headerName: 'Tên đăng nhập', width: 150 },
-    { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 150 },
+    { field: 'username', headerName: 'Tên đăng nhập', width: 180 },
+    { field: 'email', headerName: 'Email', width: 300 },
+    {
+      field: 'group_user_id',
+      headerName: 'Quyền',
+      width: 320,
+      renderCell: (params) => {
+        if (params.row.group_user_id) {
+          return <span>{params.row.group_user_id.name}</span>;
+        }
+      }
+    },
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 },
     {
       field: 'action',
       headerName: 'Hành động',
@@ -40,29 +50,18 @@ export default function ListUser() {
     }
   ];
 
-  const [data, setData] = useState([]);
-
   useEffect(() => {
     loadListUsers();
   }, []);
 
   const loadListUsers = async () => {
-    const result = await axios.get(`${LIST_USERS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_USERS}`);
     setData(result.data);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_USERS}/` + id, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })
+      apiDelete(`${LIST_USERS}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

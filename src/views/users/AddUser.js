@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -11,6 +10,8 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -19,8 +20,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { apiPost, apiGet } from '../../utils/formatUtils';
 
 const LIST_USER = `${config.API_URL}/users`;
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -37,10 +40,22 @@ export default function AddUser() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [group_user_id, setGroupUserId] = useState('');
 
   const [open, setOpen] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const [dataGroupUser, setDataGroupUser] = useState([]);
+
+  useEffect(() => {
+    loadListGroupUser();
+  }, []);
+
+  const loadListGroupUser = async () => {
+    const result = await apiGet(`${LIST_GROUP_USER}`);
+    setDataGroupUser(result.data);
+  };
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -70,18 +85,11 @@ export default function AddUser() {
       display_name: displayname,
       username: username,
       email: email,
-      password: password
+      password: password,
+      group_user_id: group_user_id
     };
 
-    const config_header = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      }
-    };
-
-    axios
-      .post(`${LIST_USER}`, addUser, config_header)
+    apiPost(`${LIST_USER}`, addUser)
       .then(() => {
         setOpen(true);
         setInterval(() => {
@@ -168,6 +176,20 @@ export default function AddUser() {
                       </InputAdornment>
                     }
                   />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Quyền</InputLabel>
+                  <Select id="group_user_id" value={group_user_id} label="Chọn quyền..." onChange={(e) => setGroupUserId(e.target.value)}>
+                    {dataGroupUser.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>

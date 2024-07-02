@@ -1,14 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const token = Cookies.get('token');
-
 export function apiGet(url, headers = {}) {
   return axios.get(url, {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -19,7 +17,7 @@ export function apiPost(url, data, headers = {}) {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -31,7 +29,7 @@ export function apiPostFile(url, data, headers = {}) {
       'Cache-Control': 'no-cache',
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -42,7 +40,7 @@ export function apiGetById(url, id, headers = {}) {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -53,7 +51,7 @@ export function apiUpdate(url, id, data, headers = {}) {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -65,7 +63,7 @@ export function apiUpdateFile(url, id, data, headers = {}) {
       'Cache-Control': 'no-cache',
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });
@@ -76,7 +74,7 @@ export function apiDelete(url, id, headers = {}) {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',
-      token: token,
+      token: Cookies.get('token'),
       ...headers
     }
   });

@@ -35,8 +35,9 @@ import { IconLogout, IconSettings } from '@tabler/icons';
 import { logout } from '../../../../store/auth/authActions';
 
 import config from '../../../../config';
+import { apiPost } from '../../../../utils/formatUtils';
 
-const LOGOUT_USER = `${config.API_URL}/users/logout`;
+const LOGOUT_USER = `${config.API_URL}/login/logout`;
 const display_name = Cookies.get('display_name');
 
 const ProfileSection = () => {
@@ -50,13 +51,7 @@ const ProfileSection = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch(`${LOGOUT_USER}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      });
+      const res = await apiPost(`${LOGOUT_USER}`);
 
       if (res.status === 200) {
         dispatch(logout());

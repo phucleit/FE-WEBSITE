@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import { styled } from '@mui/material/styles';
@@ -16,11 +15,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { signin } from '../../../../store/auth/authActions';
 
 import config from '../../../../config';
 
-const SIGNIN_USER = `${config.API_URL}/users/signin`;
+const LOGIN_USER = `${config.API_URL}/login`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -32,11 +30,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Signin() {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
-  const [openError, setopenError] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -55,7 +52,7 @@ export default function Signin() {
     };
 
     try {
-      const res = await fetch(`${SIGNIN_USER}`, {
+      const res = await fetch(`${LOGIN_USER}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,15 +71,18 @@ export default function Signin() {
         Cookies.set('display_name', display_name, { expires: 7 });
         setOpen(true);
         setTimeout(() => {
-          dispatch(signin(info));
           navigate('/dashboard');
         }, 1100);
       } else {
-        setopenError(true);
+        setOpenError(true);
       }
     } catch (error) {
-      setopenError(true);
+      setOpenError(true);
     }
+  };
+
+  const handleCloseError = () => {
+    setOpenError(false);
   };
 
   const handleKeyDown = (e) => {
@@ -148,7 +148,12 @@ export default function Signin() {
           </Item>
         </Grid>
       </Box>
-      <Snackbar open={openError} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={2000}>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={3000}
+      >
         <Alert severity="error">Tên đăng nhập hoặc mật khẩu không đúng! Vui lòng nhập lại thông tin!</Alert>
       </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
