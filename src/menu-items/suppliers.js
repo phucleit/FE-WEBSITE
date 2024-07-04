@@ -19,16 +19,9 @@ const suppliers = {
       children: [
         {
           id: 'list-suppliers',
-          title: 'Danh sách',
+          title: 'Danh sách nhà cung cấp',
           type: 'item',
           url: '/dashboard/suppliers/list-suppliers',
-          breadcrumbs: false
-        },
-        {
-          id: 'add-suppliers',
-          title: 'Thêm mới',
-          type: 'item',
-          url: '/dashboard/suppliers/add-suppliers',
           breadcrumbs: false
         },
         {
@@ -39,24 +32,10 @@ const suppliers = {
           breadcrumbs: false
         },
         {
-          id: 'add-mobile-network',
-          title: 'Thêm mới nhà mạng',
-          type: 'item',
-          url: '/dashboard/suppliers/mobile-network/add-mobile-network',
-          breadcrumbs: false
-        },
-        {
           id: 'list-server',
           title: 'Danh sách server',
           type: 'item',
           url: '/dashboard/suppliers/server/list-server',
-          breadcrumbs: false
-        },
-        {
-          id: 'add-server',
-          title: 'Thêm mới server',
-          type: 'item',
-          url: '/dashboard/suppliers/server/add-server',
           breadcrumbs: false
         }
       ]

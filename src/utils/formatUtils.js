@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import config from '../config';
+
 export function apiGet(url, headers = {}) {
   return axios.get(url, {
     headers: {
@@ -78,6 +80,11 @@ export function apiDelete(url, id, headers = {}) {
       ...headers
     }
   });
+}
+
+export async function getRoles() {
+  const list_roles = await axios.get(`${config.API_URL}/functions/list-roles/${Cookies.get('group_user_id')}`);
+  return list_roles;
 }
 
 export function formatPhoneNumber(phoneNumber) {

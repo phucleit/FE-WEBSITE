@@ -19,7 +19,7 @@ export default function ListGroupUser() {
 
   const columns = [
     { field: 'name', headerName: 'Tên nhóm', width: 300 },
-    { field: 'description', headerName: 'Mô tả nhóm', width: 500 },
+    { field: 'description', headerName: 'Mô tả nhóm', width: 800 },
     {
       field: 'action',
       headerName: 'Hành động',

@@ -23,13 +23,6 @@ const customers = {
           type: 'item',
           url: '/dashboard/customers/list-customers',
           breadcrumbs: false
-        },
-        {
-          id: 'add-customers',
-          title: 'Thêm mới',
-          type: 'item',
-          url: '/dashboard/customers/add-customers',
-          breadcrumbs: false
         }
       ]
     }

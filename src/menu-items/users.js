@@ -19,16 +19,9 @@ const users = {
       children: [
         {
           id: 'list-users',
-          title: 'Danh sách',
+          title: 'Danh sách tài khoản',
           type: 'item',
           url: '/dashboard/users/list-users',
-          breadcrumbs: false
-        },
-        {
-          id: 'add-users',
-          title: 'Thêm mới',
-          type: 'item',
-          url: '/dashboard/users/add-users',
           breadcrumbs: false
         },
         {
@@ -36,13 +29,6 @@ const users = {
           title: 'Nhóm người dùng',
           type: 'item',
           url: '/dashboard/users/list-group-users',
-          breadcrumbs: false
-        },
-        {
-          id: 'add-group-users',
-          title: 'Thêm nhóm người dùng',
-          type: 'item',
-          url: '/dashboard/users/add-group-users',
           breadcrumbs: false
         }
       ]

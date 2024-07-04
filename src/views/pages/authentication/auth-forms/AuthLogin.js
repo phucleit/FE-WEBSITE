@@ -67,8 +67,10 @@ export default function Signin() {
         const data = await res.json();
         const token = data.token;
         const display_name = data.display_name;
+        const group_user_id = data.group_user_id;
         Cookies.set('token', token, { expires: 7 });
         Cookies.set('display_name', display_name, { expires: 7 });
+        Cookies.set('group_user_id', group_user_id, { expires: 7 });
         setOpen(true);
         setTimeout(() => {
           navigate('/dashboard');

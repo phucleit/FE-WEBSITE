@@ -23,13 +23,6 @@ const contracts = {
           type: 'item',
           url: '/dashboard/contracts/list-contracts',
           breadcrumbs: false
-        },
-        {
-          id: 'add-contracts',
-          title: 'Thêm mới',
-          type: 'item',
-          url: '/dashboard/contracts/add-contracts',
-          breadcrumbs: false
         }
       ]
     }
