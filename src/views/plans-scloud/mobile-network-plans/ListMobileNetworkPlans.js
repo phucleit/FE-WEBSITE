@@ -18,7 +18,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import CheckIcon from '@mui/icons-material/Check';
 
 import config from '../../../config';
-import { apiGet, apiDelete, convertPrice } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, convertPrice, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 
@@ -31,12 +31,47 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ListMobileNetworkPlans() {
-  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListMobileNetworkPlans();
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746678f7f723b779b1b071');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b072');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '66746678f7f723b779b1b073');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListMobileNetworkPlans = async () => {
     const result = await apiGet(`${LIST_MOBILE_NETWORK_PLANS}`);
@@ -62,9 +97,11 @@ export default function ListMobileNetworkPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/plans/add-mobile-network">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/plans/add-mobile-network">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -98,24 +135,28 @@ export default function ListMobileNetworkPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        component={Link}
-                        to={`/dashboard/plans/update-mobile-network/${item._id}`}
-                        sx={{ mr: 1 }}
-                      >
-                        Cập nhật
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        color="error"
-                        startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(item._id)}
-                      >
-                        Xóa
-                      </Button>
+                      {permissionUpdate && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          component={Link}
+                          to={`/dashboard/plans/update-mobile-network/${item._id}`}
+                          sx={{ mr: 1 }}
+                        >
+                          Cập nhật
+                        </Button>
+                      )}
+                      {permissionDelete && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          Xóa
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Item>

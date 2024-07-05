@@ -13,30 +13,108 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 
 export default function ListEmailServices() {
   const [open, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState('data');
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
+
+  const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState('');
+
+  const [dataEmailServicesExpiring, setDataEmailServicesExpiring] = useState([]);
+  const [countEmailServicesExpiring, setCountEmailServicesExpiring] = useState([]);
+
+  const [dataEmailServicesExpired, setDataEmailServicesExpired] = useState([]);
+  const [countEmailServicesExpired, setCountEmailServicesExpired] = useState([]);
+
+  const [dataEmailServicesBeforePayment, setDataEmailServicesBeforePayment] = useState([]);
+  const [countEmailServicesBeforePayment, setCountEmailServicesBeforePayment] = useState([]);
+
+  useEffect(() => {
+    loadListRoles();
+    loadListEmailServices();
+    loadEmailServicesExpiring();
+    loadEmailServicesExpired();
+    loadEmailServicesBeforePayment();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d34');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667467eb263fb998b9925d35');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '667467eb263fb998b9925d36');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
+
+  const loadListEmailServices = async () => {
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}`);
+    setData(result.data);
+    setDataLength(result.data.length);
+  };
+
+  const loadEmailServicesExpiring = async () => {
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expiring/all`);
+    setDataEmailServicesExpiring(result.data);
+    setCountEmailServicesExpiring(result.data.length);
+  };
+
+  const loadEmailServicesExpired = async () => {
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expired/all`);
+    setDataEmailServicesExpired(result.data);
+    setCountEmailServicesExpired(result.data.length);
+  };
+
+  const loadEmailServicesBeforePayment = async () => {
+    const result = await apiGet(`${LIST_EMAIL_SERVICES}/before-payment/all`);
+    setDataEmailServicesBeforePayment(result.data);
+    setCountEmailServicesBeforePayment(result.data.length);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Bạn có muốn xóa không?')) {
+      apiDelete(`${LIST_EMAIL_SERVICES}`, id)
+        .then(() => {
+          setOpen(true);
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   const columns = [
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-email/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    },
     {
       field: 'name',
       headerName: 'Tên miền',
@@ -174,72 +252,38 @@ export default function ListEmailServices() {
     }
   ];
 
-  const [data, setData] = useState([]);
-  const [dataLength, setDataLength] = useState('');
-
-  const [dataEmailServicesExpiring, setDataEmailServicesExpiring] = useState([]);
-  const [countEmailServicesExpiring, setCountEmailServicesExpiring] = useState([]);
-
-  const [dataEmailServicesExpired, setDataEmailServicesExpired] = useState([]);
-  const [countEmailServicesExpired, setCountEmailServicesExpired] = useState([]);
-
-  const [dataEmailServicesBeforePayment, setDataEmailServicesBeforePayment] = useState([]);
-  const [countEmailServicesBeforePayment, setCountEmailServicesBeforePayment] = useState([]);
-
-  useEffect(() => {
-    loadListEmailServices();
-    loadEmailServicesExpiring();
-    loadEmailServicesExpired();
-    loadEmailServicesBeforePayment();
-  }, []);
-
-  const loadListEmailServices = async () => {
-    const result = await apiGet(`${LIST_EMAIL_SERVICES}`);
-    setData(result.data);
-    setDataLength(result.data.length);
-  };
-
-  const loadEmailServicesExpiring = async () => {
-    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expiring/all`);
-    setDataEmailServicesExpiring(result.data);
-    setCountEmailServicesExpiring(result.data.length);
-  };
-
-  const loadEmailServicesExpired = async () => {
-    const result = await apiGet(`${LIST_EMAIL_SERVICES}/expired/all`);
-    setDataEmailServicesExpired(result.data);
-    setCountEmailServicesExpired(result.data.length);
-  };
-
-  const loadEmailServicesBeforePayment = async () => {
-    const result = await apiGet(`${LIST_EMAIL_SERVICES}/before-payment/all`);
-    setDataEmailServicesBeforePayment(result.data);
-    setCountEmailServicesBeforePayment(result.data.length);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_EMAIL_SERVICES}`, id)
-        .then(() => {
-          setOpen(true);
-          setData((prevData) => prevData.filter((item) => item._id !== id));
-          setDataLength((prevCount) => prevCount - 1);
-          setInterval(() => {
-            setOpen(false);
-          }, 1100);
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+  if (permissionUpdate || permissionDelete) {
+    columns.unshift({
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            {permissionUpdate && (
+              <Link to={'/dashboard/services/update-email/' + params.row._id}>
+                <IconEdit />
+              </Link>
+            )}
+            {permissionDelete && (
+              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+            )}
+          </>
+        );
+      }
+    });
+  }
 
   return (
     <>
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/services/add-email">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/services/add-email">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">

@@ -13,30 +13,108 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
 
 export default function ListHostingServices() {
   const [open, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState('data');
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
+
+  const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState('');
+
+  const [dataHostingServicesExpiring, setDataHostingServicesExpiring] = useState([]);
+  const [countHostingServicesExpiring, setCountHostingServicesExpiring] = useState([]);
+
+  const [dataHostingServicesExpired, setDataHostingServicesExpired] = useState([]);
+  const [countHostingServicesExpired, setCountHostingServicesExpired] = useState([]);
+
+  const [dataHostingServicesBeforePayment, setDataHostingServicesBeforePayment] = useState([]);
+  const [countHostingServicesBeforePayment, setCountHostingServicesBeforePayment] = useState([]);
+
+  useEffect(() => {
+    loadListRoles();
+    loadListHostingServices();
+    loadHostingServicesExpiring();
+    loadHostingServicesExpired();
+    loadHostingServicesBeforePayment();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d31');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667467eb263fb998b9925d32');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '667467eb263fb998b9925d33');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
+
+  const loadListHostingServices = async () => {
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}`);
+    setData(result.data);
+    setDataLength(result.data.length);
+  };
+
+  const loadHostingServicesExpiring = async () => {
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expiring/all`);
+    setDataHostingServicesExpiring(result.data);
+    setCountHostingServicesExpiring(result.data.length);
+  };
+
+  const loadHostingServicesExpired = async () => {
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expired/all`);
+    setDataHostingServicesExpired(result.data);
+    setCountHostingServicesExpired(result.data.length);
+  };
+
+  const loadHostingServicesBeforePayment = async () => {
+    const result = await apiGet(`${LIST_HOSTING_SERVICES}/before-payment/all`);
+    setDataHostingServicesBeforePayment(result.data);
+    setCountHostingServicesBeforePayment(result.data.length);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Bạn có muốn xóa không?')) {
+      apiDelete(`${LIST_HOSTING_SERVICES}`, id)
+        .then(() => {
+          setOpen(true);
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   const columns = [
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-hosting/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    },
     {
       field: 'name',
       headerName: 'Tên miền',
@@ -175,72 +253,38 @@ export default function ListHostingServices() {
     }
   ];
 
-  const [data, setData] = useState([]);
-  const [dataLength, setDataLength] = useState('');
-
-  const [dataHostingServicesExpiring, setDataHostingServicesExpiring] = useState([]);
-  const [countHostingServicesExpiring, setCountHostingServicesExpiring] = useState([]);
-
-  const [dataHostingServicesExpired, setDataHostingServicesExpired] = useState([]);
-  const [countHostingServicesExpired, setCountHostingServicesExpired] = useState([]);
-
-  const [dataHostingServicesBeforePayment, setDataHostingServicesBeforePayment] = useState([]);
-  const [countHostingServicesBeforePayment, setCountHostingServicesBeforePayment] = useState([]);
-
-  useEffect(() => {
-    loadListHostingServices();
-    loadHostingServicesExpiring();
-    loadHostingServicesExpired();
-    loadHostingServicesBeforePayment();
-  }, []);
-
-  const loadListHostingServices = async () => {
-    const result = await apiGet(`${LIST_HOSTING_SERVICES}`);
-    setData(result.data);
-    setDataLength(result.data.length);
-  };
-
-  const loadHostingServicesExpiring = async () => {
-    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expiring/all`);
-    setDataHostingServicesExpiring(result.data);
-    setCountHostingServicesExpiring(result.data.length);
-  };
-
-  const loadHostingServicesExpired = async () => {
-    const result = await apiGet(`${LIST_HOSTING_SERVICES}/expired/all`);
-    setDataHostingServicesExpired(result.data);
-    setCountHostingServicesExpired(result.data.length);
-  };
-
-  const loadHostingServicesBeforePayment = async () => {
-    const result = await apiGet(`${LIST_HOSTING_SERVICES}/before-payment/all`);
-    setDataHostingServicesBeforePayment(result.data);
-    setCountHostingServicesBeforePayment(result.data.length);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_HOSTING_SERVICES}`, id)
-        .then(() => {
-          setOpen(true);
-          setData((prevData) => prevData.filter((item) => item._id !== id));
-          setDataLength((prevCount) => prevCount - 1);
-          setInterval(() => {
-            setOpen(false);
-          }, 1100);
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+  if (permissionUpdate || permissionDelete) {
+    columns.unshift({
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            {permissionUpdate && (
+              <Link to={'/dashboard/services/update-hosting/' + params.row._id}>
+                <IconEdit />
+              </Link>
+            )}
+            {permissionDelete && (
+              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+            )}
+          </>
+        );
+      }
+    });
+  }
 
   return (
     <>
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/services/add-hosting">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/services/add-hosting">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">

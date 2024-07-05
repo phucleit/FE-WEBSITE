@@ -10,12 +10,71 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { apiGet, apiDelete, getCreatedAt } from '../../utils/formatUtils';
+import { apiGet, apiDelete, getCreatedAt, getRoles } from '../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
 export default function ListContracts() {
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [dataRoles, setDataRoles] = useState([]);
+  // const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
+
+  useEffect(() => {
+    loadListRoles();
+    loadListContracts();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      // const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667463d04bede188dfb46d7b');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667463d04bede188dfb46d7c');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '667463d04bede188dfb46c7c');
+      // if (filteredAdd.length > 0) {
+      //   setPermissionAdd(true);
+      // } else {
+      //   setPermissionAdd(false);
+      // }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
+
+  const loadListContracts = async () => {
+    const result = await apiGet(`${LIST_CONTRACTS}`);
+    setData(result.data);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Bạn có muốn xóa không?')) {
+      apiDelete(`${LIST_CONTRACTS}`, id)
+        .then(() => {
+          setOpen(true);
+          setData(data.filter((item) => item._id !== id));
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   const columns = [
     { field: 'contract_code', headerName: 'Mã hợp đồng', width: 150 },
@@ -81,57 +140,41 @@ export default function ListContracts() {
         }
       }
     },
-    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 },
-    {
+    { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 }
+  ];
+
+  if (permissionUpdate || permissionDelete) {
+    columns.push({
       field: 'action',
       headerName: 'Hành động',
       width: 100,
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/dashboard/contracts/update-contracts/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+            {permissionUpdate && (
+              <Link to={'/dashboard/contracts/update-contracts/' + params.row._id}>
+                <IconEdit />
+              </Link>
+            )}
+            {permissionDelete && (
+              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+            )}
           </>
         );
       }
-    }
-  ];
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    loadListContracts();
-  }, []);
-
-  const loadListContracts = async () => {
-    const result = await apiGet(`${LIST_CONTRACTS}`);
-    setData(result.data);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_CONTRACTS}`, id)
-        .then(() => {
-          setOpen(true);
-          setData(data.filter((item) => item._id !== id));
-          setInterval(() => {
-            setOpen(false);
-          }, 1100);
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+    });
+  }
 
   return (
     <>
       <MainCard
         title="Danh sách hợp đồng"
         // secondary={
-        //   <Button variant="contained" component={Link} to="/dashboard/contracts/add-contracts">
-        //     Thêm mới
-        //   </Button>
+        //   permissionAdd && (
+        //     <Button variant="contained" component={Link} to="/dashboard/contracts/add-contracts">
+        //       Thêm mới
+        //     </Button>
+        //   )
         // }
       >
         {data.length !== 0 ? (

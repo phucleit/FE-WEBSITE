@@ -12,30 +12,88 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, getCreatedAt } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getCreatedAt, getRoles } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 
 export default function ListWebsiteServices() {
   const [open, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState('data');
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
+
+  const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState('');
+
+  const [dataWebsiteServicesClosed, setDataWebsiteServicesClosed] = useState([]);
+  const [countWebsiteServicesClosed, setCountWebsiteServicesClosed] = useState([]);
+
+  useEffect(() => {
+    loadListRoles();
+    loadListWebsiteServices();
+    loadListWebsiteClosed();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d46');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667467eb263fb998b9925d47');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '667467eb263fb998b9925d48');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
+
+  const loadListWebsiteServices = async () => {
+    const result = await apiGet(`${LIST_WEBSITE_SERVICES}`);
+    setData(result.data);
+    setDataLength(result.data.length);
+  };
+
+  const loadListWebsiteClosed = async () => {
+    const result = await apiGet(`${LIST_WEBSITE_SERVICES}/closed/all`);
+    setDataWebsiteServicesClosed(result.data);
+    setCountWebsiteServicesClosed(result.data.length);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Bạn có muốn xóa không?')) {
+      apiDelete(`${LIST_WEBSITE_SERVICES}`, id)
+        .then(() => {
+          setOpen(true);
+          setData((prevData) => prevData.filter((item) => item._id !== id));
+          setDataLength((prevCount) => prevCount - 1);
+          setInterval(() => {
+            setOpen(false);
+          }, 1100);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   const columns = [
-    {
-      field: 'action',
-      headerName: 'Hành động',
-      width: 120,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={'/dashboard/services/update-website/' + params.row._id}>
-              <IconEdit />
-            </Link>
-            <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-          </>
-        );
-      }
-    },
     {
       field: 'name',
       headerName: 'Tên miền',
@@ -103,52 +161,38 @@ export default function ListWebsiteServices() {
     { field: 'createdAt', headerName: 'Ngày khởi tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 230 }
   ];
 
-  const [data, setData] = useState([]);
-  const [dataLength, setDataLength] = useState('');
-
-  const [dataWebsiteServicesClosed, setDataWebsiteServicesClosed] = useState([]);
-  const [countWebsiteServicesClosed, setCountWebsiteServicesClosed] = useState([]);
-
-  useEffect(() => {
-    loadListWebsiteServices();
-    loadListWebsiteClosed();
-  }, []);
-
-  const loadListWebsiteServices = async () => {
-    const result = await apiGet(`${LIST_WEBSITE_SERVICES}`);
-    setData(result.data);
-    setDataLength(result.data.length);
-  };
-
-  const loadListWebsiteClosed = async () => {
-    const result = await apiGet(`${LIST_WEBSITE_SERVICES}/closed/all`);
-    setDataWebsiteServicesClosed(result.data);
-    setCountWebsiteServicesClosed(result.data.length);
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_WEBSITE_SERVICES}`, id)
-        .then(() => {
-          setOpen(true);
-          setData((prevData) => prevData.filter((item) => item._id !== id));
-          setDataLength((prevCount) => prevCount - 1);
-          setInterval(() => {
-            setOpen(false);
-          }, 1100);
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+  if (permissionUpdate || permissionDelete) {
+    columns.unshift({
+      field: 'action',
+      headerName: 'Hành động',
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            {permissionUpdate && (
+              <Link to={'/dashboard/services/update-website/' + params.row._id}>
+                <IconEdit />
+              </Link>
+            )}
+            {permissionDelete && (
+              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+            )}
+          </>
+        );
+      }
+    });
+  }
 
   return (
     <>
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/services/add-website">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/services/add-website">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">

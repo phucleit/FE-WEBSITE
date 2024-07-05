@@ -18,7 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, convertPrice } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, convertPrice, getRoles } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_PLANS = `${config.API_URL}/plans/hosting`;
 
@@ -31,12 +31,47 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ListHostingPlans() {
-  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListHostingPlans();
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746678f7f723b779b1b062');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b063');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '66746678f7f723b779b1b064');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListHostingPlans = async () => {
     const result = await apiGet(`${LIST_HOSTING_PLANS}`);
@@ -62,9 +97,11 @@ export default function ListHostingPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/plans/add-hosting">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/plans/add-hosting">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -96,24 +133,28 @@ export default function ListHostingPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        component={Link}
-                        to={`/dashboard/plans/update-hosting/${item._id}`}
-                        sx={{ mr: 1 }}
-                      >
-                        Cập nhật
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        color="error"
-                        startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(item._id)}
-                      >
-                        Xóa
-                      </Button>
+                      {permissionUpdate && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          component={Link}
+                          to={`/dashboard/plans/update-hosting/${item._id}`}
+                          sx={{ mr: 1 }}
+                        >
+                          Cập nhật
+                        </Button>
+                      )}
+                      {permissionDelete && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          Xóa
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Item>

@@ -18,7 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, convertPrice } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, convertPrice, getRoles } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -31,12 +31,47 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ListContentPlans() {
-  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+  const [permissionDelete, setPermissionDelete] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListContentPlans();
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746678f7f723b779b1b06b');
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b06c');
+      const filteredDelete = dataRoles.filter((role_delete) => role_delete.function_id === '66746678f7f723b779b1b06d');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+
+      if (filteredDelete.length > 0) {
+        setPermissionDelete(true);
+      } else {
+        setPermissionDelete(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListContentPlans = async () => {
     const result = await apiGet(`${LIST_CONTENT_PLANS}`);
@@ -62,9 +97,11 @@ export default function ListContentPlans() {
       <MainCard
         title="Danh sách"
         secondary={
-          <Button variant="contained" component={Link} to="/dashboard/plans/add-content">
-            Thêm mới
-          </Button>
+          permissionAdd && (
+            <Button variant="contained" component={Link} to="/dashboard/plans/add-content">
+              Thêm mới
+            </Button>
+          )
         }
       >
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -85,24 +122,28 @@ export default function ListContentPlans() {
                       <Divider />
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        component={Link}
-                        to={`/dashboard/plans/update-content/${item._id}`}
-                        sx={{ mr: 1 }}
-                      >
-                        Cập nhật
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        color="error"
-                        startIcon={<DeleteIcon />}
-                        onClick={() => handleDelete(item._id)}
-                      >
-                        Xóa
-                      </Button>
+                      {permissionUpdate && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          component={Link}
+                          to={`/dashboard/plans/update-content/${item._id}`}
+                          sx={{ mr: 1 }}
+                        >
+                          Cập nhật
+                        </Button>
+                      )}
+                      {permissionDelete && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          Xóa
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Item>
