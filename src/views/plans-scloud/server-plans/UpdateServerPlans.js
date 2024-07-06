@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
 
 const LIST_SERVER_PLANS = `${config.API_URL}/plans/server`;
 const LIST_SUPPLIER_SERVER = `${config.API_URL}/server`;
@@ -35,6 +35,9 @@ export default function UpdateServerPlans() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+
   const [name, setName] = useState('');
   const [supplierServer, setSupplierServer] = useState('');
 
@@ -43,10 +46,28 @@ export default function UpdateServerPlans() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailServerPlans();
     loadSupplierServers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b075');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailServerPlans = async () => {
     const result = await apiGetById(`${LIST_SERVER_PLANS}`, currentId);
@@ -82,7 +103,7 @@ export default function UpdateServerPlans() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -136,5 +157,7 @@ export default function UpdateServerPlans() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

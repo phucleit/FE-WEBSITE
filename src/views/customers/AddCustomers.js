@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
 import { styled } from '@mui/material/styles';
@@ -18,7 +18,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { apiPostFile } from '../../utils/formatUtils';
+import { apiPostFile, getRoles } from '../../utils/formatUtils';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
@@ -34,6 +34,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function AddCustomers() {
   let navigate = useNavigate();
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [fullname, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -51,6 +53,26 @@ export default function AddCustomers() {
   const [imageBackView, setImageBackView] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    loadListRoles();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667463d04bede188dfb46d7e');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const handleChangeFrontView = (file) => {
     setImageFrontView(file);
@@ -109,7 +131,7 @@ export default function AddCustomers() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -352,5 +374,7 @@ export default function AddCustomers() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

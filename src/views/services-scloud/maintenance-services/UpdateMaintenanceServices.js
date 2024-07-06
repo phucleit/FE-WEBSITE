@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
@@ -37,6 +37,9 @@ export default function UpdateMaintenanceServices() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+
   const [maintenancePlanId, setMaintenancePlanId] = useState('');
   const [domainServiceId, setDomainServiceId] = useState('');
   const [serviceType, setServiceType] = useState('');
@@ -52,12 +55,30 @@ export default function UpdateMaintenanceServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailMaintenanceServices();
     loadListMaintenacePlans();
     loadListDomainServices();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667467eb263fb998b9925d3e');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailMaintenanceServices = async () => {
     const result = await apiGetById(`${LIST_MAINTENANCE_SERVICES}`, currentId);
@@ -107,7 +128,7 @@ export default function UpdateMaintenanceServices() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -245,5 +266,7 @@ export default function UpdateMaintenanceServices() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

@@ -25,7 +25,6 @@ export default function ListContentServices() {
   const [permissionUpdate, setPermissionUpdate] = useState(false);
   const [permissionDelete, setPermissionDelete] = useState(false);
 
-
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
 

@@ -19,6 +19,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
+import { getRoles } from '../../utils/formatUtils';
 
 const LIST_USER = `${config.API_URL}/users`;
 
@@ -34,6 +35,9 @@ export default function UpdateUser() {
   let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
+
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
 
   const [displayname, setDisplayname] = useState('');
   const [username, setUsername] = useState('');
@@ -52,9 +56,27 @@ export default function UpdateUser() {
   };
 
   useEffect(() => {
+    loadListRoles();
     loadDetailUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746193cb45907845239f38');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailUser = async () => {
     const result = await axios.get(`${LIST_USER}/${currentId}`, {
@@ -111,7 +133,7 @@ export default function UpdateUser() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -204,5 +226,7 @@ export default function UpdateUser() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

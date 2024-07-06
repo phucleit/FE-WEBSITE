@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { apiPost } from '../../utils/formatUtils';
+import { apiPost, getRoles } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -29,6 +29,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function AddSuppliers() {
   let navigate = useNavigate();
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
@@ -39,6 +41,26 @@ export default function AddSuppliers() {
   const [address, setAddress] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    loadListRoles();
+  }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667463d04bede188dfb46d76');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const handleAddSuppliers = (e) => {
     e.preventDefault();
@@ -83,7 +105,7 @@ export default function AddSuppliers() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -207,5 +229,7 @@ export default function AddSuppliers() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

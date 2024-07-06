@@ -20,7 +20,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { apiPost, apiGet } from '../../utils/formatUtils';
+import { apiPost, apiGet, getRoles } from '../../utils/formatUtils';
 
 const LIST_USER = `${config.API_URL}/users`;
 const LIST_GROUP_USER = `${config.API_URL}/group-user`;
@@ -35,6 +35,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function AddUser() {
   let navigate = useNavigate();
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [displayname, setDisplayname] = useState('');
   const [username, setUsername] = useState('');
@@ -48,8 +50,25 @@ export default function AddUser() {
   const [dataGroupUser, setDataGroupUser] = useState([]);
 
   useEffect(() => {
+    loadListRoles();
     loadListGroupUser();
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746193cb45907845239f36');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListGroupUser = async () => {
     const result = await apiGet(`${LIST_GROUP_USER}`);
@@ -100,7 +119,7 @@ export default function AddUser() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -207,5 +226,7 @@ export default function AddUser() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

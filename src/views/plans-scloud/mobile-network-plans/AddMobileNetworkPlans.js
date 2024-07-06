@@ -20,7 +20,7 @@ import FormLabel from '@mui/material/FormLabel';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiPost, apiGet } from '../../../utils/formatUtils';
+import { apiPost, apiGet, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
@@ -36,6 +36,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddMobileNetworkPlans() {
   let navigate = useNavigate();
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
@@ -49,9 +52,26 @@ export default function AddMobileNetworkPlans() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListMobileNetworkSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746678f7f723b779b1b071');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListMobileNetworkSuppliers = async () => {
     const result = await apiGet(`${LIST_MOBILE_NETWORK}`);
@@ -100,7 +120,7 @@ export default function AddMobileNetworkPlans() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -223,5 +243,7 @@ export default function AddMobileNetworkPlans() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

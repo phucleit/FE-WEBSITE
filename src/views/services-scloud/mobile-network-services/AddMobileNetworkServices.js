@@ -20,7 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
@@ -37,6 +37,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddMobileNetworkServices() {
   let navigate = useNavigate();
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
   const [mobileNetworkPlanId, setMobileNetworkPlanId] = useState('');
@@ -48,10 +51,27 @@ export default function AddMobileNetworkServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListMobileNetworkPlans();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d40');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListMobileNetworkPlans = async () => {
     const result = await apiGet(`${LIST_MOBILE_NETWORK_PLANS}`);
@@ -84,7 +104,7 @@ export default function AddMobileNetworkServices() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -167,5 +187,7 @@ export default function AddMobileNetworkServices() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

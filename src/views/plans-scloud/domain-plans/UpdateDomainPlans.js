@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiGet, apiUpdate } from '../../../utils/formatUtils';
+import { apiGetById, apiGet, apiUpdate, getRoles } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -35,6 +35,9 @@ export default function UpdateDomainPlans() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
@@ -45,10 +48,28 @@ export default function UpdateDomainPlans() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailDomainPlans();
     loadSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b060');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailDomainPlans = async () => {
     const result = await apiGetById(`${LIST_DOMAIN_PLANS}`, currentId);
@@ -93,7 +114,7 @@ export default function UpdateDomainPlans() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -171,5 +192,7 @@ export default function UpdateDomainPlans() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

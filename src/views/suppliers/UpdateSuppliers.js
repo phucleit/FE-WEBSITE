@@ -17,7 +17,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import ListSupplierPlans from './ListSupplierPlans';
 
 import config from '../../config';
-import { apiGetById, apiUpdate } from '../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -43,11 +43,31 @@ export default function UpdateSuppliers() {
   const [address, setAddress] = useState('');
 
   const [open, setOpen] = useState(false);
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667463d04bede188dfb46d77');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailSuppliers = async () => {
     const result = await apiGetById(`${LIST_SUPPLIER}`, currentId);
@@ -103,7 +123,7 @@ export default function UpdateSuppliers() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -228,5 +248,7 @@ export default function UpdateSuppliers() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

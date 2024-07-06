@@ -20,7 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -38,6 +38,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddEmailServices() {
   let navigate = useNavigate();
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+
   const [registeredAt, setRegisteredAt] = useState(new Date());
   const [domainServiceId, setDomainServiceId] = useState('');
   const [emailPlanId, setEmailPlanId] = useState('');
@@ -51,11 +54,28 @@ export default function AddEmailServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListDomainServices();
     loadListEmailPlans();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d34');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListDomainServices = async () => {
     const result = await apiGet(`${LIST_DOMAIN_SERVICES}`);
@@ -94,7 +114,7 @@ export default function AddEmailServices() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -192,5 +212,7 @@ export default function AddEmailServices() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

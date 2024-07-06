@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_PLANS = `${config.API_URL}/plans/email`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -32,6 +32,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function AddEmailPlans() {
   let navigate = useNavigate();
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
@@ -45,9 +47,26 @@ export default function AddEmailPlans() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadSuppliers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '66746678f7f723b779b1b065');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadSuppliers = async () => {
     const result = await apiGet(`${LIST_SUPPLIER}`);
@@ -96,7 +115,7 @@ export default function AddEmailPlans() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -204,5 +223,7 @@ export default function AddEmailPlans() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

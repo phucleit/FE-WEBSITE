@@ -26,7 +26,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { getCreatedAt, getRegisteredAt, getExpiredAt } from '../../utils/formatUtils';
+import { getCreatedAt, getRegisteredAt, getExpiredAt, getRoles } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
@@ -44,6 +44,9 @@ export default function AddContracts() {
   let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
+
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
 
   const [contract_code, setContractCode] = useState('');
   const [customer_id, setCustomerId] = useState('');
@@ -73,12 +76,30 @@ export default function AddContracts() {
   };
 
   useEffect(() => {
+    loadListRoles();
     loadDetailContract();
     loadListCustomers();
     const calculatedRemainingCost = total_price - deposit_amount;
     setRemainingCost(calculatedRemainingCost);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total_price, deposit_amount]);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667463d04bede188dfb46d7c');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailContract = async () => {
     const result = await axios.get(`${LIST_CONTRACT}/${currentId}`, {
@@ -752,7 +773,7 @@ export default function AddContracts() {
     }
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -1039,5 +1060,7 @@ export default function AddContracts() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

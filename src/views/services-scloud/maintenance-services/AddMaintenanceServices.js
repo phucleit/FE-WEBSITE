@@ -20,7 +20,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
@@ -38,6 +38,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddMaintenanceServices() {
   let navigate = useNavigate();
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+
   const [maintenancePlanId, setMaintenancePlanId] = useState('');
   const [domainServiceId, setDomainServiceId] = useState('');
   const [serviceType, setServiceType] = useState('');
@@ -52,11 +55,28 @@ export default function AddMaintenanceServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListMaintenancePlans();
     loadListDomainServices();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d3d');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListMaintenancePlans = async () => {
     const result = await apiGet(`${LIST_MAINTENANCE_PLANS}`);
@@ -96,7 +116,7 @@ export default function AddMaintenanceServices() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -216,5 +236,7 @@ export default function AddMaintenanceServices() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
 
@@ -36,10 +36,31 @@ export default function UpdateMobileNetwork() {
 
   const [open, setOpen] = useState(false);
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+
   useEffect(() => {
+    loadListRoles();
     loadDetailMobileNetwork();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667463d04bede188dfb46d80');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailMobileNetwork = async () => {
     const result = await apiGetById(`${LIST_MOBILE_NETWORK}`, currentId);
@@ -68,7 +89,7 @@ export default function UpdateMobileNetwork() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -102,5 +123,7 @@ export default function UpdateMobileNetwork() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

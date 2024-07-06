@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiUpdate } from '../../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -32,6 +32,9 @@ export default function UpdateContentPlans() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
+
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [number_of_articles, setNumberOfArticles] = useState('');
@@ -39,9 +42,27 @@ export default function UpdateContentPlans() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailSslPlans();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '66746678f7f723b779b1b06c');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailSslPlans = async () => {
     const result = await apiGetById(`${LIST_CONTENT_PLANS}`, currentId);
@@ -84,7 +105,7 @@ export default function UpdateContentPlans() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -148,5 +169,7 @@ export default function UpdateContentPlans() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

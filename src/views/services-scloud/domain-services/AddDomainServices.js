@@ -24,7 +24,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
@@ -42,6 +42,9 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AddDomainServices() {
   let navigate = useNavigate();
 
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionAdd, setPermissionAdd] = useState(false);
+
   const [name, setName] = useState('');
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
@@ -57,11 +60,28 @@ export default function AddDomainServices() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadListDomainPlans();
     loadListServerPlans();
     loadListCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredAdd = dataRoles.filter((role_add) => role_add.function_id === '667467eb263fb998b9925d2e');
+      if (filteredAdd.length > 0) {
+        setPermissionAdd(true);
+      } else {
+        setPermissionAdd(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadListDomainPlans = async () => {
     const result = await apiGet(`${LIST_DOMAIN_PLANS}`);
@@ -110,7 +130,7 @@ export default function AddDomainServices() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -230,5 +250,7 @@ export default function AddDomainServices() {
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }

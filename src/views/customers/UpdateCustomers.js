@@ -18,7 +18,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { apiGetById, apiUpdateFile } from '../../utils/formatUtils';
+import { apiGetById, apiUpdateFile, getRoles } from '../../utils/formatUtils';
 
 import ListServices from './ListServices';
 
@@ -38,6 +38,9 @@ export default function UpdateCustomers() {
   let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
+
+  const [dataRoles, setDataRoles] = useState([]);
+  const [permissionUpdate, setPermissionUpdate] = useState(false);
 
   const [fullname, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -60,9 +63,27 @@ export default function UpdateCustomers() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    loadListRoles();
     loadDetailCustomers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (dataRoles.length > 0) {
+      const filteredUpdate = dataRoles.filter((role_update) => role_update.function_id === '667463d04bede188dfb46d7f');
+
+      if (filteredUpdate.length > 0) {
+        setPermissionUpdate(true);
+      } else {
+        setPermissionUpdate(false);
+      }
+    }
+  }, [dataRoles]);
+
+  const loadListRoles = async () => {
+    const result = await getRoles();
+    setDataRoles(result.data);
+  };
 
   const loadDetailCustomers = async () => {
     const result = await apiGetById(`${LIST_CUSTOMERS}`, currentId);
@@ -139,7 +160,7 @@ export default function UpdateCustomers() {
       .catch((error) => console.log(error));
   };
 
-  return (
+  return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
         <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
@@ -397,5 +418,7 @@ export default function UpdateCustomers() {
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
     </>
+  ) : (
+    <div>Bạn không có quyền truy cập!</div>
   );
 }
