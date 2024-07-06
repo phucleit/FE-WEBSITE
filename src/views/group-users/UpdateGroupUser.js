@@ -21,7 +21,7 @@ import { apiGetById, apiGet } from '../../utils/formatUtils';
 
 const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 const LIST_FUNCTION = `${config.API_URL}/functions`;
-const LIST_ROLE = `${config.API_URL}/functions/roles`;
+const LIST_ROLES = `${config.API_URL}/functions/list-roles`;
 
 const parent_id_tai_khoan = '667460e3d19aa9fcecc69fa6';
 const parent_id_nha_cung_cap = '667463d04bede188dfb46d75';
@@ -44,20 +44,21 @@ export default function UpdateGroupUser() {
 
   const [dataFunctions, setDataFunctions] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-  const [roles, setRoles] = useState([]);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  console.log(roles);
-
   useEffect(() => {
+    loadListRoles();
     loadDetailGroupUser();
     loadListFunctions();
-    loadListRoles();
-    setCheckedItems(roles.map((item) => item.function_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadListRoles = async () => {
+    const result = await apiGet(`${LIST_ROLES}/${currentId}`);
+    setCheckedItems(result.data.map((role) => role.function_id));
+  };
 
   const loadDetailGroupUser = async () => {
     const result = await apiGetById(`${LIST_GROUP_USER}`, currentId);
@@ -70,28 +71,12 @@ export default function UpdateGroupUser() {
     setDataFunctions(result.data);
   };
 
-  const loadListRoles = async () => {
-    const result = await apiGet(`${LIST_ROLE}`);
-    setRoles(result.data);
-  };
-
   const filteredItemsTaiKhoan = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_tai_khoan);
   const filteredItemsNCC = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_nha_cung_cap);
   const filteredItemsGoiDV = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_goi_dich_vu);
   const filteredItemsDV = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_dich_vu);
   const filteredItemsKH = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_khach_hang);
   const filteredItemsHD = dataFunctions.filter((item) => item.fuction_parent_id === parent_id_hop_dong);
-
-  const handleChangeGroupUser = (event) => {
-    const { name, checked } = event.target;
-    setCheckedItems((prevItems) => {
-      if (checked) {
-        return [...prevItems, name];
-      } else {
-        return prevItems.filter((item) => item !== name);
-      }
-    });
-  };
 
   return (
     <>
@@ -139,7 +124,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsTaiKhoan.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
@@ -153,7 +140,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsNCC.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
@@ -167,7 +156,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsKH.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
@@ -181,7 +172,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsHD.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
@@ -195,7 +188,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsGoiDV.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
@@ -209,7 +204,9 @@ export default function UpdateGroupUser() {
                   {filteredItemsDV.map((item) => (
                     <FormControlLabel
                       key={item._id}
-                      control={<Checkbox checked={checkedItems.includes(item._id)} onChange={handleChangeGroupUser} name={item._id} />}
+                      control={
+                        <Checkbox checked={checkedItems.includes(item._id)} disabled={!checkedItems.includes(item._id)} name={item._id} />
+                      }
                       label={item.name}
                     />
                   ))}
