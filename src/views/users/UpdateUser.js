@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -11,6 +10,8 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -19,7 +20,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { getRoles } from '../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles } from '../../utils/formatUtils';
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
 const LIST_USER = `${config.API_URL}/users`;
 
@@ -36,6 +38,7 @@ export default function UpdateUser() {
   const paramId = useParams();
   const currentId = paramId.id;
 
+  const [dataGroupUser, setDataGroupUser] = useState([]);
   const [dataRoles, setDataRoles] = useState([]);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
 
@@ -43,6 +46,7 @@ export default function UpdateUser() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [group_user_id, setGroupUserId] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -58,6 +62,7 @@ export default function UpdateUser() {
   useEffect(() => {
     loadListRoles();
     loadDetailUser();
+    loadListGroupUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,16 +83,18 @@ export default function UpdateUser() {
     setDataRoles(result.data);
   };
 
+  const loadListGroupUser = async () => {
+    const result = await apiGet(`${LIST_GROUP_USER}`);
+    setDataGroupUser(result.data);
+  };
+
   const loadDetailUser = async () => {
-    const result = await axios.get(`${LIST_USER}/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGetById(`${LIST_USER}`, currentId);
     setDisplayname(result.data.display_name);
     setUsername(result.data.username);
     setEmail(result.data.email);
     setPassword(result.data.password);
+    setGroupUserId(result.data.group_user_id);
   };
 
   const handleUpdateUser = (e) => {
@@ -111,18 +118,11 @@ export default function UpdateUser() {
       display_name: displayname,
       username: username,
       email: email,
-      password: password
+      password: password,
+      group_user_id: group_user_id
     };
 
-    const config_header = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      }
-    };
-
-    axios
-      .put(`${LIST_USER}/${currentId}`, updateUser, config_header)
+    apiUpdate(`${LIST_USER}`, currentId, updateUser)
       .then(() => {
         setOpen(true);
         setInterval(() => {
@@ -209,6 +209,20 @@ export default function UpdateUser() {
                       </InputAdornment>
                     }
                   />
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <InputLabel>Quyền</InputLabel>
+                  <Select id="group_user_id" value={group_user_id} label="Chọn quyền..." onChange={(e) => setGroupUserId(e.target.value)}>
+                    {dataGroupUser.map((item) => (
+                      <MenuItem key={item._id} value={item._id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Item>
             </Grid>
