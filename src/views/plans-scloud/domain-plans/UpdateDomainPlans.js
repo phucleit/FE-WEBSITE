@@ -108,7 +108,6 @@ export default function UpdateDomainPlans() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/plans/list-domain');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

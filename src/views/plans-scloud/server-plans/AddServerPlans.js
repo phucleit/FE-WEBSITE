@@ -87,7 +87,6 @@ export default function AddServerPlans() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/plans/list-server');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

@@ -20,11 +20,12 @@ import MainCard from 'ui-component/cards/MainCard';
 import config from '../../config';
 import { apiGetById, apiUpdateFile, getRoles } from '../../utils/formatUtils';
 
-import ListServices from './ListServices';
+// import ListServices from './ListServices';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const URL_UPLOAD = `${config.API_UPLOAD}`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,6 +39,8 @@ export default function UpdateCustomers() {
   let navigate = useNavigate();
   const paramId = useParams();
   const currentId = paramId.id;
+
+  const normalizePath = (path) => path.replace(/\\/g, '/');
 
   const [dataRoles, setDataRoles] = useState([]);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
@@ -56,9 +59,6 @@ export default function UpdateCustomers() {
   const [mailVat, setMailVat] = useState('');
   const [imageFrontView, setImageFrontView] = useState('');
   const [imageBackView, setImageBackView] = useState('');
-
-  const [previewImageFrontView, setPreviewImageFrontView] = useState('');
-  const [previewImageBackView, setPreviewImageBackView] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -99,8 +99,8 @@ export default function UpdateCustomers() {
     setRepresentative(result.data.representative);
     setRepresentativeHotline(result.data.representative_hotline);
     setMailVat(result.data.mail_vat);
-    setPreviewImageFrontView(result.data.image_front_view[0]);
-    setPreviewImageBackView(result.data.image_back_view[0]);
+    setImageFrontView(result.data.image_front_view[0]);
+    setImageBackView(result.data.image_back_view[0]);
   };
 
   const handleChangeFrontView = (file) => {
@@ -115,11 +115,6 @@ export default function UpdateCustomers() {
     e.preventDefault();
     if (fullname == '') {
       alert('Vui lòng nhập họ và tên!');
-      return;
-    }
-
-    if (email == '') {
-      alert('Vui lòng nhập địa chỉ email!');
       return;
     }
 
@@ -154,7 +149,6 @@ export default function UpdateCustomers() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/customers/list-customers');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -357,20 +351,20 @@ export default function UpdateCustomers() {
                   />
                 </FormControl>
               </Item>
-              <Item>
-                {previewImageFrontView && (
-                  <div>
-                    <img src={`data:image/jpeg;base64,${previewImageFrontView}`} alt="Hình CCCD mặt trước" />
-                  </div>
-                )}
-              </Item>
-              <Item>
-                {imageFrontView && (
-                  <div>
-                    <img src={URL.createObjectURL(imageFrontView)} alt="Hình CCCD mặt trước" />
-                  </div>
-                )}
-              </Item>
+              {imageFrontView ? (
+                <img
+                  src={
+                    typeof imageFrontView === 'string'
+                      ? `${URL_UPLOAD}/${normalizePath(imageFrontView)}`
+                      : URL.createObjectURL(imageFrontView)
+                  }
+                  alt="Hình CCCD mặt trước"
+                  width={400}
+                  height={230}
+                />
+              ) : (
+                <p>Không có hình ảnh nào!</p>
+              )}
             </Grid>
             <Grid item xs={6}>
               <Item>
@@ -388,20 +382,18 @@ export default function UpdateCustomers() {
                   />
                 </FormControl>
               </Item>
-              <Item>
-                {previewImageBackView && (
-                  <div>
-                    <img src={`data:image/jpeg;base64,${previewImageBackView}`} alt="Hình CCCD mặt sau" />
-                  </div>
-                )}
-              </Item>
-              <Item>
-                {imageBackView && (
-                  <div>
-                    <img src={URL.createObjectURL(imageBackView)} alt="Hình CCCD mặt sau" />
-                  </div>
-                )}
-              </Item>
+              {imageBackView ? (
+                <img
+                  src={
+                    typeof imageBackView === 'string' ? `${URL_UPLOAD}/${normalizePath(imageBackView)}` : URL.createObjectURL(imageBackView)
+                  }
+                  alt="Hình CCCD mặt sau"
+                  width={400}
+                  height={230}
+                />
+              ) : (
+                <p>Không có hình ảnh nào!</p>
+              )}
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -413,7 +405,7 @@ export default function UpdateCustomers() {
           </Grid>
         </Box>
       </MainCard>
-      <ListServices />
+      {/* <ListServices /> */}
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

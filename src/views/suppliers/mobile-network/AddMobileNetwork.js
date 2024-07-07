@@ -71,7 +71,6 @@ export default function AddMobileNetwork() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/suppliers/mobile-network/list-mobile-network');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

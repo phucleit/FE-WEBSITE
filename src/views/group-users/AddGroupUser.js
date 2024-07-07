@@ -101,7 +101,6 @@ export default function AddGroupUser() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/users/list-group-users');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => {

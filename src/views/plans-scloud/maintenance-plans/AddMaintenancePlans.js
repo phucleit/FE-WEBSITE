@@ -90,7 +90,6 @@ export default function AddMaintenancePlans() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/plans/list-maintenance');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

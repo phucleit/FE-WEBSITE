@@ -109,7 +109,6 @@ export default function AddToplistServices() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/services/list-toplist');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

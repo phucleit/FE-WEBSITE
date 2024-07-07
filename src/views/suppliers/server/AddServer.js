@@ -77,7 +77,6 @@ export default function AddServer() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/suppliers/server/list-server');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

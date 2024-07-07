@@ -98,7 +98,6 @@ export default function AddContentServices() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/services/list-content');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

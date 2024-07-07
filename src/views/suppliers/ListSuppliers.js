@@ -64,7 +64,7 @@ export default function ListSupplier() {
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete()
+      apiDelete(`${LIST_SUPPLIER}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

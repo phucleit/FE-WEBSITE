@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { apiGet, formatPhoneNumber, getCreatedAt, getRoles } from '../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumber, getCreatedAt, getRoles } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
@@ -64,8 +64,7 @@ export default function ListCustomers() {
 
   const handleDelete = (id) => {
     if (window.confirm('Bạn có muốn xóa không?')) {
-      axios
-        .delete(`${LIST_CUSTOMERS}/` + id)
+      apiDelete(`${LIST_CUSTOMERS}`, id)
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));

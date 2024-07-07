@@ -124,7 +124,6 @@ export default function AddDomainServices() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/services/list-domain');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

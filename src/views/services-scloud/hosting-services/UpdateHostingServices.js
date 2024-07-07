@@ -135,7 +135,6 @@ export default function UpdateHostingServices() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/services/list-hosting');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

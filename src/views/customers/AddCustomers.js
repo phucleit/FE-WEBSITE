@@ -89,11 +89,6 @@ export default function AddCustomers() {
       return;
     }
 
-    if (email == '') {
-      alert('Vui lòng nhập địa chỉ email!');
-      return;
-    }
-
     if (idNumber == '') {
       alert('Vui lòng nhập số CCCD!');
       return;
@@ -125,7 +120,6 @@ export default function AddCustomers() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/customers/list-customers');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));
@@ -331,7 +325,7 @@ export default function AddCustomers() {
               <Item>
                 {imageFrontView && (
                   <div>
-                    <img src={URL.createObjectURL(imageFrontView)} alt="Hình CCCD mặt trước" />
+                    <img src={URL.createObjectURL(imageFrontView)} alt="Hình CCCD mặt trước" width={400} height={230} />
                   </div>
                 )}
               </Item>
@@ -355,7 +349,7 @@ export default function AddCustomers() {
               <Item>
                 {imageBackView && (
                   <div>
-                    <img src={URL.createObjectURL(imageBackView)} alt="Hình CCCD mặt sau" />
+                    <img src={URL.createObjectURL(imageBackView)} alt="Hình CCCD mặt sau" width={400} height={230} />
                   </div>
                 )}
               </Item>

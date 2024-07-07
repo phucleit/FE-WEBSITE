@@ -127,7 +127,6 @@ export default function UpdateUser() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/users/list-users');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));

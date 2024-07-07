@@ -135,7 +135,6 @@ export default function UpdateSslServices() {
         setOpen(true);
         setInterval(() => {
           navigate('/dashboard/services/list-ssl');
-          window.location.reload(true);
         }, 1500);
       })
       .catch((error) => console.log(error));
