@@ -120,7 +120,7 @@ export default function UpdateMaintenanceServices() {
     apiUpdate(`${LIST_MAINTENANCE_SERVICES}`, currentId, updateMaintenanceServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setIntersetTimeoutval(() => {
           navigate('/dashboard/services/list-maintenance');
         }, 1500);
       })

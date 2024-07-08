@@ -106,7 +106,7 @@ export default function AddHostingServices() {
     apiPost(`${LIST_HOSTING_SERVICES}`, addHostingServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-hosting');
         }, 1500);
       })

@@ -88,7 +88,7 @@ export default function AddMaintenancePlans() {
     apiPost(`${LIST_MAINTENANCE_PLANS}`, addMaintenancePlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-maintenance');
         }, 1500);
       })

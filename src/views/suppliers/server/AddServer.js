@@ -75,7 +75,7 @@ export default function AddServer() {
     apiPost(`${LIST_SERVER}`, addServer)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/suppliers/server/list-server');
         }, 1500);
       })

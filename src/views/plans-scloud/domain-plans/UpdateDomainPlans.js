@@ -106,7 +106,7 @@ export default function UpdateDomainPlans() {
     apiUpdate(`${LIST_DOMAIN_PLANS}`, currentId, updateDomainPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-domain');
         }, 1500);
       })

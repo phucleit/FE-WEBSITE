@@ -107,7 +107,7 @@ export default function AddEmailPlans() {
     apiPost(`${LIST_EMAIL_PLANS}`, addEmailPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-email');
         }, 1500);
       })

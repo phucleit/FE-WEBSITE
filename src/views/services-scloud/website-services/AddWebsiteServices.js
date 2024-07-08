@@ -91,7 +91,7 @@ export default function AddWebsiteServices() {
     apiPost(`${LIST_WEBSITE_SERVICES}`, addWebsiteServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-website');
         }, 1500);
       })

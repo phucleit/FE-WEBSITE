@@ -103,7 +103,7 @@ export default function UpdateToplistServices() {
     apiUpdate(`${LIST_TOPLIST_SERVICES}`, currentId, updateToplistServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-toplist');
         }, 1500);
       })

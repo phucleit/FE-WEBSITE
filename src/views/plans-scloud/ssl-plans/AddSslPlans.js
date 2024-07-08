@@ -96,7 +96,7 @@ export default function AddSslPlans() {
     apiPost(`${LIST_SSL_PLANS}`, addSslPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-ssl');
         }, 1500);
       })

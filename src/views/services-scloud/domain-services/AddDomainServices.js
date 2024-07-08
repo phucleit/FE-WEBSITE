@@ -122,7 +122,7 @@ export default function AddDomainServices() {
     apiPost(`${LIST_DOMAIN_SERVICES}`, addDomainServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-domain');
         }, 1500);
       })

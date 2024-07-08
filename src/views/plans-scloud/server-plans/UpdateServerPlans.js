@@ -95,7 +95,7 @@ export default function UpdateServerPlans() {
     apiUpdate(`${LIST_SERVER_PLANS}`, currentId, updateServerPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-server');
         }, 1500);
       })

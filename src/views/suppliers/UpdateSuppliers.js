@@ -115,7 +115,7 @@ export default function UpdateSuppliers() {
     apiUpdate(`${LIST_SUPPLIER}`, currentId, updateSuppliers)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/suppliers/list-suppliers');
         }, 1500);
       })

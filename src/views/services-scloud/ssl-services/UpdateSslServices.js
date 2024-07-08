@@ -133,7 +133,7 @@ export default function UpdateSslServices() {
     apiUpdate(`${LIST_SSL_SERVICES}`, currentId, updateSslServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-ssl');
         }, 1500);
       })

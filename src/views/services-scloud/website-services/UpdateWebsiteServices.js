@@ -105,7 +105,7 @@ export default function UpdateWebsiteServices() {
     apiUpdate(`${LIST_WEBSITE_SERVICES}`, currentId, updateWebsiteServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-website');
         }, 1500);
       })

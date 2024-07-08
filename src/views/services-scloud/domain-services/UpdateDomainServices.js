@@ -132,7 +132,7 @@ export default function UpdateDomainServices() {
     apiUpdate(`${LIST_DOMAIN_SERVICES}`, currentId, updateDomainServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-domain');
         }, 1500);
       })

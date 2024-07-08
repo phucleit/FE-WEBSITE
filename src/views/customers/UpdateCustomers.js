@@ -147,7 +147,7 @@ export default function UpdateCustomers() {
     apiUpdateFile(`${LIST_CUSTOMERS}`, currentId, formDataCustomer)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/customers/list-customers');
         }, 1500);
       })

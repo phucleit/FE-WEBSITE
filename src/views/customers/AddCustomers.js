@@ -118,11 +118,14 @@ export default function AddCustomers() {
     apiPostFile(`${LIST_CUSTOMERS}`, formDataCustomer)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/customers/list-customers');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const err = error.response.data;
+        alert(err);
+      });
   };
 
   return permissionAdd ? (

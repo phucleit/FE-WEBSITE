@@ -107,7 +107,7 @@ export default function AddHostingPlans() {
     apiPost(`${LIST_HOSTING_PLANS}`, addHostingPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-hosting');
         }, 1500);
       })

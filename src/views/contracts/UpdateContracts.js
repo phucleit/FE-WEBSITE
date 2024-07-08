@@ -764,7 +764,7 @@ export default function AddContracts() {
         })
         .then(() => {
           setOpen(true);
-          setInterval(() => {
+          setTimeout(() => {
             navigate('/dashboard/contracts/list-contracts');
           }, 1500);
         })

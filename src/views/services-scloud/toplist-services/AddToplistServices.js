@@ -107,7 +107,7 @@ export default function AddToplistServices() {
     apiPost(`${LIST_TOPLIST_SERVICES}`, addToplistServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-toplist');
         }, 1500);
       })

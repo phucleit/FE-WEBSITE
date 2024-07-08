@@ -85,7 +85,7 @@ export default function AddServerPlans() {
     apiPost(`${LIST_SERVER_PLANS}`, addServerPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-server');
         }, 1500);
       })

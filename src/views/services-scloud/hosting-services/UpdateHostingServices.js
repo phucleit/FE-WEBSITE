@@ -133,7 +133,7 @@ export default function UpdateHostingServices() {
     apiUpdate(`${LIST_HOSTING_SERVICES}`, currentId, updateHostingServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-hosting');
         }, 1500);
       })

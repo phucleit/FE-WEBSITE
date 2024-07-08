@@ -106,7 +106,7 @@ export default function AddEmailServices() {
     apiPost(`${LIST_EMAIL_SERVICES}`, addEmailServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-email');
         }, 1500);
       })

@@ -125,7 +125,7 @@ export default function UpdateUser() {
     apiUpdate(`${LIST_USER}`, currentId, updateUser)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/users/list-users');
         }, 1500);
       })

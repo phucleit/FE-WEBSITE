@@ -108,7 +108,7 @@ export default function UpdateSslPlans() {
     apiUpdate(`${LIST_SSL_PLANS}`, currentId, updateSslPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-ssl');
         }, 1500);
       })

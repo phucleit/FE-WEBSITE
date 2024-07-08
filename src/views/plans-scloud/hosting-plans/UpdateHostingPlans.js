@@ -122,7 +122,7 @@ export default function UpdateHostinglPlans() {
     apiUpdate(`${LIST_HOSTING_PLANS}`, currentId, updateHostingPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-hosting');
         }, 1500);
       })

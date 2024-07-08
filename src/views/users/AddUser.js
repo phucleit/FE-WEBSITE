@@ -111,7 +111,7 @@ export default function AddUser() {
     apiPost(`${LIST_USER}`, addUser)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/users/list-users');
         }, 1500);
       })

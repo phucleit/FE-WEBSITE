@@ -101,7 +101,7 @@ export default function UpdateMaintenancePlans() {
     apiUpdate(`${LIST_MAINTENANCE_PLANS}`, currentId, updateMaintenancePlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-maintenance');
         }, 1500);
       })

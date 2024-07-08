@@ -84,7 +84,7 @@ export default function ListMobileNetworkPlans() {
         .then(() => {
           setOpen(true);
           setData(data.filter((item) => item._id !== id));
-          setInterval(() => {
+          setTimeout(() => {
             setOpen(false);
           }, 1100);
         })

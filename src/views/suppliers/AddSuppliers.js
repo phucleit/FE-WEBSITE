@@ -97,7 +97,7 @@ export default function AddSuppliers() {
     apiPost(`${LIST_SUPPLIER}`, addSuppliers)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/suppliers/list-suppliers');
         }, 1500);
       })

@@ -106,7 +106,7 @@ export default function UpdateContentServices() {
     apiUpdate(`${LIST_CONTENT_SERVICES}`, currentId, updateContentServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-content');
         }, 1500);
       })

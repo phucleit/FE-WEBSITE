@@ -133,7 +133,7 @@ export default function UpdateEmailServices() {
     apiUpdate(`${LIST_EMAIL_SERVICES}`, currentId, updateEmailServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-email');
         }, 1500);
       })

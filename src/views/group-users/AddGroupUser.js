@@ -99,7 +99,7 @@ export default function AddGroupUser() {
     apiPost(`${LIST_FUNCTION}`, addGroupUser)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/users/list-group-users');
         }, 1500);
       })

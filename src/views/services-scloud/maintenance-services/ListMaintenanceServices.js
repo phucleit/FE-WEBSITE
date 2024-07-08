@@ -96,7 +96,7 @@ export default function ListMaintenanceServices() {
           setOpen(true);
           setData((prevData) => prevData.filter((item) => item._id !== id));
           setDataLength((prevCount) => prevCount - 1);
-          setInterval(() => {
+          setTimeout(() => {
             setOpen(false);
           }, 1100);
         })

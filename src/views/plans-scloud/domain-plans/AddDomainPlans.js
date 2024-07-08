@@ -94,7 +94,7 @@ export default function AddDomainPlans() {
     apiPost(`${LIST_DOMAIN_PLANS}`, addDomainPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-domain');
         }, 1500);
       })

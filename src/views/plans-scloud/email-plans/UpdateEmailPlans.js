@@ -122,7 +122,7 @@ export default function UpdateEmailPlans() {
     apiUpdate(`${LIST_EMAIL_PLANS}`, currentId, updateEmailPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-email');
         }, 1500);
       })

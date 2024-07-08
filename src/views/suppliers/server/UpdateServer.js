@@ -93,7 +93,7 @@ export default function UpdateServer() {
     apiUpdate(`${LIST_SERVER}`, currentId, updateServer)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/suppliers/server/list-server');
         }, 1500);
       })

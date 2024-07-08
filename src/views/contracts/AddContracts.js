@@ -231,7 +231,7 @@ export default function AddContracts() {
     apiPost(`${LIST_CONTRACT}`, addContract)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/contracts/list-contracts');
         }, 1500);
       })

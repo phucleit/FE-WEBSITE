@@ -97,7 +97,7 @@ export default function UpdateContentPlans() {
     apiUpdate(`${LIST_CONTENT_PLANS}`, currentId, updateContentPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-content');
         }, 1500);
       })

@@ -81,7 +81,7 @@ export default function UpdateMobileNetwork() {
     apiUpdate(`${LIST_MOBILE_NETWORK}`, currentId, updateMobileNetwork)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/suppliers/mobile-network/list-mobile-network');
         }, 1500);
       })

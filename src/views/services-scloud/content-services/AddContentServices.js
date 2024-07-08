@@ -96,7 +96,7 @@ export default function AddContentServices() {
     apiPost(`${LIST_CONTENT_SERVICES}`, addContentServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-content');
         }, 1500);
       })

@@ -84,7 +84,7 @@ export default function AddContentPlans() {
     apiPost(`${LIST_CONTENT_PLANS}`, addContentPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-content');
         }, 1500);
       })

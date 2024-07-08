@@ -112,7 +112,7 @@ export default function AddMobileNetworkPlans() {
     apiPost(`${LIST_MOBILE_NETWORK_PLANS}`, addMobileNetworkPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-mobile-network');
         }, 1500);
       })

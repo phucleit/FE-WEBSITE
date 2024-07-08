@@ -127,7 +127,7 @@ export default function UpdateMobileNetworkPlans() {
     apiUpdate(`${LIST_MOBILE_NETWORK_PLANS}`, currentId, updateNetworkPlans)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/plans/list-mobile-network');
         }, 1500);
       })

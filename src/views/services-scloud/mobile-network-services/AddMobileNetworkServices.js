@@ -96,7 +96,7 @@ export default function AddMobileNetworkServices() {
     apiPost(`${LIST_MOBILE_NETWORK_SERVICES}`, addDomainServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-mobile-network');
         }, 1500);
       })

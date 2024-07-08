@@ -106,7 +106,7 @@ export default function AddSslServices() {
     apiPost(`${LIST_SSL_SERVICES}`, addSslServices)
       .then(() => {
         setOpen(true);
-        setInterval(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-ssl');
         }, 1500);
       })
