@@ -114,7 +114,7 @@ export default function ListMobileNetworkServices() {
           <span>
             {params.row.mobileNetworkPlanId.name}
             <br />
-            (NMDD: {params.row.supplierMobileNetworkId.name})
+            (NMDD: {params.row.supplier_mobile_network_id.name})
           </span>
         );
       }

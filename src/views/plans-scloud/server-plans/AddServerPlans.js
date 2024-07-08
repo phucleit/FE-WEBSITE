@@ -37,7 +37,7 @@ export default function AddServerPlans() {
   const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [name, setName] = useState('');
-  const [supplierServer, setSupplierServer] = useState('');
+  const [supplierServerId, setSupplierServerId] = useState('');
 
   const [listSupplierServer, setListSupplierServer] = useState([]);
 
@@ -79,7 +79,7 @@ export default function AddServerPlans() {
 
     const addServerPlans = {
       name: name,
-      supplier_server_id: supplierServer
+      supplier_server_id: supplierServerId
     };
 
     apiPost(`${LIST_SERVER_PLANS}`, addServerPlans)
@@ -117,10 +117,10 @@ export default function AddServerPlans() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Nhà cung cấp</InputLabel>
                   <Select
-                    id="supplierServer"
-                    value={supplierServer}
+                    id="supplierServerId"
+                    value={supplierServerId}
                     label="Chọn nhà cung cấp..."
-                    onChange={(e) => setSupplierServer(e.target.value)}
+                    onChange={(e) => setSupplierServerId(e.target.value)}
                   >
                     {listSupplierServer.map((item) => (
                       <MenuItem key={item._id} value={item._id}>

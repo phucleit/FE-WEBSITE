@@ -134,7 +134,7 @@ export default function UpdateMobileNetworkServices() {
                   >
                     {listMobileNetworkPlans.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
-                        {item.name} (NMDD: {item.supplierMobileNetworkId.name})
+                        {item.name} (NMDD: {item.supplier_mobile_network_id.name})
                       </MenuItem>
                     ))}
                   </Select>

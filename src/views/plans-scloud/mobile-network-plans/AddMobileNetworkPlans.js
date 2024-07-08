@@ -44,7 +44,7 @@ export default function AddMobileNetworkPlans() {
   const [price, setPrice] = useState('');
   const [capacity, setCapacity] = useState('');
   const [content, setContent] = useState('');
-  const [esim, setEsim] = useState('');
+  const [esim, setEsim] = useState(false);
   const [supplierMobileNetworkId, setSupplierMobileNetworkId] = useState('');
 
   const [listMobileNetworkSuppliers, setListMobileNetworkSuppliers] = useState([]);
@@ -106,7 +106,7 @@ export default function AddMobileNetworkPlans() {
       capacity: capacity,
       content: content,
       esim: esim,
-      supplierMobileNetworkId: supplierMobileNetworkId
+      supplier_mobile_network_id: supplierMobileNetworkId
     };
 
     apiPost(`${LIST_MOBILE_NETWORK_PLANS}`, addMobileNetworkPlans)

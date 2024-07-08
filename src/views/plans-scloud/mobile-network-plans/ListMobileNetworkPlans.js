@@ -120,17 +120,22 @@ export default function ListMobileNetworkPlans() {
                         (Giá trên chưa bao gồm VAT)
                       </Typography>
                       <Typography sx={{ fontSize: 17, pb: 1, color: '#2196f3' }}>
-                        Nhà mạng di động: {item.supplierMobileNetworkId.name}
+                        Nhà mạng di động: {item.supplier_mobile_network_id.name}
                       </Typography>
                       <Divider />
                       <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Dung lượng: {item.capacity}GB/tháng</Typography>
                       <Divider />
-                      {item.content.split('\n').map((value, index) => (
-                        <Typography key={index} sx={{ fontSize: 15, pt: 1, pb: 1 }}>
-                          <CheckIcon style={{ fontSize: 15, color: '#74cb35' }} /> {value}
-                        </Typography>
-                      ))}
-                      <Divider />
+                      {item.content
+                        ? item.content.split('\n').map((value, index) => (
+                            <React.Fragment key={index}>
+                              <Typography key={index} sx={{ fontSize: 15, pt: 1, pb: 1 }}>
+                                <CheckIcon style={{ fontSize: 15, color: '#74cb35' }} /> {value}
+                              </Typography>
+                              <Divider />
+                            </React.Fragment>
+                          ))
+                        : ''}
+
                       <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Hỗ trợ Esim: {item.esim == false ? 'Không' : 'Có'}</Typography>
                       <Divider />
                     </CardContent>

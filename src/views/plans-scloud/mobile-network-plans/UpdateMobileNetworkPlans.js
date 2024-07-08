@@ -46,7 +46,7 @@ export default function UpdateMobileNetworkPlans() {
   const [price, setPrice] = useState('');
   const [capacity, setCapacity] = useState('');
   const [content, setContent] = useState('');
-  const [esim, setEsim] = useState('');
+  const [esim, setEsim] = useState(false);
   const [supplierMobileNetworkId, setSupplierMobileNetworkId] = useState('');
 
   const [listMobileNetworkSuppliers, setListMobileNetworkSuppliers] = useState([]);
@@ -85,7 +85,7 @@ export default function UpdateMobileNetworkPlans() {
     setCapacity(result.data.capacity);
     setContent(result.data.content);
     setEsim(result.data.esim);
-    setSupplierMobileNetworkId(result.data.supplierMobileNetworkId._id);
+    setSupplierMobileNetworkId(result.data.supplier_mobile_network_id._id);
   };
 
   const loadListMobileNetworkSuppliers = async () => {
@@ -121,7 +121,7 @@ export default function UpdateMobileNetworkPlans() {
       capacity: capacity,
       content: content,
       esim: esim,
-      supplierMobileNetworkId: supplierMobileNetworkId
+      supplier_mobile_network_id: supplierMobileNetworkId
     };
 
     apiUpdate(`${LIST_MOBILE_NETWORK_PLANS}`, currentId, updateNetworkPlans)
