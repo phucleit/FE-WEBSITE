@@ -81,10 +81,10 @@ export default function UpdateMobileNetworkServices() {
   const loadDetailMobileNetworkServices = async () => {
     const result = await apiGetById(`${LIST_MOBILE_NETWORK_SERVICES}`, currentId);
     setPeriods(result.data.periods);
-    setRegisteredAt(getRegisteredAt(result.data.expiredAt));
+    setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
-    setMobileNetworkPlanId(result.data.mobileNetworkPlanId._id);
-    setCustomerId(result.data.customerId._id);
+    setMobileNetworkPlanId(result.data.mobile_network_plan_id._id);
+    setCustomerId(result.data.customer_id._id);
   };
 
   const loadListMobileNetworkPlans = async () => {
@@ -102,14 +102,14 @@ export default function UpdateMobileNetworkServices() {
 
     const updateMobileNetworkServices = {
       periods: periods,
-      mobileNetworkPlanId: mobileNetworkPlanId,
-      customerId: customerId
+      mobile_network_plan_id: mobileNetworkPlanId,
+      customer_id: customerId
     };
 
     apiUpdate(`${LIST_MOBILE_NETWORK_SERVICES}`, currentId, updateMobileNetworkServices)
       .then(() => {
         setOpen(true);
-        setIntervapiUpdateal(() => {
+        setTimeout(() => {
           navigate('/dashboard/services/list-mobile-network');
         }, 1500);
       })
@@ -181,7 +181,7 @@ export default function UpdateMobileNetworkServices() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Thời gian</InputLabel>
-                  <Select id="setPeriods" value={periods} label="Thời gian" onChange={(e) => setPeriods(e.target.value)}>
+                  <Select id="periods" value={periods} label="Thời gian" onChange={(e) => setPeriods(e.target.value)}>
                     <MenuItem value={1}>1 năm</MenuItem>
                     <MenuItem value={2}>2 năm</MenuItem>
                     <MenuItem value={3}>3 năm</MenuItem>

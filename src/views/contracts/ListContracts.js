@@ -77,31 +77,31 @@ export default function ListContracts() {
   };
 
   const columns = [
-    { field: 'contract_code', headerName: 'Mã hợp đồng', width: 150 },
-    // {
-    //   field: 'customer',
-    //   headerName: 'Khách hàng',
-    //   width: 280,
-    //   renderCell: (params) => {
-    //     if (params.row.customer_id.gender == 1) {
-    //       return (
-    //         <span>
-    //           Anh {params.row.customer_id.fullname}
-    //           <br />
-    //           {params.row.customer_id.email} / {params.row.customer_id.phone}
-    //         </span>
-    //       );
-    //     } else {
-    //       return (
-    //         <span>
-    //           Chị {params.row.customer_id.fullname}
-    //           <br />
-    //           {params.row.customer_id.email} / {params.row.customer_id.phone}
-    //         </span>
-    //       );
-    //     }
-    //   }
-    // },
+    { field: 'contract_code', headerName: 'Mã hợp đồng', width: 200 },
+    {
+      field: 'customer',
+      headerName: 'Khách hàng',
+      width: 260,
+      renderCell: (params) => {
+        if (params.row.customer_id.gender == 1) {
+          return (
+            <span>
+              Anh {params.row.customer_id.fullname}
+              <br />
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
+            </span>
+          );
+        } else {
+          return (
+            <span>
+              Chị {params.row.customer_id.fullname}
+              <br />
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
+            </span>
+          );
+        }
+      }
+    },
     {
       field: 'total_price',
       headerName: 'Tổng chi phí',
@@ -144,7 +144,7 @@ export default function ListContracts() {
   ];
 
   if (permissionUpdate || permissionDelete) {
-    columns.push({
+    columns.unshift({
       field: 'action',
       headerName: 'Hành động',
       width: 100,

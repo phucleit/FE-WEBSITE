@@ -80,7 +80,7 @@ export default function UpdateMobileNetworkPlans() {
   const loadDetailMobileNetworkPlans = async () => {
     const result = await apiGetById(`${LIST_MOBILE_NETWORK_PLANS}`, currentId);
     setName(result.data.name);
-    setImportPrice(result.data.importPrice);
+    setImportPrice(result.data.import_price);
     setPrice(result.data.price);
     setCapacity(result.data.capacity);
     setContent(result.data.content);
@@ -116,7 +116,7 @@ export default function UpdateMobileNetworkPlans() {
 
     const updateNetworkPlans = {
       name: name,
-      importPrice: importPrice,
+      import_price: importPrice,
       price: price,
       capacity: capacity,
       content: content,

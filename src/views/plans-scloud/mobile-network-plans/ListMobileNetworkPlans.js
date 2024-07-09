@@ -114,7 +114,7 @@ export default function ListMobileNetworkPlans() {
                       <Typography gutterBottom variant="h2" component="div">
                         {item.name}
                       </Typography>
-                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá nhập: {convertPrice(item.importPrice)}</Typography>
+                      <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá nhập: {convertPrice(item.import_price)}</Typography>
                       <Typography sx={{ fontSize: 20, pt: 1, color: '#f00' }}>Giá bán: {convertPrice(item.price)}</Typography>
                       <Typography sx={{ fontSize: 14, pt: 1, pb: 1, fontStyle: 'italic' }} color="text.secondary">
                         (Giá trên chưa bao gồm VAT)

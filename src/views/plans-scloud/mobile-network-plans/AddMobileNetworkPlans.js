@@ -101,7 +101,7 @@ export default function AddMobileNetworkPlans() {
 
     const addMobileNetworkPlans = {
       name: name,
-      importPrice: importPrice,
+      import_price: importPrice,
       price: price,
       capacity: capacity,
       content: content,

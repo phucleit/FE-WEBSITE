@@ -85,7 +85,7 @@ export default function UpdateDomainServices() {
     const result = await apiGetById(`${LIST_DOMAIN_SERVICES}`, currentId);
     setName(result.data.name);
     setPeriods(result.data.periods);
-    setRegisteredAt(getRegisteredAt(result.data.expiredAt));
+    setRegisteredAt(getRegisteredAt(result.data.registeredAt));
     setExpiredAt(getExpiredAt(result.data.expiredAt));
     setDomainPlanId(result.data.domain_plan_id._id);
     setCustomerId(result.data.customer_id._id);

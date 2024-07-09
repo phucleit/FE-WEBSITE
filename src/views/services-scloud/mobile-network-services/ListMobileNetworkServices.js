@@ -112,7 +112,7 @@ export default function ListMobileNetworkServices() {
       renderCell: (params) => {
         return (
           <span>
-            {params.row.mobileNetworkPlanId.name}
+            {params.row.mobile_network_plan_id.name}
             <br />
             (NMDD: {params.row.supplier_mobile_network_id.name})
           </span>
@@ -124,20 +124,20 @@ export default function ListMobileNetworkServices() {
       headerName: 'Khách hàng',
       width: 350,
       renderCell: (params) => {
-        if (params.row.customerId.gender == 1) {
+        if (params.row.customer_id.gender == 1) {
           return (
             <span>
-              Anh {params.row.customerId.fullname}
+              Anh {params.row.customer_id.fullname}
               <br />
-              {params.row.customerId.email} / {params.row.customerId.phone}
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
             </span>
           );
         } else {
           return (
             <span>
-              Chị {params.row.customerId.fullname}
+              Chị {params.row.customer_id.fullname}
               <br />
-              {params.row.customerId.email} / {params.row.customerId.phone}
+              {params.row.customer_id.email} / {params.row.customer_id.phone}
             </span>
           );
         }
@@ -148,7 +148,7 @@ export default function ListMobileNetworkServices() {
       headerName: 'Giá gói',
       width: 200,
       valueGetter: (params) =>
-        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.mobileNetworkPlanId.price)
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.mobile_network_plan_id.price)
     },
     {
       field: 'periods',
@@ -164,7 +164,7 @@ export default function ListMobileNetworkServices() {
         return (
           <span>
             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.mobileNetworkPlanId.price * params.row.periods
+              params.row.mobile_network_plan_id.price * params.row.periods
             )}
           </span>
         );

@@ -83,17 +83,17 @@ export default function AddMobileNetworkServices() {
     setListCustomers(result.data);
   };
 
-  const handleAddDomainServices = (e) => {
+  const handleMobileNetworkServices = (e) => {
     e.preventDefault();
 
-    const addDomainServices = {
+    const addMobileNetworkServices = {
       periods: periods,
       registeredAt: registeredAt.getTime(),
-      mobileNetworkPlanId: mobileNetworkPlanId,
-      customerId: customerId
+      mobile_network_plan_id: mobileNetworkPlanId,
+      customer_id: customerId
     };
 
-    apiPost(`${LIST_MOBILE_NETWORK_SERVICES}`, addDomainServices)
+    apiPost(`${LIST_MOBILE_NETWORK_SERVICES}`, addMobileNetworkServices)
       .then(() => {
         setOpen(true);
         setTimeout(() => {
@@ -175,7 +175,7 @@ export default function AddMobileNetworkServices() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddDomainServices}>
+              <Button variant="contained" size="medium" onClick={handleMobileNetworkServices}>
                 Thêm mới
               </Button>
             </Item>
