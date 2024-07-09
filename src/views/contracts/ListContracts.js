@@ -110,7 +110,7 @@ export default function ListContracts() {
     },
     {
       field: 'deposit_amount',
-      headerName: 'Thanh toán trước',
+      headerName: 'Đã thanh toán',
       width: 160,
       valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)
     },
@@ -125,16 +125,42 @@ export default function ListContracts() {
       headerName: 'Trạng thái',
       width: 300,
       renderCell: (params) => {
-        if (params.row.status == 1) {
+        if (params.row.status == 0) {
+          return (
+            <Button variant="contained" size="small" color="success">
+              Hợp đồng mới tạo
+            </Button>
+          );
+        } else if (params.row.status == 1) {
+          return (
+            <Button variant="contained" size="small" color="error">
+              Thanh toán trước {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)}
+            </Button>
+          );
+        } else if (params.row.status == 2) {
           return (
             <Button variant="contained" size="small">
               Đã thanh toán
             </Button>
           );
-        } else if (params.row.status == 2) {
+        }
+      }
+    },
+    {
+      field: 'export_vat',
+      headerName: 'Xuất HĐ VAT',
+      width: 200,
+      renderCell: (params) => {
+        if (params.row.export_vat == false) {
           return (
-            <Button variant="contained" size="small" color="error">
-              Thanh toán trước {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)}
+            <Button variant="contained" size="small" color="success">
+              Chưa xuất
+            </Button>
+          );
+        } else {
+          return (
+            <Button variant="contained" size="small">
+              Đã xuất
             </Button>
           );
         }
