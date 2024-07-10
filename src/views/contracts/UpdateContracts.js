@@ -48,6 +48,8 @@ export default function UpdateContracts() {
   const [export_vat, setExportVat] = useState(false);
   const [status, setStatus] = useState();
 
+  const [remaining_cost_new, setRemainingCostNew] = useState('');
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -69,7 +71,9 @@ export default function UpdateContracts() {
   }, [dataRoles]);
 
   useEffect(() => {
-    setRemainingCost(total_price - deposit_amount);
+    if (deposit_amount > 0) {
+      setRemainingCost(total_price - deposit_amount);
+    }
   }, [total_price, deposit_amount]);
 
   const loadListRoles = async () => {
@@ -93,26 +97,68 @@ export default function UpdateContracts() {
     setExportVat(e.target.checked);
   };
 
+  const handleChangeRemainingCost = (e) => {
+    e.preventDefault();
+    setRemainingCostNew(e.target.value);
+  };
+
   const handleUpdateContracts = (e) => {
     e.preventDefault();
 
-    const updateContract = {
-      deposit_amount: deposit_amount,
-      remaining_cost: parseFloat(remaining_cost),
-      note: note,
-      export_vat: export_vat
-    };
+    let updateContract = {};
 
-    console.log(updateContract);
+    if (remaining_cost_new) {
+      updateContract = {
+        deposit_amount: parseFloat(deposit_amount) + parseFloat(remaining_cost_new),
+        remaining_cost: 0,
+        note: note,
+        export_vat: export_vat
+      };
+    } else {
+      updateContract = {
+        deposit_amount: parseFloat(deposit_amount),
+        remaining_cost: parseFloat(remaining_cost),
+        note: note,
+        export_vat: export_vat
+      };
+    }
 
-    // apiUpdate(`${LIST_CONTRACT}`, currentId, updateContract)
-    //   .then(() => {
-    //     setOpen(true);
-    //     setTimeout(() => {
-    //       navigate('/dashboard/contracts/list-contracts');
-    //     }, 1500);
-    //   })
-    //   .catch((error) => console.log(error));
+    apiUpdate(`${LIST_CONTRACT}`, currentId, updateContract)
+      .then(() => {
+        setOpen(true);
+        setTimeout(() => {
+          navigate('/dashboard/contracts/list-contracts');
+        }, 1500);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const renderTextField = () => {
+    if (status === 0 || deposit_amount === 0) {
+      return (
+        <TextField
+          id="remaining_cost"
+          label="Chi phí còn lại"
+          variant="standard"
+          value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
+          InputProps={{
+            readOnly: true
+          }}
+        />
+      );
+    } else if (status === 2) {
+      return null;
+    } else {
+      return (
+        <TextField
+          id="remaining_cost_new"
+          value={remaining_cost_new}
+          label="Chi phí còn lại"
+          variant="standard"
+          onChange={handleChangeRemainingCost}
+        />
+      );
+    }
   };
 
   return permissionUpdate ? (
@@ -184,7 +230,9 @@ export default function UpdateContracts() {
           ) : (
             ''
           )}
-          {remaining_cost !== 0 && (
+          {remaining_cost == 0 ? (
+            ''
+          ) : (
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom sx={{ color: '#f00' }}>
                 Chi phí còn lại: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
@@ -199,24 +247,7 @@ export default function UpdateContracts() {
             ''
           )}
           <Grid item xs={12}>
-            {status == 0 && deposit_amount ? (
-              <TextField
-                id="remaining_cost"
-                label="Chi phí còn lại"
-                variant="standard"
-                value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
-                InputProps={{
-                  readOnly: true
-                }}
-              />
-            ) : (
-              <TextField
-                id="remaining_cost"
-                label="Chi phí còn lại"
-                variant="standard"
-                onChange={(e) => setRemainingCost(e.target.value)}
-              />
-            )}
+            {renderTextField()}
           </Grid>
           <Grid item xs={12}>
             {status == 2 ? (
@@ -224,12 +255,15 @@ export default function UpdateContracts() {
                 Đã thanh toán
               </Button>
             ) : (
-              <Item>
-                <Button variant="contained" size="medium" onClick={handleUpdateContracts}>
-                  Cập nhật
-                </Button>
-              </Item>
+              ''
             )}
+          </Grid>
+          <Grid item xs={12}>
+            <Item>
+              <Button variant="contained" size="medium" onClick={handleUpdateContracts}>
+                Cập nhật
+              </Button>
+            </Item>
           </Grid>
         </Grid>
       </MainCard>
