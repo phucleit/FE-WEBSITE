@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -59,6 +61,7 @@ export default function UpdateCustomers() {
   const [mailVat, setMailVat] = useState('');
   const [imageFrontView, setImageFrontView] = useState('');
   const [imageBackView, setImageBackView] = useState('');
+  const [typeCustomer, setTypeCustomer] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -101,6 +104,7 @@ export default function UpdateCustomers() {
     setMailVat(result.data.mail_vat);
     setImageFrontView(result.data.image_front_view[0]);
     setImageBackView(result.data.image_back_view[0]);
+    setTypeCustomer(result.data.type_customer);
   };
 
   const handleChangeFrontView = (file) => {
@@ -109,6 +113,10 @@ export default function UpdateCustomers() {
 
   const handleChangeBackView = (file) => {
     setImageBackView(file);
+  };
+
+  const handleChangeTypeCustomer = (e) => {
+    setTypeCustomer(e.target.checked);
   };
 
   const handleUpdateCustomers = (e) => {
@@ -143,6 +151,7 @@ export default function UpdateCustomers() {
     formDataCustomer.append('mail_vat', mailVat);
     formDataCustomer.append('image_front_view', imageFrontView);
     formDataCustomer.append('image_back_view', imageBackView);
+    formDataCustomer.append('type_customer', typeCustomer);
 
     apiUpdateFile(`${LIST_CUSTOMERS}`, currentId, formDataCustomer)
       .then(() => {
@@ -394,6 +403,14 @@ export default function UpdateCustomers() {
               ) : (
                 <p>Không có hình ảnh nào!</p>
               )}
+            </Grid>
+            <Grid item xs={12}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Khách hàng doanh nghiệp</FormLabel>
+                  <Switch checked={typeCustomer} onChange={handleChangeTypeCustomer} />
+                </FormControl>
+              </Item>
             </Grid>
           </Grid>
           <Grid item xs={12}>

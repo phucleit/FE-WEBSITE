@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-
+import Box from '@mui/material/Box';
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
 import Alert from '@mui/material/Alert';
@@ -16,15 +17,26 @@ const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
 export default function ListCustomers() {
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
+  const [selectedData, setSelectedData] = useState('data');
   const [dataRoles, setDataRoles] = useState([]);
   const [permissionAdd, setPermissionAdd] = useState(false);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
   const [permissionDelete, setPermissionDelete] = useState(false);
 
+  const [data, setData] = useState([]);
+  const [dataLength, setDataLength] = useState(0);
+
+  const [dataGuests, setDataGuests] = useState([]);
+  const [countDataGuests, setCountDataGuests] = useState(0);
+
+  const [dataCompany, setDataCompany] = useState([]);
+  const [countDataCompany, setCountDataCompany] = useState(0);
+
   useEffect(() => {
     loadListRoles();
     loadListCustomers();
+    loadListDataGuests();
+    loadListDataCompany();
   }, []);
 
   useEffect(() => {
@@ -60,6 +72,19 @@ export default function ListCustomers() {
   const loadListCustomers = async () => {
     const result = await apiGet(`${LIST_CUSTOMERS}`);
     setData(result.data);
+    setDataLength(result.data.length);
+  };
+
+  const loadListDataGuests = async () => {
+    const result = await apiGet(`${LIST_CUSTOMERS}/type/guests`);
+    setDataGuests(result.data);
+    setCountDataGuests(result.data.length);
+  };
+
+  const loadListDataCompany = async () => {
+    const result = await apiGet(`${LIST_CUSTOMERS}/type/company`);
+    setDataCompany(result.data);
+    setCountDataCompany(result.data.length);
   };
 
   const handleDelete = (id) => {
@@ -97,6 +122,26 @@ export default function ListCustomers() {
       headerName: 'Số điện thoại',
       width: 150,
       valueGetter: (params) => formatPhoneNumber(params.row.phone)
+    },
+    {
+      field: 'type_customer',
+      headerName: 'Loại khách hàng',
+      width: 170,
+      renderCell: (params) => {
+        if (params.row.type_customer == true) {
+          return (
+            <Button variant="contained" size="small" color="warning">
+              Khách doanh nghiệp
+            </Button>
+          );
+        } else {
+          return (
+            <Button variant="contained" size="small" color="success">
+              Khách cá nhân
+            </Button>
+          );
+        }
+      }
     },
     { field: 'address', headerName: 'Địa chỉ', width: 320 },
     { field: 'createdAt', headerName: 'Ngày tạo', valueGetter: (params) => getCreatedAt(params.row.createdAt), width: 180 }
@@ -136,7 +181,40 @@ export default function ListCustomers() {
           )
         }
       >
-        {data.length !== 0 ? (
+        <Box component="form" sx={{ flexGrow: 1, mb: '20px' }} noValidate autoComplete="off">
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('data')}
+            component={Link}
+            to={{ pathname: '/dashboard/customers/list-customers' }}
+          >
+            Tất cả: {dataLength ? dataLength : '0'}
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataGuests')}
+            component={Link}
+            to={{ pathname: '/dashboard/customers/list-customers', search: '?data=guests' }}
+            sx={{ ml: '10px', mr: '10px' }}
+            color="success"
+          >
+            Khách cá nhân: {countDataGuests ? countDataGuests : '0'}
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => setSelectedData('dataCompany')}
+            component={Link}
+            to={{ pathname: '/dashboard/customers/list-customers', search: '?type=company' }}
+            sx={{ mr: '10px' }}
+            color="warning"
+          >
+            Khách doanh nghiệp: {countDataCompany ? countDataCompany : '0'}
+          </Button>
+        </Box>
+        {selectedData === 'data' && data.length > 0 && (
           <DataGrid
             rows={data}
             columns={columns}
@@ -153,8 +231,42 @@ export default function ListCustomers() {
             // disableSelectionOnClick
             // disableRowSelectionOnClick
           />
-        ) : (
-          ''
+        )}
+        {selectedData === 'dataGuests' && dataGuests.length > 0 && (
+          <DataGrid
+            rows={dataGuests}
+            columns={columns}
+            getRowId={(row) => row._id}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
+          />
+        )}
+        {selectedData === 'dataCompany' && dataCompany.length > 0 && (
+          <DataGrid
+            rows={dataCompany}
+            columns={columns}
+            getRowId={(row) => row._id}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 20
+                }
+              }
+            }}
+            pageSizeOptions={[20]}
+            checkboxSelection
+            // disableSelectionOnClick
+            // disableRowSelectionOnClick
+          />
         )}
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>

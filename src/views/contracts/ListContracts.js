@@ -103,6 +103,26 @@ export default function ListContracts() {
       }
     },
     {
+      field: 'type_customer',
+      headerName: 'Loại khách hàng',
+      width: 170,
+      renderCell: (params) => {
+        if (params.row.customer_id.type_customer == true) {
+          return (
+            <Button variant="contained" size="small" color="warning">
+              Khách doanh nghiệp
+            </Button>
+          );
+        } else {
+          return (
+            <Button variant="contained" size="small">
+              Khách cá nhân
+            </Button>
+          );
+        }
+      }
+    },
+    {
       field: 'total_price',
       headerName: 'Tổng chi phí',
       width: 160,

@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -51,6 +53,7 @@ export default function AddCustomers() {
   const [mailVat, setMailVat] = useState('');
   const [imageFrontView, setImageFrontView] = useState('');
   const [imageBackView, setImageBackView] = useState('');
+  const [typeCustomer, setTypeCustomer] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -80,6 +83,10 @@ export default function AddCustomers() {
 
   const handleChangeBackView = (file) => {
     setImageBackView(file);
+  };
+
+  const handleChangeTypeCustomer = (e) => {
+    setTypeCustomer(e.target.checked);
   };
 
   const handleAddCustomers = (e) => {
@@ -114,6 +121,7 @@ export default function AddCustomers() {
     formDataCustomer.append('mail_vat', mailVat);
     formDataCustomer.append('image_front_view', imageFrontView);
     formDataCustomer.append('image_back_view', imageBackView);
+    formDataCustomer.append('type_customer', typeCustomer);
 
     apiPostFile(`${LIST_CUSTOMERS}`, formDataCustomer)
       .then(() => {
@@ -355,6 +363,14 @@ export default function AddCustomers() {
                     <img src={URL.createObjectURL(imageBackView)} alt="Hình CCCD mặt sau" width={400} height={230} />
                   </div>
                 )}
+              </Item>
+            </Grid>
+            <Grid item xs={12}>
+              <Item>
+                <FormControl variant="standard" fullWidth>
+                  <FormLabel component="legend">Khách hàng doanh nghiệp</FormLabel>
+                  <Switch checked={typeCustomer} onChange={handleChangeTypeCustomer} />
+                </FormControl>
               </Item>
             </Grid>
           </Grid>
