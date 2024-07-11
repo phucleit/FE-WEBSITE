@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -10,19 +11,21 @@ import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
 const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 
-export default function ListMaintenanceById() {
+export default function ListMaintenanceById(props) {
   const paramId = useParams();
   const currentId = paramId.id;
+  const customer_id = props.customer_id;
 
   const [maintenanceServices, setMaintenanceServices] = useState([]);
 
   useEffect(() => {
     loadListMaintenanceById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentId, customer_id]);
 
   const loadListMaintenanceById = async () => {
-    const result = await apiGetById(`${LIST_MAINTENANCE_SERVICES}/customer`, currentId);
+    const id = customer_id ? customer_id : currentId;
+    const result = await apiGetById(`${LIST_MAINTENANCE_SERVICES}/customer`, id);
     setMaintenanceServices(result.data);
   };
 
@@ -137,9 +140,8 @@ export default function ListMaintenanceById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''
@@ -147,3 +149,11 @@ export default function ListMaintenanceById() {
     </>
   );
 }
+
+ListMaintenanceById.propTypes = {
+  customer_id: PropTypes.string
+};
+
+ListMaintenanceById.defaultProps = {
+  customer_id: null
+};

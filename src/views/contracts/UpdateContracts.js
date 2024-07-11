@@ -20,6 +20,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
 import { apiGetById, apiUpdate, getRoles } from '../../utils/formatUtils';
+import ListServices from '../../utils/services/ListServices';
 
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
 
@@ -41,6 +42,7 @@ export default function UpdateContracts() {
 
   const [contract_code, setContractCode] = useState('');
   const [customer, setCustomer] = useState('');
+  const [customer_id, setCustomerId] = useState('');
   const [note, setNote] = useState('');
   const [total_price, setTotalPrice] = useState(0);
   const [deposit_amount, setDepositAmount] = useState(0);
@@ -85,6 +87,7 @@ export default function UpdateContracts() {
     const result = await apiGetById(`${LIST_CONTRACT}`, currentId);
     setContractCode(result.data.contract_code);
     setCustomer(result.data.customer_id.fullname);
+    setCustomerId(result.data.customer_id._id);
     setTotalPrice(result.data.total_price || 0);
     setDepositAmount(result.data.deposit_amount || 0);
     setRemainingCost(result.data.remaining_cost || 0);
@@ -267,6 +270,7 @@ export default function UpdateContracts() {
           </Grid>
         </Grid>
       </MainCard>
+      <ListServices customer_id={customer_id} />
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

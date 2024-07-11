@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -18,7 +19,8 @@ import ListToplistById from './ListToplistById';
 import ListMaintenanceById from './ListMaintenanceById';
 import ListMobileNetworkById from './ListMobileNetworkById';
 
-export default function ListServices() {
+export default function ListServices(props) {
+  const customer_id = props.customer_id;
   const [valueTab, setValueTab] = useState('1');
 
   const handleChangeTab = (event, newValue) => {
@@ -44,31 +46,31 @@ export default function ListServices() {
               </TabList>
             </Box>
             <TabPanel value="1">
-              <ListDomainById />
+              <ListDomainById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="2">
-              <ListHostingById />
+              <ListHostingById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="3">
-              <ListEmailById />
+              <ListEmailById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="4">
-              <ListSslById />
+              <ListSslById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="5">
-              <ListWebsiteById />
+              <ListWebsiteById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="6">
-              <ListContentById />
+              <ListContentById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="7">
-              <ListToplistById />
+              <ListToplistById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="8">
-              <ListMaintenanceById />
+              <ListMaintenanceById customer_id={customer_id} />
             </TabPanel>
             <TabPanel value="9">
-              <ListMobileNetworkById />
+              <ListMobileNetworkById customer_id={customer_id} />
             </TabPanel>
           </TabContext>
         </Box>
@@ -76,3 +78,11 @@ export default function ListServices() {
     </>
   );
 }
+
+ListServices.propTypes = {
+  customer_id: PropTypes.string
+};
+
+ListServices.defaultProps = {
+  customer_id: null
+};

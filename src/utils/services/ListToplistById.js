@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -10,19 +11,21 @@ import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 
-export default function ListToplistById() {
+export default function ListToplistById(props) {
   const paramId = useParams();
   const currentId = paramId.id;
+  const customer_id = props.customer_id;
 
   const [toplistServices, setToplistServices] = useState([]);
 
   useEffect(() => {
     loadListToplistById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentId, customer_id]);
 
   const loadListToplistById = async () => {
-    const result = await apiGetById(`${LIST_TOPLIST_SERVICES}/customer`, currentId);
+    const id = customer_id ? customer_id : currentId;
+    const result = await apiGetById(`${LIST_TOPLIST_SERVICES}/customer`, id);
     setToplistServices(result.data);
   };
 
@@ -102,3 +105,11 @@ export default function ListToplistById() {
     </>
   );
 }
+
+ListToplistById.propTypes = {
+  customer_id: PropTypes.string
+};
+
+ListToplistById.defaultProps = {
+  customer_id: null
+};

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -10,19 +11,21 @@ import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 
-export default function ListDomainById() {
+export default function ListDomainById(props) {
   const paramId = useParams();
   const currentId = paramId.id;
+  const customer_id = props.customer_id;
 
   const [domainServices, setDomainServices] = useState([]);
 
   useEffect(() => {
     loadListDomainById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentId, customer_id]);
 
   const loadListDomainById = async () => {
-    const result = await apiGetById(`${LIST_DOMAIN_SERVICES}/customer`, currentId);
+    const id = customer_id ? customer_id : currentId;
+    const result = await apiGetById(`${LIST_DOMAIN_SERVICES}/customer`, id);
     setDomainServices(result.data);
   };
 
@@ -105,3 +108,11 @@ export default function ListDomainById() {
     </>
   );
 }
+
+ListDomainById.propTypes = {
+  customer_id: PropTypes.string
+};
+
+ListDomainById.defaultProps = {
+  customer_id: null
+};

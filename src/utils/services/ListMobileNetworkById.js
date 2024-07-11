@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -9,19 +10,21 @@ import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
 const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 
-export default function ListMobileNetworkById() {
+export default function ListMobileNetworkById(props) {
   const paramId = useParams();
   const currentId = paramId.id;
+  const customer_id = props.customer_id;
 
   const [mobileNetworkServices, setMobileNetworkServices] = useState([]);
 
   useEffect(() => {
     loadListContentById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentId, customer_id]);
 
   const loadListContentById = async () => {
-    const result = await apiGetById(`${LIST_MOBILE_NETWORK_SERVICES}/customer`, currentId);
+    const id = customer_id ? customer_id : currentId;
+    const result = await apiGetById(`${LIST_MOBILE_NETWORK_SERVICES}/customer`, id);
     setMobileNetworkServices(result.data);
   };
 
@@ -124,3 +127,11 @@ export default function ListMobileNetworkById() {
     </>
   );
 }
+
+ListMobileNetworkById.propTypes = {
+  customer_id: PropTypes.string
+};
+
+ListMobileNetworkById.defaultProps = {
+  customer_id: null
+};
