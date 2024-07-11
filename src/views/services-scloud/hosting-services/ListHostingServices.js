@@ -188,7 +188,7 @@ export default function ListHostingServices() {
         return (
           <span>
             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.hosting_plan_id.price * 12 * params.row.periods
+              params.row.periods * 12 * params.row.hosting_plan_id.price
             )}
           </span>
         );

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 
 export default function ListDomainById() {
   const paramId = useParams();
@@ -23,36 +22,30 @@ export default function ListDomainById() {
   }, []);
 
   const loadListDomainById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/domain-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setDomainServices(result.data[0].domain_services);
+    const result = await apiGetById(`${LIST_DOMAIN_SERVICES}/customer`, currentId);
+    setDomainServices(result.data);
   };
 
   const columnsDomainServices = [
     {
       field: 'name',
-      headerName: 'Dịch vụ Domain',
+      headerName: 'Dịch vụ tên miền',
       width: 250,
-      valueGetter: (params) =>
-        params.row.name && params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].name ? `${params.row.name}` : ''
+      valueGetter: (params) => (params.row.name ? `${params.row.name}${params.row.domain_plan_id.name}` : '')
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 170,
-      valueGetter: (params) =>
-        params.row.supplier && params.row.supplier[0] && params.row.supplier[0].name ? params.row.supplier[0].name : ''
+      valueGetter: (params) => (params.row.supplier_id ? params.row.supplier_id.name : '')
     },
     {
       field: 'price',
       headerName: 'Giá dịch vụ / năm',
       width: 220,
       valueGetter: (params) =>
-        params.row.domain_plan && params.row.domain_plan[0] && params.row.domain_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan[0].price)
+        params.row.domain_plan_id
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.domain_plan_id.price)
           : ''
     },
     {
@@ -103,9 +96,8 @@ export default function ListDomainById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''

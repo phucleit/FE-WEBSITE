@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
 
 export default function ListMaintenanceById() {
   const paramId = useParams();
@@ -23,15 +22,17 @@ export default function ListMaintenanceById() {
   }, []);
 
   const loadListMaintenanceById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/maintenance-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setMaintenanceServices(result.data[0].maintenance_services);
+    const result = await apiGetById(`${LIST_MAINTENANCE_SERVICES}/customer`, currentId);
+    setMaintenanceServices(result.data);
   };
 
   const columnsMaintenanceServices = [
+    {
+      field: 'name_maintenance',
+      headerName: 'Tên dịch vụ bảo trì',
+      width: 250,
+      valueGetter: (params) => (params.row.maintenance_plan_id ? `${params.row.maintenance_plan_id.name}` : '')
+    },
     {
       field: 'service_type',
       headerName: 'Loại dịch vụ',
@@ -61,9 +62,9 @@ export default function ListMaintenanceById() {
       renderCell: (params) => {
         return (
           <span>
-            {params.row.domain_service[0].name}
+            {params.row.domain_service_id.name}
             <br />
-            Domain {params.row.domain_plan[0].name} / NCC {params.row.domain_supplier[0].name}
+            Domain {params.row.domain_plan_id.name} / NCC {params.row.domain_supplier_id.name}
           </span>
         );
       }
@@ -76,9 +77,8 @@ export default function ListMaintenanceById() {
         return (
           <span>
             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.maintenance_plan[0].price * params.row.periods
+              params.row.maintenance_plan_id.price * params.row.periods
             )}
-            / {params.row.periods} tháng
           </span>
         );
       }

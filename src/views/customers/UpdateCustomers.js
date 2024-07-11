@@ -22,7 +22,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import config from '../../config';
 import { apiGetById, apiUpdateFile, getRoles } from '../../utils/formatUtils';
 
-// import ListServices from './ListServices';
+import ListServices from '../../utils/services/ListServices';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
@@ -422,7 +422,7 @@ export default function UpdateCustomers() {
           </Grid>
         </Box>
       </MainCard>
-      {/* <ListServices /> */}
+      <ListServices />
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

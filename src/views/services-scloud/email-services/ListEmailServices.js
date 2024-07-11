@@ -187,7 +187,7 @@ export default function ListEmailServices() {
         return (
           <span>
             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.email_plan_id.price * 12 * params.row.periods
+              params.row.periods * 12 * params.row.email_plan_id.price
             )}
           </span>
         );

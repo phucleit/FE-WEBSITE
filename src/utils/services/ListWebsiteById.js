@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getCreatedAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getCreatedAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 
 export default function ListWebsiteById() {
   const paramId = useParams();
@@ -22,12 +21,8 @@ export default function ListWebsiteById() {
   }, []);
 
   const loadListWebsiteById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/website-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setWebsiteServices(result.data[0].website_services);
+    const result = await apiGetById(`${LIST_WEBSITE_SERVICES}/customer`, currentId);
+    setWebsiteServices(result.data);
   };
 
   const columnsWebsiteServices = [
@@ -36,11 +31,13 @@ export default function ListWebsiteById() {
       headerName: 'Tên miền',
       width: 300,
       renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
+        const domainServiceName = params.row.domain_service_id?.name || '';
+        const domainPlanName = params.row.domain_plan_id?.name || '';
+        const domainSupplierName = params.row.domain_supplier_id?.name || '';
         return (
           <span>
             {domainServiceName}
+            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
@@ -92,9 +89,8 @@ export default function ListWebsiteById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''

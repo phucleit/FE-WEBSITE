@@ -1,79 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
 
-export default function ListEmailById() {
+export default function ListMobileNetworkById() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [emailServices, setEmailServices] = useState([]);
+  const [mobileNetworkServices, setMobileNetworkServices] = useState([]);
 
   useEffect(() => {
-    loadListEmailById();
+    loadListContentById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadListEmailById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/email-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setEmailServices(result.data[0].email_services);
+  const loadListContentById = async () => {
+    const result = await apiGetById(`${LIST_MOBILE_NETWORK_SERVICES}/customer`, currentId);
+    setMobileNetworkServices(result.data);
   };
 
-  const columnsEmailServices = [
+  const columnsMobileNetworkServices = [
     {
       field: 'name',
-      headerName: 'Tên miền',
+      headerName: 'Tên gói',
       width: 250,
       renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
         return (
           <span>
-            {domainServiceName}
+            {params.row.mobile_network_plan_id.name}
             <br />
-            {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
+            (NMDD: {params.row.supplier_mobile_network_id.name})
           </span>
         );
       }
     },
     {
-      field: 'email',
-      headerName: 'Dịch vụ Email',
-      width: 200,
-      valueGetter: (params) => params.row.email_plan[0]?.name || ''
-    },
-    {
-      field: 'supplier',
-      headerName: 'Nhà cung cấp',
-      width: 140,
-      valueGetter: (params) => params.row.email_supplier[0]?.name || ''
-    },
-    {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 180,
+      headerName: 'Giá gói',
+      width: 200,
       valueGetter: (params) =>
-        params.row.email_plan && params.row.email_plan[0] && params.row.email_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.email_plan[0].price)
-          : ''
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.mobile_network_plan_id.price)
     },
     {
       field: 'periods',
       headerName: 'Thời gian',
-      width: 100,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+      width: 130,
+      valueGetter: (params) => `${params.row.periods} năm`
+    },
+    {
+      field: 'totalPrice',
+      headerName: 'Thành tiền',
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.mobile_network_plan_id.price * params.row.periods
+            )}
+          </span>
+        );
+      }
     },
     {
       field: 'status',
@@ -110,10 +102,10 @@ export default function ListEmailById() {
 
   return (
     <>
-      {emailServices && emailServices.length !== 0 ? (
+      {mobileNetworkServices && mobileNetworkServices.length !== 0 ? (
         <DataGrid
-          rows={emailServices}
-          columns={columnsEmailServices}
+          rows={mobileNetworkServices}
+          columns={columnsMobileNetworkServices}
           getRowId={(row) => (row._id ? row._id : '')}
           initialState={{
             pagination: {
@@ -123,9 +115,8 @@ export default function ListEmailById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''

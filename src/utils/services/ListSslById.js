@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
 
-export default function ListHostingById() {
+export default function ListSslById() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [hostingServices, setHostingServices] = useState([]);
+  const [sslServices, setSslServices] = useState([]);
 
   useEffect(() => {
-    loadListHostingById();
+    loadListSslById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadListHostingById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/hosting-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setHostingServices(result.data[0].hosting_services);
+  const loadListSslById = async () => {
+    const result = await apiGetById(`${LIST_SSL_SERVICES}/customer`, currentId);
+    setSslServices(result.data);
   };
 
-  const columnsHostingServices = [
+  const columnsSslServices = [
     {
       field: 'name',
       headerName: 'Tên miền',
       width: 250,
       renderCell: (params) => {
-        const domainServiceName = params.row.domain_service[0]?.name || '';
-        const domainSupplierName = params.row.domain_supplier[0]?.name || '';
+        const domainServiceName = params.row.domain_service_id?.name || '';
+        const domainPlanName = params.row.domain_plan_id?.name || '';
+        const domainSupplierName = params.row.domain_supplier_id?.name || '';
         return (
           <span>
             {domainServiceName}
+            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>
@@ -49,24 +46,24 @@ export default function ListHostingById() {
       }
     },
     {
-      field: 'hosting',
-      headerName: 'Dịch vụ Hosting',
+      field: 'ssl',
+      headerName: 'Dịch vụ SSL',
       width: 200,
-      valueGetter: (params) => params.row.hosting_plan[0]?.name || ''
+      valueGetter: (params) => params.row.ssl_plan_id?.name || ''
     },
     {
       field: 'supplier',
       headerName: 'Nhà cung cấp',
       width: 140,
-      valueGetter: (params) => params.row.hosting_supplier[0]?.name || ''
+      valueGetter: (params) => params.row.ssl_supplier_id?.name || ''
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
+      headerName: 'Giá dịch vụ / năm',
       width: 180,
       valueGetter: (params) =>
-        params.row.hosting_plan && params.row.hosting_plan[0] && params.row.hosting_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.hosting_plan[0].price)
+        params.row.ssl_plan_id
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price)
           : ''
     },
     {
@@ -74,6 +71,13 @@ export default function ListHostingById() {
       headerName: 'Thời gian',
       width: 100,
       valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
+      width: 200,
+      valueGetter: (params) =>
+        new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.ssl_plan_id.price * params.row.periods)
     },
     {
       field: 'status',
@@ -110,10 +114,10 @@ export default function ListHostingById() {
 
   return (
     <>
-      {hostingServices && hostingServices.length !== 0 ? (
+      {sslServices && sslServices.length !== 0 ? (
         <DataGrid
-          rows={hostingServices}
-          columns={columnsHostingServices}
+          rows={sslServices}
+          columns={columnsSslServices}
           getRowId={(row) => (row._id ? row._id : '')}
           initialState={{
             pagination: {
@@ -123,9 +127,8 @@ export default function ListHostingById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''

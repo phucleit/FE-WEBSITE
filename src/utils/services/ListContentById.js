@@ -1,59 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
 
-export default function ListToplistById() {
+export default function ListContentById() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [toplistServices, setToplistServices] = useState([]);
+  const [contentServices, setContentServices] = useState([]);
 
   useEffect(() => {
-    loadListToplistById();
+    loadListContentById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadListToplistById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/toplist-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setToplistServices(result.data[0].toplist_services);
+  const loadListContentById = async () => {
+    const result = await apiGetById(`${LIST_CONTENT_SERVICES}/customer`, currentId);
+    setContentServices(result.data);
   };
 
-  const columnsToplistServices = [
+  const columnsContentServices = [
     {
-      field: 'post',
-      headerName: 'Tiêu đề bài viết',
+      field: 'content',
+      headerName: 'Dịch vụ Content',
       width: 300,
-      valueGetter: (params) => `${params.row.post}`
+      valueGetter: (params) => (params.row.content_plan_id ? params.row.content_plan_id.name : '')
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / năm',
-      width: 170,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
+      headerName: 'Giá dịch vụ / tháng',
+      width: 250,
+      valueGetter: (params) =>
+        params.row.content_plan_id
+          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan_id.price)
+          : ''
     },
     {
-      field: 'rental_location',
-      headerName: 'Vị trí hiển thị',
+      field: 'periods',
+      headerName: 'Thời gian',
+      width: 150,
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+    },
+    {
+      field: 'total_price',
+      headerName: 'Thành tiền',
       width: 200,
-      valueGetter: (params) => `${params.row.rental_location}`
+      renderCell: (params) => {
+        return (
+          <span>
+            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
+              params.row.periods * 12 * params.row.content_plan_id.price
+            )}
+          </span>
+        );
+      }
     },
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 250,
+      width: 220,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -85,10 +96,10 @@ export default function ListToplistById() {
 
   return (
     <>
-      {toplistServices && toplistServices.length !== 0 ? (
+      {contentServices && contentServices.length !== 0 ? (
         <DataGrid
-          rows={toplistServices}
-          columns={columnsToplistServices}
+          rows={contentServices}
+          columns={columnsContentServices}
           getRowId={(row) => (row._id ? row._id : '')}
           initialState={{
             pagination: {
@@ -98,9 +109,8 @@ export default function ListToplistById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''

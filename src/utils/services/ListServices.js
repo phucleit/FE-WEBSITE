@@ -8,14 +8,15 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-import ListDomainById from './services/ListDomainById';
-import ListHostingById from './services/ListHostingById';
-import ListEmailById from './services/ListEmailById';
-import ListSslById from './services/ListSslById';
-import ListWebsiteById from './services/ListWebsiteById';
-import ListContentById from './services/ListContentById';
-import ListToplistById from './services/ListToplistById';
-import ListMaintenanceById from './services/ListMaintenanceById';
+import ListDomainById from './ListDomainById';
+import ListHostingById from './ListHostingById';
+import ListEmailById from './ListEmailById';
+import ListSslById from './ListSslById';
+import ListWebsiteById from './ListWebsiteById';
+import ListContentById from './ListContentById';
+import ListToplistById from './ListToplistById';
+import ListMaintenanceById from './ListMaintenanceById';
+import ListMobileNetworkById from './ListMobileNetworkById';
 
 export default function ListServices() {
   const [valueTab, setValueTab] = useState('1');
@@ -39,6 +40,7 @@ export default function ListServices() {
                 <Tab label="Dịch vụ Content" value="6" />
                 <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
                 <Tab label="Dịch vụ Bảo trì" value="8" />
+                <Tab label="Dịch vụ Sim 4G" value="9" />
               </TabList>
             </Box>
             <TabPanel value="1">
@@ -64,6 +66,9 @@ export default function ListServices() {
             </TabPanel>
             <TabPanel value="8">
               <ListMaintenanceById />
+            </TabPanel>
+            <TabPanel value="9">
+              <ListMobileNetworkById />
             </TabPanel>
           </TabContext>
         </Box>

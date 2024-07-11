@@ -1,62 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import dayjs from 'dayjs';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../../config';
-import { getRegisteredAt, getExpiredAt } from '../../../utils/formatUtils';
+import config from '../../config';
+import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const CUSTOMER_DETAIL = `${config.API_URL}/customer`;
+const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 
-export default function ListContentById() {
+export default function ListToplistById() {
   const paramId = useParams();
   const currentId = paramId.id;
 
-  const [contentServices, setContentServices] = useState([]);
+  const [toplistServices, setToplistServices] = useState([]);
 
   useEffect(() => {
-    loadListContentById();
+    loadListToplistById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadListContentById = async () => {
-    const result = await axios.get(`${CUSTOMER_DETAIL}/content-service/${currentId}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
-    setContentServices(result.data[0].content_services);
+  const loadListToplistById = async () => {
+    const result = await apiGetById(`${LIST_TOPLIST_SERVICES}/customer`, currentId);
+    setToplistServices(result.data);
   };
 
-  const columnsContentServices = [
+  const columnsToplistServices = [
     {
-      field: 'content',
-      headerName: 'Dịch vụ Content',
+      field: 'post',
+      headerName: 'Tiêu đề bài viết',
       width: 300,
-      valueGetter: (params) =>
-        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].name ? params.row.content_plan[0].name : ''
+      valueGetter: (params) => `${params.row.post}`
     },
     {
       field: 'price',
-      headerName: 'Giá dịch vụ / tháng',
-      width: 250,
-      valueGetter: (params) =>
-        params.row.content_plan && params.row.content_plan[0] && params.row.content_plan[0].price
-          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.content_plan[0].price)
-          : ''
+      headerName: 'Giá dịch vụ / năm',
+      width: 170,
+      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.price)
     },
     {
-      field: 'periods',
-      headerName: 'Thời gian',
-      width: 150,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
+      field: 'rental_location',
+      headerName: 'Vị trí hiển thị',
+      width: 200,
+      valueGetter: (params) => `${params.row.rental_location}`
     },
     {
       field: 'status',
       headerName: 'Trạng thái',
-      width: 220,
+      width: 250,
       renderCell: (params) => {
         if (params.row.status == 1) {
           return (
@@ -88,10 +80,10 @@ export default function ListContentById() {
 
   return (
     <>
-      {contentServices && contentServices.length !== 0 ? (
+      {toplistServices && toplistServices.length !== 0 ? (
         <DataGrid
-          rows={contentServices}
-          columns={columnsContentServices}
+          rows={toplistServices}
+          columns={columnsToplistServices}
           getRowId={(row) => (row._id ? row._id : '')}
           initialState={{
             pagination: {
@@ -101,9 +93,8 @@ export default function ListContentById() {
             }
           }}
           pageSizeOptions={[20]}
-          checkboxSelection
-          // disableSelectionOnClick
-          // disableRowSelectionOnClick
+          disableSelectionOnClick
+          disableRowSelectionOnClick
         />
       ) : (
         ''
