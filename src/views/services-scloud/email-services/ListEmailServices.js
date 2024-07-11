@@ -177,7 +177,7 @@ export default function ListEmailServices() {
       field: 'periods',
       headerName: 'Thời gian',
       width: 130,
-      valueGetter: (params) => (params.row.periods ? `${params.row.periods} tháng` : '')
+      valueGetter: (params) => (params.row.periods ? `${params.row.periods} năm` : '')
     },
     {
       field: 'total_price',

@@ -119,7 +119,6 @@ const UpdateMobileNetworkServices = Loadable(
 
 // contracts
 const ListContracts = Loadable(lazy(() => import('views/contracts/ListContracts')));
-const AddContracts = Loadable(lazy(() => import('views/contracts/AddContracts')));
 const UpdateContracts = Loadable(lazy(() => import('views/contracts/UpdateContracts')));
 
 // users
@@ -449,10 +448,6 @@ const MainRoutes = {
         {
           path: 'list-contracts',
           element: <ListContracts />
-        },
-        {
-          path: 'add-contracts',
-          element: <AddContracts />
         },
         {
           path: 'update-contracts/:id',

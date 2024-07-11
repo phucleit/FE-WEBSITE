@@ -260,8 +260,8 @@ export default function CardServices() {
 
   if (dataMobileNetworkServices) {
     dataMobileNetworkServices.forEach((item) => {
-      totalImportPriceMobileNetworkServices += item.periods * item.mobileNetworkPlanId.importPrice;
-      totalPriceMobileNetworkServices += item.periods * item.mobileNetworkPlanId.price;
+      totalImportPriceMobileNetworkServices += item.periods * item.mobile_network_plan_id.import_price;
+      totalPriceMobileNetworkServices += item.periods * item.mobile_network_plan_id.price;
     });
   }
 

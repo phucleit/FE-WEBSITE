@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { styled, useTheme } from '@mui/material/styles';
@@ -11,6 +10,7 @@ import EarningIcon from 'assets/images/icons/earning.svg';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import config from '../../../config';
+import { apiGet } from '../../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
@@ -65,11 +65,7 @@ export default function TotalPriceServices() {
   }, []);
 
   const loadListContracts = async () => {
-    const result = await axios.get(`${LIST_CONTRACTS}`, {
-      headers: {
-        'Cache-Control': 'no-cache'
-      }
-    });
+    const result = await apiGet(`${LIST_CONTRACTS}`);
     setData(result.data);
   };
 
