@@ -77,7 +77,7 @@ export default function ListSupplier() {
   };
 
   const columns = [
-    { field: 'name', headerName: 'Tên NCC', width: 140 },
+    { field: 'name', headerName: 'Tên NCC', width: 130 },
     { field: 'company', headerName: 'Tên công ty', width: 250 },
     { field: 'tax_code', headerName: 'Mã số thuế', width: 150 },
     {
@@ -93,14 +93,14 @@ export default function ListSupplier() {
       width: 150,
       valueGetter: (params) => formatPhoneNumber(params.row.phone_support)
     },
-    { field: 'address', headerName: 'Địa chỉ', width: 380 }
+    { field: 'address', headerName: 'Địa chỉ', width: 350 }
   ];
 
   if (permissionUpdate || permissionDelete) {
-    columns.push({
+    columns.unshift({
       field: 'action',
       headerName: 'Hành động',
-      width: 120,
+      width: 110,
       renderCell: (params) => {
         return (
           <>

@@ -135,7 +135,6 @@ export default function ListMobileNetworkPlans() {
                             </React.Fragment>
                           ))
                         : ''}
-
                       <Typography sx={{ fontSize: 15, pt: 1, pb: 1 }}>Hỗ trợ Esim: {item.esim == false ? 'Không' : 'Có'}</Typography>
                       <Divider />
                     </CardContent>

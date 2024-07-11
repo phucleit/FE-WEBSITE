@@ -129,12 +129,16 @@ export default function ListMaintenancePlans() {
                         </Typography>
                       ))}
                       <Divider />
-                      {item.note.split('\n').map((value, index) => (
-                        <Typography key={index} sx={{ fontSize: 15, pt: 1, pb: 1 }}>
-                          {value}
-                        </Typography>
-                      ))}
-                      <Divider />
+                      {item.note
+                        ? item.note.split('\n').map((value, index) => (
+                            <React.Fragment key={index}>
+                              <Typography key={index} sx={{ fontSize: 15, pt: 1, pb: 1 }}>
+                                {value}
+                              </Typography>
+                              <Divider />
+                            </React.Fragment>
+                          ))
+                        : ''}
                     </CardContent>
                     <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
                       {permissionUpdate && (

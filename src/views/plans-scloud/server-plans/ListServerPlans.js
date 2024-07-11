@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { DeleteOutline } from '@mui/icons-material';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
+import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
-import { IconEdit } from '@tabler/icons';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 import config from '../../../config';
 import { apiGet, apiDelete, getRoles } from '../../../utils/formatUtils';
 
 const LIST_SERVER_PLANS = `${config.API_URL}/plans/server`;
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'left',
+  color: theme.palette.text.secondary
+}));
 
 export default function ListServerPlans() {
   const [open, setOpen] = useState(false);
@@ -76,38 +91,6 @@ export default function ListServerPlans() {
     }
   };
 
-  const columns = [
-    { field: 'name', headerName: 'Tên IP', width: 300 },
-    {
-      field: 'supplier_server_id',
-      headerName: 'Nhà cung cấp',
-      width: 300,
-      valueGetter: (params) => `${params.row.supplier_server_id.name}`
-    }
-  ];
-
-  if (permissionUpdate || permissionDelete) {
-    columns.push({
-      field: 'action',
-      headerName: 'Hành động',
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            {permissionUpdate && (
-              <Link to={'/dashboard/plans/update-server/' + params.row._id}>
-                <IconEdit />
-              </Link>
-            )}
-            {permissionDelete && (
-              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
-            )}
-          </>
-        );
-      }
-    });
-  }
-
   return (
     <>
       <MainCard
@@ -120,25 +103,52 @@ export default function ListServerPlans() {
           )
         }
       >
-        {data.length ? (
-          <DataGrid
-            rows={data}
-            columns={columns}
-            getRowId={(row) => row._id}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 20
-                }
-              }
-            }}
-            pageSizeOptions={[20]}
-            disableSelectionOnClick
-            disableRowSelectionOnClick
-          />
-        ) : (
-          ''
-        )}
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+          <Grid container spacing={1}>
+            {data.map((item) => (
+              <Grid item xs={3} key={item._id}>
+                <Item>
+                  <Card sx={{ maxWidth: 400, textAlign: 'center' }} variant="outlined">
+                    <CardContent sx={{ pb: 2 }}>
+                      <Typography gutterBottom variant="h2" component="div">
+                        Tên IP: {item.name}
+                      </Typography>
+                      <Divider />
+                      <Typography sx={{ fontSize: 20, pt: 1, pb: 1, color: '#f00' }}>
+                        Nhà cung cấp: {item.supplier_server_id.name}
+                      </Typography>
+                      <Divider />
+                    </CardContent>
+                    <CardActions sx={{ pt: 1, justifyContent: 'center' }}>
+                      {permissionUpdate && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          component={Link}
+                          to={`/dashboard/plans/update-server/${item._id}`}
+                          sx={{ mr: 1 }}
+                        >
+                          Cập nhật
+                        </Button>
+                      )}
+                      {permissionDelete && (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          Xóa
+                        </Button>
+                      )}
+                    </CardActions>
+                  </Card>
+                </Item>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Xóa thành công!</Alert>
