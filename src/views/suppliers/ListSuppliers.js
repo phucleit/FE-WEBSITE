@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { apiGet, apiDelete, formatPhoneNumber, getRoles } from '../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumber, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
 
@@ -84,14 +84,14 @@ export default function ListSupplier() {
       field: 'phone',
       headerName: 'Số điện thoại',
       width: 150,
-      valueGetter: (params) => formatPhoneNumber(params.row.phone)
+      valueGetter: (params) => maskPhoneNumber(formatPhoneNumber(params.row.phone))
     },
     { field: 'name_support', headerName: 'Hỗ trợ viên', width: 180 },
     {
       field: 'phone_support',
       headerName: 'Hotline hỗ trợ viên',
       width: 150,
-      valueGetter: (params) => formatPhoneNumber(params.row.phone_support)
+      valueGetter: (params) => maskPhoneNumber(formatPhoneNumber(params.row.phone_support))
     },
     { field: 'address', headerName: 'Địa chỉ', width: 350 }
   ];

@@ -11,7 +11,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { apiGet, apiDelete, formatPhoneNumber, getCreatedAt, getRoles } from '../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumber, getCreatedAt, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
@@ -121,7 +121,7 @@ export default function ListCustomers() {
       field: 'phone',
       headerName: 'Số điện thoại',
       width: 150,
-      valueGetter: (params) => formatPhoneNumber(params.row.phone)
+      valueGetter: (params) => maskPhoneNumber(formatPhoneNumber(params.row.phone))
     },
     {
       field: 'type_customer',

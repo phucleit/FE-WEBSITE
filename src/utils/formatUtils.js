@@ -123,3 +123,10 @@ export function getExpiredAt(params) {
 export function convertPrice(price) {
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 }
+
+export function maskPhoneNumber(phoneNumber) {
+  const parts = phoneNumber.split(' ');
+  if (parts.length < 2) return phoneNumber;
+  parts[2] = '*****';
+  return parts.join(' ');
+}
