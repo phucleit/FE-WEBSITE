@@ -79,7 +79,7 @@ export default function ListMobileNetwork() {
   const columns = [{ field: 'name', headerName: 'Tên nhà mạng di động', width: 300 }];
 
   if (permissionUpdate || permissionDelete) {
-    columns.push({
+    columns.unshift({
       field: 'action',
       headerName: 'Hành động',
       width: 120,

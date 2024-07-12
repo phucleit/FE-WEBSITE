@@ -97,7 +97,7 @@ export default function ListServer() {
   ];
 
   if (permissionUpdate || permissionDelete) {
-    columns.push({
+    columns.unshift({
       field: 'action',
       headerName: 'Hành động',
       width: 120,
