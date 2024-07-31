@@ -75,7 +75,7 @@ const services = {
         },
         {
           id: 'mobile-network-services',
-          title: 'Sim 4G',
+          title: 'Nhà mạng',
           type: 'item',
           url: '/dashboard/services/list-mobile-network',
           breadcrumbs: false

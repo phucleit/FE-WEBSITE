@@ -57,6 +57,7 @@ const ProfileSection = () => {
         dispatch(logout());
         Cookies.remove('token');
         Cookies.remove('display_name');
+        Cookies.remove('group_user_id');
         navigate('/');
       }
     } catch (error) {

@@ -68,7 +68,7 @@ const plans = {
         },
         {
           id: 'mobile-network-plans',
-          title: 'Sim 4G',
+          title: 'Nhà mạng',
           type: 'item',
           url: '/dashboard/plans/list-mobile-network',
           breadcrumbs: false

@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 
 import TotalPriceServices from '../total-price-services';
 import RemainingContracts from '../contracts';
+import ListActionLogs from '../action-logs';
 
 import config from '../../../config';
 import { apiGet } from '../../../utils/formatUtils';
@@ -824,6 +825,7 @@ export default function CardServices() {
             </Grid>
           </Grid>
           <Grid item xs={12} md={4}>
+            <ListActionLogs />
             <TotalPriceServices />
             <RemainingContracts />
           </Grid>
