@@ -12,7 +12,8 @@ const suppliers = {
   type: 'group',
   children: [
     {
-      id: 'suppliers',
+      // id: 'suppliers',
+      id: 'authentication',
       title: 'Nhà cung cấp',
       type: 'collapse',
       icon: icons.IconBusinessplan,

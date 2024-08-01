@@ -12,7 +12,8 @@ const contracts = {
   type: 'group',
   children: [
     {
-      id: 'contracts',
+      // id: 'contracts',
+      id: 'authentication',
       title: 'Hợp đồng',
       type: 'collapse',
       icon: icons.IconDatabaseImport,

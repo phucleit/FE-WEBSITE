@@ -12,7 +12,8 @@ const services = {
   type: 'group',
   children: [
     {
-      id: 'services',
+      // id: 'services',
+      id: 'authentication',
       title: 'Dịch vụ',
       type: 'collapse',
       icon: icons.IconServerBolt,

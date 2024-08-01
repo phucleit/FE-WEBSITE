@@ -12,7 +12,8 @@ const users = {
   type: 'group',
   children: [
     {
-      id: 'users',
+      // id: 'users',
+      id: 'authentication',
       title: 'Tài khoản',
       type: 'collapse',
       icon: icons.IconUserCircle,

@@ -12,7 +12,8 @@ const plans = {
   type: 'group',
   children: [
     {
-      id: 'plans',
+      // id: 'plans',
+      id: 'authentication',
       title: 'Gói dịch vụ',
       type: 'collapse',
       icon: icons.IconPlaylistAdd,

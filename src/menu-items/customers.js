@@ -12,7 +12,8 @@ const customers = {
   type: 'group',
   children: [
     {
-      id: 'customers',
+      // id: 'customers',
+      id: 'authentication',
       title: 'Khách hàng',
       type: 'collapse',
       icon: icons.IconUsers,
