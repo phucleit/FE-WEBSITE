@@ -39,7 +39,7 @@ export default function ListServices() {
               <Tab label="Dịch vụ Content" value="6" />
               <Tab label="Dịch vụ Toplist Vũng Tàu" value="7" />
               <Tab label="Dịch vụ Bảo trì" value="8" />
-              <Tab label="Dịch vụ Sim 4G" value="9" />
+              <Tab label="Dịch vụ Nhà mạng" value="9" />
             </TabList>
           </Box>
           <TabPanel value="1">

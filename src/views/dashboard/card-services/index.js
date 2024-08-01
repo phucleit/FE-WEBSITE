@@ -765,7 +765,7 @@ export default function CardServices() {
                   <CardContent>
                     <Typography sx={{ fontSize: 18, textAlign: 'center' }} gutterBottom>
                       <IconMailOpened /> <br />
-                      Sim 4G
+                      Nhà mạng
                     </Typography>
                     <Divider sx={{ mt: 2, mb: 2 }} />
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
