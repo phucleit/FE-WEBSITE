@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import CommentIcon from '@mui/icons-material/Comment';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -35,23 +36,25 @@ export default function ListActionLogs() {
 
   return (
     <MainCard title="Lịch sử thao tác" sx={{ mb: 2 }}>
-      <List sx={{ paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0 }}>
-        {data.map((item, index) => (
-          <React.Fragment key={index}>
-            <ListItem component="div" disablePadding>
-              <ListItemButton sx={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0 }}>
-                <ListItemIcon sx={{ color: 'inherit', pr: 0 }}>
-                  <CommentIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={`${getCreatedAt(item.createdAt)}: Tài khoản ${item.user_id.display_name} ${item.action} ${item.object}`}
-                />
-              </ListItemButton>
-            </ListItem>
-            {index < data.length - 1 && <Divider sx={{ margin: '8px 0' }} />}
-          </React.Fragment>
-        ))}
-      </List>
+      <Box sx={{ maxHeight: 250, overflow: 'auto' }}>
+        <List sx={{ paddingTop: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0 }}>
+          {data.map((item, index) => (
+            <React.Fragment key={index}>
+              <ListItem component="div" disablePadding>
+                <ListItemButton sx={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0 }}>
+                  <ListItemIcon sx={{ color: 'inherit', pr: 0 }}>
+                    <CommentIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`${getCreatedAt(item.createdAt)}: Tài khoản ${item.user_id.display_name} ${item.action} ${item.object}`}
+                  />
+                </ListItemButton>
+              </ListItem>
+              {index < data.length - 1 && <Divider sx={{ margin: '8px 0' }} />}
+            </React.Fragment>
+          ))}
+        </List>
+      </Box>
     </MainCard>
   );
 }
