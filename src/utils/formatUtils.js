@@ -83,7 +83,13 @@ export function apiDelete(url, id, headers = {}) {
 }
 
 export async function getRoles() {
-  const list_roles = await axios.get(`${config.API_URL}/functions/list-roles/${Cookies.get('group_user_id')}`);
+  const list_roles = await axios.get(`${config.API_URL}/functions/list-roles/${Cookies.get('group_user_id')}`, {
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      token: Cookies.get('token')
+    }
+  });
   return list_roles;
 }
 
