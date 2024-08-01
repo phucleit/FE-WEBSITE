@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,9 +20,8 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
 
-import { apiPost } from '../../utils/formatUtils';
+import { apiGet, apiPost } from '../../utils/formatUtils';
 
-// const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 const LIST_FUNCTION = `${config.API_URL}/functions`;
 
 const parent_id_tai_khoan = '667460e3d19aa9fcecc69fa6';
@@ -55,7 +53,7 @@ export default function AddGroupUser() {
   }, []);
 
   const loadListFunctions = async () => {
-    const result = await axios.get(`${LIST_FUNCTION}`);
+    const result = await apiGet(`${LIST_FUNCTION}`);
     setDataFunctions(result.data);
   };
 

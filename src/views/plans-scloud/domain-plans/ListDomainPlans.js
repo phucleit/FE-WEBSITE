@@ -99,7 +99,7 @@ export default function ListDomainPlans() {
   ];
 
   if (permissionUpdate || permissionDelete) {
-    columns.push({
+    columns.unshift({
       field: 'action',
       headerName: 'Hành động',
       width: 150,
