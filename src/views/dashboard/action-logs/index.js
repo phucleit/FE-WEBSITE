@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -34,6 +35,18 @@ export default function ListActionLogs() {
     }
   };
 
+  const renderListItemText = (item) => {
+    const text = `${getCreatedAt(item.createdAt)}: Tài khoản ${item.user_id.display_name} ${item.action} ${item.object}`;
+    if (item.link) {
+      return (
+        <Link to={`${item.link}`}>
+          <ListItemText primary={text} />
+        </Link>
+      );
+    }
+    return <ListItemText primary={text} />;
+  };
+
   return (
     <MainCard title="Lịch sử thao tác" sx={{ mb: 2 }}>
       <Box sx={{ maxHeight: 250, overflow: 'auto' }}>
@@ -45,9 +58,7 @@ export default function ListActionLogs() {
                   <ListItemIcon sx={{ color: 'inherit', pr: 0 }}>
                     <CommentIcon />
                   </ListItemIcon>
-                  <ListItemText
-                    primary={`${getCreatedAt(item.createdAt)}: Tài khoản ${item.user_id.display_name} ${item.action} ${item.object}`}
-                  />
+                  {renderListItemText(item)}
                 </ListItemButton>
               </ListItem>
               {index < data.length - 1 && <Divider sx={{ margin: '8px 0' }} />}

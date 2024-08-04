@@ -38,13 +38,14 @@ import config from '../../../../config';
 import { apiPost } from '../../../../utils/formatUtils';
 
 const LOGOUT_USER = `${config.API_URL}/login/logout`;
-const display_name = Cookies.get('display_name');
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  const display_name = Cookies.get('display_name');
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
