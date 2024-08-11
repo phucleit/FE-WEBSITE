@@ -136,3 +136,8 @@ export function maskPhoneNumber(phoneNumber) {
   parts[2] = '*****';
   return parts.join(' ');
 }
+
+export function formatCurrency(value) {
+  const roundedValue = Math.round(value / 1000) * 1000;
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(roundedValue);
+}

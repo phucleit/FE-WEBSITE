@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 import config from '../../config';
-import { apiGet, apiDelete, getCreatedAt, getRoles } from '../../utils/formatUtils';
+import { apiGet, apiDelete, getCreatedAt, getRoles, formatCurrency } from '../../utils/formatUtils';
 
 const LIST_CONTRACTS = `${config.API_URL}/contracts`;
 
@@ -126,19 +126,19 @@ export default function ListContracts() {
       field: 'total_price',
       headerName: 'Tổng chi phí',
       width: 160,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.total_price)
+      valueGetter: (params) => formatCurrency(params.row.total_price)
     },
     {
       field: 'deposit_amount',
       headerName: 'Đã thanh toán',
       width: 160,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)
+      valueGetter: (params) => formatCurrency(params.row.deposit_amount)
     },
     {
       field: 'remaining_cost',
       headerName: 'Chi phí còn lại',
       width: 160,
-      valueGetter: (params) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.remaining_cost)
+      valueGetter: (params) => formatCurrency(params.row.remaining_cost)
     },
     {
       field: 'status',
@@ -154,7 +154,7 @@ export default function ListContracts() {
         } else if (params.row.status == 1) {
           return (
             <Button variant="contained" size="small" color="error">
-              Thanh toán trước {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(params.row.deposit_amount)}
+              Thanh toán trước {formatCurrency(params.row.deposit_amount)}
             </Button>
           );
         } else if (params.row.status == 2) {

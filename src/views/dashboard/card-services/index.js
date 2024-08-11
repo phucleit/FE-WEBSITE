@@ -15,7 +15,7 @@ import RemainingContracts from '../contracts';
 import ListActionLogs from '../action-logs';
 
 import config from '../../../config';
-import { apiGet } from '../../../utils/formatUtils';
+import { apiGet, formatCurrency } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
 const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
@@ -301,17 +301,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalImportPriceDomainServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceDomainServices)
-                          : '0 ₫'}
+                        {totalImportPriceDomainServices ? formatCurrency(totalImportPriceDomainServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceDomainServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceDomainServices)
-                          : '0 ₫'}
+                        {totalPriceDomainServices ? formatCurrency(totalPriceDomainServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -362,17 +358,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalImportPriceHostingServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceHostingServices)
-                          : '0 ₫'}
+                        {totalImportPriceHostingServices ? formatCurrency(totalImportPriceHostingServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceHostingServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceHostingServices)
-                          : '0 ₫'}
+                        {totalPriceHostingServices ? formatCurrency(totalPriceHostingServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -423,17 +415,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalImportPriceSslServices
-                          ? Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceSslServices)
-                          : '0 ₫'}
+                        {totalImportPriceSslServices ? formatCurrency(totalImportPriceSslServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceSslServices
-                          ? Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceSslServices)
-                          : '0 ₫'}
+                        {totalPriceSslServices ? formatCurrency(totalPriceSslServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -484,17 +472,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalImportPriceEmailServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalImportPriceEmailServices)
-                          : '0 ₫'}
+                        {totalImportPriceEmailServices ? formatCurrency(totalImportPriceEmailServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceEmailServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceEmailServices)
-                          : '0 ₫'}
+                        {totalPriceEmailServices ? formatCurrency(totalPriceEmailServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -545,17 +529,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceWebsiteServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)
-                          : '0 ₫'}
+                        {totalPriceWebsiteServices ? formatCurrency(totalPriceWebsiteServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceWebsiteServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceWebsiteServices)
-                          : '0 ₫'}
+                        {totalPriceWebsiteServices ? formatCurrency(totalPriceWebsiteServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -606,17 +586,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceContentServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)
-                          : '0 ₫'}
+                        {totalPriceContentServices ? formatCurrency(totalPriceContentServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceContentServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceContentServices)
-                          : '0 ₫'}
+                        {totalPriceContentServices ? formatCurrency(totalPriceContentServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -667,17 +643,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceToplistServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceToplistServices)
-                          : '0 ₫'}
+                        {totalPriceToplistServices ? formatCurrency(totalPriceToplistServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceToplistServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceToplistServices)
-                          : '0 ₫'}
+                        {totalPriceToplistServices ? formatCurrency(totalPriceToplistServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -728,17 +700,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceMaintenanceServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMaintenanceServices)
-                          : '0 ₫'}
+                        {totalPriceMaintenanceServices ? formatCurrency(totalPriceMaintenanceServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceMaintenanceServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMaintenanceServices)
-                          : '0 ₫'}
+                        {totalPriceMaintenanceServices ? formatCurrency(totalPriceMaintenanceServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
@@ -789,19 +757,13 @@ export default function CardServices() {
                     <Typography sx={{ fontSize: 14, mb: 2 }} gutterBottom>
                       Tổng chi phí nhập
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalImportPriceMobileNetworkServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-                              totalImportPriceMobileNetworkServices
-                            )
-                          : '0 ₫'}
+                        {totalImportPriceMobileNetworkServices ? formatCurrency(totalImportPriceMobileNetworkServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       Tổng chi phí bán
                       <Button sx={{ ml: 2 }} variant="outlined" size="small" color="error">
-                        {totalPriceMobileNetworkServices
-                          ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPriceMobileNetworkServices)
-                          : '0 ₫'}
+                        {totalPriceMobileNetworkServices ? formatCurrency(totalPriceMobileNetworkServices) : '0 ₫'}
                       </Button>
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>

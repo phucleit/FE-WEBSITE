@@ -13,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles, formatCurrency } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
 
@@ -184,13 +184,7 @@ export default function ListEmailServices() {
       headerName: 'Thành tiền',
       width: 200,
       renderCell: (params) => {
-        return (
-          <span>
-            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(
-              params.row.periods * 12 * params.row.email_plan_id.price
-            )}
-          </span>
-        );
+        return <span>{formatCurrency(params.row.periods * 12 * params.row.email_plan_id.price)}</span>;
       }
     },
     {

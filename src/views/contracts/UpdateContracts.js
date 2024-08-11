@@ -19,7 +19,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../config';
-import { apiGetById, apiUpdate, getRoles } from '../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles, formatCurrency } from '../../utils/formatUtils';
 import ListServices from '../../utils/services/ListServices';
 
 const LIST_CONTRACT = `${config.API_URL}/contracts`;
@@ -143,7 +143,7 @@ export default function UpdateContracts() {
           id="remaining_cost"
           label="Chi phí còn lại"
           variant="standard"
-          value={new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
+          value={formatCurrency(remaining_cost)}
           InputProps={{
             readOnly: true
           }}
@@ -221,13 +221,13 @@ export default function UpdateContracts() {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom sx={{ color: '#f00' }}>
-              Tổng chi phí cần thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total_price)}
+              Tổng chi phí cần thanh toán: {formatCurrency(total_price)}
             </Typography>
           </Grid>
           {deposit_amount ? (
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom sx={{ color: '#f00' }}>
-                Đã thanh toán: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(deposit_amount)}
+                Đã thanh toán: {formatCurrency(deposit_amount)}
               </Typography>
             </Grid>
           ) : (
@@ -238,7 +238,7 @@ export default function UpdateContracts() {
           ) : (
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom sx={{ color: '#f00' }}>
-                Chi phí còn lại: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(remaining_cost)}
+                Chi phí còn lại: {formatCurrency(remaining_cost)}
               </Typography>
             </Grid>
           )}
