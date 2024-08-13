@@ -131,6 +131,17 @@ const ListGroupUser = Loadable(lazy(() => import('views/group-users/ListGroupUse
 const AddGroupUser = Loadable(lazy(() => import('views/group-users/AddGroupUser')));
 const UpdateGroupUser = Loadable(lazy(() => import('views/group-users/UpdateGroupUser')));
 
+/***** itvt *****/
+// domain
+const ListDomainITVT = Loadable(lazy(() => import('views/itvt/domain-itvt/ListDomainITVT')));
+const AddDomainITVT = Loadable(lazy(() => import('views/itvt/domain-itvt/AddDomainITVT')));
+const UpdateDomainITVT = Loadable(lazy(() => import('views/itvt/domain-itvt/UpdateDomainITVT')));
+
+// ssl
+const ListSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/ListSslITVT')));
+const AddSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/AddSslITVT')));
+const UpdateSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/UpdateSslITVT')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -208,6 +219,52 @@ const MainRoutes = {
         {
           path: 'server/update-server/:id',
           element: <UpdateServer />
+        }
+      ]
+    },
+    {
+      path: 'itvt',
+      children: [
+        {
+          path: 'list-domain-itvt',
+          element: <ListDomainITVT />
+        },
+        {
+          path: 'add-domain-itvt',
+          element: <AddDomainITVT />
+        },
+        {
+          path: 'update-domain-itvt/:id',
+          element: <UpdateDomainITVT />
+        },
+        {
+          path: 'list-ssl-itvt',
+          element: <ListSslITVT />
+        },
+        {
+          path: 'add-ssl-itvt',
+          element: <AddSslITVT />
+        },
+        {
+          path: 'update-ssl-itvt/:id',
+          element: <UpdateSslITVT />
+        }
+      ]
+    },
+    {
+      path: 'customers',
+      children: [
+        {
+          path: 'list-customers',
+          element: <ListCustomers />
+        },
+        {
+          path: 'add-customers',
+          element: <AddCustomers />
+        },
+        {
+          path: 'update-customers/:id',
+          element: <UpdateCustomers />
         }
       ]
     },
@@ -309,23 +366,6 @@ const MainRoutes = {
         {
           path: 'update-mobile-network/:id',
           element: <UpdateMobileNetworkPlans />
-        }
-      ]
-    },
-    {
-      path: 'customers',
-      children: [
-        {
-          path: 'list-customers',
-          element: <ListCustomers />
-        },
-        {
-          path: 'add-customers',
-          element: <AddCustomers />
-        },
-        {
-          path: 'update-customers/:id',
-          element: <UpdateCustomers />
         }
       ]
     },
