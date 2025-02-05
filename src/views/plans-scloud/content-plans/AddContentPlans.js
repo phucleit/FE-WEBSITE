@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiPost, getRoles } from '../../../utils/formatUtils';
+import { apiPost, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -34,6 +34,7 @@ export default function AddContentPlans() {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [number_of_articles, setNumberOfArticles] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -56,6 +57,12 @@ export default function AddContentPlans() {
   const loadListRoles = async () => {
     const result = await getRoles();
     setDataRoles(result.data);
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleAddContentPlans = (e) => {
@@ -118,8 +125,8 @@ export default function AddContentPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />

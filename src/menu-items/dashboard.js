@@ -17,6 +17,14 @@ const dashboard = {
       url: '/dashboard',
       icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
+    },
+    {
+      id: 'qrcode',
+      title: 'QRCode',
+      type: 'item',
+      url: '/dashboard/qrcode',
+      icon: icons.IconLayoutBoardSplit,
+      breadcrumbs: false
     }
   ]
 };

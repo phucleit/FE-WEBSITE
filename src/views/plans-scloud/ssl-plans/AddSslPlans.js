@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_SSL_PLANS = `${config.API_URL}/plans/ssl`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -38,7 +38,9 @@ export default function AddSslPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [feature, setFeature] = useState('');
   const [supplier, setSupplier] = useState('');
 
@@ -71,6 +73,18 @@ export default function AddSslPlans() {
   const loadSuppliers = async () => {
     const result = await apiGet(`${LIST_SUPPLIER}`);
     setListSupplier(result.data);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleAddSslPlans = (e) => {
@@ -130,8 +144,8 @@ export default function AddSslPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập email..."
                   />
@@ -145,8 +159,8 @@ export default function AddSslPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán email..."
                   />

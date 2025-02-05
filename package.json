@@ -32,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.10",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-qrcode-logo": "^3.0.0",
     "react-redux": "^8.0.2",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",

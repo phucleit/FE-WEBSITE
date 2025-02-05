@@ -141,3 +141,9 @@ export function formatCurrency(value) {
   const roundedValue = Math.round(value / 1000) * 1000;
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(roundedValue);
 }
+
+export function formatPriceValue(value) {
+  if (!value) return '';
+  const numericValue = value.toString().replace(/\D/g, '');
+  return new Intl.NumberFormat('de-DE').format(numericValue);
+}

@@ -20,7 +20,7 @@ import FormLabel from '@mui/material/FormLabel';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiPost, apiGet, getRoles } from '../../../utils/formatUtils';
+import { apiPost, apiGet, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
@@ -41,7 +41,9 @@ export default function AddMobileNetworkPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [capacity, setCapacity] = useState('');
   const [content, setContent] = useState('');
   const [esim, setEsim] = useState(false);
@@ -76,6 +78,18 @@ export default function AddMobileNetworkPlans() {
   const loadListMobileNetworkSuppliers = async () => {
     const result = await apiGet(`${LIST_MOBILE_NETWORK}`);
     setListMobileNetworkSuppliers(result.data);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleChangeEsim = (e) => {
@@ -180,8 +194,8 @@ export default function AddMobileNetworkPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập..."
                   />
@@ -195,8 +209,8 @@ export default function AddMobileNetworkPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán..."
                   />
