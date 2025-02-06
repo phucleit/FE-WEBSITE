@@ -218,7 +218,7 @@ export default function ListSslITVT() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/itvt/update-ssl-itvt/' + params.row._id}>
+              <Link to={'/trang-chu/itvt/cap-nhat-ssl-itvt/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -237,7 +237,7 @@ export default function ListSslITVT() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/itvt/add-ssl-itvt">
+            <Button variant="contained" component={Link} to="/trang-chu/itvt/add-ssl-itvt">
               Thêm mới
             </Button>
           )
@@ -249,7 +249,7 @@ export default function ListSslITVT() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-ssl-itvt' }}
+            to={{ pathname: '/trang-chu/itvt/list-ssl-itvt' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -258,7 +258,7 @@ export default function ListSslITVT() {
             size="small"
             onClick={() => setSelectedData('dataSslITVTExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-ssl-itvt', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/itvt/list-ssl-itvt', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -269,7 +269,7 @@ export default function ListSslITVT() {
             size="small"
             onClick={() => setSelectedData('dataSslITVTExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-ssl-itvt', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/itvt/list-ssl-itvt', search: '?data=expired' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >

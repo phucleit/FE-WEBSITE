@@ -118,7 +118,7 @@ export default function UpdateSslITVT() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/itvt/list-ssl-itvt');
+          navigate('/trang-chu/itvt/danh-sach-ssl-itvt');
         }, 1500);
       })
       .catch((error) => console.log(error));

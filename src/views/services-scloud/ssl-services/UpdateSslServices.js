@@ -134,7 +134,7 @@ export default function UpdateSslServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-ssl');
+          navigate('/trang-chu/dich-vu/danh-sach-ssl');
         }, 1500);
       })
       .catch((error) => console.log(error));

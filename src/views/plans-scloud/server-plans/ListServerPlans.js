@@ -97,7 +97,7 @@ export default function ListServerPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-server">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-server">
               Thêm mới
             </Button>
           )
@@ -125,7 +125,7 @@ export default function ListServerPlans() {
                           size="small"
                           variant="contained"
                           component={Link}
-                          to={`/dashboard/plans/update-server/${item._id}`}
+                          to={`/trang-chu/goi-dich-vu/cap-nhat-server/${item._id}`}
                           sx={{ mr: 1 }}
                         >
                           Cập nhật

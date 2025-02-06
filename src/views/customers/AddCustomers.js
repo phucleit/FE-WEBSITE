@@ -127,7 +127,7 @@ export default function AddCustomers() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/customers/list-customers');
+          navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
         }, 1500);
       })
       .catch((error) => {

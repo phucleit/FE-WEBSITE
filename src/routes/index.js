@@ -10,7 +10,7 @@ const ThemeRoutes = () => {
 
   return useRoutes([
     ...routes,
-    { path: '/', element: token ? <Navigate to="/dashboard" /> : <Navigate to="/login" /> },
+    { path: '/', element: token ? <Navigate to="/trang-chu" /> : <Navigate to="/login" /> },
     { path: '*', element: <Navigate to="/" /> }
   ]);
 };

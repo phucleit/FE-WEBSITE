@@ -130,7 +130,7 @@ export default function UpdateContracts() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/contracts/list-contracts');
+          navigate('/trang-chu/hop-dong/danh-sach-hop-dong');
         }, 1500);
       })
       .catch((error) => console.log(error));

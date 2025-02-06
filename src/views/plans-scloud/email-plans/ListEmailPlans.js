@@ -98,7 +98,7 @@ export default function ListEmailPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-email">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-email">
               Thêm mới
             </Button>
           )
@@ -140,7 +140,7 @@ export default function ListEmailPlans() {
                           size="small"
                           variant="contained"
                           component={Link}
-                          to={`/dashboard/plans/update-email/${item._id}`}
+                          to={`/trang-chu/goi-dich-vu/cap-nhat-email/${item._id}`}
                           sx={{ mr: 1 }}
                         >
                           Cập nhật

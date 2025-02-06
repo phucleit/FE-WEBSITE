@@ -111,7 +111,7 @@ export default function AddSslPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-ssl');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-ssl');
         }, 1500);
       })
       .catch((error) => console.log(error));

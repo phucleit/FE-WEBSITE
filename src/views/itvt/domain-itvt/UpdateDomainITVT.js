@@ -119,7 +119,7 @@ export default function UpdateDomainITVT() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/itvt/list-domain-itvt');
+          navigate('/trang-chu/itvt/danh-sach-ten-mien-itvt');
         }, 1500);
       })
       .catch((error) => console.log(error));

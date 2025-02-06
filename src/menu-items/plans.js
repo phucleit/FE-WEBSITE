@@ -19,59 +19,59 @@ const plans = {
       icon: icons.IconPlaylistAdd,
       children: [
         {
-          id: 'domain-plans',
+          id: 'ten-mien',
           title: 'Tên miền',
           type: 'item',
-          url: '/dashboard/plans/list-domain',
+          url: '/trang-chu/goi-dich-vu/danh-sach-ten-mien',
           breadcrumbs: false
         },
         {
-          id: 'hosting-plans',
+          id: 'hosting',
           title: 'Hosting',
           type: 'item',
-          url: '/dashboard/plans/list-hosting',
+          url: '/trang-chu/goi-dich-vu/danh-sach-hosting',
           breadcrumbs: false
         },
         {
-          id: 'email-plans',
+          id: 'email',
           title: 'Email',
           type: 'item',
-          url: '/dashboard/plans/list-email',
+          url: '/trang-chu/goi-dich-vu/danh-sach-email',
           breadcrumbs: false
         },
         {
-          id: 'ssl-plans',
+          id: 'ssl',
           title: 'SSL',
           type: 'item',
-          url: '/dashboard/plans/list-ssl',
+          url: '/trang-chu/goi-dich-vu/danh-sach-ssl',
           breadcrumbs: false
         },
         {
-          id: 'content-plans',
+          id: 'content',
           title: 'Viết bài Content & PR',
           type: 'item',
-          url: '/dashboard/plans/list-content',
+          url: '/trang-chu/goi-dich-vu/danh-sach-content',
           breadcrumbs: false
         },
         {
-          id: 'maintenance-plans',
+          id: 'bao-tri',
           title: 'Bảo trì',
           type: 'item',
-          url: '/dashboard/plans/list-maintenance',
+          url: '/trang-chu/goi-dich-vu/danh-sach-bao-tri',
           breadcrumbs: false
         },
         {
-          id: 'server-plans',
+          id: 'server',
           title: 'Server',
           type: 'item',
-          url: '/dashboard/plans/list-server',
+          url: '/trang-chu/goi-dich-vu/danh-sach-server',
           breadcrumbs: false
         },
         {
-          id: 'mobile-network-plans',
+          id: 'nha-mang',
           title: 'Nhà mạng',
           type: 'item',
-          url: '/dashboard/plans/list-mobile-network',
+          url: '/trang-chu/goi-dich-vu/danh-sach-nha-mang',
           breadcrumbs: false
         }
       ]

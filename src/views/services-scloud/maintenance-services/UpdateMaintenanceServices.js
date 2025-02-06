@@ -121,7 +121,7 @@ export default function UpdateMaintenanceServices() {
       .then(() => {
         setOpen(true);
         setIntersetTimeoutval(() => {
-          navigate('/dashboard/services/list-maintenance');
+          navigate('/trang-chu/dich-vu/danh-sach-bao-tri');
         }, 1500);
       })
       .catch((error) => console.log(error));

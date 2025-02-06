@@ -107,7 +107,7 @@ export default function ListDomainPlans() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/plans/update-domain/' + params.row._id}>
+              <Link to={'/trang-chu/goi-dich-vu/cap-nhat-ten-mien/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -126,7 +126,7 @@ export default function ListDomainPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-domain">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-ten-mien">
               Thêm mới
             </Button>
           )

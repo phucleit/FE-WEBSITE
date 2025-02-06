@@ -128,7 +128,7 @@ export default function UpdateMobileNetworkPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-mobile-network');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-nha-mang');
         }, 1500);
       })
       .catch((error) => console.log(error));

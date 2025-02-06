@@ -146,83 +146,83 @@ const UpdateSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/UpdateSslI
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-  path: '/dashboard',
+  path: '/trang-chu',
   element: <MainLayout />,
   children: [
     {
-      path: '/dashboard',
+      path: '/trang-chu',
       element: <DashboardDefault />
     },
     {
-      path: '/dashboard/qrcode',
+      path: '/trang-chu/qrcode',
       element: <ListQrCode />
     },
     {
-      path: 'users',
+      path: 'tai-khoan',
       children: [
         {
-          path: 'list-users',
+          path: 'danh-sach-tai-khoan',
           element: <ListUser />
         },
         {
-          path: 'add-users',
+          path: 'them-tai-khoan',
           element: <AddUser />
         },
         {
-          path: 'update-users/:id',
+          path: 'cap-nhat-tai-khoan/:id',
           element: <UpdateUser />
         },
         {
-          path: 'list-group-users',
+          path: 'danh-sach-nhom',
           element: <ListGroupUser />
         },
         {
-          path: 'add-group-users',
+          path: 'them-nhom',
           element: <AddGroupUser />
         },
         {
-          path: 'update-group-users/:id',
+          path: 'cap-nhat-nhom/:id',
           element: <UpdateGroupUser />
         }
       ]
     },
     {
-      path: 'suppliers',
+      path: 'nha-cung-cap',
       children: [
         {
-          path: 'list-suppliers',
+          path: 'danh-sach-nha-cung-cap',
           element: <ListSuppliers />
         },
         {
-          path: 'add-suppliers',
+          path: 'them-nha-cung-cap',
           element: <AddSuppliers />
         },
         {
-          path: 'update-suppliers/:id',
+          path: 'cap-nhat-nha-cung-cap/:id',
           element: <UpdateSuppliers />
         },
         {
-          path: 'mobile-network/list-mobile-network',
+          path: 'nha-mang/danh-sach-nha-mang',
           element: <ListMobileNetwork />
         },
         {
-          path: 'mobile-network/add-mobile-network',
+          path: 'nha-mang/them-nha-mang',
           element: <AddMobileNetwork />
         },
         {
-          path: 'mobile-network/update-mobile-network/:id',
+          path: 'nha-mang/cap-nhat-nha-mang/:id',
           element: <UpdateMobileNetwork />
         },
         {
-          path: 'server/list-server',
+          path: 'server/danh-sach-server',
           element: <ListServer />
         },
         {
-          path: 'server/add-server',
+          path: 'server/them-server',
           element: <AddServer />
         },
         {
-          path: 'server/update-server/:id',
+          path: 'server/cap-nhat-server/:id',
           element: <UpdateServer />
         }
       ]
@@ -231,271 +231,271 @@ const MainRoutes = {
       path: 'itvt',
       children: [
         {
-          path: 'list-domain-itvt',
+          path: 'danh-sach-ten-mien-itvt',
           element: <ListDomainITVT />
         },
         {
-          path: 'add-domain-itvt',
+          path: 'them-ten-mien-itvt',
           element: <AddDomainITVT />
         },
         {
-          path: 'update-domain-itvt/:id',
+          path: 'cap-nhat-ten-mien-itvt/:id',
           element: <UpdateDomainITVT />
         },
         {
-          path: 'list-ssl-itvt',
+          path: 'danh-sach-ssl-itvt',
           element: <ListSslITVT />
         },
         {
-          path: 'add-ssl-itvt',
+          path: 'them-ssl-itvt',
           element: <AddSslITVT />
         },
         {
-          path: 'update-ssl-itvt/:id',
+          path: 'cap-nhat-ssl-itvt/:id',
           element: <UpdateSslITVT />
         }
       ]
     },
     {
-      path: 'customers',
+      path: 'khach-hang',
       children: [
         {
-          path: 'list-customers',
+          path: 'danh-sach-khach-hang',
           element: <ListCustomers />
         },
         {
-          path: 'add-customers',
+          path: 'them-khach-hang',
           element: <AddCustomers />
         },
         {
-          path: 'update-customers/:id',
+          path: 'cap-nhat-khach-hang/:id',
           element: <UpdateCustomers />
         }
       ]
     },
     {
-      path: 'plans',
+      path: 'goi-dich-vu',
       children: [
         {
-          path: 'list-domain',
+          path: 'danh-sach-ten-mien',
           element: <ListDomainPlans />
         },
         {
-          path: 'add-domain',
+          path: 'them-ten-mien',
           element: <AddDomainPlans />
         },
         {
-          path: 'update-domain/:id',
+          path: 'cap-nhat-ten-mien/:id',
           element: <UpdateDomainPlans />
         },
         {
-          path: 'list-email',
+          path: 'danh-sach-email',
           element: <ListEmailPlans />
         },
         {
-          path: 'add-email',
+          path: 'them-email',
           element: <AddEmailPlans />
         },
         {
-          path: 'update-email/:id',
+          path: 'cap-nhat-email/:id',
           element: <UpdateEmailPlans />
         },
         {
-          path: 'list-hosting',
+          path: 'danh-sach-hosting',
           element: <ListHostingPlans />
         },
         {
-          path: 'add-hosting',
+          path: 'them-hosting',
           element: <AddHostingPlans />
         },
         {
-          path: 'update-hosting/:id',
+          path: 'cap-nhat-hosting/:id',
           element: <UpdateHostingPlans />
         },
         {
-          path: 'list-ssl',
+          path: 'danh-sach-ssl',
           element: <ListSslPlans />
         },
         {
-          path: 'add-ssl',
+          path: 'them-ssl',
           element: <AddSslPlans />
         },
         {
-          path: 'update-ssl/:id',
+          path: 'cap-nhat-ssl/:id',
           element: <UpdateSslPlans />
         },
         {
-          path: 'list-content',
+          path: 'danh-sach-content',
           element: <ListContentPlans />
         },
         {
-          path: 'add-content',
+          path: 'them-content',
           element: <AddContentPlans />
         },
         {
-          path: 'update-content/:id',
+          path: 'cap-nhat-content/:id',
           element: <UpdateContentPlans />
         },
         {
-          path: 'list-maintenance',
+          path: 'danh-sach-bao-tri',
           element: <ListMaintenancePlans />
         },
         {
-          path: 'add-maintenance',
+          path: 'them-bao-tri',
           element: <AddMaintenancePlans />
         },
         {
-          path: 'update-maintenance/:id',
+          path: 'cap-nhat-bao-tri/:id',
           element: <UpdateMaintenancePlans />
         },
         {
-          path: 'list-server',
+          path: 'danh-sach-server',
           element: <ListServerPlans />
         },
         {
-          path: 'add-server',
+          path: 'them-server',
           element: <AddServerPlans />
         },
         {
-          path: 'update-server/:id',
+          path: 'cap-nhat-server/:id',
           element: <UpdateServerPlans />
         },
         {
-          path: 'list-mobile-network',
+          path: 'danh-sach-nha-mang',
           element: <ListMobileNetworkPlans />
         },
         {
-          path: 'add-mobile-network',
+          path: 'them-nha-mang',
           element: <AddMobileNetworkPlans />
         },
         {
-          path: 'update-mobile-network/:id',
+          path: 'cap-nhat-nha-mang/:id',
           element: <UpdateMobileNetworkPlans />
         }
       ]
     },
     {
-      path: 'services',
+      path: 'dich-vu',
       children: [
         {
-          path: 'list-domain',
+          path: 'danh-sach-ten-mien',
           element: <ListDomainServices />
         },
         {
-          path: 'add-domain',
+          path: 'them-ten-mien',
           element: <AddDomainServices />
         },
         {
-          path: 'update-domain/:id',
+          path: 'cap-nhat-ten-mien/:id',
           element: <UpdateDomainServices />
         },
         {
-          path: 'list-hosting',
+          path: 'danh-sach-hosting',
           element: <ListHostingServices />
         },
         {
-          path: 'add-hosting',
+          path: 'them-hosting',
           element: <AddHostingServices />
         },
         {
-          path: 'update-hosting/:id',
+          path: 'cap-nhat-hosting/:id',
           element: <UpdateHostingServices />
         },
         {
-          path: 'list-email',
+          path: 'danh-sach-email',
           element: <ListEmailServices />
         },
         {
-          path: 'add-email',
+          path: 'them-email',
           element: <AddEmailServices />
         },
         {
-          path: 'update-email/:id',
+          path: 'cap-nhat-email/:id',
           element: <UpdateEmailServices />
         },
         {
-          path: 'list-ssl',
+          path: 'danh-sach-ssl',
           element: <ListSslServices />
         },
         {
-          path: 'add-ssl',
+          path: 'them-ssl',
           element: <AddSslServices />
         },
         {
-          path: 'update-ssl/:id',
+          path: 'cap-nhat-ssl/:id',
           element: <UpdateSslServices />
         },
         {
-          path: 'list-website',
+          path: 'danh-sach-website',
           element: <ListWebsiteServices />
         },
         {
-          path: 'add-website',
+          path: 'them-website',
           element: <AddWebsiteServices />
         },
         {
-          path: 'update-website/:id',
+          path: 'cap-nhat-website/:id',
           element: <UpdateWebsiteServices />
         },
         {
-          path: 'list-content',
+          path: 'danh-sach-content',
           element: <ListContentServices />
         },
         {
-          path: 'add-content',
+          path: 'them-content',
           element: <AddContentServices />
         },
         {
-          path: 'update-content/:id',
+          path: 'cap-nhat-content/:id',
           element: <UpdateContentServices />
         },
         {
-          path: 'list-toplist',
+          path: 'danh-sach-toplist',
           element: <ListToplistServices />
         },
         {
-          path: 'add-toplist',
+          path: 'them-toplist',
           element: <AddToplistServices />
         },
         {
-          path: 'update-toplist/:id',
+          path: 'cap-nhat-toplist/:id',
           element: <UpdateToplistServices />
         },
         {
-          path: 'list-maintenance',
+          path: 'danh-sach-bao-tri',
           element: <ListMaintenanceServices />
         },
         {
-          path: 'add-maintenance',
+          path: 'them-bao-tri',
           element: <AddMaintenanceServices />
         },
         {
-          path: 'update-maintenance/:id',
+          path: 'cap-nhat-bao-tri/:id',
           element: <UpdateMaintenanceServices />
         },
         {
-          path: 'list-mobile-network',
+          path: 'danh-sach-nha-mang',
           element: <ListMobileNetworkServices />
         },
         {
-          path: 'add-mobile-network',
+          path: 'them-nha-mang',
           element: <AddMobileNetworkServices />
         },
         {
-          path: 'update-mobile-network/:id',
+          path: 'cap-nhat-nha-mang/:id',
           element: <UpdateMobileNetworkServices />
         }
       ]
     },
     {
-      path: 'contracts',
+      path: 'hop-dong',
       children: [
         {
-          path: 'list-contracts',
+          path: 'danh-sach-hop-dong',
           element: <ListContracts />
         },
         {
-          path: 'update-contracts/:id',
+          path: 'cap-nhat-hop-dong/:id',
           element: <UpdateContracts />
         }
       ]

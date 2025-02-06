@@ -82,7 +82,7 @@ export default function UpdateMobileNetwork() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/suppliers/mobile-network/list-mobile-network');
+          navigate('/trang-chu/nha-cung-cap/nha-mang/danh-sach-nha-mang');
         }, 1500);
       })
       .catch((error) => console.log(error));

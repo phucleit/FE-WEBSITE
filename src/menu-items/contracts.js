@@ -19,10 +19,10 @@ const contracts = {
       icon: icons.IconDatabaseImport,
       children: [
         {
-          id: 'list-contracts',
+          id: 'danh-sach-hop-dong',
           title: 'Danh sách',
           type: 'item',
-          url: '/dashboard/contracts/list-contracts',
+          url: '/trang-chu/hop-dong/danh-sach-hop-dong',
           breadcrumbs: false
         }
       ]

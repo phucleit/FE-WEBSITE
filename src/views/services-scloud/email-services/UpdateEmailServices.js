@@ -134,7 +134,7 @@ export default function UpdateEmailServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-email');
+          navigate('/trang-chu/dich-vu/danh-sach-email');
         }, 1500);
       })
       .catch((error) => console.log(error));

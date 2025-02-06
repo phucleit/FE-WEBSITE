@@ -170,7 +170,7 @@ export default function ListWebsiteServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-website/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-website/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -189,7 +189,7 @@ export default function ListWebsiteServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-website">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-website">
               Thêm mới
             </Button>
           )
@@ -201,7 +201,7 @@ export default function ListWebsiteServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-website' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-website' }}
           >
             Đang hoạt động: {dataLength ? dataLength : '0'}
           </Button>
@@ -210,7 +210,7 @@ export default function ListWebsiteServices() {
             size="small"
             onClick={() => setSelectedData('dataWebsiteServicesClosed')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-website', search: '?data=closed' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-website', search: '?data=closed' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >

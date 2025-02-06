@@ -122,7 +122,7 @@ export default function AddEmailPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-email');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-email');
         }, 1500);
       })
       .catch((error) => console.log(error));

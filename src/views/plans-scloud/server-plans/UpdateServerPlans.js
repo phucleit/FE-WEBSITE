@@ -96,7 +96,7 @@ export default function UpdateServerPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-server');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-server');
         }, 1500);
       })
       .catch((error) => console.log(error));

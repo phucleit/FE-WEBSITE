@@ -123,7 +123,7 @@ export default function UpdateHostinglPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-hosting');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-hosting');
         }, 1500);
       })
       .catch((error) => console.log(error));

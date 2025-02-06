@@ -105,7 +105,7 @@ export default function ListServer() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/suppliers/server/update-server/' + params.row._id}>
+              <Link to={'/trang-chu/nha-cung-cap/server/cap-nhat-server/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -124,7 +124,7 @@ export default function ListServer() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/suppliers/server/add-server">
+            <Button variant="contained" component={Link} to="/trang-chu/nha-cung-cap/server/them-server">
               Thêm mới
             </Button>
           )

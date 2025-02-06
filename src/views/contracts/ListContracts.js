@@ -198,7 +198,7 @@ export default function ListContracts() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/contracts/update-contracts/' + params.row._id}>
+              <Link to={'/trang-chu/hop-dong/cap-nhat-hop-dong/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -217,7 +217,7 @@ export default function ListContracts() {
         title="Danh sách hợp đồng"
         // secondary={
         //   permissionAdd && (
-        //     <Button variant="contained" component={Link} to="/dashboard/contracts/add-contracts">
+        //     <Button variant="contained" component={Link} to="/trang-chu/contracts/add-contracts">
         //       Thêm mới
         //     </Button>
         //   )

@@ -19,17 +19,17 @@ const itvt = {
       icon: icons.IconBrandCodepen,
       children: [
         {
-          id: 'list-domain-itvt',
+          id: 'danh-sach-ten-mien-itvt',
           title: 'Tên miền',
           type: 'item',
-          url: '/dashboard/itvt/list-domain-itvt',
+          url: '/trang-chu/itvt/danh-sach-ten-mien-itvt',
           breadcrumbs: false
         },
         {
-          id: 'list-ssl-itvt',
+          id: 'danh-sach-ssl-itvt',
           title: 'SSL',
           type: 'item',
-          url: '/dashboard/itvt/list-ssl-itvt',
+          url: '/trang-chu/itvt/danh-sach-ssl-itvt',
           breadcrumbs: false
         }
       ]

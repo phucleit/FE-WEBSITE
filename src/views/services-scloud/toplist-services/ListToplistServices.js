@@ -202,7 +202,7 @@ export default function ListToplistServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-toplist/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-toplist/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -221,7 +221,7 @@ export default function ListToplistServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-toplist">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-toplist">
               Thêm mới
             </Button>
           )
@@ -233,7 +233,7 @@ export default function ListToplistServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-toplist' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -242,7 +242,7 @@ export default function ListToplistServices() {
             size="small"
             onClick={() => setSelectedData('dataToplistServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-toplist', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -253,7 +253,7 @@ export default function ListToplistServices() {
             size="small"
             onClick={() => setSelectedData('dataToplistServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-toplist', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?data=expired' }}
             color="error"
           >
             Hết hạn: {countToplistServicesExpired ? countToplistServicesExpired : '0'}

@@ -255,7 +255,7 @@ export default function ListEmailServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-email/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-email/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -274,7 +274,7 @@ export default function ListEmailServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-email">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-email">
               Thêm mới
             </Button>
           )
@@ -286,7 +286,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-email' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -295,7 +295,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-email', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -306,7 +306,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-email', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=expired' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -317,7 +317,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-email', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=payment' }}
             color="success"
           >
             Công nợ: {countEmailServicesBeforePayment ? countEmailServicesBeforePayment : '0'}

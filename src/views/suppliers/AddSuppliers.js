@@ -98,7 +98,7 @@ export default function AddSuppliers() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/suppliers/list-suppliers');
+          navigate('/trang-chu/nha-cung-cap/danh-sach-nha-cung-cap');
         }, 1500);
       })
       .catch((error) => console.log(error));

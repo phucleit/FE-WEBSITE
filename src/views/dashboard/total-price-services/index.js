@@ -78,7 +78,7 @@ export default function TotalPriceServices() {
   }
 
   const handleClick = () => {
-    navigate('/contracts/list-contracts');
+    navigate('/hop-dong/danh-sach-hop-dong');
   };
 
   return (

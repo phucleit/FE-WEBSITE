@@ -90,7 +90,7 @@ export default function ListGroupUser() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/users/update-group-users/' + params.row._id}>
+              <Link to={'/trang-chu/tai-khoan/cap-nhat-nhom/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -109,7 +109,7 @@ export default function ListGroupUser() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/users/add-group-users">
+            <Button variant="contained" component={Link} to="/trang-chu/tai-khoan/them-nhom">
               Thêm mới
             </Button>
           )

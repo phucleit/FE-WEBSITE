@@ -73,7 +73,7 @@ export default function Signin() {
         Cookies.set('group_user_id', group_user_id, { expires: 7 });
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate('/trang-chu');
         }, 1100);
       } else {
         setOpenError(true);

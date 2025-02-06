@@ -72,7 +72,7 @@ export default function RemainingContracts() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={'/contracts/update-contracts/' + params.row._id}>
+            <Link to={'/hop-dong/cap-nhat-hop-dong/' + params.row._id}>
               <IconEdit />
             </Link>
           </>

@@ -108,7 +108,7 @@ export default function AddToplistServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-toplist');
+          navigate('/trang-chu/dich-vu/danh-sach-toplist');
         }, 1500);
       })
       .catch((error) => console.log(error));

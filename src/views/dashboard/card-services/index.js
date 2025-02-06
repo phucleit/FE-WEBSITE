@@ -312,7 +312,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-domain"
+                        href="/trang-chu/dich-vu/danh-sach-ten-mien"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -369,7 +369,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-hosting"
+                        href="/trang-chu/dich-vu/danh-sach-hosting"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -426,7 +426,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-ssl"
+                        href="/trang-chu/dich-vu/danh-sach-ssl"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -483,7 +483,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-email"
+                        href="/trang-chu/dich-vu/danh-sach-email"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -540,7 +540,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-website"
+                        href="/trang-chu/dich-vu/danh-sach-website"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -597,7 +597,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-content"
+                        href="/trang-chu/dich-vu/danh-sach-content"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -654,7 +654,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-toplist"
+                        href="/trang-chu/dich-vu/danh-sach-toplist"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -711,7 +711,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-maintenance"
+                        href="/trang-chu/dich-vu/danh-sach-bao-tri"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',
@@ -768,7 +768,7 @@ export default function CardServices() {
                     </Typography>
                     <Typography sx={{ textAlign: 'center', mt: 4 }} gutterBottom>
                       <Link
-                        href="/dashboard/services/list-mobile-network"
+                        href="/trang-chu/dich-vu/danh-sach-nha-mang"
                         sx={{
                           padding: '10px 20px',
                           color: '#fff',

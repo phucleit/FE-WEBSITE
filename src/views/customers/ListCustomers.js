@@ -156,7 +156,7 @@ export default function ListCustomers() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/customers/update-customers/' + params.row._id}>
+              <Link to={'/trang-chu/khach-hang/cap-nhat-khach-hang/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -175,7 +175,7 @@ export default function ListCustomers() {
         title="Danh sách khách hàng"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/customers/add-customers">
+            <Button variant="contained" component={Link} to="/trang-chu/khach-hang/them-khach-hang">
               Thêm mới
             </Button>
           )
@@ -187,7 +187,7 @@ export default function ListCustomers() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/customers/list-customers' }}
+            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang' }}
           >
             Tất cả: {dataLength ? dataLength : '0'}
           </Button>
@@ -196,7 +196,7 @@ export default function ListCustomers() {
             size="small"
             onClick={() => setSelectedData('dataGuests')}
             component={Link}
-            to={{ pathname: '/dashboard/customers/list-customers', search: '?data=guests' }}
+            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?data=guests' }}
             sx={{ ml: '10px', mr: '10px' }}
             color="success"
           >
@@ -207,7 +207,7 @@ export default function ListCustomers() {
             size="small"
             onClick={() => setSelectedData('dataCompany')}
             component={Link}
-            to={{ pathname: '/dashboard/customers/list-customers', search: '?type=company' }}
+            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?type=company' }}
             sx={{ mr: '10px' }}
             color="warning"
           >

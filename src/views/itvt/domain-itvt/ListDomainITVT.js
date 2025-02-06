@@ -232,7 +232,7 @@ export default function ListDomainITVT() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/itvt/update-domain-itvt/' + params.row._id}>
+              <Link to={'/trang-chu/itvt/cap-nhat-ten-mien-itvt/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -251,7 +251,7 @@ export default function ListDomainITVT() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/itvt/add-domain-itvt">
+            <Button variant="contained" component={Link} to="/trang-chu/itvt/them-ten-mien-itvt">
               Thêm mới
             </Button>
           )
@@ -263,7 +263,7 @@ export default function ListDomainITVT() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-domain-itvt' }}
+            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -272,7 +272,7 @@ export default function ListDomainITVT() {
             size="small"
             onClick={() => setSelectedData('dataDomainITVTExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-domain-itvt', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -283,7 +283,7 @@ export default function ListDomainITVT() {
             size="small"
             onClick={() => setSelectedData('dataDomainITVTExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/itvt/list-domain-itvt', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?data=expired' }}
             color="error"
             sx={{ mr: '10px' }}
           >

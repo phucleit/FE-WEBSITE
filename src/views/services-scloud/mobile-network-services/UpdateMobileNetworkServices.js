@@ -110,7 +110,7 @@ export default function UpdateMobileNetworkServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-mobile-network');
+          navigate('/trang-chu/dich-vu/danh-sach-nha-mang');
         }, 1500);
       })
       .catch((error) => console.log(error));

@@ -98,7 +98,7 @@ export default function ListMobileNetworkPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-mobile-network">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-nha-mang">
               Thêm mới
             </Button>
           )
@@ -144,7 +144,7 @@ export default function ListMobileNetworkPlans() {
                           size="small"
                           variant="contained"
                           component={Link}
-                          to={`/dashboard/plans/update-mobile-network/${item._id}`}
+                          to={`/trang-chu/goi-dich-vu/cap-nhat-nha-mang/${item._id}`}
                           sx={{ mr: 1 }}
                         >
                           Cập nhật

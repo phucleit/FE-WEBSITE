@@ -212,7 +212,7 @@ export default function ListMobileNetworkServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-mobile-network/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-nha-mang/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -231,7 +231,7 @@ export default function ListMobileNetworkServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-mobile-network">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-nha-mang">
               Thêm mới
             </Button>
           )
@@ -243,7 +243,7 @@ export default function ListMobileNetworkServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-mobile-network' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -252,7 +252,7 @@ export default function ListMobileNetworkServices() {
             size="small"
             onClick={() => setSelectedData('dataMobileNetworkServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-mobile-network', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -263,7 +263,7 @@ export default function ListMobileNetworkServices() {
             size="small"
             onClick={() => setSelectedData('dataMobileNetworkServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-mobile-network', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?data=expired' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >

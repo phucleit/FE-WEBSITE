@@ -123,7 +123,7 @@ export default function AddDomainServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-domain');
+          navigate('/trang-chu/dich-vu/danh-sach-ten-mien');
         }, 1500);
       })
       .catch((error) => console.log(error));

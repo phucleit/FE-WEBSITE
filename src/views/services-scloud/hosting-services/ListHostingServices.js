@@ -256,7 +256,7 @@ export default function ListHostingServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-hosting/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-hosting/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -275,7 +275,7 @@ export default function ListHostingServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-hosting">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-hosting">
               Thêm mới
             </Button>
           )
@@ -287,7 +287,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-hosting' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -296,7 +296,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -307,7 +307,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=expired' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -318,7 +318,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-hosting', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=payment' }}
             color="success"
           >
             Công nợ: {countHostingServicesBeforePayment ? countHostingServicesBeforePayment : '0'}

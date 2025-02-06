@@ -19,10 +19,10 @@ const customers = {
       icon: icons.IconUsers,
       children: [
         {
-          id: 'list-customers',
+          id: 'danh-sach-khach-hang',
           title: 'Danh sách',
           type: 'item',
-          url: '/dashboard/customers/list-customers',
+          url: '/trang-chu/khach-hang/danh-sach-khach-hang',
           breadcrumbs: false
         }
       ]

@@ -157,7 +157,7 @@ export default function UpdateCustomers() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/customers/list-customers');
+          navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
         }, 1500);
       })
       .catch((error) => console.log(error));

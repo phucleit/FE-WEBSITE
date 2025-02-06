@@ -107,7 +107,7 @@ export default function AddHostingServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-hosting');
+          navigate('/trang-chu/dich-vu/danh-sach-hosting');
         }, 1500);
       })
       .catch((error) => console.log(error));

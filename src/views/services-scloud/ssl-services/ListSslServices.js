@@ -254,7 +254,7 @@ export default function ListSslServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-ssl/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-ssl/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -273,7 +273,7 @@ export default function ListSslServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-ssl">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-ssl">
               Thêm mới
             </Button>
           )
@@ -285,7 +285,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-ssl' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -294,7 +294,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -305,7 +305,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=expired' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -316,7 +316,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-ssl', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=payment' }}
             color="success"
           >
             Công nợ: {countSslServicesBeforePayment ? countSslServicesBeforePayment : '0'}

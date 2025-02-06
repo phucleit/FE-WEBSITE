@@ -98,7 +98,7 @@ export default function ListHostingPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-hosting">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-hosting">
               Thêm mới
             </Button>
           )
@@ -138,7 +138,7 @@ export default function ListHostingPlans() {
                           size="small"
                           variant="contained"
                           component={Link}
-                          to={`/dashboard/plans/update-hosting/${item._id}`}
+                          to={`/trang-chu/goi-dich-vu/cap-nhat-hosting/${item._id}`}
                           sx={{ mr: 1 }}
                         >
                           Cập nhật

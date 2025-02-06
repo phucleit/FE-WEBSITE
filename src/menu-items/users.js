@@ -19,17 +19,17 @@ const users = {
       icon: icons.IconUserCircle,
       children: [
         {
-          id: 'list-users',
+          id: 'danh-sach-tai-khoan',
           title: 'Danh sách tài khoản',
           type: 'item',
-          url: '/dashboard/users/list-users',
+          url: '/trang-chu/tai-khoan/danh-sach-tai-khoan',
           breadcrumbs: false
         },
         {
-          id: 'list-group-users',
+          id: 'danh-sach-nhom',
           title: 'Nhóm người dùng',
           type: 'item',
-          url: '/dashboard/users/list-group-users',
+          url: '/trang-chu/tai-khoan/danh-sach-nhom',
           breadcrumbs: false
         }
       ]

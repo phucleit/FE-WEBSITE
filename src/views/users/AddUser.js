@@ -112,7 +112,7 @@ export default function AddUser() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/users/list-users');
+          navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
         }, 1500);
       })
       .catch((error) => console.log(error));

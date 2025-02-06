@@ -268,7 +268,7 @@ export default function ListDomainServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-domain/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-ten-mien/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -287,7 +287,7 @@ export default function ListDomainServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-domain">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-ten-mien">
               Thêm mới
             </Button>
           )
@@ -299,7 +299,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-domain' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -308,7 +308,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-domain', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -319,7 +319,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-domain', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=expired' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -330,7 +330,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-domain', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=payment' }}
             color="success"
           >
             Công nợ: {countDomainServicesBeforePayment ? countDomainServicesBeforePayment : '0'}

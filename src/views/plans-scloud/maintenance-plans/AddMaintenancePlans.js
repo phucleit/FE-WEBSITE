@@ -96,7 +96,7 @@ export default function AddMaintenancePlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-maintenance');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-bao-tri');
         }, 1500);
       })
       .catch((error) => console.log(error));

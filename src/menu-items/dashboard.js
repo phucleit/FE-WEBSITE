@@ -7,14 +7,14 @@ const icons = { IconLayoutBoardSplit };
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard = {
-  id: 'dashboard',
+  id: 'trang-chu',
   type: 'group',
   children: [
     {
       id: 'default',
       title: 'Tổng quát',
       type: 'item',
-      url: '/dashboard',
+      url: '/trang-chu',
       icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
     },
@@ -22,7 +22,7 @@ const dashboard = {
       id: 'qrcode',
       title: 'QRCode',
       type: 'item',
-      url: '/dashboard/qrcode',
+      url: '/trang-chu/qrcode',
       icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
     }

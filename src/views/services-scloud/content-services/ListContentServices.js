@@ -206,7 +206,7 @@ export default function ListContentServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-content/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-content/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -225,7 +225,7 @@ export default function ListContentServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-content">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-content">
               Thêm mới
             </Button>
           )
@@ -237,7 +237,7 @@ export default function ListContentServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-content' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -246,7 +246,7 @@ export default function ListContentServices() {
             size="small"
             onClick={() => setSelectedData('dataContentServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-content', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -257,7 +257,7 @@ export default function ListContentServices() {
             size="small"
             onClick={() => setSelectedData('dataContentServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-content', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?data=expired' }}
             color="error"
           >
             Hết hạn: {countContentServicesExpired ? countContentServicesExpired : '0'}

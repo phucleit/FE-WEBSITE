@@ -87,7 +87,7 @@ export default function ListMobileNetwork() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/suppliers/mobile-network/update-mobile-network/' + params.row._id}>
+              <Link to={'/trang-chu/nha-cung-cap/nha-mang/cap-nhat-nha-mang/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -106,7 +106,7 @@ export default function ListMobileNetwork() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/suppliers/mobile-network/add-mobile-network">
+            <Button variant="contained" component={Link} to="/trang-chu/nha-cung-cap/nha-mang/them-nha-mang">
               Thêm mới
             </Button>
           )

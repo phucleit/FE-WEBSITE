@@ -229,7 +229,7 @@ export default function ListMaintenanceServices() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/services/update-maintenance/' + params.row._id}>
+              <Link to={'/trang-chu/dich-vu/cap-nhat-bao-tri/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -248,7 +248,7 @@ export default function ListMaintenanceServices() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/services/add-maintenance">
+            <Button variant="contained" component={Link} to="/trang-chu/dich-vu/them-bao-tri">
               Thêm mới
             </Button>
           )
@@ -260,7 +260,7 @@ export default function ListMaintenanceServices() {
             size="small"
             onClick={() => setSelectedData('data')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-maintenance' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri' }}
           >
             Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
@@ -269,7 +269,7 @@ export default function ListMaintenanceServices() {
             size="small"
             onClick={() => setSelectedData('dataMaintenanceServicesExpiring')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-maintenance', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?data=expiring' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -280,7 +280,7 @@ export default function ListMaintenanceServices() {
             size="small"
             onClick={() => setSelectedData('dataMaintenanceServicesExpired')}
             component={Link}
-            to={{ pathname: '/dashboard/services/list-maintenance', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?data=expired' }}
             color="error"
           >
             Hết hạn: {countMaintenanceServicesExpired ? countMaintenanceServicesExpired : '0'}

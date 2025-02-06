@@ -109,7 +109,7 @@ export default function AddDomainPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-domain');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-ten-mien');
         }, 1500);
       })
       .catch((error) => console.log(error));

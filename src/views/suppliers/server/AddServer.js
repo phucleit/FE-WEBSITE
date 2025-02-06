@@ -76,7 +76,7 @@ export default function AddServer() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/suppliers/server/list-server');
+          navigate('/trang-chu/nha-cung-cap/server/danh-sach-server');
         }, 1500);
       })
       .catch((error) => console.log(error));

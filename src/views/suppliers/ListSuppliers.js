@@ -105,7 +105,7 @@ export default function ListSupplier() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/dashboard/suppliers/update-suppliers/' + params.row._id}>
+              <Link to={'/trang-chu/nha-cung-cap/cap-nhat-nha-cung-cap/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -124,7 +124,7 @@ export default function ListSupplier() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/suppliers/add-suppliers">
+            <Button variant="contained" component={Link} to="/trang-chu/nha-cung-cap/them-nha-cung-cap">
               Thêm mới
             </Button>
           )

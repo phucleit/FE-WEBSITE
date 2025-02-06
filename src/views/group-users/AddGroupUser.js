@@ -98,7 +98,7 @@ export default function AddGroupUser() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/users/list-group-users');
+          navigate('/trang-chu/tai-khoan/danh-sach-nhom');
         }, 1500);
       })
       .catch((error) => {

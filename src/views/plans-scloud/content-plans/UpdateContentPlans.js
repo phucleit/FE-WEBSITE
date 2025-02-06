@@ -98,7 +98,7 @@ export default function UpdateContentPlans() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/plans/list-content');
+          navigate('/trang-chu/goi-dich-vu/danh-sach-content');
         }, 1500);
       })
       .catch((error) => console.log(error));

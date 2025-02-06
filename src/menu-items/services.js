@@ -19,66 +19,66 @@ const services = {
       icon: icons.IconServerBolt,
       children: [
         {
-          id: 'domain-services',
+          id: 'ten-mien',
           title: 'Tên miền',
           type: 'item',
-          url: '/dashboard/services/list-domain',
+          url: '/trang-chu/dich-vu/danh-sach-ten-mien',
           breadcrumbs: false
         },
         {
-          id: 'hosting-services',
+          id: 'hosting',
           title: 'Hostings',
           type: 'item',
-          url: '/dashboard/services/list-hosting',
+          url: '/trang-chu/dich-vu/danh-sach-hosting',
           breadcrumbs: false
         },
         {
-          id: 'email-services',
+          id: 'email',
           title: 'Email',
           type: 'item',
-          url: '/dashboard/services/list-email',
+          url: '/trang-chu/dich-vu/danh-sach-email',
           breadcrumbs: false
         },
         {
-          id: 'ssl-services',
+          id: 'ssl',
           title: 'SSL',
           type: 'item',
-          url: '/dashboard/services/list-ssl',
+          url: '/trang-chu/dich-vu/danh-sach-ssl',
           breadcrumbs: false
         },
         {
-          id: 'website-services',
+          id: 'website',
           title: 'Thiết kế website',
           type: 'item',
-          url: '/dashboard/services/list-website',
+          url: '/trang-chu/dich-vu/danh-sach-website',
           breadcrumbs: false
         },
         {
-          id: 'content-services',
+          id: 'content',
           title: 'Viết bài Content & PR',
           type: 'item',
-          url: '/dashboard/services/list-content',
+          url: '/trang-chu/dich-vu/danh-sach-content',
           breadcrumbs: false
         },
         {
-          id: 'toplist-services',
+          id: 'toplist-',
           title: 'Toplist Vũng Tàu',
           type: 'item',
-          url: '/dashboard/services/list-toplist',
+          url: '/trang-chu/dich-vu/danh-sach-toplist',
           breadcrumbs: false
         },
         {
-          id: 'maintenance-services',
+          id: 'bao-tri',
           title: 'Bảo trì',
           type: 'item',
-          url: '/dashboard/services/list-maintenance',
+          url: '/trang-chu/dich-vu/danh-sach-bao-tri',
           breadcrumbs: false
         },
         {
-          id: 'mobile-network-services',
+          id: 'nha-mang',
           title: 'Nhà mạng',
           type: 'item',
-          url: '/dashboard/services/list-mobile-network',
+          url: '/trang-chu/dich-vu/danh-sach-nha-mang',
           breadcrumbs: false
         }
       ]

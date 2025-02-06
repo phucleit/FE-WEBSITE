@@ -92,7 +92,7 @@ export default function AddWebsiteServices() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/dashboard/services/list-website');
+          navigate('/trang-chu/dich-vu/danh-sach-website');
         }, 1500);
       })
       .catch((error) => console.log(error));

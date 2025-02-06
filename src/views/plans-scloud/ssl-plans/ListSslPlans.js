@@ -98,7 +98,7 @@ export default function ListSslPlans() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/dashboard/plans/add-ssl">
+            <Button variant="contained" component={Link} to="/trang-chu/goi-dich-vu/them-ssl">
               Thêm mới
             </Button>
           )
@@ -130,7 +130,7 @@ export default function ListSslPlans() {
                           size="small"
                           variant="contained"
                           component={Link}
-                          to={`/dashboard/plans/update-ssl/${item._id}`}
+                          to={`/trang-chu/goi-dich-vu/cap-nhat-ssl/${item._id}`}
                           sx={{ mr: 1 }}
                         >
                           Cập nhật
