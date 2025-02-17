@@ -3,10 +3,10 @@ const config = {
   defaultPath: '',
   fontFamily: `'Roboto', sans-serif`,
   borderRadius: 12,
-  API_URL: 'http://localhost:8500/v1',
-  API_UPLOAD: 'http://localhost:8500'
-  // API_URL: 'https://backend.thietkewebvungtau.com/v1',
-  // API_UPLOAD: 'https://backend.thietkewebvungtau.com'
+  // API_URL: 'http://localhost:8500/v1',
+  // API_UPLOAD: 'http://localhost:8500'
+  API_URL: 'https://backendtest.thietkewebvungtau.com/v1',
+  API_UPLOAD: 'https://backendtest.thietkewebvungtau.com'
 };
 
 export default config;
