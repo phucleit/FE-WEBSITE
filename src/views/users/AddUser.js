@@ -47,6 +47,9 @@ export default function AddUser() {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   const [dataGroupUser, setDataGroupUser] = useState([]);
 
   useEffect(() => {
@@ -83,6 +86,10 @@ export default function AddUser() {
     event.preventDefault();
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddUser = (e) => {
     e.preventDefault();
     if (displayname == '') {
@@ -105,6 +112,11 @@ export default function AddUser() {
       return;
     }
 
+    if (group_user_id == '') {
+      alert('Vui lòng chọn quyền!');
+      return;
+    }
+
     const addUser = {
       display_name: displayname,
       username: username,
@@ -120,7 +132,10 @@ export default function AddUser() {
           navigate('/trang-chu/tai-khoan/danh-sach-tai-khoan');
         }, 1500);
       })
-      .catch((error) => alert(error.response.data.message));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -226,6 +241,14 @@ export default function AddUser() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={3000}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
