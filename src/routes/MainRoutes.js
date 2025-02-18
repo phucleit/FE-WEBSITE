@@ -6,7 +6,6 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
-const ListQrCode = Loadable(lazy(() => import('views/qrcode/ListQrCode')));
 
 /***** supplier *****/
 // supplier
@@ -152,10 +151,6 @@ const MainRoutes = {
     {
       path: '/trang-chu',
       element: <DashboardDefault />
-    },
-    {
-      path: '/trang-chu/qrcode',
-      element: <ListQrCode />
     },
     {
       path: 'tai-khoan',

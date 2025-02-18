@@ -17,14 +17,6 @@ const dashboard = {
       url: '/trang-chu',
       icon: icons.IconLayoutBoardSplit,
       breadcrumbs: false
-    },
-    {
-      id: 'qrcode',
-      title: 'QRCode',
-      type: 'item',
-      url: '/trang-chu/qrcode',
-      icon: icons.IconLayoutBoardSplit,
-      breadcrumbs: false
     }
   ]
 };
