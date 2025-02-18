@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 import MainCard from 'ui-component/cards/MainCard';
-import { IconEdit } from '@tabler/icons';
+import { IconEye } from '@tabler/icons';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -91,10 +91,10 @@ export default function ListGroupUser() {
           <>
             {permissionUpdate && (
               <Link to={'/trang-chu/tai-khoan/cap-nhat-nhom/' + params.row._id}>
-                <IconEdit />
+                <IconEye />
               </Link>
             )}
-            {permissionDelete && (
+            {permissionDelete && params.row._id !== '6684196550a34692df218d8d' && (
               <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
             )}
           </>
