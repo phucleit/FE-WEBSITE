@@ -102,7 +102,7 @@ export default function ListUser() {
         return (
           <>
             {permissionUpdate && (
-              <Link to={'/trang-chu/khach-hang/cap-nhat-khach-hang/' + params.row._id}>
+              <Link to={'/trang-chu/tai-khoan/cap-nhat-tai-khoan/' + params.row._id}>
                 <IconEdit />
               </Link>
             )}
@@ -121,7 +121,7 @@ export default function ListUser() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/trang-chu/khach-hang/them-khach-hang">
+            <Button variant="contained" component={Link} to="/trang-chu/tai-khoan/them-tai-khoan">
               Thêm mới
             </Button>
           )

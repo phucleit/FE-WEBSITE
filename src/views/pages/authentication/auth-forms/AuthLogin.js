@@ -33,7 +33,8 @@ export default function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
-  const [openError, setOpenError] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -63,28 +64,34 @@ export default function Signin() {
 
       const status = res.status;
 
-      if (status == 200) {
+      if (status === 200) {
         const data = await res.json();
-        const token = data.token;
-        const display_name = data.display_name;
-        const group_user_id = data.group_user_id;
+        const { token, display_name, group_user_id } = data;
+
         Cookies.set('token', token, { expires: 7 });
         Cookies.set('display_name', display_name, { expires: 7 });
         Cookies.set('group_user_id', group_user_id, { expires: 7 });
+
         setOpen(true);
         setTimeout(() => {
           navigate('/trang-chu');
         }, 1100);
+
+        setUsername('');
+        setPassword('');
       } else {
-        setOpenError(true);
+        const errorData = await res.json();
+        setMessageError(errorData.message);
+        setopenError(true);
       }
     } catch (error) {
-      setOpenError(true);
+      console.error('Error during login:', error);
+      setopenError(true);
     }
   };
 
   const handleCloseError = () => {
-    setOpenError(false);
+    setopenError(false);
   };
 
   const handleKeyDown = (e) => {
@@ -156,7 +163,7 @@ export default function Signin() {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         autoHideDuration={3000}
       >
-        <Alert severity="error">Tên đăng nhập hoặc mật khẩu không đúng! Vui lòng nhập lại thông tin!</Alert>
+        <Alert severity="error">{messageError}</Alert>
       </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Đăng nhập thành công!</Alert>

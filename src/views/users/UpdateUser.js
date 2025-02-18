@@ -126,7 +126,7 @@ export default function UpdateUser() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
+          navigate('/trang-chu/tai-khoan/danh-sach-tai-khoan');
         }, 1500);
       })
       .catch((error) => console.log(error));

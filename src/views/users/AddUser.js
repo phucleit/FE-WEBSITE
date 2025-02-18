@@ -85,8 +85,13 @@ export default function AddUser() {
 
   const handleAddUser = (e) => {
     e.preventDefault();
+    if (displayname == '') {
+      alert('Vui lòng nhập tên hiển thị!');
+      return;
+    }
+
     if (username == '') {
-      alert('Vui lòng nhập username!');
+      alert('Vui lòng nhập tên đăng nhập!');
       return;
     }
 
@@ -112,10 +117,10 @@ export default function AddUser() {
       .then(() => {
         setOpen(true);
         setTimeout(() => {
-          navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
+          navigate('/trang-chu/tai-khoan/danh-sach-tai-khoan');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error.response.data.message));
   };
 
   return permissionAdd ? (
