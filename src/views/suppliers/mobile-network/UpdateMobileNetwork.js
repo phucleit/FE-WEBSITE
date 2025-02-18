@@ -34,10 +34,12 @@ export default function UpdateMobileNetwork() {
 
   const [name, setName] = useState('');
 
-  const [open, setOpen] = useState(false);
-
   const [dataRoles, setDataRoles] = useState([]);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -67,10 +69,15 @@ export default function UpdateMobileNetwork() {
     setName(result.data.name);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateMobileNetwork = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên nhà mạng di động!');
+      setMessageError('Vui lòng nhập tên nhà mạng di động!');
+      setopenError(true);
       return;
     }
 
@@ -85,13 +92,16 @@ export default function UpdateMobileNetwork() {
           navigate('/trang-chu/nha-cung-cap/nha-mang/danh-sach-nha-mang');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleUpdateMobileNetwork}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -111,13 +121,21 @@ export default function UpdateMobileNetwork() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleUpdateMobileNetwork}>
+              <Button variant="contained" size="medium" type="submit">
                 Cập nhật
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

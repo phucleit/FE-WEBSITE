@@ -39,26 +39,36 @@ export default function AddServer() {
   const [address, setAddress] = useState('');
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
+  const handleCloseError = () => {
+    setopenError(false);
+  };
 
   const handleAddServer = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên nhà cung cấp!');
+      setMessageError('Vui lòng nhập tên nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
     if (company == '') {
-      alert('Vui lòng nhập tên công ty!');
+      setMessageError('Vui lòng nhập tên công ty!');
+      setopenError(true);
       return;
     }
 
     if (phone == '') {
-      alert('Vui lòng nhập số điện thoại!');
+      setMessageError('Vui lòng nhập số điện thoại!');
+      setopenError(true);
       return;
     }
 
     if (address == '') {
-      alert('Vui lòng nhập địa chỉ!');
+      setMessageError('Vui lòng nhập địa chỉ!');
+      setopenError(true);
       return;
     }
 
@@ -79,13 +89,16 @@ export default function AddServer() {
           navigate('/trang-chu/nha-cung-cap/server/danh-sach-server');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return (
     <>
       <MainCard title="Thêm mới">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleAddServer}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -195,13 +208,21 @@ export default function AddServer() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddServer}>
+              <Button variant="contained" size="medium" type="submit">
                 Thêm mới
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

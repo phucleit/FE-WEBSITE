@@ -33,7 +33,10 @@ export default function AddMobileNetwork() {
   const [permissionAdd, setPermissionAdd] = useState(false);
 
   const [name, setName] = useState('');
+
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -55,10 +58,15 @@ export default function AddMobileNetwork() {
     setDataRoles(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddMobileNetwork = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên nhà mạng di động!');
+      setMessageError('Vui lòng nhập tên nhà mạng di động!');
+      setopenError(true);
       return;
     }
 
@@ -73,13 +81,16 @@ export default function AddMobileNetwork() {
           navigate('/trang-chu/nha-cung-cap/nha-mang/danh-sach-nha-mang');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleAddMobileNetwork}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -99,13 +110,21 @@ export default function AddMobileNetwork() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddMobileNetwork}>
+              <Button variant="contained" size="medium" type="submit">
                 Thêm mới
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>
