@@ -55,6 +55,9 @@ export default function UpdateUser() {
     setShowPassword(!showPassword);
   };
 
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -97,21 +100,35 @@ export default function UpdateUser() {
     setGroupUserId(result.data.group_user_id);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateUser = (e) => {
     e.preventDefault();
+    if (displayname == '') {
+      setMessageError('Vui lòng nhập tên hiển thị!');
+      setopenError(true);
+    }
+
     if (username == '') {
-      alert('Vui lòng nhập username!');
-      return;
+      setMessageError('Vui lòng nhập tên đăng nhập!');
+      setopenError(true);
     }
 
     if (email == '') {
-      alert('Vui lòng nhập email!');
-      return;
+      setMessageError('Vui lòng nhập email!');
+      setopenError(true);
     }
 
     if (password == '') {
-      alert('Vui lòng nhập mật khẩu!');
-      return;
+      setMessageError('Vui lòng nhập mật khẩu!');
+      setopenError(true);
+    }
+
+    if (group_user_id == '') {
+      setMessageError('Vui lòng chọn quyền!');
+      setopenError(true);
     }
 
     const updateUser = {
@@ -129,13 +146,16 @@ export default function UpdateUser() {
           navigate('/trang-chu/tai-khoan/danh-sach-tai-khoan');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response?.data?.message || 'Cập nhật thất bại!');
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
     <>
       <MainCard title="Cập nhật">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleUpdateUser}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -187,7 +207,9 @@ export default function UpdateUser() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Mật khẩu</InputLabel>
                   <Input
-                    type={showPassword ? 'text' : 'password'}
+                    disabled
+                    type="password"
+                    // type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
                     value={password}
@@ -228,13 +250,21 @@ export default function UpdateUser() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleUpdateUser}>
+              <Button variant="contained" size="medium" type="submit">
                 Cập nhật
               </Button>
             </Item>
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

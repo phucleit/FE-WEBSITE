@@ -93,27 +93,32 @@ export default function AddUser() {
   const handleAddUser = (e) => {
     e.preventDefault();
     if (displayname == '') {
-      alert('Vui lòng nhập tên hiển thị!');
+      setMessageError('Vui lòng nhập tên hiển thị!');
+      setopenError(true);
       return;
     }
 
     if (username == '') {
-      alert('Vui lòng nhập tên đăng nhập!');
+      setMessageError('Vui lòng nhập tên đăng nhập!');
+      setopenError(true);
       return;
     }
 
     if (email == '') {
-      alert('Vui lòng nhập email!');
+      setMessageError('Vui lòng nhập email!');
+      setopenError(true);
       return;
     }
 
     if (password == '') {
-      alert('Vui lòng nhập mật khẩu!');
+      setMessageError('Vui lòng nhập mật khẩu!');
+      setopenError(true);
       return;
     }
 
     if (group_user_id == '') {
-      alert('Vui lòng chọn quyền!');
+      setMessageError('Vui lòng chọn quyền!');
+      setopenError(true);
       return;
     }
 
@@ -141,7 +146,7 @@ export default function AddUser() {
   return permissionAdd ? (
     <>
       <MainCard title="Thêm mới">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleAddUser}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -234,7 +239,7 @@ export default function AddUser() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Button variant="contained" size="medium" onClick={handleAddUser}>
+              <Button variant="contained" size="medium" type="submit">
                 Thêm mới
               </Button>
             </Item>
@@ -245,7 +250,7 @@ export default function AddUser() {
         open={openError}
         onClose={handleCloseError}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        autoHideDuration={3000}
+        autoHideDuration={1500}
       >
         <Alert severity="error">{messageError}</Alert>
       </Snackbar>

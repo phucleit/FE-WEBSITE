@@ -48,6 +48,9 @@ export default function AddGroupUser() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   useEffect(() => {
     loadListFunctions();
   }, []);
@@ -75,16 +78,28 @@ export default function AddGroupUser() {
     });
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddGroupUser = (e) => {
     e.preventDefault();
 
-    if (name == '') {
-      alert('Vui lòng nhập tên nhóm!');
+    if (name === '') {
+      setMessageError('Vui lòng nhập tên nhóm!');
+      setopenError(true);
       return;
     }
 
-    if (description == '') {
-      alert('Vui lòng nhập mô tả nhóm!');
+    if (description === '') {
+      setMessageError('Vui lòng nhập mô tả nhóm!');
+      setopenError(true);
+      return;
+    }
+
+    if (!checkedItems.length) {
+      setMessageError('Vui lòng chọn quyền!');
+      setopenError(true);
       return;
     }
 
@@ -102,15 +117,16 @@ export default function AddGroupUser() {
         }, 1500);
       })
       .catch((error) => {
-        const message = error.response ? error.response.data : '';
-        alert(message);
+        const message = error.response?.data?.message || 'Có lỗi xảy ra! Vui lòng thử lại.';
+        setMessageError(message);
+        setopenError(true);
       });
   };
 
   return (
     <>
       <MainCard title="Tạo nhóm người dùng">
-        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+        <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off" onSubmit={handleAddGroupUser}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Item>
@@ -230,7 +246,7 @@ export default function AddGroupUser() {
             </Grid>
             <Grid item xs={12}>
               <Item>
-                <Button variant="contained" size="medium" onClick={handleAddGroupUser}>
+                <Button variant="contained" size="medium" type="submit">
                   Tạo nhóm
                 </Button>
               </Item>
@@ -238,6 +254,14 @@ export default function AddGroupUser() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Tạo nhóm thành công!</Alert>
       </Snackbar>
