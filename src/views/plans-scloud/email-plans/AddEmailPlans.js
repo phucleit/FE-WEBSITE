@@ -47,6 +47,8 @@ export default function AddEmailPlans() {
   const [listSupplier, setListSupplier] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -87,25 +89,45 @@ export default function AddEmailPlans() {
     setFormatPrice(formatPriceValue(value));
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddEmailPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên gói email!');
-      return;
-    }
-
-    if (price == '') {
-      alert('Vui lòng nhập chi phí email!');
+      setMessageError('Vui lòng nhập tên gói email!');
+      setopenError(true);
       return;
     }
 
     if (account == '') {
-      alert('Vui lòng nhập số lượng tài khoản!');
+      setMessageError('Vui lòng nhập số lượng tài khoản!');
+      setopenError(true);
+      return;
+    }
+
+    if (importPrice == '') {
+      setMessageError('Vui lòng nhập giá nhập email!');
+      setopenError(true);
+      return;
+    }
+
+    if (price == '') {
+      setMessageError('Vui lòng nhập giá bán email!');
+      setopenError(true);
       return;
     }
 
     if (capacity == '') {
-      alert('Vui lòng nhập dung lượng!');
+      setMessageError('Vui lòng nhập dung lượng!');
+      setopenError(true);
+      return;
+    }
+
+    if (supplier == '') {
+      setMessageError('Vui lòng chọn nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
@@ -125,7 +147,10 @@ export default function AddEmailPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-email');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -232,6 +257,14 @@ export default function AddEmailPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

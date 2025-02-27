@@ -47,6 +47,8 @@ export default function UpdateSslPlans() {
   const [listSupplier, setListSupplier] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -85,15 +87,33 @@ export default function UpdateSslPlans() {
     setListSupplier(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateSslPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên gói ssl!');
+      setMessageError('Vui lòng nhập tên gói!');
+      setopenError(true);
+      return;
+    }
+
+    if (importPrice == '') {
+      setMessageError('Vui lòng nhập giá nhập!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí ssl!');
+      setMessageError('Vui lòng nhập giá bán!');
+      setopenError(true);
+      return;
+    }
+
+    if (supplier == '') {
+      setMessageError('Vui lòng chọn nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
@@ -112,7 +132,10 @@ export default function UpdateSslPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-ssl');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -204,6 +227,14 @@ export default function UpdateSslPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

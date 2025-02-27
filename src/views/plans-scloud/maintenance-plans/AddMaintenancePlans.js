@@ -41,6 +41,8 @@ export default function AddMaintenancePlans() {
   const [note, setNote] = useState('');
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -68,20 +70,27 @@ export default function AddMaintenancePlans() {
     setFormatPrice(formatPriceValue(value));
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddMaintenancePlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên gói!');
+      setMessageError('Vui lòng nhập tên gói!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí!');
+      setMessageError('Vui lòng nhập giá!');
+      setopenError(true);
       return;
     }
 
     if (content == '') {
-      alert('Vui lòng nhập nội dung!');
+      setMessageError('Vui lòng nhập nội dung!');
+      setopenError(true);
       return;
     }
 
@@ -99,7 +108,10 @@ export default function AddMaintenancePlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-bao-tri');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -182,6 +194,14 @@ export default function AddMaintenancePlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

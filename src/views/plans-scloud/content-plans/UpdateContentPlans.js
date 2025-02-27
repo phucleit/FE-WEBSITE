@@ -40,6 +40,8 @@ export default function UpdateContentPlans() {
   const [number_of_articles, setNumberOfArticles] = useState('');
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -71,20 +73,27 @@ export default function UpdateContentPlans() {
     setNumberOfArticles(result.data.number_of_articles);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateContentPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên gói!');
+      setMessageError('Vui lòng nhập tên gói!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí!');
+      setMessageError('Vui lòng nhập giá!');
+      setopenError(true);
       return;
     }
 
     if (number_of_articles == '') {
-      alert('Vui lòng nhập số lượng bài viết!');
+      setMessageError('Vui lòng nhập số lượng bài viết!');
+      setopenError(true);
       return;
     }
 
@@ -101,7 +110,10 @@ export default function UpdateContentPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-content');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -164,6 +176,14 @@ export default function UpdateContentPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

@@ -42,6 +42,8 @@ export default function AddServerPlans() {
   const [listSupplierServer, setListSupplierServer] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -70,10 +72,21 @@ export default function AddServerPlans() {
     setListSupplierServer(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddServerPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập địa chỉ IP!');
+      setMessageError('Vui lòng nhập địa chỉ IP!');
+      setopenError(true);
+      return;
+    }
+
+    if (supplierServerId == '') {
+      setMessageError('Vui lòng chọn nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
@@ -89,7 +102,10 @@ export default function AddServerPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-server');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -141,6 +157,14 @@ export default function AddServerPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

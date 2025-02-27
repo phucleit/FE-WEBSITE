@@ -52,6 +52,8 @@ export default function UpdateMobileNetworkPlans() {
   const [listMobileNetworkSuppliers, setListMobileNetworkSuppliers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -97,20 +99,39 @@ export default function UpdateMobileNetworkPlans() {
     setEsim(e.target.checked);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateMobileNetworkPlans = (e) => {
     e.preventDefault();
+    if (supplierMobileNetworkId == '') {
+      setMessageError('Vui lòng chọn nhà mạng!');
+      setopenError(true);
+      return;
+    }
+
     if (name == '') {
-      alert('Vui lòng nhập tên!');
+      setMessageError('Vui lòng nhập tên gói!');
+      setopenError(true);
+      return;
+    }
+
+    if (capacity == '') {
+      setMessageError('Vui lòng nhập dung lượng!');
+      setopenError(true);
       return;
     }
 
     if (importPrice == '') {
-      alert('Vui lòng nhập chi phí nhập!');
+      setMessageError('Vui lòng nhập giá nhập!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí bán!');
+      setMessageError('Vui lòng nhập giá bán!');
+      setopenError(true);
       return;
     }
 
@@ -131,7 +152,10 @@ export default function UpdateMobileNetworkPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-nha-mang');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -254,6 +278,14 @@ export default function UpdateMobileNetworkPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhập thành công!</Alert>
       </Snackbar>

@@ -39,11 +39,13 @@ export default function UpdateServerPlans() {
   const [permissionUpdate, setPermissionUpdate] = useState(false);
 
   const [name, setName] = useState('');
-  const [supplierServer, setSupplierServer] = useState('');
+  const [supplierServerId, setSupplierServerId] = useState('');
 
   const [listSupplierServer, setListSupplierServer] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -72,7 +74,7 @@ export default function UpdateServerPlans() {
   const loadDetailServerPlans = async () => {
     const result = await apiGetById(`${LIST_SERVER_PLANS}`, currentId);
     setName(result.data.name);
-    setSupplierServer(result.data.supplier_server_id._id);
+    setSupplierServerId(result.data.supplier_server_id._id);
   };
 
   const loadSupplierServers = async () => {
@@ -80,16 +82,27 @@ export default function UpdateServerPlans() {
     setListSupplierServer(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateServerPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập địa chỉ IP!');
+      setMessageError('Vui lòng nhập địa chỉ IP!');
+      setopenError(true);
+      return;
+    }
+
+    if (supplierServerId == '') {
+      setMessageError('Vui lòng chọn nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
     const updateServerPlans = {
       name: name,
-      supplier_server_id: supplierServer
+      supplier_server_id: supplierServerId
     };
 
     apiUpdate(`${LIST_SERVER_PLANS}`, currentId, updateServerPlans)
@@ -99,7 +112,10 @@ export default function UpdateServerPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-server');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -127,10 +143,10 @@ export default function UpdateServerPlans() {
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Nhà cung cấp</InputLabel>
                   <Select
-                    id="supplierServer"
-                    value={supplierServer}
+                    id="supplierServerId"
+                    value={supplierServerId}
                     label="Chọn nhà cung cấp..."
-                    onChange={(e) => setSupplierServer(e.target.value)}
+                    onChange={(e) => setSupplierServerId(e.target.value)}
                     disabled
                   >
                     {listSupplierServer.map((item) => (
@@ -152,6 +168,14 @@ export default function UpdateServerPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

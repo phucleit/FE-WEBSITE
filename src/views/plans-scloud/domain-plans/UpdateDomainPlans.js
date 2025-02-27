@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiGet, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGetById, apiGet, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -40,12 +40,16 @@ export default function UpdateDomainPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [supplier, setSupplier] = useState('');
 
   const [listSupplier, setListSupplier] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -75,7 +79,9 @@ export default function UpdateDomainPlans() {
     const result = await apiGetById(`${LIST_DOMAIN_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
+    setFormatImportPrice(formatPriceValue(result.data.import_price));
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setSupplier(result.data.supplier_id._id);
   };
 
@@ -84,15 +90,45 @@ export default function UpdateDomainPlans() {
     setListSupplier(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
+  };
+
   const handleUpdateDomainPlans = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên miền!');
+      setMessageError('Vui lòng nhập tên miền!');
+      setopenError(true);
+      return;
+    }
+
+    if (importPrice == '') {
+      setMessageError('Vui lòng nhập giá nhập tên miền!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí tên miền!');
+      setMessageError('Vui lòng nhập giá bán tên miền!');
+      setopenError(true);
+      return;
+    }
+
+    if (supplier == '') {
+      setMessageError('Vui lòng chọn nhà cung cấp!');
+      setopenError(true);
       return;
     }
 
@@ -110,7 +146,10 @@ export default function UpdateDomainPlans() {
           navigate('/trang-chu/goi-dich-vu/danh-sach-ten-mien');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -140,8 +179,8 @@ export default function UpdateDomainPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập tên miền..."
                   />
@@ -155,8 +194,8 @@ export default function UpdateDomainPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán tên miền..."
                   />
@@ -187,6 +226,14 @@ export default function UpdateDomainPlans() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>
