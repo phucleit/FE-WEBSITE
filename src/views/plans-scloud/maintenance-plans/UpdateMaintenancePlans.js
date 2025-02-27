@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
 
@@ -39,6 +39,7 @@ export default function UpdateMaintenancePlans() {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [note, setNote] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -73,11 +74,18 @@ export default function UpdateMaintenancePlans() {
     setName(result.data.name);
     setContent(result.data.content);
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setNote(result.data.note);
   };
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateMaintenancePlans = (e) => {
@@ -147,8 +155,8 @@ export default function UpdateMaintenancePlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />

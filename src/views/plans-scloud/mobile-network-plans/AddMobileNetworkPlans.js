@@ -203,6 +203,7 @@ export default function AddMobileNetworkPlans() {
                   <Input
                     id="capacity"
                     name="capacity"
+                    type="number"
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     required={true}

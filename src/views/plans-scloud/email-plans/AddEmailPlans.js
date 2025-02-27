@@ -180,6 +180,7 @@ export default function AddEmailPlans() {
                   <Input
                     id="account"
                     name="account"
+                    type="number"
                     value={account}
                     onChange={(e) => setAccount(e.target.value)}
                     required={true}
@@ -225,6 +226,7 @@ export default function AddEmailPlans() {
                   <Input
                     id="capacity"
                     name="capacity"
+                    type="number"
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     required={true}

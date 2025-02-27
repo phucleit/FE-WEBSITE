@@ -153,6 +153,7 @@ export default function AddContentPlans() {
                     id="number_of_articles"
                     name="number_of_articles"
                     value={number_of_articles}
+                    type="number"
                     onChange={(e) => setNumberOfArticles(e.target.value)}
                     required={true}
                     placeholder="Nhập số lượng bài viết..."

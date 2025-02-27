@@ -20,7 +20,7 @@ import FormLabel from '@mui/material/FormLabel';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
 const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
@@ -43,7 +43,9 @@ export default function UpdateMobileNetworkPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [capacity, setCapacity] = useState('');
   const [content, setContent] = useState('');
   const [esim, setEsim] = useState(false);
@@ -83,7 +85,9 @@ export default function UpdateMobileNetworkPlans() {
     const result = await apiGetById(`${LIST_MOBILE_NETWORK_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
+    setFormatImportPrice(formatPriceValue(result.data.import_price));
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setCapacity(result.data.capacity);
     setContent(result.data.content);
     setEsim(result.data.esim);
@@ -101,6 +105,18 @@ export default function UpdateMobileNetworkPlans() {
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateMobileNetworkPlans = (e) => {
@@ -205,6 +221,7 @@ export default function UpdateMobileNetworkPlans() {
                   <Input
                     id="capacity"
                     name="capacity"
+                    type="number"
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     required={true}
@@ -220,8 +237,8 @@ export default function UpdateMobileNetworkPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập..."
                   />
@@ -235,8 +252,8 @@ export default function UpdateMobileNetworkPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán..."
                   />

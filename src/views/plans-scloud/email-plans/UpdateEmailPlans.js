@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_EMAIL_PLANS = `${config.API_URL}/plans/email`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -40,7 +40,9 @@ export default function UpdateEmailPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [account, setAccount] = useState('');
   const [capacity, setCapacity] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -79,7 +81,9 @@ export default function UpdateEmailPlans() {
     const result = await apiGetById(`${LIST_EMAIL_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
+    setFormatImportPrice(formatPriceValue(result.data.import_price));
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setAccount(result.data.account);
     setCapacity(result.data.capacity);
     setSupplier(result.data.supplier_id._id);
@@ -92,6 +96,18 @@ export default function UpdateEmailPlans() {
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateEmailPlans = (e) => {
@@ -181,6 +197,7 @@ export default function UpdateEmailPlans() {
                   <Input
                     id="account"
                     name="account"
+                    type="number"
                     value={account}
                     onChange={(e) => setAccount(e.target.value)}
                     required={true}
@@ -196,8 +213,8 @@ export default function UpdateEmailPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập hosting..."
                   />
@@ -211,8 +228,8 @@ export default function UpdateEmailPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán hosting..."
                   />
@@ -226,6 +243,7 @@ export default function UpdateEmailPlans() {
                   <Input
                     id="capacity"
                     name="capacity"
+                    type="number"
                     value={capacity}
                     onChange={(e) => setCapacity(e.target.value)}
                     required={true}

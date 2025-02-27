@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_CONTENT_PLANS = `${config.API_URL}/plans/content`;
 
@@ -37,6 +37,7 @@ export default function UpdateContentPlans() {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [number_of_articles, setNumberOfArticles] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -70,11 +71,18 @@ export default function UpdateContentPlans() {
     const result = await apiGetById(`${LIST_CONTENT_PLANS}`, currentId);
     setName(result.data.name);
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setNumberOfArticles(result.data.number_of_articles);
   };
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateContentPlans = (e) => {
@@ -143,8 +151,8 @@ export default function UpdateContentPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />
@@ -158,6 +166,7 @@ export default function UpdateContentPlans() {
                   <Input
                     id="number_of_articles"
                     name="number_of_articles"
+                    type="number"
                     value={number_of_articles}
                     onChange={(e) => setNumberOfArticles(e.target.value)}
                     required={true}

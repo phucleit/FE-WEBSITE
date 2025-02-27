@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_HOSTING_PLANS = `${config.API_URL}/plans/HOSTING`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -40,7 +40,9 @@ export default function UpdateHostinglPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [account, setAccount] = useState('');
   const [capacity, setCapacity] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -79,7 +81,9 @@ export default function UpdateHostinglPlans() {
     const result = await apiGetById(`${LIST_HOSTING_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
+    setFormatImportPrice(formatPriceValue(result.data.import_price));
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setAccount(result.data.account);
     setCapacity(result.data.capacity);
     setSupplier(result.data.supplier_id._id);
@@ -92,6 +96,18 @@ export default function UpdateHostinglPlans() {
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateHostingPlans = (e) => {
@@ -197,8 +213,8 @@ export default function UpdateHostinglPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập hosting..."
                   />
@@ -212,8 +228,8 @@ export default function UpdateHostinglPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán hosting..."
                   />

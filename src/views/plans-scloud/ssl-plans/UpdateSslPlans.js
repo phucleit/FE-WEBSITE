@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiUpdate, apiGetById, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiUpdate, apiGetById, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_SSL_PLANS = `${config.API_URL}/plans/ssl`;
 const LIST_SUPPLIER = `${config.API_URL}/supplier`;
@@ -40,7 +40,9 @@ export default function UpdateSslPlans() {
 
   const [name, setName] = useState('');
   const [importPrice, setImportPrice] = useState('');
+  const [formatImportPrice, setFormatImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [feature, setFeature] = useState('');
   const [supplier, setSupplier] = useState('');
 
@@ -77,7 +79,9 @@ export default function UpdateSslPlans() {
     const result = await apiGetById(`${LIST_SSL_PLANS}`, currentId);
     setName(result.data.name);
     setImportPrice(result.data.import_price);
+    setFormatImportPrice(formatPriceValue(result.data.import_price));
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setFeature(result.data.feature);
     setSupplier(result.data.supplier_id._id);
   };
@@ -89,6 +93,18 @@ export default function UpdateSslPlans() {
 
   const handleCloseError = () => {
     setopenError(false);
+  };
+
+  const handChangeImportPrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setImportPrice(value);
+    setFormatImportPrice(formatPriceValue(value));
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateSslPlans = (e) => {
@@ -165,8 +181,8 @@ export default function UpdateSslPlans() {
                   <Input
                     id="importPrice"
                     name="importPrice"
-                    value={importPrice}
-                    onChange={(e) => setImportPrice(e.target.value)}
+                    value={formatImportPrice}
+                    onChange={handChangeImportPrice}
                     required={true}
                     placeholder="Nhập giá nhập email..."
                   />
@@ -180,8 +196,8 @@ export default function UpdateSslPlans() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập giá bán email..."
                   />

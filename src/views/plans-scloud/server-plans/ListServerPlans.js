@@ -15,6 +15,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import config from '../../../config';
 import { apiGet, apiDelete, getRoles } from '../../../utils/formatUtils';
@@ -36,6 +41,9 @@ export default function ListServerPlans() {
   const [permissionAdd, setPermissionAdd] = useState(false);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
   const [permissionDelete, setPermissionDelete] = useState(false);
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     loadListRoles();
@@ -77,17 +85,28 @@ export default function ListServerPlans() {
     setData(result.data);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_SERVER_PLANS}`, id)
+  const handleOpen = (id) => {
+    setSelectedId(id);
+    setOpenConfirm(true);
+  };
+
+  const handleClose = () => {
+    setOpenConfirm(false);
+    setSelectedId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedId) {
+      apiDelete(`${LIST_SERVER_PLANS}`, selectedId)
         .then(() => {
           setOpen(true);
-          setData(data.filter((item) => item._id !== id));
+          setData(data.filter((item) => item._id !== selectedId));
           setTimeout(() => {
             setOpen(false);
           }, 1100);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => handleClose());
     }
   };
 
@@ -137,7 +156,7 @@ export default function ListServerPlans() {
                           variant="contained"
                           color="error"
                           startIcon={<DeleteIcon />}
-                          onClick={() => handleDelete(item._id)}
+                          onClick={() => handleOpen(item._id)}
                         >
                           Xóa
                         </Button>
@@ -153,6 +172,20 @@ export default function ListServerPlans() {
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Xóa thành công!</Alert>
       </Snackbar>
+      <Dialog open={openConfirm} onClose={handleClose}>
+        <DialogTitle>Thông báo</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Bạn có chắc chắn muốn xóa mục này không?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Huỷ
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Xoá
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
