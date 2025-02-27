@@ -8,6 +8,11 @@ import Button from '@mui/material/Button';
 import { IconEdit } from '@tabler/icons';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import MainCard from 'ui-component/cards/MainCard';
 
@@ -23,6 +28,9 @@ export default function ListWebsiteServices() {
   const [permissionAdd, setPermissionAdd] = useState(false);
   const [permissionUpdate, setPermissionUpdate] = useState(false);
   const [permissionDelete, setPermissionDelete] = useState(false);
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState('');
@@ -78,18 +86,28 @@ export default function ListWebsiteServices() {
     setCountWebsiteServicesClosed(result.data.length);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có muốn xóa không?')) {
-      apiDelete(`${LIST_WEBSITE_SERVICES}`, id)
+  const handleOpen = (id) => {
+    setSelectedId(id);
+    setOpenConfirm(true);
+  };
+
+  const handleClose = () => {
+    setOpenConfirm(false);
+    setSelectedId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedId) {
+      apiDelete(`${LIST_WEBSITE_SERVICES}`, selectedId)
         .then(() => {
           setOpen(true);
-          setData((prevData) => prevData.filter((item) => item._id !== id));
-          setDataLength((prevCount) => prevCount - 1);
+          setData(data.filter((item) => item._id !== selectedId));
           setTimeout(() => {
             setOpen(false);
           }, 1100);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => handleClose());
     }
   };
 
@@ -175,7 +193,7 @@ export default function ListWebsiteServices() {
               </Link>
             )}
             {permissionDelete && (
-              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleDelete(params.row._id)} />
+              <DeleteOutline style={{ cursor: 'pointer', color: '#ff6666' }} onClick={() => handleOpen(params.row._id)} />
             )}
           </>
         );
@@ -257,6 +275,20 @@ export default function ListWebsiteServices() {
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Xóa thành công!</Alert>
       </Snackbar>
+      <Dialog open={openConfirm} onClose={handleClose}>
+        <DialogTitle>Thông báo</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Bạn có chắc chắn muốn xóa mục này không?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Huỷ
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Xoá
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
