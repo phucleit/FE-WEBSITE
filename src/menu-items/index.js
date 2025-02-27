@@ -9,7 +9,7 @@ import itvt from './itvt';
 import actionlogs from './actionlogs';
 
 const menuItems = {
-  items: [dashboard, users, suppliers, plans, itvt, customers, services, contracts, actionlogs]
+  items: [dashboard, actionlogs, users, suppliers, plans, itvt, customers, services, contracts]
 };
 
 export default menuItems;

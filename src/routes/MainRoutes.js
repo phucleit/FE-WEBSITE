@@ -142,6 +142,9 @@ const ListSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/ListSslITVT'
 const AddSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/AddSslITVT')));
 const UpdateSslITVT = Loadable(lazy(() => import('views/itvt/ssl-itvt/UpdateSslITVT')));
 
+// action logs
+const ListActionLogs = Loadable(lazy(() => import('views/action-logs/ListActionLogs')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -492,6 +495,15 @@ const MainRoutes = {
         {
           path: 'cap-nhat-hop-dong/:id',
           element: <UpdateContracts />
+        }
+      ]
+    },
+    {
+      path: 'lich-su-thao-tac',
+      children: [
+        {
+          path: 'danh-sach',
+          element: <ListActionLogs />
         }
       ]
     }

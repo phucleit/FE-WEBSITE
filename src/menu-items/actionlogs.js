@@ -8,14 +8,13 @@ const icons = { IconBellRinging };
 
 const actionlogs = {
   id: 'actionlogs-scloud',
-  title: 'Lịch Sử Thao Tác - Scloud',
   type: 'group',
   children: [
     {
-      id: 'danh-sach-lich-su-thao-tac',
+      id: 'lich-su-thao-tac',
       title: 'Lịch sử thao tác',
       type: 'item',
-      url: '/trang-chu/danh-sach-lich-su-thao-tac',
+      url: '/trang-chu/lich-su-thao-tac/danh-sach',
       icon: icons.IconBellRinging,
       breadcrumbs: false
     }
