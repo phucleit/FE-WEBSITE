@@ -27,8 +27,8 @@ export default function ListActionLogs() {
   const loadListActionLogs = async () => {
     try {
       const result = await apiGet(`${LIST_ACTION_LOGS}`);
-      if (result.data.length > 0) {
-        setData(result.data);
+      if (result.data.data.length > 0) {
+        setData(result.data.data);
       }
     } catch (error) {
       console.error('Lỗi khi lấy dữ liệu:', error);
