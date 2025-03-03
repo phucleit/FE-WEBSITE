@@ -99,6 +99,11 @@ export function formatPhoneNumber(phoneNumber) {
   return formattedNumber;
 }
 
+export function formatPhoneNumberCustomer(number) {
+  const numStr = number.toString().padStart(10, '0');
+  return numStr.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+}
+
 export function getCreatedAt(params) {
   if (params) {
     var timeStamp = params;

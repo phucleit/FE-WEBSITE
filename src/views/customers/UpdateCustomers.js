@@ -64,6 +64,8 @@ export default function UpdateCustomers() {
   const [typeCustomer, setTypeCustomer] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -119,20 +121,33 @@ export default function UpdateCustomers() {
     setTypeCustomer(e.target.checked);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateCustomers = (e) => {
     e.preventDefault();
     if (fullname == '') {
-      alert('Vui lòng nhập họ và tên!');
+      setMessageError('Vui lòng nhập họ và tên!');
+      setopenError(true);
+      return;
+    }
+
+    if (gender == '') {
+      setMessageError('Vui lòng chọn giới tính!');
+      setopenError(true);
       return;
     }
 
     if (idNumber == '') {
-      alert('Vui lòng nhập số CCCD!');
+      setMessageError('Vui lòng nhập số CCCD!');
+      setopenError(true);
       return;
     }
 
     if (phone == '') {
-      alert('Vui lòng nhập số điện thoại!');
+      setMessageError('Vui lòng nhập số điện thoại!');
+      setopenError(true);
       return;
     }
 
@@ -160,7 +175,10 @@ export default function UpdateCustomers() {
           navigate('/trang-chu/khach-hang/danh-sach-khach-hang');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -216,6 +234,7 @@ export default function UpdateCustomers() {
                   <Input
                     id="idNumber"
                     name="idNumber"
+                    type="number"
                     value={idNumber}
                     onChange={(e) => setIdNumber(e.target.value)}
                     required={true}
@@ -231,6 +250,7 @@ export default function UpdateCustomers() {
                   <Input
                     id="phone"
                     name="phone"
+                    type="number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required={true}
@@ -250,96 +270,6 @@ export default function UpdateCustomers() {
                     onChange={(e) => setAddress(e.target.value)}
                     required={true}
                     placeholder="Nhập địa chỉ..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Tên công ty</InputLabel>
-                  <Input
-                    id="company"
-                    name="company"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    required={true}
-                    placeholder="Nhập tên công ty..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Mã số thuế</InputLabel>
-                  <Input
-                    id="taxCode"
-                    name="taxCode"
-                    value={taxCode}
-                    onChange={(e) => setTaxCode(e.target.value)}
-                    required={true}
-                    placeholder="Nhập mã số thuế..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Địa chỉ công ty</InputLabel>
-                  <Input
-                    id="addressCompany"
-                    name="addressCompany"
-                    value={addressCompany}
-                    onChange={(e) => setAddressCompany(e.target.value)}
-                    required={true}
-                    placeholder="Nhập địa chỉ công ty..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Người đại diện</InputLabel>
-                  <Input
-                    id="representative"
-                    name="representative"
-                    value={representative}
-                    onChange={(e) => setRepresentative(e.target.value)}
-                    required={true}
-                    placeholder="Nhập tên người đại diện..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Hotline người đại diện</InputLabel>
-                  <Input
-                    id="representativeHotline"
-                    name="representativeHotline"
-                    value={representativeHotline}
-                    onChange={(e) => setRepresentativeHotline(e.target.value)}
-                    required={true}
-                    placeholder="Nhập hotline người đại diện..."
-                  />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <InputLabel>Mail VAT</InputLabel>
-                  <Input
-                    id="mailVat"
-                    name="mailVat"
-                    value={mailVat}
-                    onChange={(e) => setMailVat(e.target.value)}
-                    required={true}
-                    placeholder="Nhập mail VAT..."
                   />
                 </FormControl>
               </Item>
@@ -412,6 +342,96 @@ export default function UpdateCustomers() {
                 </FormControl>
               </Item>
             </Grid>
+            {typeCustomer === true && (
+              <>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Tên công ty</InputLabel>
+                      <Input
+                        id="company"
+                        name="company"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        placeholder="Nhập tên công ty..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Mã số thuế</InputLabel>
+                      <Input
+                        id="taxCode"
+                        name="taxCode"
+                        value={taxCode}
+                        type="number"
+                        onChange={(e) => setTaxCode(e.target.value)}
+                        placeholder="Nhập mã số thuế..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Địa chỉ công ty</InputLabel>
+                      <Input
+                        id="addressCompany"
+                        name="addressCompany"
+                        value={addressCompany}
+                        onChange={(e) => setAddressCompany(e.target.value)}
+                        placeholder="Nhập địa chỉ công ty..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Người đại diện</InputLabel>
+                      <Input
+                        id="representative"
+                        name="representative"
+                        value={representative}
+                        onChange={(e) => setRepresentative(e.target.value)}
+                        placeholder="Nhập tên người đại diện..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Hotline người đại diện</InputLabel>
+                      <Input
+                        id="representativeHotline"
+                        name="representativeHotline"
+                        type="number"
+                        value={representativeHotline}
+                        onChange={(e) => setRepresentativeHotline(e.target.value)}
+                        placeholder="Nhập hotline người đại diện..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+                <Grid item xs={6}>
+                  <Item>
+                    <FormControl variant="standard" fullWidth>
+                      <InputLabel>Mail VAT</InputLabel>
+                      <Input
+                        id="mailVat"
+                        name="mailVat"
+                        value={mailVat}
+                        onChange={(e) => setMailVat(e.target.value)}
+                        placeholder="Nhập mail VAT..."
+                      />
+                    </FormControl>
+                  </Item>
+                </Grid>
+              </>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Item>
@@ -425,6 +445,14 @@ export default function UpdateCustomers() {
       <ListServices />
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
       </Snackbar>
     </>
   ) : (

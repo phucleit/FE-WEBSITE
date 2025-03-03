@@ -16,7 +16,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import config from '../../config';
-import { apiGet, apiDelete, formatPhoneNumber, getCreatedAt, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
+import { apiGet, apiDelete, formatPhoneNumberCustomer, getCreatedAt, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
 
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
 
@@ -116,7 +116,28 @@ export default function ListCustomers() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const customers = await apiGet(`${LIST_CUSTOMERS}`);
+      setData(customers.data);
+      setDataLength(customers.data.length);
+
+      const guests = await apiGet(`${LIST_CUSTOMERS}/type/guests`);
+      setDataGuests(guests.data);
+      setCountDataGuests(guests.data.length);
+
+      const company = await apiGet(`${LIST_CUSTOMERS}/type/company`);
+      setDataCompany(company.data);
+      setCountDataCompany(company.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -140,7 +161,7 @@ export default function ListCustomers() {
       field: 'phone',
       headerName: 'Số điện thoại',
       width: 150,
-      valueGetter: (params) => maskPhoneNumber(formatPhoneNumber(params.row.phone))
+      valueGetter: (params) => maskPhoneNumber(formatPhoneNumberCustomer(params.row.phone))
     },
     {
       field: 'type_customer',
@@ -215,7 +236,7 @@ export default function ListCustomers() {
             size="small"
             onClick={() => setSelectedData('dataGuests')}
             component={Link}
-            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?data=guests' }}
+            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?loai=khach-ca-nhan' }}
             sx={{ ml: '10px', mr: '10px' }}
             color="success"
           >
@@ -226,7 +247,7 @@ export default function ListCustomers() {
             size="small"
             onClick={() => setSelectedData('dataCompany')}
             component={Link}
-            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?type=company' }}
+            to={{ pathname: '/trang-chu/khach-hang/danh-sach-khach-hang', search: '?loai=khach-doanh-nghiep' }}
             sx={{ mr: '10px' }}
             color="warning"
           >
