@@ -118,7 +118,28 @@ export default function ListMobileNetworkServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expiring/all`);
+      setDataMobileNetworkServicesExpiring(listExpiring.data);
+      setCountMobileNetworkServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_MOBILE_NETWORK_SERVICES}/expired/all`);
+      setDataMobileNetworkServicesExpired(listExpired.data);
+      setCountMobileNetworkServicesExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -270,7 +291,7 @@ export default function ListMobileNetworkServices() {
             size="small"
             onClick={() => setSelectedData('dataMobileNetworkServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -281,7 +302,7 @@ export default function ListMobileNetworkServices() {
             size="small"
             onClick={() => setSelectedData('dataMobileNetworkServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-nha-mang', search: '?loai=het-han' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >

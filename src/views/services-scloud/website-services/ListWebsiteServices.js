@@ -107,7 +107,24 @@ export default function ListWebsiteServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_WEBSITE_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listClosed = await apiGet(`${LIST_WEBSITE_SERVICES}/closed/all`);
+      setDataWebsiteServicesClosed(listClosed.data);
+      setCountWebsiteServicesClosed(listClosed.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -221,14 +238,14 @@ export default function ListWebsiteServices() {
             component={Link}
             to={{ pathname: '/trang-chu/dich-vu/danh-sach-website' }}
           >
-            Đang hoạt động: {dataLength ? dataLength : '0'}
+            Đang sử dụng: {dataLength ? dataLength : '0'}
           </Button>
           <Button
             variant="contained"
             size="small"
             onClick={() => setSelectedData('dataWebsiteServicesClosed')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-website', search: '?data=closed' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-website', search: '?loai=da-dong' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >

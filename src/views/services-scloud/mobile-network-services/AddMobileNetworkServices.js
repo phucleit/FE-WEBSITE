@@ -49,6 +49,8 @@ export default function AddMobileNetworkServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -83,14 +85,35 @@ export default function AddMobileNetworkServices() {
     setListCustomers(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleMobileNetworkServices = (e) => {
     e.preventDefault();
+    if (mobileNetworkPlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
 
     const addMobileNetworkServices = {
-      periods: periods,
-      registeredAt: registeredAt.getTime(),
       mobile_network_plan_id: mobileNetworkPlanId,
-      customer_id: customerId
+      customer_id: customerId,
+      registeredAt: registeredAt.getTime(),
+      periods: periods
     };
 
     apiPost(`${LIST_MOBILE_NETWORK_SERVICES}`, addMobileNetworkServices)
@@ -100,7 +123,10 @@ export default function AddMobileNetworkServices() {
           navigate('/trang-chu/dich-vu/danh-sach-nha-mang');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -182,6 +208,14 @@ export default function AddMobileNetworkServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

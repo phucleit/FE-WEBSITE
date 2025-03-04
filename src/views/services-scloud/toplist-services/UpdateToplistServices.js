@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
@@ -40,6 +40,7 @@ export default function UpdateToplistServices() {
 
   const [post, setPost] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [rentalLocation, setRentalLocation] = useState('');
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState('');
@@ -49,6 +50,8 @@ export default function UpdateToplistServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -90,8 +93,35 @@ export default function UpdateToplistServices() {
     setListCustomers(result.data);
   };
 
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
+  };
+
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleUpdateToplistServices = (e) => {
     e.preventDefault();
+    if (price == '') {
+      setMessageError('Vui lòng chi phí!');
+      setopenError(true);
+      return;
+    }
+
+    if (rentalLocation == '') {
+      setMessageError('Vui lòng nhập vị trí hiển thị!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
 
     const updateToplistServices = {
       post: post,
@@ -107,7 +137,10 @@ export default function UpdateToplistServices() {
           navigate('/trang-chu/dich-vu/danh-sach-toplist');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionUpdate ? (
@@ -138,8 +171,8 @@ export default function UpdateToplistServices() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />
@@ -153,6 +186,7 @@ export default function UpdateToplistServices() {
                   <Input
                     id="rentalLocation"
                     name="rentalLocation"
+                    type="number"
                     value={rentalLocation}
                     onChange={(e) => setRentalLocation(e.target.value)}
                     required={true}
@@ -220,6 +254,14 @@ export default function UpdateToplistServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Cập nhật thành công!</Alert>
       </Snackbar>

@@ -128,7 +128,32 @@ export default function ListEmailServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_EMAIL_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_EMAIL_SERVICES}/expiring/all`);
+      setDataEmailServicesExpiring(listExpiring.data);
+      setCountEmailServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_EMAIL_SERVICES}/expired/all`);
+      setDataEmailServicesExpired(listExpired.data);
+      setCountEmailServicesExpired(listExpired.data.length);
+
+      const listBeforePayment = await apiGet(`${LIST_EMAIL_SERVICES}/before-payment/all`);
+      setDataEmailServicesBeforePayment(listBeforePayment.data);
+      setCountEmailServicesBeforePayment(listBeforePayment.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -313,7 +338,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -324,7 +349,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?loai=het-han' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -335,7 +360,7 @@ export default function ListEmailServices() {
             size="small"
             onClick={() => setSelectedData('dataEmailServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-email', search: '?loai=cong-no' }}
             color="success"
           >
             Công nợ: {countEmailServicesBeforePayment ? countEmailServicesBeforePayment : '0'}

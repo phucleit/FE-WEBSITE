@@ -49,7 +49,7 @@ export default function UpdateEmailServices() {
   const [periods, setPeriods] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [beforePayment, setBeforePayment] = useState(false);
-  const [after_payment, setAfterPayment] = useState(false);
+  const [afterPayment, setAfterPayment] = useState(false);
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listEmailPlans, setListEmailPlans] = useState([]);
@@ -127,7 +127,7 @@ export default function UpdateEmailServices() {
       periods: periods,
       customer_id: customerId,
       before_payment: beforePayment,
-      after_payment: after_payment
+      after_payment: afterPayment
     };
 
     apiUpdate(`${LIST_EMAIL_SERVICES}`, currentId, updateEmailServices)
@@ -159,7 +159,6 @@ export default function UpdateEmailServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -241,22 +240,26 @@ export default function UpdateEmailServices() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
-                  <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
-                  <Switch checked={after_payment} onChange={handleChangeAfterPayment} />
-                </FormControl>
-              </Item>
-            </Grid>
+            {!afterPayment && (
+              <Grid item xs={6}>
+                <Item>
+                  <FormControl variant="standard" fullWidth>
+                    <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
+                    <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
+                  </FormControl>
+                </Item>
+              </Grid>
+            )}
+            {!beforePayment && (
+              <Grid item xs={6}>
+                <Item>
+                  <FormControl variant="standard" fullWidth>
+                    <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
+                    <Switch checked={afterPayment} onChange={handleChangeAfterPayment} />
+                  </FormControl>
+                </Item>
+              </Grid>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Item>

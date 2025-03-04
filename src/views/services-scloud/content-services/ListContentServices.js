@@ -118,7 +118,28 @@ export default function ListContentServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_CONTENT_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_CONTENT_SERVICES}/expiring/all`);
+      setDataContentServicesExpiring(listExpiring.data);
+      setCountContentServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_CONTENT_SERVICES}/expired/all`);
+      setDataContentServicesExpired(listExpired.data);
+      setCountContentServicesExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -264,7 +285,7 @@ export default function ListContentServices() {
             size="small"
             onClick={() => setSelectedData('dataContentServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -275,7 +296,7 @@ export default function ListContentServices() {
             size="small"
             onClick={() => setSelectedData('dataContentServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-content', search: '?loai=het-han' }}
             color="error"
           >
             Hết hạn: {countContentServicesExpired ? countContentServicesExpired : '0'}

@@ -118,7 +118,28 @@ export default function ListToplistServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_TOPLIST_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_TOPLIST_SERVICES}/expiring/all`);
+      setDataToplistServicesExpiring(listExpiring.data);
+      setCountToplistServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_TOPLIST_SERVICES}/expired/all`);
+      setDataToplistServicesExpired(listExpired.data);
+      setCountToplistServicesExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -132,8 +153,8 @@ export default function ListToplistServices() {
     {
       field: 'rental_location',
       headerName: 'Vị trí hiển thị',
-      width: 140,
-      valueGetter: (params) => `${params.row.rental_location}`
+      width: 170,
+      valueGetter: (params) => `Top ${params.row.rental_location}`
     },
     {
       field: 'customer',
@@ -260,7 +281,7 @@ export default function ListToplistServices() {
             size="small"
             onClick={() => setSelectedData('dataToplistServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -271,7 +292,7 @@ export default function ListToplistServices() {
             size="small"
             onClick={() => setSelectedData('dataToplistServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-toplist', search: '?loai=het-han' }}
             color="error"
           >
             Hết hạn: {countToplistServicesExpired ? countToplistServicesExpired : '0'}

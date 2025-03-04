@@ -128,7 +128,32 @@ export default function ListSslServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_SSL_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_SSL_SERVICES}/expiring/all`);
+      setDataSslServicesExpiring(listExpiring.data);
+      setCountSslServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_SSL_SERVICES}/expired/all`);
+      setDataSslServicesExpired(listExpired.data);
+      setCountSslServicesExpired(listExpired.data.length);
+
+      const listBeforePayment = await apiGet(`${LIST_SSL_SERVICES}/before-payment/all`);
+      setDataSslServicesBeforePayment(listBeforePayment.data);
+      setCountSslServicesBeforePayment(listBeforePayment.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -312,7 +337,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -323,7 +348,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?loai=het-han' }}
             color="error"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -334,7 +359,7 @@ export default function ListSslServices() {
             size="small"
             onClick={() => setSelectedData('dataSslServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ssl', search: '?loai=cong-no' }}
             color="success"
           >
             Công nợ: {countSslServicesBeforePayment ? countSslServicesBeforePayment : '0'}

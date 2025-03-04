@@ -21,7 +21,7 @@ import './styles.css';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
 const LIST_CUSTOMERS = `${config.API_URL}/customer`;
@@ -42,6 +42,7 @@ export default function AddToplistServices() {
 
   const [post, setPost] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [rentalLocation, setRentalLocation] = useState('');
   const [periods, setPeriods] = useState('');
   const [registeredAt, setRegisteredAt] = useState(new Date());
@@ -50,6 +51,8 @@ export default function AddToplistServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -78,20 +81,45 @@ export default function AddToplistServices() {
     setListCustomers(result.data);
   };
 
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
+  };
+
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddToplistServices = (e) => {
     e.preventDefault();
     if (post == '') {
-      alert('Vui lòng nhập tiêu đề bài viết!');
+      setMessageError('Vui lòng nhập tiêu đề bài viết!');
+      setopenError(true);
       return;
     }
 
     if (price == '') {
-      alert('Vui lòng nhập chi phí!');
+      setMessageError('Vui lòng chi phí!');
+      setopenError(true);
       return;
     }
 
     if (rentalLocation == '') {
-      alert('Vui lòng nhập vị trí hiển thị!');
+      setMessageError('Vui lòng nhập vị trí hiển thị!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
       return;
     }
 
@@ -111,7 +139,10 @@ export default function AddToplistServices() {
           navigate('/trang-chu/dich-vu/danh-sach-toplist');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -141,8 +172,8 @@ export default function AddToplistServices() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />
@@ -156,6 +187,7 @@ export default function AddToplistServices() {
                   <Input
                     id="rentalLocation"
                     name="rentalLocation"
+                    type="number"
                     value={rentalLocation}
                     onChange={(e) => setRentalLocation(e.target.value)}
                     required={true}
@@ -219,6 +251,14 @@ export default function AddToplistServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

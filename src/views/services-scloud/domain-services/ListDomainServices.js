@@ -128,7 +128,32 @@ export default function ListDomainServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_DOMAIN_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_DOMAIN_SERVICES}/expiring/all`);
+      setDataDomainServicesExpiring(listExpiring.data);
+      setCountDomainServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_DOMAIN_SERVICES}/expired/all`);
+      setDataDomainServicesExpired(listExpired.data);
+      setCountDomainServicesExpired(listExpired.data.length);
+
+      const listBeforePayment = await apiGet(`${LIST_DOMAIN_SERVICES}/before-payment/all`);
+      setDataDomainServicesBeforePayment(listBeforePayment.data);
+      setCountDomainServicesBeforePayment(listBeforePayment.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -326,7 +351,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -337,7 +362,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?loai=het-han' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -348,7 +373,7 @@ export default function ListDomainServices() {
             size="small"
             onClick={() => setSelectedData('dataDomainServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-ten-mien', search: '?loai=cong-no' }}
             color="success"
           >
             Công nợ: {countDomainServicesBeforePayment ? countDomainServicesBeforePayment : '0'}

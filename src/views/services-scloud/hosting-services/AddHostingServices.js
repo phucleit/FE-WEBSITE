@@ -52,6 +52,8 @@ export default function AddHostingServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -92,13 +94,40 @@ export default function AddHostingServices() {
     setListCustomers(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddHostingServices = (e) => {
     e.preventDefault();
+    if (domainServiceId == '') {
+      setMessageError('Vui lòng chọn tên miền đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (hostingPlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ hosting!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
 
     const addHostingServices = {
-      registeredAt: registeredAt.getTime(),
       domain_service_id: domainServiceId,
       hosting_plan_id: hostingPlanId,
+      registeredAt: registeredAt.getTime(),
       periods: periods,
       customer_id: customerId
     };
@@ -110,7 +139,10 @@ export default function AddHostingServices() {
           navigate('/trang-chu/dich-vu/danh-sach-hosting');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -131,7 +163,6 @@ export default function AddHostingServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -212,6 +243,14 @@ export default function AddHostingServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

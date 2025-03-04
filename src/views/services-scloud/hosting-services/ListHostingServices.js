@@ -128,7 +128,32 @@ export default function ListHostingServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_HOSTING_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_HOSTING_SERVICES}/expiring/all`);
+      setDataHostingServicesExpiring(listExpiring.data);
+      setCountHostingServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_HOSTING_SERVICES}/expired/all`);
+      setDataHostingServicesExpired(listExpired.data);
+      setCountHostingServicesExpired(listExpired.data.length);
+
+      const listBeforePayment = await apiGet(`${LIST_HOSTING_SERVICES}/before-payment/all`);
+      setDataHostingServicesBeforePayment(listBeforePayment.data);
+      setCountHostingServicesBeforePayment(listBeforePayment.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -314,7 +339,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -325,7 +350,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?loai=het-han' }}
             color="error"
             sx={{ mr: '10px' }}
           >
@@ -336,7 +361,7 @@ export default function ListHostingServices() {
             size="small"
             onClick={() => setSelectedData('dataHostingServicesBeforePayment')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?data=payment' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-hosting', search: '?loai=cong-no' }}
             color="success"
           >
             Công nợ: {countHostingServicesBeforePayment ? countHostingServicesBeforePayment : '0'}

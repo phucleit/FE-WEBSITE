@@ -34,7 +34,7 @@ export default function ListDomainById(props) {
       field: 'name',
       headerName: 'Dịch vụ tên miền',
       width: 250,
-      valueGetter: (params) => (params.row.name ? `${params.row.name}${params.row.domain_plan_id.name}` : '')
+      valueGetter: (params) => (params.row.name ? `${params.row.name}` : '')
     },
     {
       field: 'supplier',

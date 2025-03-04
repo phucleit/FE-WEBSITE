@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiPost, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -39,12 +39,15 @@ export default function AddWebsiteServices() {
 
   const [domainServiceId, setDomainServiceId] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [customerId, setCustomerId] = useState('');
 
   const [listDomainServices, setListDomainServices] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -79,8 +82,35 @@ export default function AddWebsiteServices() {
     setListCustomers(result.data);
   };
 
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
+  };
+
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddWebsiteServices = (e) => {
     e.preventDefault();
+    if (domainServiceId == '') {
+      setMessageError('Vui lòng chọn tên miền đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (price == '') {
+      setMessageError('Vui lòng nhập chi phí!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
 
     const addWebsiteServices = {
       domain_service_id: domainServiceId,
@@ -95,7 +125,10 @@ export default function AddWebsiteServices() {
           navigate('/trang-chu/dich-vu/danh-sach-website');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -116,7 +149,6 @@ export default function AddWebsiteServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -130,8 +162,8 @@ export default function AddWebsiteServices() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
                   />
@@ -162,6 +194,14 @@ export default function AddWebsiteServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

@@ -48,8 +48,8 @@ export default function UpdateDomainServices() {
   const [domainPlanId, setDomainPlanId] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [pingCloudflare, setPingCloudflare] = useState('');
-  const [before_payment, setBeforePayment] = useState(false);
-  const [after_payment, setAfterPayment] = useState(false);
+  const [beforePayment, setBeforePayment] = useState(false);
+  const [afterPayment, setAfterPayment] = useState(false);
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
@@ -125,8 +125,8 @@ export default function UpdateDomainServices() {
       domain_plan_id: domainPlanId,
       customer_id: customerId,
       ping_cloudflare: pingCloudflare,
-      before_payment: before_payment,
-      after_payment: after_payment
+      before_payment: beforePayment,
+      after_payment: afterPayment
     };
 
     apiUpdate(`${LIST_DOMAIN_SERVICES}`, currentId, updateDomainServices)
@@ -215,22 +215,26 @@ export default function UpdateDomainServices() {
                 </FormControl>
               </Item>
             </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
-                  <Switch checked={before_payment} onChange={handleChangeBeforePayment} />
-                </FormControl>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <FormControl variant="standard" fullWidth>
-                  <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
-                  <Switch checked={after_payment} onChange={handleChangeAfterPayment} />
-                </FormControl>
-              </Item>
-            </Grid>
+            {!afterPayment && (
+              <Grid item xs={6}>
+                <Item>
+                  <FormControl variant="standard" fullWidth>
+                    <FormLabel component="legend">Gia hạn trước khi thanh toán</FormLabel>
+                    <Switch checked={beforePayment} onChange={handleChangeBeforePayment} />
+                  </FormControl>
+                </Item>
+              </Grid>
+            )}
+            {!beforePayment && (
+              <Grid item xs={6}>
+                <Item>
+                  <FormControl variant="standard" fullWidth>
+                    <FormLabel component="legend">Gia hạn sau khi thanh toán</FormLabel>
+                    <Switch checked={afterPayment} onChange={handleChangeAfterPayment} />
+                  </FormControl>
+                </Item>
+              </Grid>
+            )}
             <Grid item xs={6}>
               <Item>
                 <FormControl variant="standard" fullWidth>

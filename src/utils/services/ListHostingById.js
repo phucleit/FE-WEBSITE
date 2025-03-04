@@ -36,12 +36,10 @@ export default function ListHostingById(props) {
       width: 250,
       renderCell: (params) => {
         const domainServiceName = params.row.domain_service_id?.name || '';
-        const domainPlanName = params.row.domain_plan_id?.name || '';
         const domainSupplierName = params.row.domain_supplier_id?.name || '';
         return (
           <span>
             {domainServiceName}
-            {domainPlanName}
             <br />
             {domainSupplierName ? `NCC: ${domainSupplierName}` : ''}
           </span>

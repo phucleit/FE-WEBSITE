@@ -49,6 +49,8 @@ export default function AddContentServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -83,12 +85,33 @@ export default function AddContentServices() {
     setListCustomers(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddContentServices = (e) => {
     e.preventDefault();
+    if (contentPlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
 
     const addContentServices = {
-      registeredAt: registeredAt.getTime(),
       content_plan_id: contentPlanId,
+      registeredAt: registeredAt.getTime(),
       periods: periods,
       customer_id: customerId
     };
@@ -100,7 +123,10 @@ export default function AddContentServices() {
           navigate('/trang-chu/dich-vu/danh-sach-content');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -184,6 +210,14 @@ export default function AddContentServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

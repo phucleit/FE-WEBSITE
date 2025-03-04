@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 
 import config from '../../../config';
-import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
+import { apiGet, apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
 const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
 const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
@@ -41,6 +41,7 @@ export default function UpdateWebsiteServices() {
 
   const [domainServiceId, setDomainServiceId] = useState('');
   const [price, setPrice] = useState('');
+  const [formatPrice, setFormatPrice] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [status, setStatusService] = useState('');
 
@@ -78,6 +79,7 @@ export default function UpdateWebsiteServices() {
     const result = await apiGetById(`${LIST_WEBSITE_SERVICES}`, currentId);
     setDomainServiceId(result.data.domain_service_id._id);
     setPrice(result.data.price);
+    setFormatPrice(formatPriceValue(result.data.price));
     setCustomerId(result.data.customer_id._id);
     setStatusService(result.data.status);
   };
@@ -90,6 +92,12 @@ export default function UpdateWebsiteServices() {
   const loadListCustomers = async () => {
     const result = await apiGet(`${LIST_CUSTOMERS}`);
     setListCustomers(result.data);
+  };
+
+  const handChangePrice = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setPrice(value);
+    setFormatPrice(formatPriceValue(value));
   };
 
   const handleUpdateWebsiteServices = (e) => {
@@ -131,7 +139,6 @@ export default function UpdateWebsiteServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -145,10 +152,11 @@ export default function UpdateWebsiteServices() {
                   <Input
                     id="price"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={formatPrice}
+                    onChange={handChangePrice}
                     required={true}
                     placeholder="Nhập chi phí..."
+                    disabled
                   />
                 </FormControl>
               </Item>
