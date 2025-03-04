@@ -53,6 +53,8 @@ export default function AddMaintenanceServices() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -93,8 +95,41 @@ export default function AddMaintenanceServices() {
     setListCustomers(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddMaintenanceServices = (e) => {
     e.preventDefault();
+    if (maintenancePlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (domainServiceId == '') {
+      setMessageError('Vui lòng chọn tên miền đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (serviceType == '') {
+      setMessageError('Vui lòng chọn loại dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
 
     const addMaintenanceServices = {
       maintenance_plan_id: maintenancePlanId,
@@ -112,7 +147,11 @@ export default function AddMaintenanceServices() {
           navigate('/trang-chu/dich-vu/danh-sach-bao-tri');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -152,7 +191,6 @@ export default function AddMaintenanceServices() {
                     {listDomainServices.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -232,6 +270,14 @@ export default function AddMaintenanceServices() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

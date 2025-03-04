@@ -118,7 +118,28 @@ export default function ListMaintenanceServices() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_MAINTENANCE_SERVICES}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expiring/all`);
+      setDataMaintenanceServicesExpiring(listExpiring.data);
+      setCountMaintenanceServicesExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_MAINTENANCE_SERVICES}/expired/all`);
+      setDataMaintenanceServicesExpired(listExpired.data);
+      setCountMaintenanceServicesExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -287,7 +308,7 @@ export default function ListMaintenanceServices() {
             size="small"
             onClick={() => setSelectedData('dataMaintenanceServicesExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -298,7 +319,7 @@ export default function ListMaintenanceServices() {
             size="small"
             onClick={() => setSelectedData('dataMaintenanceServicesExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/dich-vu/danh-sach-bao-tri', search: '?loai=het-han' }}
             color="error"
           >
             Hết hạn: {countMaintenanceServicesExpired ? countMaintenanceServicesExpired : '0'}

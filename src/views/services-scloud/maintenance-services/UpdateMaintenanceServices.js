@@ -120,7 +120,7 @@ export default function UpdateMaintenanceServices() {
     apiUpdate(`${LIST_MAINTENANCE_SERVICES}`, currentId, updateMaintenanceServices)
       .then(() => {
         setOpen(true);
-        setIntersetTimeoutval(() => {
+        setTimeout(() => {
           navigate('/trang-chu/dich-vu/danh-sach-bao-tri');
         }, 1500);
       })
