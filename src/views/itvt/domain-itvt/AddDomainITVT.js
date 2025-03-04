@@ -51,13 +51,15 @@ export default function AddDomainITVT() {
   const [domainPlanId, setDomainPlanId] = useState('');
   const [serverPlanId, setServerPlanId] = useState('');
   const [pingCloudflare, setPingCloudflare] = useState(false);
-  const [customer_id, setCustomerId] = useState('');
+  const [customerId, setCustomerId] = useState('');
 
   const [listDomainPlans, setListDomainPlans] = useState([]);
   const [listServerPlans, setListServerPlans] = useState([]);
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -102,21 +104,50 @@ export default function AddDomainITVT() {
     setPingCloudflare(e.target.checked);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddDomainITVT = (e) => {
     e.preventDefault();
     if (name == '') {
-      alert('Vui lòng nhập tên miền đăng ký!');
+      setMessageError('Vui lòng nhập tên miền đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (domainPlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
+
+    if (serverPlanId == '') {
+      setMessageError('Vui lòng chọn server!');
+      setopenError(true);
       return;
     }
 
     const addDomainITVT = {
       name: name,
-      periods: periods,
-      registeredAt: registeredAt.getTime(),
       domain_plan_id: domainPlanId,
+      registeredAt: registeredAt.getTime(),
+      periods: periods,
+      customer_id: customerId,
       server_plan_id: serverPlanId,
-      ping_cloudflare: pingCloudflare,
-      customer_id: customer_id
+      ping_cloudflare: pingCloudflare
     };
 
     apiPost(`${LIST_DOMAIN_ITVT}`, addDomainITVT)
@@ -126,7 +157,10 @@ export default function AddDomainITVT() {
           navigate('/trang-chu/itvt/danh-sach-ten-mien-itvt');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -203,7 +237,7 @@ export default function AddDomainITVT() {
               <Item>
                 <FormControl variant="standard" fullWidth>
                   <InputLabel>Khách hàng</InputLabel>
-                  <Select id="customer_id" value={customer_id} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
+                  <Select id="customerId" value={customerId} label="Chọn khách hàng..." onChange={(e) => setCustomerId(e.target.value)}>
                     {listCustomers.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.fullname}
@@ -245,6 +279,14 @@ export default function AddDomainITVT() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

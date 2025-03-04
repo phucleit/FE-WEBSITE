@@ -118,7 +118,28 @@ export default function ListSslITVT() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_SSL_ITVT}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_SSL_ITVT}/expiring/all`);
+      setDataSslITVTExpiring(listExpiring.data);
+      setCountSslITVTExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_SSL_ITVT}/expired/all`);
+      setDataSslITVTExpired(listExpired.data);
+      setCountSslITVTExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
@@ -255,7 +276,7 @@ export default function ListSslITVT() {
         title="Danh sách"
         secondary={
           permissionAdd && (
-            <Button variant="contained" component={Link} to="/trang-chu/itvt/add-ssl-itvt">
+            <Button variant="contained" component={Link} to="/trang-chu/itvt/them-ssl-itvt">
               Thêm mới
             </Button>
           )

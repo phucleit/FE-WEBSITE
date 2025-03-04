@@ -52,6 +52,8 @@ export default function AddSslITVT() {
   const [listCustomers, setListCustomers] = useState([]);
 
   const [open, setOpen] = useState(false);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   useEffect(() => {
     loadListRoles();
@@ -92,14 +94,41 @@ export default function AddSslITVT() {
     setListCustomers(result.data);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleAddSslITVT = (e) => {
     e.preventDefault();
+    if (domainITVTId == '') {
+      setMessageError('Vui lòng chọn tên miền đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (sslPlanId == '') {
+      setMessageError('Vui lòng chọn gói dịch vụ!');
+      setopenError(true);
+      return;
+    }
+
+    if (periods == '') {
+      setMessageError('Vui lòng chọn thời gian đăng ký!');
+      setopenError(true);
+      return;
+    }
+
+    if (customerId == '') {
+      setMessageError('Vui lòng chọn khách hàng!');
+      setopenError(true);
+      return;
+    }
 
     const addSslITVT = {
-      registeredAt: registeredAt.getTime(),
       domain_itvt_id: domainITVTId,
       ssl_plan_id: sslPlanId,
       periods: periods,
+      registeredAt: registeredAt.getTime(),
       customer_id: customerId
     };
 
@@ -110,7 +139,10 @@ export default function AddSslITVT() {
           navigate('/trang-chu/itvt/danh-sach-ssl-itvt');
         }, 1500);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      });
   };
 
   return permissionAdd ? (
@@ -131,7 +163,6 @@ export default function AddSslITVT() {
                     {listDomainITVT.map((item) => (
                       <MenuItem key={item._id} value={item._id}>
                         {item.name}
-                        {item.domain_plan_id.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -207,6 +238,14 @@ export default function AddSslITVT() {
           </Grid>
         </Box>
       </MainCard>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Thêm thành công!</Alert>
       </Snackbar>

@@ -118,7 +118,28 @@ export default function ListDomainITVT() {
           }, 1100);
         })
         .catch((error) => console.log(error))
-        .finally(() => handleClose());
+        .finally(() => {
+          handleClose();
+          reloadAllData();
+        });
+    }
+  };
+
+  const reloadAllData = async () => {
+    try {
+      const listData = await apiGet(`${LIST_DOMAIN_ITVT}`);
+      setData(listData.data);
+      setDataLength(listData.data.length);
+
+      const listExpiring = await apiGet(`${LIST_DOMAIN_ITVT}/expiring/all`);
+      setDataDomainITVTExpiring(listExpiring.data);
+      setCountDomainITVTExpiring(listExpiring.data.length);
+
+      const listExpired = await apiGet(`${LIST_DOMAIN_ITVT}/expired/all`);
+      setDataDomainITVTExpired(listExpired.data);
+      setCountDomainITVTExpired(listExpired.data.length);
+    } catch (error) {
+      console.log('Error reloading data:', error);
     }
   };
 
