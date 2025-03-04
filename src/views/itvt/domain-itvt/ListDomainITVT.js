@@ -311,7 +311,7 @@ export default function ListDomainITVT() {
             size="small"
             onClick={() => setSelectedData('dataDomainITVTExpiring')}
             component={Link}
-            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?data=expiring' }}
+            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?loai=sap-het-han' }}
             color="warning"
             sx={{ ml: '10px', mr: '10px' }}
           >
@@ -322,7 +322,7 @@ export default function ListDomainITVT() {
             size="small"
             onClick={() => setSelectedData('dataDomainITVTExpired')}
             component={Link}
-            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?data=expired' }}
+            to={{ pathname: '/trang-chu/itvt/danh-sach-ten-mien-itvt', search: '?loai=het-han' }}
             color="error"
             sx={{ mr: '10px' }}
           >
