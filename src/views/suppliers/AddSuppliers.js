@@ -82,6 +82,12 @@ export default function AddSuppliers() {
       return;
     }
 
+    if (taxCode == '') {
+      setMessageError('Vui lòng nhập mã số thuế!');
+      setopenError(true);
+      return;
+    }
+
     if (phone == '') {
       setMessageError('Vui lòng nhập số điện thoại!');
       setopenError(true);
@@ -159,6 +165,7 @@ export default function AddSuppliers() {
                   <Input
                     id="taxCode"
                     name="taxCode"
+                    type="number"
                     value={taxCode}
                     onChange={(e) => setTaxCode(e.target.value)}
                     required={true}
@@ -174,6 +181,7 @@ export default function AddSuppliers() {
                   <Input
                     id="phone"
                     name="phone"
+                    type="number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required={true}
@@ -204,6 +212,7 @@ export default function AddSuppliers() {
                   <Input
                     id="phoneSupport"
                     name="phoneSupport"
+                    type="number"
                     value={phoneSupport}
                     onChange={(e) => setPhoneSupport(e.target.value)}
                     required={true}
