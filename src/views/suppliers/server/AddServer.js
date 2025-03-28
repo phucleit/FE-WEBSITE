@@ -137,6 +137,7 @@ export default function AddServer() {
                   <Input
                     id="taxCode"
                     name="taxCode"
+                    type="number"
                     value={taxCode}
                     onChange={(e) => setTaxCode(e.target.value)}
                     required={true}
@@ -152,6 +153,7 @@ export default function AddServer() {
                   <Input
                     id="phone"
                     name="phone"
+                    type="number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required={true}
@@ -182,6 +184,7 @@ export default function AddServer() {
                   <Input
                     id="phoneSupport"
                     name="phoneSupport"
+                    type="number"
                     value={phoneSupport}
                     onChange={(e) => setPhoneSupport(e.target.value)}
                     required={true}
