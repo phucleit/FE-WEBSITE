@@ -102,7 +102,7 @@ export default function AddHostingPlans() {
     }
 
     if (account == '') {
-      setMessageError('Vui lòng nhập số lượng tài khoản!');
+      setMessageError('Vui lòng nhập số lượng website!');
       setopenError(true);
       return;
     }
