@@ -31,6 +31,9 @@ export default function ListCustomers() {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
   const [data, setData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
 
@@ -105,6 +108,10 @@ export default function ListCustomers() {
     setSelectedId(null);
   };
 
+  const handleCloseError = () => {
+    setopenError(false);
+  };
+
   const handleConfirmDelete = () => {
     if (selectedId) {
       apiDelete(`${LIST_CUSTOMERS}`, selectedId)
@@ -115,7 +122,10 @@ export default function ListCustomers() {
             setOpen(false);
           }, 1100);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          setMessageError(error.response.data.message);
+          setopenError(true);
+        })
         .finally(() => {
           handleClose();
           reloadAllData();
@@ -311,6 +321,14 @@ export default function ListCustomers() {
       </MainCard>
       <Snackbar open={open} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1000}>
         <Alert severity="success">Xóa thành công!</Alert>
+      </Snackbar>
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
       </Snackbar>
       <Dialog open={openConfirm} onClose={handleClose}>
         <DialogTitle>Thông báo</DialogTitle>
