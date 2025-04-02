@@ -11,7 +11,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 
 import CardList from './CardList';
-import Statistical from './statistical';
+import Statistical from './Statistical';
 import TotalPriceServices from '../total-price-services';
 import RemainingContracts from '../contracts';
 import ListActionLogs from '../action-logs';
