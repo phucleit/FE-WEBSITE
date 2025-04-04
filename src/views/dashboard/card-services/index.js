@@ -33,7 +33,7 @@ export default function CardServices() {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <TabList onChange={handleChangeTab}>
                     <Tab label="Danh sách dịch vụ" value="1" />
-                    <Tab label="Thống kê dịch vụ" value="2" />
+                    <Tab label="Thống kê đơn hàng dịch vụ" value="2" />
                   </TabList>
                 </Box>
                 <TabPanel value="1">
