@@ -5,7 +5,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-export default function Statistical2() {
+export default function Statistical() {
   const [value, setValue] = useState('');
   const handleChange = (event) => {
     setValue(event.target.value);
