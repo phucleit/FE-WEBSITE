@@ -11,7 +11,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 
 import CardList from './CardList';
-import Statistical from './Statistical';
+import Statistical2 from './Statistical2';
 import TotalPriceServices from '../total-price-services';
 import RemainingContracts from '../contracts';
 import ListActionLogs from '../action-logs';
@@ -40,7 +40,7 @@ export default function CardServices() {
                   <CardList />
                 </TabPanel>
                 <TabPanel value="2">
-                  <Statistical />
+                  <Statistical2 />
                 </TabPanel>
               </TabContext>
             </Paper>
