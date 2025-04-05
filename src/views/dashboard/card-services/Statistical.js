@@ -4,7 +4,7 @@ import { MenuItem, Select, FormControl, InputLabel, Snackbar, Alert, Typography 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import config from '../../../config';
-import { apiGet } from '../../../utils/formatUtils';
+import { apiGet, convertPrice } from '../../../utils/formatUtils';
 
 export default function Statistical() {
   const [year, setYear] = useState('');
@@ -13,6 +13,7 @@ export default function Statistical() {
   const [chartData, setChartData] = useState([]);
   const [importPrice, setImportPrice] = useState('');
   const [price, setPrice] = useState('');
+  const [profit, setProfit] = useState('');
 
   const [openError, setopenError] = useState(false);
   const [messageError, setMessageError] = useState('');
@@ -38,7 +39,6 @@ export default function Statistical() {
 
       try {
         const resultYears = await apiGet(`${config.API_URL}/statistics/years?service=${service}`);
-        console.log(service);
         setYears(resultYears.data);
         setYear('');
         setChartData([]);
@@ -60,6 +60,7 @@ export default function Statistical() {
         setChartData(resultStatistics.data.data || []);
         setImportPrice(resultStatistics.data.total.import_price || 0);
         setPrice(resultStatistics.data.total.price || 0);
+        setProfit(resultStatistics.data.total.profit || 0);
       } catch (error) {
         setMessageError(error.response.data.message);
         setopenError(true);
@@ -107,10 +108,11 @@ export default function Statistical() {
             <BarChart data={chartData}>
               <XAxis dataKey="month" />
               <YAxis />
-              <Tooltip />
+              <Tooltip formatter={(value) => convertPrice(value)} />
               <Legend />
-              <Bar dataKey="import_price" fill="#8884d8" name="Giá nhập" />
-              <Bar dataKey="price" fill="#82ca9d" name="Giá bán" />
+              <Bar dataKey="import_price" fill="#0693e3" name="Giá nhập" />
+              <Bar dataKey="price" fill="#ff6900" name="Giá bán" />
+              <Bar dataKey="profit" fill="#00d084" name="Lợi nhuận" />
             </BarChart>
           </ResponsiveContainer>
           <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', mt: 2 }}>
@@ -126,6 +128,12 @@ export default function Statistical() {
             TỔNG GIÁ BÁN ĐÃ THANH TOÁN:
             <span style={{ color: 'red', marginLeft: '5px' }}>
               {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)}
+            </span>
+          </Typography>
+          <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+            TỔNG LỢI NHUẬN DỊCH VỤ {getServiceName(service)}:
+            <span style={{ color: 'red', marginLeft: '5px' }}>
+              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(profit)}
             </span>
           </Typography>
         </div>
