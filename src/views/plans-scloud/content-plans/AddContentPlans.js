@@ -1,18 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-
 import MainCard from 'ui-component/cards/MainCard';
+import { Box, Paper, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar } from '@mui/material';
 
 import config from '../../../config';
 import { apiPost, getRoles, formatPriceValue } from '../../../utils/formatUtils';

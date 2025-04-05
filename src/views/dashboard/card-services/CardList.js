@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { Grid } from '@mui/material';
 import { gridSpacing } from 'store/constant';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import { IconWorldDownload, IconServer, IconMailOpened, IconAlignBoxBottomCenter, IconLockAccess } from '@tabler/icons';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { Grid, Card, CardContent, Typography, Divider, Button, Link } from '@mui/material';
 
 import config from '../../../config';
 import { apiGet, formatCurrency } from '../../../utils/formatUtils';

@@ -3,18 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import Button from '@mui/material/Button';
-import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import { InputAdornment, IconButton, Paper, Box, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar } from '@mui/material';
 
 import config from '../../../../config';
 

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 
-import { Grid } from '@mui/material';
 import { gridSpacing } from 'store/constant';
 
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Paper from '@mui/material/Paper';
+import { Grid, Box, Tab, Paper } from '@mui/material';
 
 import CardList from './CardList';
 import Statistical from './Statistical';

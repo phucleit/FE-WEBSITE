@@ -3,23 +3,25 @@ import { Link } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Alert,
+  Snackbar,
+  Divider,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+  Box,
+  Grid,
+  Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@mui/material';
 
 import config from '../../../config';
 import { apiGet, apiDelete, getRoles } from '../../../utils/formatUtils';

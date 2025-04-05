@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { DeleteOutline } from '@mui/icons-material';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
+import { DataGrid } from '@mui/x-data-grid';
+import { DeleteOutline } from '@mui/icons-material';
 import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import config from '../../../config';
 import { apiGet, apiDelete, formatPhoneNumber, getRoles, maskPhoneNumber } from '../../../utils/formatUtils';

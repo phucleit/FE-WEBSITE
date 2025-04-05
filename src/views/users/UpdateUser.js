@@ -1,28 +1,30 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Snackbar from '@mui/material/Snackbar';
-import { InputAdornment, IconButton } from '@mui/material';
+import MainCard from 'ui-component/cards/MainCard';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-import MainCard from 'ui-component/cards/MainCard';
+import {
+  InputAdornment,
+  IconButton,
+  Box,
+  Paper,
+  Grid,
+  FormControl,
+  Input,
+  InputLabel,
+  Button,
+  Alert,
+  MenuItem,
+  Select,
+  Snackbar
+} from '@mui/material';
 
 import config from '../../config';
 import { apiGet, apiGetById, apiUpdate, getRoles } from '../../utils/formatUtils';
-const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 
+const LIST_GROUP_USER = `${config.API_URL}/group-user`;
 const LIST_USER = `${config.API_URL}/users`;
 
 const Item = styled(Paper)(({ theme }) => ({

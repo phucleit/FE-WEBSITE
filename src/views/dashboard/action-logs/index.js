@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import CommentIcon from '@mui/icons-material/Comment';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';
-
 import MainCard from 'ui-component/cards/MainCard';
+import CommentIcon from '@mui/icons-material/Comment';
+import { List, ListItem, ListItemButton, ListItemText, ListItemIcon, Divider, Box } from '@mui/material';
 
 import config from '../../../config';
 import { getCreatedAt, apiGet } from '../../../utils/formatUtils';

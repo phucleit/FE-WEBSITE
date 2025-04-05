@@ -2,18 +2,8 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import TextField from '@mui/material/TextField';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
 import MainCard from 'ui-component/cards/MainCard';
+import { Box, Paper, Grid, FormControl, Input, InputLabel, TextField, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 
 import config from '../../config';
 
