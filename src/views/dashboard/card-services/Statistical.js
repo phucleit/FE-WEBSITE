@@ -1,61 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { MenuItem, Select, FormControl, InputLabel, Snackbar, Alert, Typography } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-// Dữ liệu thống kê theo năm và dịch vụ
-const dataSets = {
-  2023: {
-    1: [
-      { month: 'Tháng 1', giaNhap: 100, giaBan: 150 },
-      { month: 'Tháng 2', giaNhap: 120, giaBan: 170 },
-      { month: 'Tháng 3', giaNhap: 140, giaBan: 190 }
-    ],
-    2: [
-      { month: 'Tháng 1', giaNhap: 200, giaBan: 250 },
-      { month: 'Tháng 2', giaNhap: 220, giaBan: 270 },
-      { month: 'Tháng 3', giaNhap: 240, giaBan: 290 }
-    ]
-  },
-  2024: {
-    1: [
-      { month: 'Tháng 1', giaNhap: 110, giaBan: 160 },
-      { month: 'Tháng 2', giaNhap: 130, giaBan: 180 },
-      { month: 'Tháng 3', giaNhap: 150, giaBan: 200 }
-    ],
-    2: [
-      { month: 'Tháng 1', giaNhap: 220, giaBan: 270 },
-      { month: 'Tháng 2', giaNhap: 240, giaBan: 290 },
-      { month: 'Tháng 3', giaNhap: 260, giaBan: 310 }
-    ]
-  }
-};
+import config from '../../../config';
+import { apiGet } from '../../../utils/formatUtils';
 
 export default function Statistical() {
   const [year, setYear] = useState('');
+  const [years, setYears] = useState([]);
   const [service, setService] = useState('');
+  const [chartData, setChartData] = useState([]);
+  const [importPrice, setImportPrice] = useState('');
+  const [price, setPrice] = useState('');
 
-  // Lấy danh sách năm từ dataSets
-  const years = Object.keys(dataSets);
+  const [openError, setopenError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+
+  const getServiceName = (id) => {
+    const map = {
+      1: 'TÊN MIỀN',
+      2: 'HOSTING',
+      3: 'SSL',
+      4: 'EMAIL',
+      5: 'THIẾT KẾ WEBSITE',
+      6: 'CONTENT & PR',
+      7: 'TOPLIST VŨNG TÀU',
+      8: 'BẢO TRÌ',
+      9: 'NHÀ MẠNG'
+    };
+    return map[id] || '';
+  };
+
+  useEffect(() => {
+    const fetchYearsByService = async () => {
+      if (!service) return;
+
+      try {
+        const resultYears = await apiGet(`${config.API_URL}/statistics/years?service=${service}`);
+        console.log(service);
+        setYears(resultYears.data);
+        setYear('');
+        setChartData([]);
+      } catch (error) {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      }
+    };
+
+    fetchYearsByService();
+  }, [service]);
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      if (!service && !year) return;
+
+      try {
+        const resultStatistics = await apiGet(`${config.API_URL}/statistics?service=${service}&year=${year}`);
+        setChartData(resultStatistics.data.data || []);
+        setImportPrice(resultStatistics.data.total.import_price || 0);
+        setPrice(resultStatistics.data.total.price || 0);
+      } catch (error) {
+        setMessageError(error.response.data.message);
+        setopenError(true);
+      }
+    };
+
+    fetchStatistics();
+  }, [year, service]);
+
+  const handleCloseError = () => {
+    setopenError(false);
+  };
 
   return (
     <div>
-      {/* Chọn năm */}
-      <FormControl sx={{ minWidth: 160, mr: 2 }}>
-        <InputLabel id="year-select">Chọn năm...</InputLabel>
-        <Select id="year-select" label="Chọn năm..." value={year} onChange={(event) => setYear(event.target.value)}>
-          {years.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      {/* Chọn dịch vụ */}
-      <FormControl sx={{ minWidth: 160, mb: 5 }}>
+      <FormControl sx={{ minWidth: 160, mb: 5, mr: 2 }}>
         <InputLabel id="service-select">Chọn dịch vụ...</InputLabel>
-        <Select id="service-select" value={service} label="Chọn dịch vụ..." onChange={(event) => setService(event.target.value)}>
+        <Select id="service-select" value={service} label="Chọn dịch vụ..." onChange={(e) => setService(e.target.value)}>
           <MenuItem value={1}>Tên miền</MenuItem>
           <MenuItem value={2}>Hosting</MenuItem>
           <MenuItem value={3}>SSL</MenuItem>
@@ -68,19 +90,55 @@ export default function Statistical() {
         </Select>
       </FormControl>
 
-      {/* Hiển thị biểu đồ nếu cả năm và dịch vụ được chọn */}
-      {year && service && (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dataSets[year]?.[service] || []}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="giaNhap" fill="#8884d8" name="Giá nhập" />
-            <Bar dataKey="giaBan" fill="#82ca9d" name="Giá bán" />
-          </BarChart>
-        </ResponsiveContainer>
+      <FormControl sx={{ minWidth: 160 }}>
+        <InputLabel id="year-select">Chọn năm...</InputLabel>
+        <Select id="year-select" label="Chọn năm..." value={year} onChange={(e) => setYear(e.target.value)}>
+          {years.map((year) => (
+            <MenuItem key={year} value={year}>
+              {year}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {chartData.length > 0 && (
+        <div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="import_price" fill="#8884d8" name="Giá nhập" />
+              <Bar dataKey="price" fill="#82ca9d" name="Giá bán" />
+            </BarChart>
+          </ResponsiveContainer>
+          <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', mt: 2 }}>
+            BIỂU ĐỒ DOANH SỐ DỊCH VỤ {getServiceName(service)} TỪ THÁNG 1 ĐẾN THÁNG 12 NĂM {year}
+          </Typography>
+          <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+            TỔNG GIÁ NHẬP ĐÃ THANH TOÁN:
+            <span style={{ color: 'red', marginLeft: '5px' }}>
+              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(importPrice)}
+            </span>
+          </Typography>
+          <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+            TỔNG GIÁ BÁN ĐÃ THANH TOÁN:
+            <span style={{ color: 'red', marginLeft: '5px' }}>
+              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)}
+            </span>
+          </Typography>
+        </div>
       )}
+
+      <Snackbar
+        open={openError}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={1500}
+      >
+        <Alert severity="error">{messageError}</Alert>
+      </Snackbar>
     </div>
   );
 }
