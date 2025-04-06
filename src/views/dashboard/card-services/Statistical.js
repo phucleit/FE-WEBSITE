@@ -41,6 +41,9 @@ export default function Statistical() {
         setYears(resultYears.data);
         setYear('');
         setChartData([]);
+        setImportPrice(0);
+        setPrice(0);
+        setProfit(0);
       } catch (error) {
         setMessageError(error.response.data.message);
         setopenError(true);
@@ -51,8 +54,10 @@ export default function Statistical() {
   }, [service]);
 
   useEffect(() => {
+    if (!year) setChartData([]);
+
     const fetchStatistics = async () => {
-      if (!service && !year) return;
+      if (!service || !year) return;
 
       try {
         const resultStatistics = await apiGet(`${process.env.REACT_APP_API_URL}/statistics?service=${service}&year=${year}`);
@@ -106,7 +111,14 @@ export default function Statistical() {
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <XAxis dataKey="month" />
-              <YAxis />
+              <YAxis
+                interval="preserveStartEnd"
+                tickFormatter={(value) => {
+                  if (value >= 1_000_000) return `${value / 1_000_000}tr`;
+                  if (value >= 1_000) return `${value / 1_000}k`;
+                  return value;
+                }}
+              />
               <Tooltip formatter={(value) => convertPrice(value)} />
               <Legend />
               <Bar dataKey="import_price" fill="#0693e3" name="Giá nhập" />
@@ -136,6 +148,12 @@ export default function Statistical() {
             </span>
           </Typography>
         </div>
+      )}
+
+      {year && service && chartData.length === 0 && (
+        <Typography variant="h6" color="error" sx={{ textAlign: 'center', mt: 4 }}>
+          Không có dữ liệu cho dịch vụ {getServiceName(service)} trong năm {year}.
+        </Typography>
       )}
 
       <Snackbar
