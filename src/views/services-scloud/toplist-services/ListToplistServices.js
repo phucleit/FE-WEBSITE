@@ -8,10 +8,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
+const LIST_TOPLIST_SERVICES = `${process.env.REACT_APP_API_URL}/services/toplist`;
 
 export default function ListToplistServices() {
   const [open, setOpen] = useState(false);

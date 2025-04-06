@@ -19,11 +19,9 @@ import {
   Checkbox
 } from '@mui/material';
 
-import config from '../../config';
-
 import { apiGet, apiPost } from '../../utils/formatUtils';
 
-const LIST_FUNCTION = `${config.API_URL}/functions`;
+const LIST_FUNCTION = `${process.env.REACT_APP_API_URL}/functions`;
 
 const parent_id_tai_khoan = '667460e3d19aa9fcecc69fa6';
 const parent_id_nha_cung_cap = '667463d04bede188dfb46d75';

@@ -5,10 +5,9 @@ import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Paper, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar, TextField } from '@mui/material';
 
-import config from '../../../config';
 import { apiGetById, apiUpdate, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
-const LIST_MAINTENANCE_PLANS = `${config.API_URL}/plans/maintenance`;
+const LIST_MAINTENANCE_PLANS = `${process.env.REACT_APP_API_URL}/plans/maintenance`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

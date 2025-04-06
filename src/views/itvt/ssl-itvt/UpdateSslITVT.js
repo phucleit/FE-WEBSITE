@@ -5,13 +5,12 @@ import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Paper, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar, MenuItem, Select } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiGetById, apiUpdate, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_SSL_ITVT = `${config.API_URL}/itvt/ssl`;
-const LIST_DOMAIN_ITVT = `${config.API_URL}/itvt/domain`;
-const LIST_SSL_PLANS = `${config.API_URL}/plans/ssl`;
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_SSL_ITVT = `${process.env.REACT_APP_API_URL}/itvt/ssl`;
+const LIST_DOMAIN_ITVT = `${process.env.REACT_APP_API_URL}/itvt/domain`;
+const LIST_SSL_PLANS = `${process.env.REACT_APP_API_URL}/plans/ssl`;
+const LIST_CUSTOMERS = `${process.env.REACT_APP_API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

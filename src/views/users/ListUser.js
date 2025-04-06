@@ -7,10 +7,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../config';
 import { getCreatedAt, apiGet, apiDelete, getRoles } from '../../utils/formatUtils';
 
-const LIST_USERS = `${config.API_URL}/users`;
+const LIST_USERS = `${process.env.REACT_APP_API_URL}/users`;
 
 export default function ListUser() {
   const [open, setOpen] = useState(false);

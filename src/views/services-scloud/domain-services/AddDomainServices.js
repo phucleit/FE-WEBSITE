@@ -23,13 +23,12 @@ import {
 } from '@mui/material';
 
 import './styles.css';
-import config from '../../../config';
 import { apiGet, apiPost, getRoles } from '../../../utils/formatUtils';
 
-const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
-const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
-const LIST_SERVER_PLANS = `${config.API_URL}/plans/server`;
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_DOMAIN_SERVICES = `${process.env.REACT_APP_API_URL}/services/domain`;
+const LIST_DOMAIN_PLANS = `${process.env.REACT_APP_API_URL}/plans/domain`;
+const LIST_SERVER_PLANS = `${process.env.REACT_APP_API_URL}/plans/server`;
+const LIST_CUSTOMERS = `${process.env.REACT_APP_API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

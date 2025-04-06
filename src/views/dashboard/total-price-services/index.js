@@ -9,10 +9,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import EarningIcon from 'assets/images/icons/earning.svg';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import config from '../../../config';
 import { apiGet } from '../../../utils/formatUtils';
 
-const LIST_CONTRACTS = `${config.API_URL}/contracts`;
+const LIST_CONTRACTS = `${process.env.REACT_APP_API_URL}/contracts`;
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.dark,

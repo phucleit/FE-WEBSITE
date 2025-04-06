@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { MenuItem, Select, FormControl, InputLabel, Snackbar, Alert, Typography } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-import config from '../../../config';
 import { apiGet, convertPrice } from '../../../utils/formatUtils';
 
 export default function Statistical() {
@@ -38,7 +37,7 @@ export default function Statistical() {
       if (!service) return;
 
       try {
-        const resultYears = await apiGet(`${config.API_URL}/statistics/years?service=${service}`);
+        const resultYears = await apiGet(`${process.env.REACT_APP_API_URL}/statistics/years?service=${service}`);
         setYears(resultYears.data);
         setYear('');
         setChartData([]);
@@ -56,7 +55,7 @@ export default function Statistical() {
       if (!service && !year) return;
 
       try {
-        const resultStatistics = await apiGet(`${config.API_URL}/statistics?service=${service}&year=${year}`);
+        const resultStatistics = await apiGet(`${process.env.REACT_APP_API_URL}/statistics?service=${service}&year=${year}`);
         setChartData(resultStatistics.data.data || []);
         setImportPrice(resultStatistics.data.total.import_price || 0);
         setPrice(resultStatistics.data.total.price || 0);

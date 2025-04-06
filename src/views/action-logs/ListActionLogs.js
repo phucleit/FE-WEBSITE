@@ -3,10 +3,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import MainCard from 'ui-component/cards/MainCard';
 
-import config from '../../config';
 import { apiGet, getCreatedAt } from '../../utils/formatUtils';
 
-const LIST_ACTION_LOGS = `${config.API_URL}/action-logs`;
+const LIST_ACTION_LOGS = `${process.env.REACT_APP_API_URL}/action-logs`;
 
 export default function ListActionLogs() {
   const [data, setData] = useState([]);

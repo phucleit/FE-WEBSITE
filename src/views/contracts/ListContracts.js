@@ -7,10 +7,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutline } from '@mui/icons-material';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../config';
 import { apiGet, apiDelete, getCreatedAt, getRoles, formatCurrency } from '../../utils/formatUtils';
 
-const LIST_CONTRACTS = `${config.API_URL}/contracts`;
+const LIST_CONTRACTS = `${process.env.REACT_APP_API_URL}/contracts`;
 
 export default function ListContracts() {
   const [open, setOpen] = useState(false);

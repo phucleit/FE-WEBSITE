@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRoles } from '../../../utils/formatUtils';
 
-const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
+const LIST_MOBILE_NETWORK = `${process.env.REACT_APP_API_URL}/mobile-network`;
 
 export default function ListMobileNetwork() {
   const [open, setOpen] = useState(false);

@@ -5,10 +5,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import CommentIcon from '@mui/icons-material/Comment';
 import { List, ListItem, ListItemButton, ListItemText, ListItemIcon, Divider, Box } from '@mui/material';
 
-import config from '../../../config';
 import { getCreatedAt, apiGet } from '../../../utils/formatUtils';
 
-const LIST_ACTION_LOGS = `${config.API_URL}/action-logs`;
+const LIST_ACTION_LOGS = `${process.env.REACT_APP_API_URL}/action-logs`;
 
 export default function ListActionLogs() {
   const [data, setData] = useState([]);

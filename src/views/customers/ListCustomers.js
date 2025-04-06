@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button, Box, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../config';
 import { apiGet, apiDelete, formatPhoneNumberCustomer, getCreatedAt, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
 
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_CUSTOMERS = `${process.env.REACT_APP_API_URL}/customer`;
 
 export default function ListCustomers() {
   const [open, setOpen] = useState(false);

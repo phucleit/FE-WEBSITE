@@ -34,10 +34,9 @@ import { IconLogout, IconSettings } from '@tabler/icons';
 
 import { logout } from '../../../../store/auth/authActions';
 
-import config from '../../../../config';
 import { apiPost } from '../../../../utils/formatUtils';
 
-const LOGOUT_USER = `${config.API_URL}/login/logout`;
+const LOGOUT_USER = `${process.env.REACT_APP_API_URL}/login/logout`;
 
 const ProfileSection = () => {
   const theme = useTheme();

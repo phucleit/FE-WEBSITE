@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../config';
 import { apiGet, apiDelete, formatPhoneNumber, getRoles, maskPhoneNumber } from '../../utils/formatUtils';
 
-const LIST_SUPPLIER = `${config.API_URL}/supplier`;
+const LIST_SUPPLIER = `${process.env.REACT_APP_API_URL}/supplier`;
 
 export default function ListSupplier() {
   const [open, setOpen] = useState(false);

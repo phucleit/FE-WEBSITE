@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getCreatedAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
+const LIST_WEBSITE_SERVICES = `${process.env.REACT_APP_API_URL}/services/website`;
 
 export default function ListWebsiteServices() {
   const [open, setOpen] = useState(false);

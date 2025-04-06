@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../config';
 import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
+const LIST_MOBILE_NETWORK_SERVICES = `${process.env.REACT_APP_API_URL}/services/mobile-network`;
 
 export default function ListMobileNetworkById(props) {
   const paramId = useParams();

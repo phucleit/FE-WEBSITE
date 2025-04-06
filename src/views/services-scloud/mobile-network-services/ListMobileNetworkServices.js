@@ -8,10 +8,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
+const LIST_MOBILE_NETWORK_SERVICES = `${process.env.REACT_APP_API_URL}/services/mobile-network`;
 
 export default function ListMobileNetworkServices() {
   const [open, setOpen] = useState(false);

@@ -7,10 +7,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import { IconEye } from '@tabler/icons';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../config';
 import { apiGet, apiDelete, getRoles } from '../../utils/formatUtils';
 
-const LIST_GROUP_USER = `${config.API_URL}/group-user`;
+const LIST_GROUP_USER = `${process.env.REACT_APP_API_URL}/group-user`;
 
 export default function ListGroupUser() {
   const [open, setOpen] = useState(false);

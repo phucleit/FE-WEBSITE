@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 
 import MainCard from 'ui-component/cards/MainCard';
 
-import config from '../../../config';
 import { getCreatedAt, apiGet } from '../../../utils/formatUtils';
 
-const LIST_CONTRACTS = `${config.API_URL}/contracts`;
+const LIST_CONTRACTS = `${process.env.REACT_APP_API_URL}/contracts`;
 
 export default function RemainingContracts() {
   const [data, setData] = useState([]);

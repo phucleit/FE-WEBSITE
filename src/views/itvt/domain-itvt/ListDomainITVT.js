@@ -8,10 +8,9 @@ import { DeleteOutline } from '@mui/icons-material';
 import { IconEdit } from '@tabler/icons';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_DOMAIN_ITVT = `${config.API_URL}/itvt/domain`;
+const LIST_DOMAIN_ITVT = `${process.env.REACT_APP_API_URL}/itvt/domain`;
 
 export default function ListDomainITVT() {
   const [open, setOpen] = useState(false);

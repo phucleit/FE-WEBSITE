@@ -20,12 +20,11 @@ import {
   Switch
 } from '@mui/material';
 
-import config from '../../config';
 import { apiPostFile, getRoles } from '../../utils/formatUtils';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
+const LIST_CUSTOMERS = `${process.env.REACT_APP_API_URL}/customer`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

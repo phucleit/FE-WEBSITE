@@ -8,10 +8,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles, formatCurrency } from '../../../utils/formatUtils';
 
-const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
+const LIST_HOSTING_SERVICES = `${process.env.REACT_APP_API_URL}/services/hosting`;
 
 export default function ListHostingServices() {
   const [open, setOpen] = useState(false);

@@ -5,13 +5,11 @@ import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Paper, Grid, FormControl, Input, InputLabel, TextField, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 
-import config from '../../config';
-
 import { apiGetById, apiGet } from '../../utils/formatUtils';
 
-const LIST_GROUP_USER = `${config.API_URL}/group-user`;
-const LIST_FUNCTION = `${config.API_URL}/functions`;
-const LIST_ROLES = `${config.API_URL}/functions/list-roles`;
+const LIST_GROUP_USER = `${process.env.REACT_APP_API_URL}/group-user`;
+const LIST_FUNCTION = `${process.env.REACT_APP_API_URL}/functions`;
+const LIST_ROLES = `${process.env.REACT_APP_API_URL}/functions/list-roles`;
 
 const parent_id_tai_khoan = '667460e3d19aa9fcecc69fa6';
 const parent_id_nha_cung_cap = '667463d04bede188dfb46d75';

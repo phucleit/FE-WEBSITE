@@ -19,11 +19,10 @@ import {
   TextField
 } from '@mui/material';
 
-import config from '../../config';
 import { apiGetById, apiUpdate, getRoles, formatCurrency } from '../../utils/formatUtils';
 import ListServices from '../../utils/services/ListServices';
 
-const LIST_CONTRACT = `${config.API_URL}/contracts`;
+const LIST_CONTRACT = `${process.env.REACT_APP_API_URL}/contracts`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

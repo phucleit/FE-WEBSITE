@@ -20,11 +20,10 @@ import {
   FormLabel
 } from '@mui/material';
 
-import config from '../../../config';
 import { apiPost, apiGet, getRoles, formatPriceValue } from '../../../utils/formatUtils';
 
-const LIST_MOBILE_NETWORK_PLANS = `${config.API_URL}/plans/mobile-network`;
-const LIST_MOBILE_NETWORK = `${config.API_URL}/mobile-network`;
+const LIST_MOBILE_NETWORK_PLANS = `${process.env.REACT_APP_API_URL}/plans/mobile-network`;
+const LIST_MOBILE_NETWORK = `${process.env.REACT_APP_API_URL}/mobile-network`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

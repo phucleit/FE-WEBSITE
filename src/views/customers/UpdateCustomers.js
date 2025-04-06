@@ -20,15 +20,14 @@ import {
   Switch
 } from '@mui/material';
 
-import config from '../../config';
 import { apiGetById, apiUpdateFile, getRoles } from '../../utils/formatUtils';
 
 import ListServices from '../../utils/services/ListServices';
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'jpg', 'jpeg', 'png'];
 
-const LIST_CUSTOMERS = `${config.API_URL}/customer`;
-const URL_UPLOAD = `${config.API_UPLOAD}`;
+const LIST_CUSTOMERS = `${process.env.REACT_APP_API_URL}/customer`;
+const URL_UPLOAD = `${process.env.REACT_APP_API_UPLOAD}`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

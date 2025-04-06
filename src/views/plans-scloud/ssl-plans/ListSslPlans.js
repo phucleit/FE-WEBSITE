@@ -23,10 +23,9 @@ import {
   DialogTitle
 } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, convertPrice, getRoles } from '../../../utils/formatUtils';
 
-const LIST_SSL_PLANS = `${config.API_URL}/plans/ssl`;
+const LIST_SSL_PLANS = `${process.env.REACT_APP_API_URL}/plans/ssl`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

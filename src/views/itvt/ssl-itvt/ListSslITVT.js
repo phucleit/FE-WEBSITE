@@ -8,10 +8,9 @@ import { DeleteOutline } from '@mui/icons-material';
 import { IconEdit } from '@tabler/icons';
 import { Box, Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRegisteredAt, getExpiredAt, getRoles } from '../../../utils/formatUtils';
 
-const LIST_SSL_ITVT = `${config.API_URL}/itvt/ssl`;
+const LIST_SSL_ITVT = `${process.env.REACT_APP_API_URL}/itvt/ssl`;
 
 export default function ListSslITVT() {
   const [open, setOpen] = useState(false);

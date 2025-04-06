@@ -7,10 +7,9 @@ import { IconEdit } from '@tabler/icons';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, getRoles } from '../../../utils/formatUtils';
 
-const LIST_DOMAIN_PLANS = `${config.API_URL}/plans/domain`;
+const LIST_DOMAIN_PLANS = `${process.env.REACT_APP_API_URL}/plans/domain`;
 
 export default function ListDomainPlans() {
   const [open, setOpen] = useState(false);

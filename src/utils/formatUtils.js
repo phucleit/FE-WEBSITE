@@ -1,8 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import config from '../config';
-
 export function apiGet(url, headers = {}) {
   return axios.get(url, {
     headers: {
@@ -83,7 +81,7 @@ export function apiDelete(url, id, headers = {}) {
 }
 
 export async function getRoles() {
-  const list_roles = await axios.get(`${config.API_URL}/functions/list-roles/${Cookies.get('group_user_id')}`, {
+  const list_roles = await axios.get(`${process.env.REACT_APP_API_URL}/functions/list-roles/${Cookies.get('group_user_id')}`, {
     headers: {
       'Cache-Control': 'no-cache',
       'Content-Type': 'application/json',

@@ -7,9 +7,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputAdornment, IconButton, Paper, Box, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar } from '@mui/material';
 
-import config from '../../../../config';
-
-const LOGIN_USER = `${config.API_URL}/login`;
+const LOGIN_USER = `${process.env.REACT_APP_API_URL}/login`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

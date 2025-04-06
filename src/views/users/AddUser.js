@@ -21,11 +21,10 @@ import {
   Snackbar
 } from '@mui/material';
 
-import config from '../../config';
 import { apiPost, apiGet, getRoles } from '../../utils/formatUtils';
 
-const LIST_USER = `${config.API_URL}/users`;
-const LIST_GROUP_USER = `${config.API_URL}/group-user`;
+const LIST_USER = `${process.env.REACT_APP_API_URL}/users`;
+const LIST_GROUP_USER = `${process.env.REACT_APP_API_URL}/group-user`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

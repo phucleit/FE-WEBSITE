@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../config';
 import { getRegisteredAt, getExpiredAt, apiGetById } from '../formatUtils';
 
-const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
+const LIST_MAINTENANCE_SERVICES = `${process.env.REACT_APP_API_URL}/services/maintenance`;
 
 export default function ListMaintenanceById(props) {
   const paramId = useParams();

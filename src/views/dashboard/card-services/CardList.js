@@ -4,18 +4,17 @@ import { gridSpacing } from 'store/constant';
 import { IconWorldDownload, IconServer, IconMailOpened, IconAlignBoxBottomCenter, IconLockAccess } from '@tabler/icons';
 import { Grid, Card, CardContent, Typography, Divider, Button, Link } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, formatCurrency } from '../../../utils/formatUtils';
 
-const LIST_DOMAIN_SERVICES = `${config.API_URL}/services/domain`;
-const LIST_HOSTING_SERVICES = `${config.API_URL}/services/hosting`;
-const LIST_SSL_SERVICES = `${config.API_URL}/services/ssl`;
-const LIST_EMAIL_SERVICES = `${config.API_URL}/services/email`;
-const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
-const LIST_CONTENT_SERVICES = `${config.API_URL}/services/content`;
-const LIST_TOPLIST_SERVICES = `${config.API_URL}/services/toplist`;
-const LIST_MAINTENANCE_SERVICES = `${config.API_URL}/services/maintenance`;
-const LIST_MOBILE_NETWORK_SERVICES = `${config.API_URL}/services/mobile-network`;
+const LIST_DOMAIN_SERVICES = `${process.env.REACT_APP_API_URL}/services/domain`;
+const LIST_HOSTING_SERVICES = `${process.env.REACT_APP_API_URL}/services/hosting`;
+const LIST_SSL_SERVICES = `${process.env.REACT_APP_API_URL}/services/ssl`;
+const LIST_EMAIL_SERVICES = `${process.env.REACT_APP_API_URL}/services/email`;
+const LIST_WEBSITE_SERVICES = `${process.env.REACT_APP_API_URL}/services/website`;
+const LIST_CONTENT_SERVICES = `${process.env.REACT_APP_API_URL}/services/content`;
+const LIST_TOPLIST_SERVICES = `${process.env.REACT_APP_API_URL}/services/toplist`;
+const LIST_MAINTENANCE_SERVICES = `${process.env.REACT_APP_API_URL}/services/maintenance`;
+const LIST_MOBILE_NETWORK_SERVICES = `${process.env.REACT_APP_API_URL}/services/mobile-network`;
 
 export default function CardList() {
   const [dataDomainServices, setDataDomainServices] = useState([]);

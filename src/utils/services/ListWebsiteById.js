@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 
-import config from '../../config';
 import { getCreatedAt, apiGetById } from '../formatUtils';
 
-const LIST_WEBSITE_SERVICES = `${config.API_URL}/services/website`;
+const LIST_WEBSITE_SERVICES = `${process.env.REACT_APP_API_URL}/services/website`;
 
 export default function ListWebsiteById(props) {
   const paramId = useParams();

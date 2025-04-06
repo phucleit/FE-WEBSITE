@@ -5,11 +5,10 @@ import { styled } from '@mui/material/styles';
 import MainCard from 'ui-component/cards/MainCard';
 import { Box, Paper, Grid, FormControl, Input, InputLabel, Button, Alert, Snackbar, MenuItem, Select } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiGetById, apiUpdate, getRoles } from '../../../utils/formatUtils';
 
-const LIST_SERVER_PLANS = `${config.API_URL}/plans/server`;
-const LIST_SUPPLIER_SERVER = `${config.API_URL}/server`;
+const LIST_SERVER_PLANS = `${process.env.REACT_APP_API_URL}/plans/server`;
+const LIST_SUPPLIER_SERVER = `${process.env.REACT_APP_API_URL}/server`;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

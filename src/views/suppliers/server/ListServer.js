@@ -7,10 +7,9 @@ import MainCard from 'ui-component/cards/MainCard';
 import { IconEdit } from '@tabler/icons';
 import { Button, Alert, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import config from '../../../config';
 import { apiGet, apiDelete, formatPhoneNumber, getRoles, maskPhoneNumber } from '../../../utils/formatUtils';
 
-const LIST_SERVER = `${config.API_URL}/server`;
+const LIST_SERVER = `${process.env.REACT_APP_API_URL}/server`;
 
 export default function ListServer() {
   const [open, setOpen] = useState(false);
