@@ -1,9 +1,9 @@
 // assets
-import { IconDatabaseImport } from '@tabler/icons';
+import { IconGrave } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconDatabaseImport
+  IconGrave
 };
 
 const contracts = {
@@ -16,7 +16,7 @@ const contracts = {
       id: 'authentication',
       title: 'Hợp đồng',
       type: 'collapse',
-      icon: icons.IconDatabaseImport,
+      icon: icons.IconGrave,
       children: [
         {
           id: 'danh-sach-hop-dong',
